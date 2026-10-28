@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "space-cat",
+  "name": "Space Cat",
+  "parts": {
+    "mine": {
+      "ref": "space-cat"
+    },
+    "theirs": {
+      "ref": "space-cat",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "space-cat": {
+      "v": 2,
+      "id": "space-cat",
+      "name": "Space Cat",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293911036
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.13,
+          9.5,
+          0.31,
+          0
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 23.5,
+            "img": "a20dce66ef2ab8a78d370"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 23.5,
+            "img": "ad81585e11e07be3482ad"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a5fd78d8f46cb7e1b8eed"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14,
+            "img": "a50b70abf28e17bca6f3b"
+          },
+          "top": {
+            "height": 12.5,
+            "fit": "stretch",
+            "img": "ae52f5b72dc9936ef5a0a"
+          },
+          "bottom": {
+            "height": 3,
+            "fit": "stretch",
+            "img": "a9375cfe766b864fed3b9"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a6dbf517e77a6aeeaaaa0"
+          },
+          "right": {
+            "width": 3.5,
+            "fit": "stretch",
+            "img": "a20adca0b53051bdc4f38"
+          }
+        }
+      },
+      "text": {
+        "c": 4282988639,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a20dce66ef2ab8a78d370": {
+      "file": "assets/a20dce66ef2ab8a78d370.png"
+    },
+    "ad81585e11e07be3482ad": {
+      "file": "assets/ad81585e11e07be3482ad.png"
+    },
+    "a5fd78d8f46cb7e1b8eed": {
+      "file": "assets/a5fd78d8f46cb7e1b8eed.png"
+    },
+    "a50b70abf28e17bca6f3b": {
+      "file": "assets/a50b70abf28e17bca6f3b.png"
+    },
+    "ae52f5b72dc9936ef5a0a": {
+      "file": "assets/ae52f5b72dc9936ef5a0a.png"
+    },
+    "a9375cfe766b864fed3b9": {
+      "file": "assets/a9375cfe766b864fed3b9.png"
+    },
+    "a6dbf517e77a6aeeaaaa0": {
+      "file": "assets/a6dbf517e77a6aeeaaaa0.png"
+    },
+    "a20adca0b53051bdc4f38": {
+      "file": "assets/a20adca0b53051bdc4f38.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

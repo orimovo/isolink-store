@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "cloud-nap",
+  "name": "Cloud Nap",
+  "parts": {
+    "mine": {
+      "ref": "cloud-nap"
+    },
+    "theirs": {
+      "ref": "cloud-nap",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "cloud-nap": {
+      "v": 2,
+      "id": "cloud-nap",
+      "name": "Cloud Nap",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4292998397
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.38,
+          0.11,
+          0.09,
+          0.89
+        ],
+        "bodyRect": [
+          2,
+          6,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a0f7239481973aeace1a1"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 14,
+            "img": "a2677816a04edb2658ec1"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15,
+            "img": "a612269c012d751e98550"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15,
+            "img": "afd3820ef1651a3388d04"
+          },
+          "top": {
+            "height": 7,
+            "fit": "stretch",
+            "img": "aeeab1d1495685f4414c5"
+          },
+          "bottom": {
+            "height": 4,
+            "fit": "stretch",
+            "img": "afda3dab2ee1c5011f64d"
+          },
+          "left": {
+            "width": 3.5,
+            "fit": "stretch",
+            "img": "a507fc565dc0e987a8fd3"
+          },
+          "right": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a4cf73e4ce81c0078413f"
+          }
+        }
+      },
+      "text": {
+        "c": 4280696163,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a0f7239481973aeace1a1": {
+      "file": "assets/a0f7239481973aeace1a1.png"
+    },
+    "a2677816a04edb2658ec1": {
+      "file": "assets/a2677816a04edb2658ec1.png"
+    },
+    "a612269c012d751e98550": {
+      "file": "assets/a612269c012d751e98550.png"
+    },
+    "afd3820ef1651a3388d04": {
+      "file": "assets/afd3820ef1651a3388d04.png"
+    },
+    "aeeab1d1495685f4414c5": {
+      "file": "assets/aeeab1d1495685f4414c5.png"
+    },
+    "afda3dab2ee1c5011f64d": {
+      "file": "assets/afda3dab2ee1c5011f64d.png"
+    },
+    "a507fc565dc0e987a8fd3": {
+      "file": "assets/a507fc565dc0e987a8fd3.png"
+    },
+    "a4cf73e4ce81c0078413f": {
+      "file": "assets/a4cf73e4ce81c0078413f.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

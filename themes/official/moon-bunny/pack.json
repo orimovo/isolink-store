@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "moon-bunny",
+  "name": "Moon Bunny",
+  "parts": {
+    "mine": {
+      "ref": "moon-bunny"
+    },
+    "theirs": {
+      "ref": "moon-bunny",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "moon-bunny": {
+      "v": 2,
+      "id": "moon-bunny",
+      "name": "Moon Bunny",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293781500
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.17,
+          11.94,
+          0.04,
+          0.06
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 26,
+            "img": "adc28c6dbadda7e4f837a"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 26,
+            "img": "a012e964f6a6a98bf0597"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a4502b19e8f127e81cee4"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14,
+            "img": "a29c44b6f90eeafb17f77"
+          },
+          "top": {
+            "height": 15,
+            "fit": "stretch",
+            "img": "a61309f39b6285fe12a47"
+          },
+          "bottom": {
+            "height": 3,
+            "fit": "stretch",
+            "img": "ae38e2c1e84de57f63ce6"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a6b4f460fcd9ff9bab160"
+          },
+          "right": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a57f97de1f2e1204697fb"
+          }
+        }
+      },
+      "text": {
+        "c": 4283382885,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "adc28c6dbadda7e4f837a": {
+      "file": "assets/adc28c6dbadda7e4f837a.png"
+    },
+    "a012e964f6a6a98bf0597": {
+      "file": "assets/a012e964f6a6a98bf0597.png"
+    },
+    "a4502b19e8f127e81cee4": {
+      "file": "assets/a4502b19e8f127e81cee4.png"
+    },
+    "a29c44b6f90eeafb17f77": {
+      "file": "assets/a29c44b6f90eeafb17f77.png"
+    },
+    "a61309f39b6285fe12a47": {
+      "file": "assets/a61309f39b6285fe12a47.png"
+    },
+    "ae38e2c1e84de57f63ce6": {
+      "file": "assets/ae38e2c1e84de57f63ce6.png"
+    },
+    "a6b4f460fcd9ff9bab160": {
+      "file": "assets/a6b4f460fcd9ff9bab160.png"
+    },
+    "a57f97de1f2e1204697fb": {
+      "file": "assets/a57f97de1f2e1204697fb.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

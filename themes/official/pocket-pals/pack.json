@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "pocket-pals",
+  "name": "Pocket Pals",
+  "parts": {
+    "mine": {
+      "ref": "pocket-pals"
+    },
+    "theirs": {
+      "ref": "pocket-pals",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "pocket-pals": {
+      "v": 2,
+      "id": "pocket-pals",
+      "name": "Pocket Pals",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294768086
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.17,
+          9.07,
+          0.17,
+          0.43
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 23,
+            "img": "acc872c3d4ea60f24d150"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 23,
+            "img": "a9cebff5a884d2e15e77d"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a82af33560d1eb405224a"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a241b9911b7fc10361737"
+          },
+          "top": {
+            "height": 12,
+            "fit": "stretch",
+            "img": "a9b656ff0f2b93e115270"
+          },
+          "bottom": {
+            "height": 3.5,
+            "fit": "stretch",
+            "img": "aa77db6c96260bef986df"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a6b56e440d3fbfb9ff85b"
+          },
+          "right": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a6ee64bd43927365e5d69"
+          }
+        }
+      },
+      "text": {
+        "c": 4283512867,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "acc872c3d4ea60f24d150": {
+      "file": "assets/acc872c3d4ea60f24d150.png"
+    },
+    "a9cebff5a884d2e15e77d": {
+      "file": "assets/a9cebff5a884d2e15e77d.png"
+    },
+    "a82af33560d1eb405224a": {
+      "file": "assets/a82af33560d1eb405224a.png"
+    },
+    "a241b9911b7fc10361737": {
+      "file": "assets/a241b9911b7fc10361737.png"
+    },
+    "a9b656ff0f2b93e115270": {
+      "file": "assets/a9b656ff0f2b93e115270.png"
+    },
+    "aa77db6c96260bef986df": {
+      "file": "assets/aa77db6c96260bef986df.png"
+    },
+    "a6b56e440d3fbfb9ff85b": {
+      "file": "assets/a6b56e440d3fbfb9ff85b.png"
+    },
+    "a6ee64bd43927365e5d69": {
+      "file": "assets/a6ee64bd43927365e5d69.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

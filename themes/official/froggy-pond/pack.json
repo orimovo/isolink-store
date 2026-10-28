@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "froggy-pond",
+  "name": "Froggy Pond",
+  "parts": {
+    "mine": {
+      "ref": "froggy-pond"
+    },
+    "theirs": {
+      "ref": "froggy-pond",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "froggy-pond": {
+      "v": 2,
+      "id": "froggy-pond",
+      "name": "Froggy Pond",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293392090
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.76,
+          4.02,
+          0.96,
+          0.98
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 18,
+            "img": "a147978f75e7c5beaebe7"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 18,
+            "img": "a67b792eb55256c46fdd7"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15,
+            "img": "aab86f2f0eb03c2be327a"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15,
+            "img": "ad3723270c7f31a90c0bd"
+          },
+          "top": {
+            "height": 7,
+            "fit": "stretch",
+            "img": "aa2ef25e8e6cadf2bafc4"
+          },
+          "bottom": {
+            "height": 4,
+            "fit": "stretch",
+            "img": "a4f3b332e2e2b98814898"
+          },
+          "left": {
+            "width": 4,
+            "fit": "stretch",
+            "img": "a127f1484ef81448bfd96"
+          },
+          "right": {
+            "width": 4,
+            "fit": "stretch",
+            "img": "a1cd7d6e2fd29aaaff5d3"
+          }
+        }
+      },
+      "text": {
+        "c": 4281094204,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a147978f75e7c5beaebe7": {
+      "file": "assets/a147978f75e7c5beaebe7.png"
+    },
+    "a67b792eb55256c46fdd7": {
+      "file": "assets/a67b792eb55256c46fdd7.png"
+    },
+    "aab86f2f0eb03c2be327a": {
+      "file": "assets/aab86f2f0eb03c2be327a.png"
+    },
+    "ad3723270c7f31a90c0bd": {
+      "file": "assets/ad3723270c7f31a90c0bd.png"
+    },
+    "aa2ef25e8e6cadf2bafc4": {
+      "file": "assets/aa2ef25e8e6cadf2bafc4.png"
+    },
+    "a4f3b332e2e2b98814898": {
+      "file": "assets/a4f3b332e2e2b98814898.png"
+    },
+    "a127f1484ef81448bfd96": {
+      "file": "assets/a127f1484ef81448bfd96.png"
+    },
+    "a1cd7d6e2fd29aaaff5d3": {
+      "file": "assets/a1cd7d6e2fd29aaaff5d3.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "sleepy-sloth",
+  "name": "Sleepy Sloth",
+  "parts": {
+    "mine": {
+      "ref": "sleepy-sloth"
+    },
+    "theirs": {
+      "ref": "sleepy-sloth",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "sleepy-sloth": {
+      "v": 2,
+      "id": "sleepy-sloth",
+      "name": "Sleepy Sloth",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293193688
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.13,
+          9.6,
+          2.01,
+          0
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 23.5,
+            "img": "a68d9737f6e1c1dd0097f"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 23.5,
+            "img": "a80755015ad8da84e2a44"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a1bd2542cb4e0f2d87e9a"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14,
+            "img": "a010bcef9293b9dbe23f3"
+          },
+          "top": {
+            "height": 12.5,
+            "fit": "stretch",
+            "img": "adbcb9c2a0dc4607dc41d"
+          },
+          "bottom": {
+            "height": 3,
+            "fit": "stretch",
+            "img": "a77a09087e9e04771c297"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a33f6315f6cbe23edb657"
+          },
+          "right": {
+            "width": 5,
+            "fit": "stretch",
+            "img": "a8a7c9bce2de02de412af"
+          }
+        }
+      },
+      "text": {
+        "c": 4283254830,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a68d9737f6e1c1dd0097f": {
+      "file": "assets/a68d9737f6e1c1dd0097f.png"
+    },
+    "a80755015ad8da84e2a44": {
+      "file": "assets/a80755015ad8da84e2a44.png"
+    },
+    "a1bd2542cb4e0f2d87e9a": {
+      "file": "assets/a1bd2542cb4e0f2d87e9a.png"
+    },
+    "a010bcef9293b9dbe23f3": {
+      "file": "assets/a010bcef9293b9dbe23f3.png"
+    },
+    "adbcb9c2a0dc4607dc41d": {
+      "file": "assets/adbcb9c2a0dc4607dc41d.png"
+    },
+    "a77a09087e9e04771c297": {
+      "file": "assets/a77a09087e9e04771c297.png"
+    },
+    "a33f6315f6cbe23edb657": {
+      "file": "assets/a33f6315f6cbe23edb657.png"
+    },
+    "a8a7c9bce2de02de412af": {
+      "file": "assets/a8a7c9bce2de02de412af.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

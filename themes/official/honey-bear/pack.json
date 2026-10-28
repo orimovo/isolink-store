@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "honey-bear",
+  "name": "Honey Bear",
+  "parts": {
+    "mine": {
+      "ref": "honey-bear"
+    },
+    "theirs": {
+      "ref": "honey-bear",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "honey-bear": {
+      "v": 2,
+      "id": "honey-bear",
+      "name": "Honey Bear",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294832327
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          3.04,
+          1.66,
+          1.85,
+          1.34
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 15.5,
+            "img": "a555440a5f7dfe1b0c190"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 15.5,
+            "img": "a0bd2245c27d8fbeee365"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15.5,
+            "img": "a925ef52f67815d6a89cf"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15.5,
+            "img": "aca883abed17ff29d8315"
+          },
+          "top": {
+            "height": 4.5,
+            "fit": "stretch",
+            "img": "ade60955c388580ac5e20"
+          },
+          "bottom": {
+            "height": 4.5,
+            "fit": "stretch",
+            "img": "acac67d0d29944b4b9ef7"
+          },
+          "left": {
+            "width": 6,
+            "fit": "stretch",
+            "img": "aa242fadc0df9e89ce6b6"
+          },
+          "right": {
+            "width": 5,
+            "fit": "stretch",
+            "img": "a211a28e96f450794b5f7"
+          }
+        }
+      },
+      "text": {
+        "c": 4284433189,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a555440a5f7dfe1b0c190": {
+      "file": "assets/a555440a5f7dfe1b0c190.png"
+    },
+    "a0bd2245c27d8fbeee365": {
+      "file": "assets/a0bd2245c27d8fbeee365.png"
+    },
+    "a925ef52f67815d6a89cf": {
+      "file": "assets/a925ef52f67815d6a89cf.png"
+    },
+    "aca883abed17ff29d8315": {
+      "file": "assets/aca883abed17ff29d8315.png"
+    },
+    "ade60955c388580ac5e20": {
+      "file": "assets/ade60955c388580ac5e20.png"
+    },
+    "acac67d0d29944b4b9ef7": {
+      "file": "assets/acac67d0d29944b4b9ef7.png"
+    },
+    "aa242fadc0df9e89ce6b6": {
+      "file": "assets/aa242fadc0df9e89ce6b6.png"
+    },
+    "a211a28e96f450794b5f7": {
+      "file": "assets/a211a28e96f450794b5f7.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

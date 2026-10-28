@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "tiny-whale",
+  "name": "Tiny Whale",
+  "parts": {
+    "mine": {
+      "ref": "tiny-whale"
+    },
+    "theirs": {
+      "ref": "tiny-whale",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "tiny-whale": {
+      "v": 2,
+      "id": "tiny-whale",
+      "name": "Tiny Whale",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4292800508
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          1.85,
+          0.15,
+          4.75,
+          0.85
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a10cb1d37e4497cfece4a"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 14,
+            "img": "a7665e9bde629b8622645"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15,
+            "img": "a8fd471fe37c04bda17e9"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15,
+            "img": "acd4f66740ca3f91caeb7"
+          },
+          "top": {
+            "height": 3,
+            "fit": "stretch",
+            "img": "a1037aed8169713b98327"
+          },
+          "bottom": {
+            "height": 4,
+            "fit": "stretch",
+            "img": "ab6870145b30799299f63"
+          },
+          "left": {
+            "width": 5,
+            "fit": "stretch",
+            "img": "a9c923201fed2aa4083e5"
+          },
+          "right": {
+            "width": 7.5,
+            "fit": "stretch",
+            "img": "aa285752c417ca33378b8"
+          }
+        }
+      },
+      "text": {
+        "c": 4280896613,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a10cb1d37e4497cfece4a": {
+      "file": "assets/a10cb1d37e4497cfece4a.png"
+    },
+    "a7665e9bde629b8622645": {
+      "file": "assets/a7665e9bde629b8622645.png"
+    },
+    "a8fd471fe37c04bda17e9": {
+      "file": "assets/a8fd471fe37c04bda17e9.png"
+    },
+    "acd4f66740ca3f91caeb7": {
+      "file": "assets/acd4f66740ca3f91caeb7.png"
+    },
+    "a1037aed8169713b98327": {
+      "file": "assets/a1037aed8169713b98327.png"
+    },
+    "ab6870145b30799299f63": {
+      "file": "assets/ab6870145b30799299f63.png"
+    },
+    "a9c923201fed2aa4083e5": {
+      "file": "assets/a9c923201fed2aa4083e5.png"
+    },
+    "aa285752c417ca33378b8": {
+      "file": "assets/aa285752c417ca33378b8.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

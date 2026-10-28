@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "peach-mochi",
+  "name": "Peach Mochi",
+  "parts": {
+    "mine": {
+      "ref": "peach-mochi"
+    },
+    "theirs": {
+      "ref": "peach-mochi",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "peach-mochi": {
+      "v": 2,
+      "id": "peach-mochi",
+      "name": "Peach Mochi",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294894809
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.16,
+          5.16,
+          0.03,
+          0.34
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 19,
+            "img": "a7a09281fe0f56af12d08"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 19,
+            "img": "a5998126c693577724978"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a6e91630726c75711f2d7"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a05527120cfded57619c9"
+          },
+          "top": {
+            "height": 8,
+            "fit": "stretch",
+            "img": "a1bc7d08376e9b6b48aaf"
+          },
+          "bottom": {
+            "height": 3.5,
+            "fit": "stretch",
+            "img": "ae9fc402648b16387fecb"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a98bd3a45973c03c7c229"
+          },
+          "right": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "aac32375f9761bcfa3c2f"
+          }
+        }
+      },
+      "text": {
+        "c": 4284496698,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a7a09281fe0f56af12d08": {
+      "file": "assets/a7a09281fe0f56af12d08.png"
+    },
+    "a5998126c693577724978": {
+      "file": "assets/a5998126c693577724978.png"
+    },
+    "a6e91630726c75711f2d7": {
+      "file": "assets/a6e91630726c75711f2d7.png"
+    },
+    "a05527120cfded57619c9": {
+      "file": "assets/a05527120cfded57619c9.png"
+    },
+    "a1bc7d08376e9b6b48aaf": {
+      "file": "assets/a1bc7d08376e9b6b48aaf.png"
+    },
+    "ae9fc402648b16387fecb": {
+      "file": "assets/ae9fc402648b16387fecb.png"
+    },
+    "a98bd3a45973c03c7c229": {
+      "file": "assets/a98bd3a45973c03c7c229.png"
+    },
+    "aac32375f9761bcfa3c2f": {
+      "file": "assets/aac32375f9761bcfa3c2f.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

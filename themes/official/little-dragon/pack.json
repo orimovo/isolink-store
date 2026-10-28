@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "little-dragon",
+  "name": "Little Dragon",
+  "parts": {
+    "mine": {
+      "ref": "little-dragon"
+    },
+    "theirs": {
+      "ref": "little-dragon",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "little-dragon": {
+      "v": 2,
+      "id": "little-dragon",
+      "name": "Little Dragon",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4292668880
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          3.9,
+          4.68,
+          3.1,
+          1.82
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 18.5,
+            "img": "a7717fd35dc070717867c"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 18.5,
+            "img": "a92c45d2676c54e1ebd72"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 16,
+            "img": "af66437595e0a966e0604"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 16,
+            "img": "a04293c45148999d41285"
+          },
+          "top": {
+            "height": 7.5,
+            "fit": "stretch",
+            "img": "a2fdb960a17dec3412002"
+          },
+          "bottom": {
+            "height": 5,
+            "fit": "stretch",
+            "img": "afc7a00cf68acc35b6a61"
+          },
+          "left": {
+            "width": 7,
+            "fit": "stretch",
+            "img": "a9f890b88944ce3acfeea"
+          },
+          "right": {
+            "width": 6,
+            "fit": "stretch",
+            "img": "a934a4539352edb4346e8"
+          }
+        }
+      },
+      "text": {
+        "c": 4281488969,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a7717fd35dc070717867c": {
+      "file": "assets/a7717fd35dc070717867c.png"
+    },
+    "a92c45d2676c54e1ebd72": {
+      "file": "assets/a92c45d2676c54e1ebd72.png"
+    },
+    "af66437595e0a966e0604": {
+      "file": "assets/af66437595e0a966e0604.png"
+    },
+    "a04293c45148999d41285": {
+      "file": "assets/a04293c45148999d41285.png"
+    },
+    "a2fdb960a17dec3412002": {
+      "file": "assets/a2fdb960a17dec3412002.png"
+    },
+    "afc7a00cf68acc35b6a61": {
+      "file": "assets/afc7a00cf68acc35b6a61.png"
+    },
+    "a9f890b88944ce3acfeea": {
+      "file": "assets/a9f890b88944ce3acfeea.png"
+    },
+    "a934a4539352edb4346e8": {
+      "file": "assets/a934a4539352edb4346e8.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

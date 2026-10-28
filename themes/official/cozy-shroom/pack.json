@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "cozy-shroom",
+  "name": "Cozy Shroom",
+  "parts": {
+    "mine": {
+      "ref": "cozy-shroom"
+    },
+    "theirs": {
+      "ref": "cozy-shroom",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "cozy-shroom": {
+      "v": 2,
+      "id": "cozy-shroom",
+      "name": "Cozy Shroom",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294833372
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          1.26,
+          8.1,
+          3.46,
+          0
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 22,
+            "img": "a06b709f5afaa91da743a"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 22,
+            "img": "ae13aeca6416071096168"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14,
+            "img": "a97c129b2cd2cef665323"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14,
+            "img": "af6005d83aeb088b63a23"
+          },
+          "top": {
+            "height": 11,
+            "fit": "stretch",
+            "img": "a75298fa80ebf22d8d27a"
+          },
+          "bottom": {
+            "height": 3,
+            "fit": "stretch",
+            "img": "a53e79478dd09f657f51e"
+          },
+          "left": {
+            "width": 4.5,
+            "fit": "stretch",
+            "img": "a2851b18cbf6ac5ea682f"
+          },
+          "right": {
+            "width": 6.5,
+            "fit": "stretch",
+            "img": "a8af6119220172b5f3be1"
+          }
+        }
+      },
+      "text": {
+        "c": 4284367153,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a06b709f5afaa91da743a": {
+      "file": "assets/a06b709f5afaa91da743a.png"
+    },
+    "ae13aeca6416071096168": {
+      "file": "assets/ae13aeca6416071096168.png"
+    },
+    "a97c129b2cd2cef665323": {
+      "file": "assets/a97c129b2cd2cef665323.png"
+    },
+    "af6005d83aeb088b63a23": {
+      "file": "assets/af6005d83aeb088b63a23.png"
+    },
+    "a75298fa80ebf22d8d27a": {
+      "file": "assets/a75298fa80ebf22d8d27a.png"
+    },
+    "a53e79478dd09f657f51e": {
+      "file": "assets/a53e79478dd09f657f51e.png"
+    },
+    "a2851b18cbf6ac5ea682f": {
+      "file": "assets/a2851b18cbf6ac5ea682f.png"
+    },
+    "a8af6119220172b5f3be1": {
+      "file": "assets/a8af6119220172b5f3be1.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

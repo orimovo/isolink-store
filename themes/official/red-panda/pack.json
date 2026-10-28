@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "red-panda",
+  "name": "Red Panda",
+  "parts": {
+    "mine": {
+      "ref": "red-panda"
+    },
+    "theirs": {
+      "ref": "red-panda",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "red-panda": {
+      "v": 2,
+      "id": "red-panda",
+      "name": "Red Panda",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294898136
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.15,
+          9.6,
+          1.72,
+          0.9
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 23.5,
+            "img": "a49542b7ae649d5abf886"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 23.5,
+            "img": "a0462782867cec8241102"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15,
+            "img": "a95a58309a3f39cc180d6"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15,
+            "img": "a74b1e2f12202e84ffba0"
+          },
+          "top": {
+            "height": 12.5,
+            "fit": "stretch",
+            "img": "a6810da0f5efc6f996255"
+          },
+          "bottom": {
+            "height": 4,
+            "fit": "stretch",
+            "img": "acbe28e9de3a52e3243b2"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a17051aaaee5535fe6982"
+          },
+          "right": {
+            "width": 4.5,
+            "fit": "stretch",
+            "img": "a1ab468a317a2409dfce8"
+          }
+        }
+      },
+      "text": {
+        "c": 4283906087,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a49542b7ae649d5abf886": {
+      "file": "assets/a49542b7ae649d5abf886.png"
+    },
+    "a0462782867cec8241102": {
+      "file": "assets/a0462782867cec8241102.png"
+    },
+    "a95a58309a3f39cc180d6": {
+      "file": "assets/a95a58309a3f39cc180d6.png"
+    },
+    "a74b1e2f12202e84ffba0": {
+      "file": "assets/a74b1e2f12202e84ffba0.png"
+    },
+    "a6810da0f5efc6f996255": {
+      "file": "assets/a6810da0f5efc6f996255.png"
+    },
+    "acbe28e9de3a52e3243b2": {
+      "file": "assets/acbe28e9de3a52e3243b2.png"
+    },
+    "a17051aaaee5535fe6982": {
+      "file": "assets/a17051aaaee5535fe6982.png"
+    },
+    "a1ab468a317a2409dfce8": {
+      "file": "assets/a1ab468a317a2409dfce8.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

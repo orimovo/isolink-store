@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "penguin-puddle",
+  "name": "Penguin Puddle",
+  "parts": {
+    "mine": {
+      "ref": "penguin-puddle"
+    },
+    "theirs": {
+      "ref": "penguin-puddle",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "penguin-puddle": {
+      "v": 2,
+      "id": "penguin-puddle",
+      "name": "Penguin Puddle",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4292538876
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.14,
+          7.71,
+          0.29,
+          0.29
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 21.5,
+            "img": "a7ebd223b776161f4683c"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 21.5,
+            "img": "a9772658a5f4b652bd1c0"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a0e674ef57295ab9d892a"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14.5,
+            "img": "aa9701e89f054733683e3"
+          },
+          "top": {
+            "height": 10.5,
+            "fit": "stretch",
+            "img": "a416469efb2ae681c03a1"
+          },
+          "bottom": {
+            "height": 3.5,
+            "fit": "stretch",
+            "img": "a9c510e169b618668ff08"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a243e5261fcf36e88ee53"
+          },
+          "right": {
+            "width": 3.5,
+            "fit": "stretch",
+            "img": "a60fc52bd19a6844d3735"
+          }
+        }
+      },
+      "text": {
+        "c": 4281355879,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a7ebd223b776161f4683c": {
+      "file": "assets/a7ebd223b776161f4683c.png"
+    },
+    "a9772658a5f4b652bd1c0": {
+      "file": "assets/a9772658a5f4b652bd1c0.png"
+    },
+    "a0e674ef57295ab9d892a": {
+      "file": "assets/a0e674ef57295ab9d892a.png"
+    },
+    "aa9701e89f054733683e3": {
+      "file": "assets/aa9701e89f054733683e3.png"
+    },
+    "a416469efb2ae681c03a1": {
+      "file": "assets/a416469efb2ae681c03a1.png"
+    },
+    "a9c510e169b618668ff08": {
+      "file": "assets/a9c510e169b618668ff08.png"
+    },
+    "a243e5261fcf36e88ee53": {
+      "file": "assets/a243e5261fcf36e88ee53.png"
+    },
+    "a60fc52bd19a6844d3735": {
+      "file": "assets/a60fc52bd19a6844d3735.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "axolotl",
+  "name": "Axolotl",
+  "parts": {
+    "mine": {
+      "ref": "axolotl"
+    },
+    "theirs": {
+      "ref": "axolotl",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "axolotl": {
+      "v": 2,
+      "id": "axolotl",
+      "name": "Axolotl",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4294759891
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          1.9,
+          2.88,
+          1.49,
+          1.62
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 17,
+            "img": "a5dac2f8e957dd43bd47e"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 17,
+            "img": "a0c109e2a5c8cc93b1161"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 15.5,
+            "img": "a8f7d60e3171e073954e8"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 15.5,
+            "img": "a0b0d8ba675025ac5f78e"
+          },
+          "top": {
+            "height": 6,
+            "fit": "stretch",
+            "img": "a9aaa40783fd6408eebed"
+          },
+          "bottom": {
+            "height": 4.5,
+            "fit": "stretch",
+            "img": "a939a691a7cb247c3c2be"
+          },
+          "left": {
+            "width": 5,
+            "fit": "stretch",
+            "img": "a5c908f90a73faf8fe16a"
+          },
+          "right": {
+            "width": 4.5,
+            "fit": "stretch",
+            "img": "a79e8fd593436d409d54f"
+          }
+        }
+      },
+      "text": {
+        "c": 4283838525,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a5dac2f8e957dd43bd47e": {
+      "file": "assets/a5dac2f8e957dd43bd47e.png"
+    },
+    "a0c109e2a5c8cc93b1161": {
+      "file": "assets/a0c109e2a5c8cc93b1161.png"
+    },
+    "a8f7d60e3171e073954e8": {
+      "file": "assets/a8f7d60e3171e073954e8.png"
+    },
+    "a0b0d8ba675025ac5f78e": {
+      "file": "assets/a0b0d8ba675025ac5f78e.png"
+    },
+    "a9aaa40783fd6408eebed": {
+      "file": "assets/a9aaa40783fd6408eebed.png"
+    },
+    "a939a691a7cb247c3c2be": {
+      "file": "assets/a939a691a7cb247c3c2be.png"
+    },
+    "a5c908f90a73faf8fe16a": {
+      "file": "assets/a5c908f90a73faf8fe16a.png"
+    },
+    "a79e8fd593436d409d54f": {
+      "file": "assets/a79e8fd593436d409d54f.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}

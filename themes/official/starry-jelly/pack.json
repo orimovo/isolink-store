@@ -1,0 +1,158 @@
+{
+  "v": 2,
+  "id": "starry-jelly",
+  "name": "Starry Jelly",
+  "parts": {
+    "mine": {
+      "ref": "starry-jelly"
+    },
+    "theirs": {
+      "ref": "starry-jelly",
+      "mirror": true
+    },
+    "background": {
+      "fit": "tile",
+      "tile": 1.0,
+      "dim": 0.0,
+      "img": "background"
+    }
+  },
+  "bubbles": {
+    "starry-jelly": {
+      "v": 2,
+      "id": "starry-jelly",
+      "name": "Starry Jelly",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293385468
+      },
+      "border": {
+        "fill": "none",
+        "w": 0,
+        "r": 19
+      },
+      "shape": {
+        "corners": [
+          19,
+          19,
+          19,
+          19
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "frame": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "bleed": [
+          0.14,
+          8.14,
+          0.12,
+          0.36
+        ],
+        "bodyRect": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "radius": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "pieces": {
+          "topLeft": {
+            "width": 28,
+            "height": 22,
+            "img": "a0fd59a08922047b006a7"
+          },
+          "topRight": {
+            "width": 28,
+            "height": 22,
+            "img": "a9c213f8e4c622847211a"
+          },
+          "bottomLeft": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a68f5d5615b38b5014ff9"
+          },
+          "bottomRight": {
+            "width": 28,
+            "height": 14.5,
+            "img": "a8f386f0a08e1d7303d04"
+          },
+          "top": {
+            "height": 11,
+            "fit": "stretch",
+            "img": "ae2caaf56f1a60970658a"
+          },
+          "bottom": {
+            "height": 3.5,
+            "fit": "stretch",
+            "img": "a17d6adb45d0b624713d2"
+          },
+          "left": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a1cdab67af8c8d7b67e3a"
+          },
+          "right": {
+            "width": 3,
+            "fit": "stretch",
+            "img": "a3b6f19f82896712df179"
+          }
+        }
+      },
+      "text": {
+        "c": 4283055467,
+        "readable": false,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 8
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      }
+    }
+  },
+  "assets": {
+    "a0fd59a08922047b006a7": {
+      "file": "assets/a0fd59a08922047b006a7.png"
+    },
+    "a9c213f8e4c622847211a": {
+      "file": "assets/a9c213f8e4c622847211a.png"
+    },
+    "a68f5d5615b38b5014ff9": {
+      "file": "assets/a68f5d5615b38b5014ff9.png"
+    },
+    "a8f386f0a08e1d7303d04": {
+      "file": "assets/a8f386f0a08e1d7303d04.png"
+    },
+    "ae2caaf56f1a60970658a": {
+      "file": "assets/ae2caaf56f1a60970658a.png"
+    },
+    "a17d6adb45d0b624713d2": {
+      "file": "assets/a17d6adb45d0b624713d2.png"
+    },
+    "a1cdab67af8c8d7b67e3a": {
+      "file": "assets/a1cdab67af8c8d7b67e3a.png"
+    },
+    "a3b6f19f82896712df179": {
+      "file": "assets/a3b6f19f82896712df179.png"
+    },
+    "background": {
+      "file": "assets/background.png"
+    }
+  }
+}
