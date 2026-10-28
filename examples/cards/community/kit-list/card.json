@@ -1,0 +1,32 @@
+{
+  "v": 1,
+  "id": "kitlist",
+  "title": "Kit list",
+  "icon": "luggage",
+  "accent": 4293548044,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Tick what you are bringing."
+    },
+    {
+      "id": "kit",
+      "k": "checklist",
+      "t": "Kit",
+      "o": [
+        "Tent",
+        "Stove",
+        "Water",
+        "First aid kit",
+        "Torch"
+      ]
+    },
+    {
+      "id": "note",
+      "k": "input",
+      "t": "Anything else?",
+      "h": "Spare socks…"
+    }
+  ]
+}

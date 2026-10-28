@@ -1,0 +1,7 @@
+# Maintainers review everything; official packs, tooling and workflows
+# are theirs alone.
+*                   @kylepantall
+/themes/official/   @kylepantall
+/cards/official/    @kylepantall
+/.github/           @kylepantall
+/examples/          @kylepantall

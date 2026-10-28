@@ -1,0 +1,113 @@
+{
+  "v": 2,
+  "id": "garden-snake",
+  "name": "Garden Snake",
+  "parts": {
+    "mine": {
+      "ref": "snake"
+    }
+  },
+  "bubbles": {
+    "snake": {
+      "id": "snake",
+      "name": "Garden Snake",
+      "v": 2,
+      "body": {
+        "fill": "texture",
+        "c": 4281240407,
+        "tex": "scales",
+        "scale": 1
+      },
+      "border": {
+        "w": 2,
+        "fill": "colour",
+        "c": 4279385380,
+        "line": "solid",
+        "r": 16
+      },
+      "text": {
+        "c": 4294967295,
+        "readable": true,
+        "links": "text"
+      },
+      "flip": true,
+      "layers": [
+        {
+          "id": "tail",
+          "kind": "tail",
+          "art": "snakeTail",
+          "z": "back",
+          "anchor": {
+            "edge": "left",
+            "along": 0.5,
+            "dx": 0,
+            "dy": 0
+          },
+          "size": 0.8,
+          "over": 3,
+          "mirror": "auto",
+          "tall": "bottom"
+        },
+        {
+          "id": "head",
+          "kind": "head",
+          "art": "snakeHead",
+          "z": "front",
+          "anchor": {
+            "edge": "right",
+            "along": 0.5,
+            "dx": 0,
+            "dy": 0
+          },
+          "size": 1,
+          "over": 4,
+          "mirror": "auto",
+          "tall": "bottom"
+        }
+      ],
+      "anims": [
+        {
+          "id": "wag",
+          "layer": "tail",
+          "type": "swing",
+          "pivot": [
+            0.9,
+            0.5
+          ],
+          "from": -14,
+          "to": 14,
+          "ms": 700,
+          "ease": "inOut",
+          "loop": "count",
+          "count": 2
+        },
+        {
+          "id": "nod",
+          "layer": "head",
+          "type": "bob",
+          "from": -0.06,
+          "to": 0.06,
+          "ms": 600,
+          "ease": "inOut",
+          "loop": "once"
+        }
+      ],
+      "on": {
+        "appear": [
+          "nod"
+        ],
+        "tapped": [
+          "wag"
+        ],
+        "idle": [
+          "wag"
+        ]
+      },
+      "idle": {
+        "every": 40,
+        "jitter": 0.5
+      },
+      "reduced": "still"
+    }
+  }
+}

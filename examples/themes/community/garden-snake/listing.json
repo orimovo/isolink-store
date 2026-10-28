@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "by": "Your name",
+  "licence": "CC-BY-4.0",
+  "desc": "A green snake that wags its tail when tapped.",
+  "tags": [
+    "animals",
+    "green"
+  ]
+}

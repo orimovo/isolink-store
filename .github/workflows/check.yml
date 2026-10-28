@@ -1,0 +1,72 @@
+name: Check
+
+# Checks every pack and card with Isolink's own validators. Runs on
+# GitHub's runners with read-only access and no secrets: nothing here can
+# reach the keys that sign the store, which live on Isolink's build
+# machine and only ever see merged work.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Only community folders, one at a time
+        if: github.event_name == 'pull_request' && !contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.pull_request.author_association)
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changed=$(git diff --name-only "$BASE"...HEAD)
+          echo "$changed"
+          outside=$(echo "$changed" | grep -Ev '^(themes|cards)/community/[a-z0-9][a-z0-9_-]{0,31}/' || true)
+          if [ -n "$outside" ]; then
+            echo "::error::A pull request may only change files under themes/community/<id>/ or cards/community/<id>/. Outside them:"
+            echo "$outside"
+            exit 1
+          fi
+          folders=$(echo "$changed" | cut -d/ -f1-3 | sort -u | wc -l)
+          if [ "$folders" -gt 1 ]; then
+            echo "::error::One pack or card per pull request, please: this one changes $folders folders."
+            exit 1
+          fi
+
+      - name: Get the checker
+        id: get
+        run: |
+          # Built by Isolink from its own validators, published with the store.
+          if ! curl -fsSL -o "$RUNNER_TEMP/theme-store" \
+            "https://raw.githubusercontent.com/${{ github.repository }}/store/tools/theme-store-linux-x64"; then
+            # Before the store is first published there is no checker yet.
+            echo "::warning::The checker isn't published yet (the store branch has no tools/theme-store-linux-x64)."
+            [ "${{ github.event_name }}" = push ] && exit 0
+            exit 1
+          fi
+          chmod +x "$RUNNER_TEMP/theme-store"
+          echo "ok=1" >> "$GITHUB_OUTPUT"
+
+      - name: Check
+        if: steps.get.outputs.ok == '1'
+        run: |
+          "$RUNNER_TEMP/theme-store" check . | tee "$RUNNER_TEMP/check.txt"
+          status=${PIPESTATUS[0]}
+          {
+            echo '### Store check'
+            echo '```'
+            cat "$RUNNER_TEMP/check.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
+      - name: Check the examples
+        if: steps.get.outputs.ok == '1'
+        run: '"$RUNNER_TEMP/theme-store" check examples'
