@@ -1,10 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
-  "desc": "Starry Jelly bubbles, with a matching background.",
+  "desc": "Starry Jelly bubbles, icons and illustrations in light and dark, with a matching wallpaper.",
   "tags": [
     "character",
     "cute"
-  ]
+  ],
+  "minApp": "0.27.0"
 }
