@@ -1,10 +1,11 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
-  "desc": "Red Panda bubbles, with a matching background.",
+  "desc": "Red Panda bubbles, icons and illustrations in light and dark, with a matching wallpaper.",
   "tags": [
     "character",
     "cute"
-  ]
+  ],
+  "minApp": "0.27.0"
 }
