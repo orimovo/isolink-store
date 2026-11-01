@@ -276,6 +276,11 @@
           "file": "sos-img.svg",
           "data": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OCA0OCkgc2NhbGUoMS4xMjAyOSkgdHJhbnNsYXRlKC00OCAtNDguNSkiPjxnIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMTIiIHk9IjI1IiB3aWR0aD0iNzIiIGhlaWdodD0iNDciIHJ4PSIxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjYuMjQ4Ii8+PHBhdGggZD0iTTMyIDM4IEgyNSBRMTkgMzggMTkgNDQgUTE5IDQ5IDI1IDQ5IEgyNyBRMzMgNDkgMzMgNTUgUTMzIDYxIDI3IDYxIEgyMCBNNzUgMzggSDY4IFE2MiAzOCA2MiA0NCBRNjIgNDkgNjggNDkgSDcwIFE3NiA0OSA3NiA1NSBRNzYgNjEgNzAgNjEgSDYzIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iNC4xOTUiLz48cmVjdCB4PSI0MSIgeT0iMzgiIHdpZHRoPSIxMyIgaGVpZ2h0PSIyMyIgcng9IjYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSI0LjE5NSIvPjwvZz48L2c+PC9zdmc+"
         }
+      },
+      "nav": {
+        "shape": "pill",
+        "fill": "tint",
+        "labels": "active"
       }
     }
   },
