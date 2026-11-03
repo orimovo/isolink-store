@@ -1,0 +1,20 @@
+{
+  "v": 1,
+  "id": "todo",
+  "title": "Checklist",
+  "emoji": "✅",
+  "icon": "checklist",
+  "accent": 4279548070,
+  "blocks": [
+    {
+      "id": "todo",
+      "k": "checklist",
+      "t": "To do",
+      "o": [
+        "Book the table",
+        "Send the address",
+        "Pay the deposit"
+      ]
+    }
+  ]
+}

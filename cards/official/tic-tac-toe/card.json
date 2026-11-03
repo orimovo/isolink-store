@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "tic-tac-toe",
+  "title": "Tic-tac-toe",
+  "emoji": "⭕",
+  "accent": 4294538006,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Tic-tac-toe\", icon: 'game', permissions: ['sound'] });\nconst words = {\n  start: \"Tap a square to start\",\n  yourTurn: \"Your turn\",\n  waiting: \"Waiting for {p0}\",\n  someone: \"the other player\",\n  youWon: \"You won!\",\n  won: \"{p0} won\",\n  draw: \"It's a draw\",\n  again: \"New game\",\n  over: \"The game is over\",\n  full: \"Two people are already playing\",\n  notYours: \"Not your turn\",\n  taken: \"That square is taken\",\n};\n\n// Two players. The first to tap is X, the next person is O.\nconst lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];\n\nfunction init() {\n  return { board: Array(9).fill(''), x: null, o: null, names: {}, turn: 'x', winner: null };\n}\n\non.play = (s, args, ctx) => {\n  if (s.winner) throw words.over;\n  if (!s.x) s.x = ctx.author;\n  else if (!s.o && ctx.author !== s.x) s.o = ctx.author;\n  const mark = ctx.author === s.x ? 'x' : ctx.author === s.o ? 'o' : null;\n  if (!mark) throw words.full;\n  if (mark !== s.turn) throw words.notYours;\n  if (s.board[args.cell]) throw words.taken;\n  s.names[ctx.author] = ctx.authorName;\n  s.board[args.cell] = mark;\n  for (const [a, b, c] of lines) {\n    if (s.board[a] && s.board[a] === s.board[b] && s.board[b] === s.board[c]) s.winner = ctx.author;\n  }\n  if (!s.winner && s.board.every(m => m)) s.winner = 'draw';\n  ctx.sound(s.winner && s.winner !== 'draw' ? 'win' : 'tap');\n  s.turn = mark === 'x' ? 'o' : 'x';\n};\n\non.reset = (s) => init();\n\nfunction view(s, me) {\n  const next = s.turn === 'x' ? s.x : s.o;\n  let status;\n  if (s.winner === 'draw') status = words.draw;\n  else if (s.winner) status = s.winner === me.id ? words.youWon : words.won.replace('{p0}', s.names[s.winner]);\n  else if (!s.x) status = words.start;\n  else if (next === me.id || (!next && me.id !== s.x)) status = words.yourTurn;\n  else status = words.waiting.replace('{p0}', s.names[next] || words.someone);\n  const marks = { x: 'X', o: 'O', '': '' };\n  return column([\n    text(status, { bold: true, align: 'center', tone: s.winner === me.id ? 'success' : undefined }),\n    grid(3, s.board.map((m, i) => button(marks[m], 'play', { cell: i }, { tone: m === 'x' ? 'accent' : m === 'o' ? 'warning' : undefined }))),\n    s.winner ? button(words.again, 'reset', null, { tone: 'accent', align: 'center' }) : spacer(0),\n  ]);\n}\n"
+}

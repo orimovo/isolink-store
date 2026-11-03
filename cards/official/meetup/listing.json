@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Pick a time and place, then who brings what",
+  "tags": [
+    "template",
+    "plans"
+  ],
+  "minApp": "0.26.17"
+}

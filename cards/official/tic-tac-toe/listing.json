@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Two players take turns",
+  "tags": [
+    "template",
+    "games"
+  ],
+  "minApp": "0.26.17"
+}

@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "turn-order",
+  "title": "Turn order",
+  "emoji": "🔀",
+  "accent": 4287323382,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Turn order\", icon: 'shuffle' });\nconst words = {\n  addMe: \"Add me\",\n  addName: \"Add a name\",\n  shuffle: \"Shuffle\",\n  clear: \"Clear\",\n  empty: \"Add names, then shuffle\",\n  by: \"Shuffled by {p0}\",\n  full: \"Twenty names at most\",\n  twice: \"{p0} is already on the list\",\n};\n\n// Names in a fair order. ctx.random() shuffles the same way on every phone.\nfunction init() {\n  return { names: [], shuffled: false, by: '' };\n}\n\nfunction add(s, name) {\n  name = String(name || '').trim().slice(0, 40);\n  if (!name) return;\n  if (s.names.includes(name)) throw words.twice.replace('{p0}', name);\n  if (s.names.length >= 20) throw words.full;\n  s.names.push(name);\n  s.shuffled = false;\n}\n\non.join = (s, args, ctx) => add(s, ctx.authorName);\non.add = (s, args) => add(s, args.value);\n\non.shuffle = (s, args, ctx) => {\n  const n = s.names;\n  for (let i = n.length - 1; i > 0; i--) {\n    const j = Math.floor(ctx.random() * (i + 1));\n    const t = n[i];\n    n[i] = n[j];\n    n[j] = t;\n  }\n  s.shuffled = true;\n  s.by = ctx.authorName;\n};\n\non.clear = (s) => init();\n\nfunction view(s) {\n  const parts = [];\n  if (!s.names.length) parts.push(text(words.empty, { tone: 'muted' }));\n  s.names.forEach((name, i) => {\n    parts.push(text((s.shuffled ? (i + 1) + '. ' : '• ') + name, { bold: s.shuffled && i === 0, tone: s.shuffled && i === 0 ? 'accent' : undefined }));\n  });\n  if (s.shuffled) parts.push(text(words.by.replace('{p0}', s.by), { size: 'small', tone: 'muted' }));\n  parts.push(input('name', words.addName, 'add'));\n  parts.push(row([\n    button(words.addMe, 'join'),\n    button('🔀 ' + words.shuffle, 'shuffle', null, { tone: 'accent' }),\n    button(words.clear, 'clear', null, { tone: 'muted' }),\n  ]));\n  return column(parts);\n}\n"
+}

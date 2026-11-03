@@ -1,0 +1,33 @@
+{
+  "v": 1,
+  "id": "checkin",
+  "title": "Check in",
+  "emoji": "🛟",
+  "icon": "shield",
+  "accent": 4293940842,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Tap one so everyone knows how you are."
+    },
+    {
+      "id": "safe",
+      "k": "button",
+      "t": "I'm safe",
+      "a": "respond"
+    },
+    {
+      "id": "help",
+      "k": "button",
+      "t": "Need help",
+      "a": "respond"
+    },
+    {
+      "id": "note",
+      "k": "input",
+      "t": "Add a note",
+      "h": "Where you are, what's happening"
+    }
+  ]
+}

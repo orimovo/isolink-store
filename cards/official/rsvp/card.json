@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "rsvp",
+  "title": "You're invited",
+  "emoji": "🎉",
+  "icon": "party",
+  "accent": 4293216378,
+  "blocks": [
+    {
+      "id": "when",
+      "k": "text",
+      "t": "**Saturday, 7pm.** Add the place and any details here."
+    },
+    {
+      "id": "coming",
+      "k": "choice",
+      "t": "Are you coming?",
+      "o": [
+        "Yes",
+        "Maybe",
+        "No"
+      ]
+    },
+    {
+      "id": "note",
+      "k": "input",
+      "t": "Anything the host should know?",
+      "h": "Food needs, a plus one, running late"
+    }
+  ],
+  "form": {
+    "send": "Send my answer",
+    "to": "sender"
+  }
+}

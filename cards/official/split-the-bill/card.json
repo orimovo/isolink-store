@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "split-the-bill",
+  "title": "Split the bill",
+  "emoji": "🧾",
+  "accent": 4280138122,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Split the bill\", icon: 'receipt' });\nconst words = {\n  total: \"Total {p0}\",\n  each: \"{p0} each, split {p1} ways\",\n  owes: \"Owes {p0}\",\n  getsBack: \"Gets back {p0}\",\n  square: \"All square\",\n  paid: \"What you paid, like 12.50 pizza\",\n  join: \"Count me in\",\n  undo: \"Undo my last\",\n  nothing: \"Nothing to undo\",\n  bad: \"Start with an amount, like 12.50\",\n  empty: \"Add what you paid. The card works out who owes what.\",\n  full: \"That's a lot of payments. Start a new card.\",\n};\n\n// Who paid what, split evenly between everyone in it.\nfunction init() {\n  return { people: {}, items: [] };\n}\n\non.join = (s, args, ctx) => {\n  s.people[ctx.author] = ctx.authorName;\n};\n\non.paid = (s, args, ctx) => {\n  const bits = String(args.value || '').trim().split(' ');\n  const amount = parseFloat(bits[0].split(',').join('.'));\n  if (!(amount > 0) || amount > 1000000) throw words.bad;\n  if (s.items.length >= 200) throw words.full;\n  s.people[ctx.author] = ctx.authorName;\n  s.items.push({ by: ctx.author, amount: Math.round(amount * 100) / 100, what: bits.slice(1).join(' ').slice(0, 40) });\n};\n\non.undo = (s, args, ctx) => {\n  const i = s.items.findLastIndex(it => it.by === ctx.author);\n  if (i < 0) throw words.nothing;\n  s.items.splice(i, 1);\n};\n\nconst money = n => n.toFixed(2);\n\nfunction view(s) {\n  const ids = Object.keys(s.people);\n  const total = s.items.reduce((t, it) => t + it.amount, 0);\n  const share = ids.length ? total / ids.length : 0;\n  const parts = [];\n  if (!s.items.length) parts.push(text(words.empty, { tone: 'muted' }));\n  else {\n    parts.push(text(words.total.replace('{p0}', money(total)), { size: 'large', bold: true, tone: 'accent' }));\n    parts.push(text(words.each.replace('{p0}', money(share)).replace('{p1}', ids.length), { tone: 'muted', size: 'small' }));\n  }\n  for (const id of ids) {\n    const paid = s.items.filter(it => it.by === id).reduce((t, it) => t + it.amount, 0);\n    const diff = paid - share;\n    const label = Math.abs(diff) < 0.005 ? words.square : diff > 0 ? words.getsBack.replace('{p0}', money(diff)) : words.owes.replace('{p0}', money(-diff));\n    parts.push(row([text(s.people[id]), badge(label, { tone: Math.abs(diff) < 0.005 ? undefined : diff > 0 ? 'success' : 'warning' })], { align: 'between' }));\n  }\n  if (s.items.length) {\n    parts.push(divider());\n    for (const it of s.items.slice(-4).reverse()) {\n      parts.push(text(s.people[it.by] + ': ' + money(it.amount) + (it.what ? ' · ' + it.what : ''), { size: 'small', tone: 'muted' }));\n    }\n  }\n  parts.push(input('paid', words.paid, 'paid'));\n  parts.push(row([button(words.join, 'join'), button(words.undo, 'undo', null, { tone: 'muted' })]));\n  return column(parts);\n}\n"
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Enter a photo, vote; a bot keeps the hall of fame",
+  "tags": [
+    "template",
+    "polls"
+  ],
+  "minApp": "0.26.17"
+}

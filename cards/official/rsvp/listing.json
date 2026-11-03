@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Yes, no or maybe, with a note",
+  "tags": [
+    "template",
+    "plans"
+  ],
+  "minApp": "0.26.17"
+}

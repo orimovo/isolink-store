@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "scoreboard",
+  "title": "Scoreboard",
+  "emoji": "🏆",
+  "accent": 4294096196,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Scoreboard\", icon: 'trophy' });\nconst words = {\n  teamA: \"Team A\",\n  teamB: \"Team B\",\n  addTeam: \"Add a team\",\n  reset: \"Reset scores\",\n  full: \"Eight teams at most\",\n  gone: \"That team is gone\",\n  onlySender: \"Only the person who sent the card can do that\",\n};\n\n// Points for each team. Anyone in the chat can score; only the sender\n// can reset.\nfunction init() {\n  return { teams: [{ name: words.teamA, score: 0 }, { name: words.teamB, score: 0 }] };\n}\n\non.score = (s, args) => {\n  const t = s.teams[args.team];\n  if (!t) throw words.gone;\n  t.score += args.by;\n};\n\non.addTeam = (s, args) => {\n  const name = String(args.value || '').trim().slice(0, 30);\n  if (!name) return;\n  if (s.teams.length >= 8) throw words.full;\n  s.teams.push({ name, score: 0 });\n};\n\non.reset = (s, args, ctx) => {\n  if (ctx.author !== ctx.sender) throw words.onlySender;\n  for (const t of s.teams) t.score = 0;\n};\n\nfunction view(s, me) {\n  const top = s.teams.reduce((m, t) => Math.max(m, t.score), 0);\n  return column([\n    ...s.teams.map((t, i) => row([\n      text((top > 0 && t.score === top ? '🏆 ' : '') + t.name, { bold: true }),\n      row([\n        text(String(t.score), { size: 'large', bold: true, tone: top > 0 && t.score === top ? 'accent' : undefined }),\n        button('−1', 'score', { team: i, by: -1 }),\n        button('+1', 'score', { team: i, by: 1 }, { tone: 'accent' }),\n      ]),\n    ], { align: 'between' })),\n    divider(),\n    input('team', words.addTeam, 'addTeam'),\n    me.isSender && button(words.reset, 'reset', null, { tone: 'muted', align: 'center' }),\n  ]);\n}\n"
+}

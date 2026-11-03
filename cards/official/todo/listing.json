@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Jobs to do, ticked off together",
+  "tags": [
+    "template",
+    "lists"
+  ],
+  "minApp": "0.26.17"
+}

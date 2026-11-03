@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "reaction-test",
+  "title": "Reaction test",
+  "emoji": "⚡",
+  "accent": 4280138122,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Reaction test\", icon: 'bolt', permissions: ['sound', 'keyboard'], keys: { Space: 'tap', Enter: 'tap' } });\nconst words = {\n  start: \"Start\",\n  wait: \"Wait for green…\",\n  now: \"Tap!\",\n  early: \"Too soon! Try again\",\n  yours: \"{p0} ms\",\n  best: \"Fastest\",\n  about: \"Tap Start, then tap as soon as it turns green.\",\n};\n\n// The wait is random but the same on every phone.\nfunction init() {\n  return { tries: {}, best: {}, last: {}, names: {} };\n}\n\non.tap = (s, args, ctx) => {\n  const id = ctx.author;\n  s.names[id] = ctx.authorName;\n  const t = s.tries[id];\n  if (!t) {\n    s.tries[id] = { go: ctx.time + 1500 + Math.floor(ctx.random() * 3000) };\n    return;\n  }\n  delete s.tries[id];\n  if (ctx.time < t.go) {\n    s.last[id] = 'early';\n    ctx.sound('buzz', { for: id });\n    return;\n  }\n  const ms = Math.min(ctx.time - t.go, 9999);\n  s.last[id] = ms;\n  if (!s.best[id] || ms < s.best[id]) {\n    s.best[id] = ms;\n    ctx.sound('coin', { for: id });\n  }\n};\n\nfunction view(s, me, now) {\n  const t = s.tries[me.id];\n  const last = s.last[me.id];\n  let big;\n  let label;\n  let tone;\n  if (t && now < t.go) {\n    // Redraw often while waiting, so green shows the moment it's time.\n    every(30);\n    big = words.wait;\n    label = words.wait;\n    tone = 'danger';\n  } else if (t) {\n    big = words.now;\n    label = words.now;\n    tone = 'success';\n  } else {\n    big = last === 'early' ? words.early : last ? words.yours.replace('{p0}', last) : words.about;\n    label = words.start;\n    tone = 'accent';\n  }\n  const ranks = Object.keys(s.best).sort((a, b) => s.best[a] - s.best[b]).slice(0, 5);\n  return column([\n    text(big, { size: t || last ? 'large' : undefined, bold: true, align: 'center', tone: t ? tone : undefined }),\n    button(label, 'tap', null, { tone, size: 'large', align: 'center' }),\n    ranks.length > 0 && divider(),\n    ranks.length > 0 && text(words.best, { bold: true }),\n    ...ranks.map((id, i) => row([text((i + 1) + '. ' + s.names[id]), badge(words.yours.replace('{p0}', s.best[id]), { tone: i === 0 ? 'success' : undefined })], { align: 'between' })),\n  ]);\n}\n"
+}

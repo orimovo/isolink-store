@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "The first right answer scores",
+  "tags": [
+    "template",
+    "games"
+  ],
+  "minApp": "0.26.17"
+}

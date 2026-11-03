@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Take a seat and say where to be picked up",
+  "tags": [
+    "template",
+    "plans"
+  ],
+  "minApp": "0.26.17"
+}

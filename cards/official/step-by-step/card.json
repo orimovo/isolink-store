@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "step-by-step",
+  "title": "Party RSVP",
+  "emoji": "🎉",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({\n  name: 'Party RSVP',\n  icon: 'party',\n  // Each person opens and closes screens on their own. push, pop and\n  // go { screen } do it from a button; ctx.push and ctx.pop from an action.\n  nav: { each: true },\n});\n\n// Opens over the main screen when someone says yes.\nscreens.food = (state, me) => column([\n  text('Anything you don\\'t eat?', { bold: true, align: 'center' }),\n  row(['Nothing', 'Meat', 'Nuts', 'Dairy'].map((f) => button(f, 'food', { food: f })), { align: 'center' }),\n  button('Back', 'pop', null, { tone: 'muted' }),\n]);\n\non.answer = (state, args, ctx) => {\n  state.answers[ctx.author] = { name: ctx.authorName, coming: args.coming, food: '' };\n  if (args.coming) ctx.push('food');\n};\n\non.food = (state, args, ctx) => {\n  if (!state.answers[ctx.author]) throw 'Say if you\\'re coming first';\n  state.answers[ctx.author].food = args.food;\n  ctx.pop();\n};\n\non.change = (state, args, ctx) => {\n  delete state.answers[ctx.author];\n};\n\nfunction init(ctx) {\n  return { answers: {} };\n}\n\nfunction view(state, me, now, local) {\n  // The host, who sent the card, sees everyone's answers and what\n  // they don't eat. Guests see the question, then their own answer.\n  const coming = Object.values(state.answers).filter((a) => a.coming);\n  if (me.isSender) {\n    const cant = Object.values(state.answers).filter((a) => !a.coming);\n    return column([\n      text(coming.length + ' coming', { size: 'large', bold: true, align: 'center' }),\n      ...coming.map((a) => row([text(a.name), a.food && a.food !== 'Nothing' ? badge('No ' + a.food.toLowerCase()) : null])),\n      cant.length > 0 && text(\"Can't make it: \" + cant.map((a) => a.name).join(', '), { size: 'small', tone: 'muted' }),\n    ]);\n  }\n  const mine = state.answers[me.id];\n  if (!mine) {\n    return column([\n      text('Are you coming?', { size: 'large', bold: true, align: 'center' }),\n      row([button('Yes', 'answer', { coming: true }, { tone: 'accent' }), button('No', 'answer', { coming: false })], { align: 'center' }),\n    ]);\n  }\n  return column([\n    text(mine.coming ? \"You're coming 🎉\" : \"You can't make it\", { size: 'large', bold: true, align: 'center' }),\n    text(coming.length + ' coming so far', { size: 'small', tone: 'muted', align: 'center' }),\n    button('Change my answer', 'change', null, { tone: 'muted' }),\n  ]);\n}\n\nfunction pause(local, ctx) {\n  // Runs on this phone when the card leaves the screen.\n}\n\nfunction resume(local, ctx) {\n  // Runs on this phone when it comes back.\n}"
+}

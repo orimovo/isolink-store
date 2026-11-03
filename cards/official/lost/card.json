@@ -1,0 +1,31 @@
+{
+  "v": 1,
+  "id": "lost",
+  "title": "Lost and found",
+  "emoji": "🔎",
+  "icon": "question",
+  "accent": 4284773515,
+  "blocks": [
+    {
+      "id": "found",
+      "k": "text",
+      "t": "Found: **a blue water bottle**. Add a photo if it helps."
+    },
+    {
+      "id": "whose",
+      "k": "choice",
+      "t": "Whose is this?",
+      "o": [
+        "Mine",
+        "Not mine",
+        "I know whose"
+      ]
+    },
+    {
+      "id": "owner",
+      "k": "input",
+      "t": "Whose is it?",
+      "h": "A name, or where to collect it"
+    }
+  ]
+}

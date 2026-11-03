@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "memory-match",
+  "title": "Memory match",
+  "emoji": "🃏",
+  "accent": 4293216378,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Memory match\", icon: 'cards', permissions: ['sound'] });\nconst words = {\n  hint: \"Turn two cards. A pair is yours.\",\n  moves: \"{p0} moves\",\n  done: \"All pairs found!\",\n  won: \"{p0} found the most\",\n  again: \"Deal again\",\n  open: \"That card is already up\",\n};\n\nconst faces = ['🍎', '🍋', '🍇', '🍒', '🥝', '🍑', '🍍', '🥥'];\n\nfunction init() {\n  return { deck: null, open: [], found: [], score: {}, names: {}, moves: 0 };\n}\n\n// ctx.random() shuffles the same way on every phone.\nfunction deal(s, ctx) {\n  const d = faces.concat(faces);\n  for (let i = d.length - 1; i > 0; i--) {\n    const j = Math.floor(ctx.random() * (i + 1));\n    const t = d[i];\n    d[i] = d[j];\n    d[j] = t;\n  }\n  s.deck = d;\n}\n\non.flip = (s, args, ctx) => {\n  if (!s.deck) deal(s, ctx);\n  const i = args.card;\n  if (s.found.includes(i) || s.open.includes(i)) throw words.open;\n  // Two that didn't match turn back over first.\n  if (s.open.length === 2) s.open = [];\n  s.names[ctx.author] = ctx.authorName;\n  s.score[ctx.author] = s.score[ctx.author] || 0;\n  s.open.push(i);\n  if (s.open.length < 2) {\n    ctx.sound('tap');\n    return;\n  }\n  s.moves++;\n  const [a, b] = s.open;\n  if (s.deck[a] !== s.deck[b]) {\n    ctx.sound('buzz');\n    return;\n  }\n  s.found.push(a, b);\n  s.open = [];\n  s.score[ctx.author]++;\n  ctx.sound(s.found.length === s.deck.length ? 'win' : 'coin');\n};\n\non.again = (s, args, ctx) => {\n  const fresh = init();\n  deal(fresh, ctx);\n  return fresh;\n};\n\nfunction view(s) {\n  const cards = [];\n  for (let i = 0; i < faces.length * 2; i++) {\n    const up = s.deck && (s.open.includes(i) || s.found.includes(i));\n    cards.push(button(up ? s.deck[i] : '', 'flip', { card: i }, {\n      size: 'large',\n      tone: s.found.includes(i) ? 'success' : up ? 'accent' : undefined,\n    }));\n  }\n  const done = s.deck && s.found.length === s.deck.length;\n  const ids = Object.keys(s.score).sort((a, b) => s.score[b] - s.score[a]);\n  return column([\n    text(done ? words.done : words.hint, { bold: true, align: 'center', tone: done ? 'success' : undefined }),\n    grid(4, cards),\n    row([\n      badge(words.moves.replace('{p0}', s.moves)),\n      ...ids.map((id, i) => badge(s.names[id] + ' ' + s.score[id], { tone: i === 0 && s.score[id] > 0 ? 'accent' : undefined })),\n    ], { align: 'center' }),\n    done && ids.length > 1 && text(words.won.replace('{p0}', s.names[ids[0]]), { align: 'center' }),\n    done && button(words.again, 'again', null, { tone: 'accent', align: 'center' }),\n  ]);\n}\n"
+}

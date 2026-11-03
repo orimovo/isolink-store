@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "To do, doing and done, and who is on what",
+  "tags": [
+    "template",
+    "lists"
+  ],
+  "minApp": "0.26.17"
+}

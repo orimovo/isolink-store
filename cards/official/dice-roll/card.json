@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "dice-roll",
+  "title": "Dice roll",
+  "emoji": "🎲",
+  "accent": 4279548070,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Dice roll\", icon: 'dice', permissions: ['sound'] });\nconst words = {\n  roll: \"Roll\",\n  tap: \"Tap Roll to throw the dice\",\n  rolled: \"{p0} rolled {p1}\",\n};\n\n// ctx.random() gives the same number on every phone.\nconst faces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];\n\nfunction init() {\n  return { rolls: [] };\n}\n\non.roll = (state, args, ctx) => {\n  const value = Math.floor(ctx.random() * 6) + 1;\n  ctx.sound(value === 6 ? 'coin' : 'tick');\n  state.rolls = [{ name: ctx.authorName, value }, ...state.rolls].slice(0, 5);\n};\n\nfunction view(state) {\n  const last = state.rolls[0];\n  return column([\n    text(last ? faces[last.value - 1] + ' ' + last.value : '?', { size: 'huge', bold: true, align: 'center', tone: 'accent' }),\n    text(last ? words.rolled.replace('{p0}', last.name).replace('{p1}', last.value) : words.tap, { align: 'center' }),\n    button(words.roll, 'roll', null, { tone: 'accent', align: 'center' }),\n    ...state.rolls.slice(1).map(r => text(r.name + ': ' + r.value, { size: 'small', tone: 'muted', align: 'center' })),\n  ]);\n}\n"
+}

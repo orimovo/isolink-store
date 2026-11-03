@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "lane-race",
+  "title": "Lane race",
+  "emoji": "🏃",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({\n  name: 'Lane race',\n  icon: 'run',\n  mode: 'lanes',\n  players: { min: 2, max: 6 },\n  match: { bestOf: 3 },\n  permissions: ['keyboard', 'sound'],\n  keys: { ArrowRight: 'step', Space: 'step' },\n});\n\nconst finish = 20;\n\non.step = (state, args, ctx) => {\n  if (state.match && state.match.winner) throw 'The match is over';\n  const round = state.match ? state.match.round : 1;\n  // A new round starts everyone at the start line.\n  if (ctx.lane.round !== round) {\n    ctx.lane.round = round;\n    ctx.lane.pos = 0;\n  }\n  ctx.lane.name = ctx.authorName;\n  ctx.lane.pos += 1;\n  if (ctx.lane.pos >= finish) {\n    ctx.sound('win');\n    ctx.endRound(ctx.author);\n  }\n};\n\nfunction init(ctx) {\n  return { lanes: {} };\n}\n\nfunction view(state, me, now, local) {\n  const round = state.match ? state.match.round : 1;\n  const wins = state.match ? state.match.wins : {};\n  const rows = Object.keys(state.lanes).map(id => {\n    const lane = state.lanes[id];\n    const pos = lane.round === round ? lane.pos : 0;\n    return column([\n      row([text(lane.name + (id === me.id ? ' (you)' : '')), badge((wins[id] || 0) + ' won')]),\n      progress(pos / finish),\n    ]);\n  });\n  if (state.match && state.match.winner) {\n    rows.push(text(state.lanes[state.match.winner].name + ' wins the match!', { bold: true, align: 'center' }));\n  }\n  return column([\n    text('Round ' + round + ' · first to ' + finish, { tone: 'muted', align: 'center' }),\n    ...rows,\n    button('Step →', 'step', null, { tone: 'accent' }),\n  ]);\n}\n\nfunction pause(local, ctx) {\n  local.away = true;\n}\n\nfunction resume(local, ctx) {\n  local.away = false;\n}"
+}
