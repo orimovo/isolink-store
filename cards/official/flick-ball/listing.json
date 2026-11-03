@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Flick a ball around and watch it bounce",
+  "tags": [
+    "template",
+    "games"
+  ],
+  "minApp": "0.26.17"
+}

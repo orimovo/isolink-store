@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Stars and a comment",
+  "tags": [
+    "template",
+    "polls"
+  ],
+  "minApp": "0.26.17"
+}

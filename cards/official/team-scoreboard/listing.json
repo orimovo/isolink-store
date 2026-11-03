@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Two teams, built from components of its own",
+  "tags": [
+    "template",
+    "tools"
+  ],
+  "minApp": "0.26.17"
+}

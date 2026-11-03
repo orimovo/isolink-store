@@ -1,0 +1,37 @@
+{
+  "v": 1,
+  "id": "details",
+  "title": "Ask for details",
+  "emoji": "🗒️",
+  "icon": "question",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Just a few details, then press Send.",
+      "for": "others"
+    },
+    {
+      "id": "what",
+      "k": "input",
+      "t": "What do you need?",
+      "h": "A few words"
+    },
+    {
+      "id": "when",
+      "k": "input",
+      "t": "When by?",
+      "h": "A day or a time"
+    },
+    {
+      "id": "more",
+      "k": "input",
+      "t": "Anything else I should know?"
+    }
+  ],
+  "form": {
+    "send": "Send answers",
+    "to": "sender"
+  }
+}

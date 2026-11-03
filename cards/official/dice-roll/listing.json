@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Everyone sees the same roll",
+  "tags": [
+    "template",
+    "games"
+  ],
+  "minApp": "0.26.17"
+}

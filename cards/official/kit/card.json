@@ -1,0 +1,39 @@
+{
+  "v": 1,
+  "id": "kit",
+  "title": "Kit list",
+  "emoji": "🎒",
+  "icon": "travel",
+  "accent": 4294538006,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Tick things off once they're packed."
+    },
+    {
+      "id": "own",
+      "k": "checklist",
+      "t": "Everyone brings",
+      "o": [
+        "Water",
+        "Snacks",
+        "Waterproof jacket",
+        "Warm layer",
+        "Phone charger",
+        "Head torch"
+      ]
+    },
+    {
+      "id": "shared",
+      "k": "checklist",
+      "t": "Shared kit",
+      "o": [
+        "Tent",
+        "Stove and fuel",
+        "First aid kit",
+        "Map and compass"
+      ]
+    }
+  ]
+}

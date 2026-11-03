@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "A main screen, and screens that open over it",
+  "tags": [
+    "template",
+    "plans"
+  ],
+  "minApp": "0.26.17"
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Draw names; each person sees only theirs",
+  "tags": [
+    "template",
+    "plans"
+  ],
+  "minApp": "0.26.17"
+}

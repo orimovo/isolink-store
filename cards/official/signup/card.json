@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "signup",
+  "title": "Sign-up sheet",
+  "emoji": "📝",
+  "icon": "people",
+  "accent": 4287323382,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Pick the slots you can do."
+    },
+    {
+      "id": "slots",
+      "k": "choice",
+      "t": "Slots",
+      "o": [
+        "Morning",
+        "Afternoon",
+        "Evening"
+      ],
+      "m": true
+    },
+    {
+      "id": "note",
+      "k": "input",
+      "t": "Anything to add?",
+      "h": "Times, a phone number, questions"
+    }
+  ],
+  "form": {
+    "send": "Sign up"
+  }
+}

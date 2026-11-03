@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "The weather here, or in any town",
+  "tags": [
+    "template",
+    "tools"
+  ],
+  "minApp": "0.26.17"
+}

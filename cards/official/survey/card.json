@@ -1,0 +1,36 @@
+{
+  "v": 1,
+  "id": "survey",
+  "title": "Quick survey",
+  "emoji": "📋",
+  "icon": "chart",
+  "accent": 4281244656,
+  "blocks": [
+    {
+      "id": "stars",
+      "k": "rating",
+      "t": "How did it go?"
+    },
+    {
+      "id": "worked",
+      "k": "choice",
+      "t": "What worked?",
+      "o": [
+        "The place",
+        "The time",
+        "The people",
+        "The food"
+      ],
+      "m": true
+    },
+    {
+      "id": "better",
+      "k": "input",
+      "t": "What would make it better?"
+    }
+  ],
+  "form": {
+    "send": "Send answers",
+    "to": "sender"
+  }
+}

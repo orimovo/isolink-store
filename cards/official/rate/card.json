@@ -1,0 +1,25 @@
+{
+  "v": 1,
+  "id": "rate",
+  "title": "Rate it",
+  "emoji": "⭐",
+  "icon": "star",
+  "accent": 4294096196,
+  "blocks": [
+    {
+      "id": "stars",
+      "k": "rating",
+      "t": "How was it?"
+    },
+    {
+      "id": "comment",
+      "k": "input",
+      "t": "What stood out?",
+      "h": "The best bit, or the worst"
+    }
+  ],
+  "form": {
+    "send": "Send",
+    "to": "sender"
+  }
+}

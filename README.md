@@ -8,7 +8,7 @@
 
 ---
 
-Everything here shows up in the app under **Theme Studio → Library → Browse** and **My cards → Browse**. The app stays small because these are downloads, not built in.
+Everything here shows up in the app under **Theme Studio → Library → Browse** and **My cards → Browse**. Isolink's cards tagged `template` are the app's New card templates. The app stays small because these are downloads, not built in.
 
 Apps never talk to GitHub. Relays pull this store, check its signatures, and hand packs to their members over the connection they already have. So nobody's IP, searches or picks reach GitHub or anyone else.
 

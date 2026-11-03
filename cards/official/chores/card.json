@@ -1,0 +1,27 @@
+{
+  "v": 1,
+  "id": "chores",
+  "title": "House chores",
+  "emoji": "🧹",
+  "icon": "home",
+  "accent": 4280138122,
+  "blocks": [
+    {
+      "id": "intro",
+      "k": "text",
+      "t": "Swap in your own names. Tick a job when it's done."
+    },
+    {
+      "id": "week",
+      "k": "checklist",
+      "t": "This week",
+      "o": [
+        "Bins out: Alex",
+        "Dishes: Sam",
+        "Hoovering: Jo",
+        "Laundry: Robin",
+        "Food shop: Kai"
+      ]
+    }
+  ]
+}

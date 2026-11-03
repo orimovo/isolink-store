@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Wait for green, then tap",
+  "tags": [
+    "template",
+    "games"
+  ],
+  "minApp": "0.26.17"
+}

@@ -1,0 +1,26 @@
+{
+  "v": 1,
+  "id": "poll",
+  "title": "Poll",
+  "emoji": "📊",
+  "icon": "vote",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "pick",
+      "k": "choice",
+      "t": "Where should dinner be?",
+      "o": [
+        "Pizza",
+        "Curry",
+        "Burgers",
+        "Something else"
+      ]
+    },
+    {
+      "id": "results",
+      "k": "text",
+      "t": "Results update as people vote."
+    }
+  ]
+}

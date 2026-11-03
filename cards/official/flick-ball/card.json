@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "flick-ball",
+  "title": "Flick ball",
+  "emoji": "⚽",
+  "accent": 4281244656,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Flick ball\", icon: 'sports' });\nconst words = {\n  hint: \"Drag the ball and flick it\",\n};\n\nfunction init() {\n  return { x: 0.5, y: 0.5, vx: 0, vy: 0, t: 0 };\n}\n\non.flick = (s, a, ctx) => {\n  s.x = a.x;\n  s.y = a.y;\n  s.vx = (a.dx || 0) * 3;\n  s.vy = (a.dy || 0) * 3;\n  s.t = ctx.time;\n};\n\n// Where an axis is now: start + distance (speed falling off), folded into the\n// walls so it bounces instead of leaving the box.\nfunction roll(p0, v, dt) {\n  const m = 0.08;\n  const span = 1 - 2 * m;\n  const decay = 1.8;\n  const d = v * (1 - Math.exp(-decay * dt)) / decay;\n  let u = Math.abs((p0 - m + d) / span) % 2;\n  return m + (u > 1 ? 2 - u : u) * span;\n}\n\nfunction view(state, me, now) {\n  const dt = Math.min((now - state.t) / 1000, 6);\n  if (dt < 4) every(30);\n  return column([\n    text(words.hint, { size: 'small', tone: 'muted', align: 'center' }),\n    canvas({\n      ratio: 1,\n      onDrag: 'flick',\n      shapes: [circle(roll(state.x, state.vx, dt), roll(state.y, state.vy, dt), 0.08, { fill: 'accent' })],\n    }),\n  ]);\n}\n"
+}

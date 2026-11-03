@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Who paid what, and who owes",
+  "tags": [
+    "template",
+    "tools"
+  ],
+  "minApp": "0.26.17"
+}

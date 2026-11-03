@@ -1,0 +1,35 @@
+{
+  "v": 1,
+  "id": "lift",
+  "title": "Lift share",
+  "emoji": "🚗",
+  "icon": "car",
+  "accent": 4281244656,
+  "blocks": [
+    {
+      "id": "trip",
+      "k": "text",
+      "t": "**Leaving:** Saturday, 9am\n**From:** the station"
+    },
+    {
+      "id": "seat",
+      "k": "choice",
+      "t": "Take a seat",
+      "o": [
+        "Front seat",
+        "Back left",
+        "Back middle",
+        "Back right"
+      ]
+    },
+    {
+      "id": "pickup",
+      "k": "input",
+      "t": "Pickup point",
+      "h": "A street, stop or landmark"
+    }
+  ],
+  "form": {
+    "send": "Book my seat"
+  }
+}

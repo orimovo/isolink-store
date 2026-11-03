@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Everyone fills in a form; only you see the answers",
+  "tags": [
+    "template",
+    "polls"
+  ],
+  "minApp": "0.26.17"
+}

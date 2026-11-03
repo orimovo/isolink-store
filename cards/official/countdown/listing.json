@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Counts down to a time",
+  "tags": [
+    "template",
+    "tools"
+  ],
+  "minApp": "0.26.17"
+}

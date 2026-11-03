@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "countdown",
+  "title": "Countdown",
+  "emoji": "⏳",
+  "accent": 4287323382,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Countdown\", icon: 'hourglass' });\nconst words = {\n  until: \"Until {p0}\",\n  days: \"{p0} days\",\n  done: \"It's time!\",\n  when: \"\",\n};\n\n// When to count down to, in ms since 1970 (UTC).\nconst target = 0;\n// Draw the card again every second. This never sends anything.\nevery(1000);\n\nfunction view(state, me, now) {\n  const left = Math.max(0, target - now);\n  if (left === 0) return text(words.done, { size: 'large', bold: true, align: 'center', tone: 'success' });\n  const s = Math.floor(left / 1000);\n  const pad = n => String(n).padStart(2, '0');\n  const clock = pad(Math.floor(s % 86400 / 3600)) + ':' + pad(Math.floor(s % 3600 / 60)) + ':' + pad(s % 60);\n  return column([\n    text(words.days.replace('{p0}', Math.floor(s / 86400)), { size: 'large', bold: true, align: 'center', tone: 'accent' }),\n    text(clock, { size: 'huge', align: 'center' }),\n    text(words.until.replace('{p0}', words.when), { tone: 'muted', align: 'center' }),\n  ]);\n}\n"
+}

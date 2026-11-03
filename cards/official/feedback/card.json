@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "feedback",
+  "title": "Feedback",
+  "emoji": "💬",
+  "accent": 4279548070,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Feedback\", icon: 'chat' });\nconst words = {\n  how: \"How did it go?\",\n  great: \"Great\",\n  fine: \"Fine\",\n  meh: \"Not great\",\n  best: \"The best bit\",\n  change: \"One thing to change\",\n  send: \"Send feedback\",\n  thanks: \"Thanks! Your feedback went to the sender.\",\n  again: \"Change my answers\",\n  none: \"No feedback yet\",\n  count: \"{p0} answered\",\n  host: \"You sent this, so you see the answers\",\n};\n\n// Everyone but the sender fills in the form; the sender sees the answers.\nconst moods = [words.great, words.fine, words.meh];\n\nfunction init() {\n  return { answers: {}, editing: {} };\n}\n\non.answer = (s, args, ctx) => {\n  if (ctx.author === ctx.sender) throw words.host;\n  const v = args.values || {};\n  s.answers[ctx.author] = { name: ctx.authorName, mood: v.mood ?? null, best: v.best || '', change: v.change || '' };\n  delete s.editing[ctx.author];\n};\n\non.edit = (s, args, ctx) => {\n  s.editing[ctx.author] = true;\n};\n\nfunction view(s, me) {\n  const all = Object.values(s.answers);\n  if (me.isSender) {\n    if (!all.length) return column([text(words.none, { bold: true }), text(words.host, { size: 'small', tone: 'muted' })]);\n    const counts = moods.map((m, i) => all.filter(a => a.mood === i).length);\n    return column([\n      badge(words.count.replace('{p0}', all.length), { tone: 'accent' }),\n      ...moods.map((m, i) => row([text(m), badge(String(counts[i]), { tone: counts[i] ? 'accent' : 'muted' })], { align: 'between' })),\n      divider(),\n      ...all.map(a => column([\n        text(a.name, { bold: true }),\n        a.best && text('👍 ' + a.best, { size: 'small' }),\n        a.change && text('🔧 ' + a.change, { size: 'small' }),\n      ])),\n    ]);\n  }\n  if (s.answers[me.id] && !s.editing[me.id]) {\n    return column([text(words.thanks, { tone: 'success' }), button(words.again, 'edit', null, { tone: 'muted' })]);\n  }\n  return form('feedback', [\n    text(words.how, { bold: true }),\n    choice('mood', moods),\n    input('best', words.best),\n    input('change', words.change),\n  ], words.send, 'answer');\n}\n"
+}

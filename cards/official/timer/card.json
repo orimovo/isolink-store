@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "timer",
+  "title": "Timer",
+  "emoji": "⏱️",
+  "accent": 4293940842,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Timer\", icon: 'timer' });\nconst words = {\n  pick: \"Pick a time to start\",\n  minutes: \"{p0} min\",\n  done: \"Time's up!\",\n  by: \"Started by {p0}\",\n  stop: \"Stop\",\n};\n\n// One timer for the whole chat. Anyone can start or stop it.\n// Draw the card again every second. This never sends anything.\nevery(1000);\nconst lengths = [1, 5, 10, 30];\n\nfunction init() {\n  return { ends: null, length: 0, by: '' };\n}\n\non.start = (s, args, ctx) => {\n  if (!lengths.includes(args.minutes)) return;\n  s.length = args.minutes * 60000;\n  s.ends = ctx.time + s.length;\n  s.by = ctx.authorName;\n};\n\non.stop = (s) => {\n  s.ends = null;\n};\n\nfunction starts() {\n  return row(lengths.map(m => button(words.minutes.replace('{p0}', m), 'start', { minutes: m }, { tone: 'accent' })), { align: 'center' });\n}\n\nfunction view(s, me, now) {\n  if (s.ends === null) return column([text(words.pick, { tone: 'muted', align: 'center' }), starts()]);\n  const left = Math.max(0, s.ends - now);\n  const secs = Math.ceil(left / 1000);\n  const pad = n => String(n).padStart(2, '0');\n  const parts = [];\n  if (left === 0) parts.push(text(words.done, { size: 'large', bold: true, align: 'center', tone: 'success' }));\n  else parts.push(text(pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), { size: 'huge', bold: true, align: 'center', tone: 'accent' }));\n  parts.push(progress(left / s.length));\n  parts.push(text(words.by.replace('{p0}', s.by), { size: 'small', tone: 'muted', align: 'center' }));\n  parts.push(left === 0 ? starts() : button(words.stop, 'stop', null, { tone: 'muted', align: 'center' }));\n  return column(parts);\n}\n"
+}

@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "live-poll",
+  "title": "Live poll",
+  "emoji": "📊",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({ name: \"Live poll\", icon: 'poll' });\nconst words = {\n  ask: \"What should we ask?\",\n  noQuestion: \"Ask a question, then add options\",\n  add: \"Add an option\",\n  empty: \"No options yet\",\n  votes: \"{p0} votes\",\n  leading: \"{p0} is ahead\",\n  tie: \"It's a tie\",\n  clear: \"Clear votes\",\n  full: \"Eight options at most\",\n  twice: \"{p0} is already an option\",\n  onlySender: \"Only the person who sent the card can do that\",\n};\n\n// Anyone adds options. Everyone has one vote: tap another to move it, or\n// the same one to take it back. Only the sender can clear the votes.\nfunction init() {\n  return { question: '', options: [], votes: {} };\n}\n\non.ask = (s, args) => {\n  s.question = String(args.value || '').trim().slice(0, 120);\n};\n\non.add = (s, args) => {\n  const option = String(args.value || '').trim().slice(0, 60);\n  if (!option) return;\n  if (s.options.length >= 8) throw words.full;\n  if (s.options.some(o => o.toLowerCase() === option.toLowerCase())) throw words.twice.replace('{p0}', option);\n  s.options.push(option);\n};\n\non.vote = (s, args, ctx) => {\n  if (s.votes[ctx.author] === args.index) delete s.votes[ctx.author];\n  else s.votes[ctx.author] = args.index;\n};\n\non.clear = (s, args, ctx) => {\n  if (ctx.author !== ctx.sender) throw words.onlySender;\n  s.votes = {};\n};\n\nfunction view(s, me) {\n  const counts = s.options.map((o, i) => Object.values(s.votes).filter(v => v === i).length);\n  const total = Object.keys(s.votes).length;\n  const top = counts.reduce((m, n) => Math.max(m, n), 0);\n  const leaders = s.options.filter((o, i) => top > 0 && counts[i] === top);\n  const mine = s.votes[me.id] ?? null;\n  return column([\n    s.question ? text(s.question, { size: 'large', bold: true }) : input('question', words.ask, 'ask'),\n    s.options.length\n      ? choice('vote', s.options, 'vote', { selected: mine === null ? [] : mine, counts })\n      : text(s.question ? words.empty : words.noQuestion, { tone: 'muted' }),\n    total > 0 && row([\n      badge(words.votes.replace('{p0}', total)),\n      badge(leaders.length === 1 ? words.leading.replace('{p0}', leaders[0]) : words.tie, { tone: 'accent' }),\n    ]),\n    input('option', words.add, 'add'),\n    me.isSender && total > 0 && button(words.clear, 'clear', null, { tone: 'muted', align: 'end' }),\n  ]);\n}\n"
+}

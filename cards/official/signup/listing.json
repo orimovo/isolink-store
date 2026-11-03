@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Pick slots and add a note",
+  "tags": [
+    "template",
+    "lists"
+  ],
+  "minApp": "0.26.17"
+}

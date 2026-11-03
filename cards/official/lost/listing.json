@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Ask whose something is",
+  "tags": [
+    "template",
+    "polls"
+  ],
+  "minApp": "0.26.17"
+}

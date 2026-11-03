@@ -1,0 +1,52 @@
+{
+  "v": 1,
+  "id": "meetup",
+  "title": "Meet up",
+  "emoji": "📍",
+  "icon": "location",
+  "accent": 4279548070,
+  "blocks": [
+    {
+      "id": "when",
+      "k": "choice",
+      "t": "When works?",
+      "o": [
+        "Saturday morning",
+        "Saturday afternoon",
+        "Sunday afternoon"
+      ],
+      "m": true
+    },
+    {
+      "id": "where",
+      "k": "choice",
+      "t": "Where?",
+      "o": [
+        "The café",
+        "The park",
+        "Town centre"
+      ],
+      "m": true
+    },
+    {
+      "id": "coming",
+      "k": "choice",
+      "t": "Are you coming?",
+      "o": [
+        "Yes",
+        "Maybe",
+        "No"
+      ]
+    },
+    {
+      "id": "bring",
+      "k": "checklist",
+      "t": "Who brings what",
+      "o": [
+        "Snacks",
+        "Drinks",
+        "Something to sit on"
+      ]
+    }
+  ]
+}

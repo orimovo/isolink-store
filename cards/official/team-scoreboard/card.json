@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "id": "team-scoreboard",
+  "title": "Scoreboard",
+  "emoji": "🏆",
+  "accent": 4284704497,
+  "blocks": [
+    {
+      "id": "_fb",
+      "k": "text",
+      "t": "Update Isolink to use this card"
+    }
+  ],
+  "script": "card({\n  name: 'Scoreboard',\n  icon: 'trophy',\n  permissions: [],\n});\n\n// Built once, used for each team in the view: Score({ team, points }).\ncomponents.Score = {\n  about: 'A team, its points, and buttons to change them',\n  props: { team: '', points: 0, tone: 'accent' },\n  view: (props) => column([\n    text(props.team, { bold: true, align: 'center' }),\n    text(String(props.points), { size: 'huge', tone: props.tone, align: 'center' }),\n    row([\n      button('−1', 'add', { team: props.team, by: -1 }),\n      button('+1', 'add', { team: props.team, by: 1 }, { tone: props.tone }),\n    ]),\n  ]),\n};\n\n// A title over whatever goes inside it: Panel({ title }, ...children).\ncomponents.Panel = {\n  about: 'A title over the components inside it',\n  props: { title: '' },\n  view: (props, children) => column([text(props.title, { tone: 'muted', align: 'center' }), ...children, divider()]),\n};\n\non.add = (state, args, ctx) => {\n  if (state.points[args.team] === undefined) throw 'No such team';\n  state.points[args.team] = Math.max(0, state.points[args.team] + args.by);\n};\n\non.reset = (state, args, ctx) => {\n  for (const team of Object.keys(state.points)) {\n    state.points[team] = 0;\n  }\n};\n\nfunction init(ctx) {\n  return { points: { Home: 0, Away: 0 } };\n}\n\nfunction view(state, me, now, local) {\n  return column([\n    Panel({ title: 'Scoreboard' }, row([\n      Score({ team: 'Home', points: state.points.Home }),\n      Score({ team: 'Away', points: state.points.Away, tone: 'warning' }),\n    ])),\n    button('Start again', 'reset', null, { tone: 'muted' }),\n  ]);\n}\n\nfunction pause(local, ctx) {\n  // Runs on this phone when the card leaves the screen.\n}\n\nfunction resume(local, ctx) {\n  // Runs on this phone when it comes back.\n}"
+}
