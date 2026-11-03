@@ -1,0 +1,50 @@
+{
+  "es": {
+    "name": "Paso a paso",
+    "desc": "Una pantalla principal y pantallas que se abren encima",
+    "lines": {
+      "Party RSVP": "Confirmación de fiesta",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta"
+    }
+  },
+  "fr": {
+    "name": "Étape par étape",
+    "desc": "Un écran principal, et des écrans qui s’ouvrent par-dessus",
+    "lines": {
+      "Party RSVP": "Réponse à la fête",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte"
+    }
+  },
+  "de": {
+    "name": "Schritt für Schritt",
+    "desc": "Ein Hauptbildschirm und Bildschirme, die sich darüber öffnen",
+    "lines": {
+      "Party RSVP": "Party-Zusage",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen"
+    }
+  },
+  "pt": {
+    "name": "Passo a passo",
+    "desc": "Uma tela principal e telas que abrem por cima dela",
+    "lines": {
+      "Party RSVP": "Confirmação da festa",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão"
+    }
+  },
+  "zh": {
+    "name": "分步进行",
+    "desc": "一个主画面，以及在其上打开的画面",
+    "lines": {
+      "Party RSVP": "派对回复",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片"
+    }
+  },
+  "ar": {
+    "name": "خطوة بخطوة",
+    "desc": "شاشة رئيسية، وشاشات تُفتح فوقها",
+    "lines": {
+      "Party RSVP": "تأكيد حضور الحفلة",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة"
+    }
+  }
+}

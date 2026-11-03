@@ -1,0 +1,86 @@
+{
+  "es": {
+    "name": "Memoria",
+    "desc": "Encuentra las parejas antes que nadie",
+    "lines": {
+      "Memory match": "Memoria",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Turn two cards. A pair is yours.": "Da la vuelta a dos cartas. Una pareja es tuya.",
+      "{p0} moves": "{p0} jugadas",
+      "All pairs found!": "¡Todas las parejas encontradas!",
+      "{p0} found the most": "{p0} encontró más",
+      "Deal again": "Repartir de nuevo",
+      "That card is already up": "Esa carta ya está boca arriba"
+    }
+  },
+  "fr": {
+    "name": "Memory",
+    "desc": "Trouvez les paires avant les autres",
+    "lines": {
+      "Memory match": "Memory",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Turn two cards. A pair is yours.": "Retournez deux cartes. Une paire est à vous.",
+      "{p0} moves": "{p0} coups",
+      "All pairs found!": "Toutes les paires sont trouvées !",
+      "{p0} found the most": "{p0} en a trouvé le plus",
+      "Deal again": "Redistribuer",
+      "That card is already up": "Cette carte est déjà retournée"
+    }
+  },
+  "de": {
+    "name": "Memory",
+    "desc": "Finde die Paare vor allen anderen",
+    "lines": {
+      "Memory match": "Memory",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Turn two cards. A pair is yours.": "Dreh zwei Karten um. Ein Paar gehört dir.",
+      "{p0} moves": "{p0} Züge",
+      "All pairs found!": "Alle Paare gefunden!",
+      "{p0} found the most": "{p0} hat die meisten gefunden",
+      "Deal again": "Neu austeilen",
+      "That card is already up": "Diese Karte liegt schon offen"
+    }
+  },
+  "pt": {
+    "name": "Jogo da memória",
+    "desc": "Encontre os pares antes de todos",
+    "lines": {
+      "Memory match": "Jogo da memória",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Turn two cards. A pair is yours.": "Vire duas cartas. Um par é seu.",
+      "{p0} moves": "{p0} jogadas",
+      "All pairs found!": "Todos os pares encontrados!",
+      "{p0} found the most": "{p0} encontrou mais",
+      "Deal again": "Distribuir de novo",
+      "That card is already up": "Essa carta já está virada"
+    }
+  },
+  "zh": {
+    "name": "记忆配对",
+    "desc": "抢先找到配对",
+    "lines": {
+      "Memory match": "记忆配对",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Turn two cards. A pair is yours.": "翻开两张牌，配对就归你。",
+      "{p0} moves": "{p0} 步",
+      "All pairs found!": "所有配对都找到了！",
+      "{p0} found the most": "{p0} 找到的最多",
+      "Deal again": "重新发牌",
+      "That card is already up": "这张牌已经翻开了"
+    }
+  },
+  "ar": {
+    "name": "لعبة الذاكرة",
+    "desc": "اعثر على الأزواج قبل الجميع",
+    "lines": {
+      "Memory match": "لعبة الذاكرة",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Turn two cards. A pair is yours.": "اقلب بطاقتين. الزوج لك.",
+      "{p0} moves": "{p0} حركات",
+      "All pairs found!": "وُجدت كل الأزواج!",
+      "{p0} found the most": "{p0} وجد الأكثر",
+      "Deal again": "وزّع من جديد",
+      "That card is already up": "هذه البطاقة مكشوفة بالفعل"
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "es": {
+    "name": "Quedada",
+    "desc": "Elige hora y lugar, y luego quién trae qué",
+    "lines": {
+      "Meet up": "Quedada",
+      "When works?": "¿Cuándo te viene bien?",
+      "Saturday morning": "Sábado por la mañana",
+      "Saturday afternoon": "Sábado por la tarde",
+      "Sunday afternoon": "Domingo por la tarde",
+      "Where?": "¿Dónde?",
+      "The café": "El café",
+      "The park": "El parque",
+      "Town centre": "El centro",
+      "Are you coming?": "¿Vienes?",
+      "Yes": "Sí",
+      "Maybe": "Quizás",
+      "Who brings what": "Quién trae qué",
+      "Snacks": "Algo de picar",
+      "Drinks": "Bebidas",
+      "Something to sit on": "Algo para sentarse"
+    }
+  },
+  "fr": {
+    "name": "Rendez-vous",
+    "desc": "Choisir l'heure et le lieu, puis qui apporte quoi",
+    "lines": {
+      "Meet up": "Rendez-vous",
+      "When works?": "Quand ça te va ?",
+      "Saturday morning": "Samedi matin",
+      "Saturday afternoon": "Samedi après-midi",
+      "Sunday afternoon": "Dimanche après-midi",
+      "Where?": "Où ?",
+      "The café": "Le café",
+      "The park": "Le parc",
+      "Town centre": "Le centre-ville",
+      "Are you coming?": "Tu viens ?",
+      "Yes": "Oui",
+      "Maybe": "Peut-être",
+      "No": "Non",
+      "Who brings what": "Qui apporte quoi",
+      "Snacks": "Des en-cas",
+      "Drinks": "Des boissons",
+      "Something to sit on": "De quoi s'asseoir"
+    }
+  },
+  "de": {
+    "name": "Treffen",
+    "desc": "Zeit und Ort wählen, dann wer was mitbringt",
+    "lines": {
+      "Meet up": "Treffen",
+      "When works?": "Wann passt es?",
+      "Saturday morning": "Samstagvormittag",
+      "Saturday afternoon": "Samstagnachmittag",
+      "Sunday afternoon": "Sonntagnachmittag",
+      "Where?": "Wo?",
+      "The café": "Das Café",
+      "The park": "Der Park",
+      "Town centre": "Die Innenstadt",
+      "Are you coming?": "Kommst du?",
+      "Yes": "Ja",
+      "Maybe": "Vielleicht",
+      "No": "Nein",
+      "Who brings what": "Wer bringt was mit",
+      "Drinks": "Getränke",
+      "Something to sit on": "Etwas zum Sitzen"
+    }
+  },
+  "pt": {
+    "name": "Encontro",
+    "desc": "Escolha hora e lugar, depois quem leva o quê",
+    "lines": {
+      "Meet up": "Encontro",
+      "When works?": "Quando dá?",
+      "Saturday morning": "Sábado de manhã",
+      "Saturday afternoon": "Sábado à tarde",
+      "Sunday afternoon": "Domingo à tarde",
+      "Where?": "Onde?",
+      "The café": "O café",
+      "The park": "O parque",
+      "Town centre": "O centro",
+      "Are you coming?": "Você vem?",
+      "Yes": "Sim",
+      "Maybe": "Talvez",
+      "No": "Não",
+      "Who brings what": "Quem leva o quê",
+      "Snacks": "Petiscos",
+      "Drinks": "Bebidas",
+      "Something to sit on": "Algo para sentar"
+    }
+  },
+  "zh": {
+    "name": "聚会",
+    "desc": "选时间和地点，再定谁带什么",
+    "lines": {
+      "Meet up": "聚会",
+      "When works?": "什么时间合适？",
+      "Saturday morning": "周六上午",
+      "Saturday afternoon": "周六下午",
+      "Sunday afternoon": "周日下午",
+      "Where?": "在哪里？",
+      "The café": "咖啡馆",
+      "The park": "公园",
+      "Town centre": "市中心",
+      "Are you coming?": "你来吗？",
+      "Yes": "是",
+      "Maybe": "也许",
+      "No": "否",
+      "Who brings what": "谁带什么",
+      "Snacks": "零食",
+      "Drinks": "饮料",
+      "Something to sit on": "坐垫或野餐垫"
+    }
+  },
+  "ar": {
+    "name": "لقاء",
+    "desc": "اختر الوقت والمكان، ثم من يحضر ماذا",
+    "lines": {
+      "Meet up": "لقاء",
+      "When works?": "متى يناسبك؟",
+      "Saturday morning": "السبت صباحًا",
+      "Saturday afternoon": "السبت بعد الظهر",
+      "Sunday afternoon": "الأحد بعد الظهر",
+      "Where?": "أين؟",
+      "The café": "المقهى",
+      "The park": "الحديقة",
+      "Town centre": "وسط المدينة",
+      "Are you coming?": "هل ستأتي؟",
+      "Yes": "نعم",
+      "Maybe": "ربما",
+      "No": "لا",
+      "Who brings what": "من يحضر ماذا",
+      "Snacks": "وجبات خفيفة",
+      "Drinks": "مشروبات",
+      "Something to sit on": "شيء للجلوس عليه"
+    }
+  }
+}

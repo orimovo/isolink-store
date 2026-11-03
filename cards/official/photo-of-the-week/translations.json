@@ -1,0 +1,50 @@
+{
+  "es": {
+    "name": "Foto de la semana",
+    "desc": "Sube una foto, vota; un bot lleva el salón de la fama",
+    "lines": {
+      "Photo of the Week": "Foto de la semana",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta"
+    }
+  },
+  "fr": {
+    "name": "Photo de la semaine",
+    "desc": "Proposez une photo, votez ; un bot tient le palmarès",
+    "lines": {
+      "Photo of the Week": "Photo de la semaine",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte"
+    }
+  },
+  "de": {
+    "name": "Foto der Woche",
+    "desc": "Foto einreichen, abstimmen; ein Bot führt die Ruhmeshalle",
+    "lines": {
+      "Photo of the Week": "Foto der Woche",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen"
+    }
+  },
+  "pt": {
+    "name": "Foto da semana",
+    "desc": "Envie uma foto, vote; um bot mantém o hall da fama",
+    "lines": {
+      "Photo of the Week": "Foto da semana",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão"
+    }
+  },
+  "zh": {
+    "name": "每周一图",
+    "desc": "上传照片并投票；机器人负责名人堂",
+    "lines": {
+      "Photo of the Week": "每周一图",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片"
+    }
+  },
+  "ar": {
+    "name": "صورة الأسبوع",
+    "desc": "أرسل صورة وصوّت؛ ويحفظ بوت قاعة المشاهير",
+    "lines": {
+      "Photo of the Week": "صورة الأسبوع",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة"
+    }
+  }
+}

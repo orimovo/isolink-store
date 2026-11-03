@@ -1,0 +1,68 @@
+{
+  "es": {
+    "name": "Lista de tareas",
+    "desc": "Tareas que se tachan entre todos",
+    "lines": {
+      "Checklist": "Lista de tareas",
+      "To do": "Por hacer",
+      "Book the table": "Reservar la mesa",
+      "Send the address": "Enviar la dirección",
+      "Pay the deposit": "Pagar la señal"
+    }
+  },
+  "fr": {
+    "name": "Liste à cocher",
+    "desc": "Des tâches cochées ensemble",
+    "lines": {
+      "Checklist": "Liste à cocher",
+      "To do": "À faire",
+      "Book the table": "Réserver la table",
+      "Send the address": "Envoyer l'adresse",
+      "Pay the deposit": "Payer l'acompte"
+    }
+  },
+  "de": {
+    "name": "Checkliste",
+    "desc": "Aufgaben, gemeinsam abgehakt",
+    "lines": {
+      "Checklist": "Checkliste",
+      "To do": "Zu erledigen",
+      "Book the table": "Tisch reservieren",
+      "Send the address": "Adresse schicken",
+      "Pay the deposit": "Anzahlung leisten"
+    }
+  },
+  "pt": {
+    "name": "Lista de tarefas",
+    "desc": "Tarefas marcadas juntos",
+    "lines": {
+      "Checklist": "Lista de tarefas",
+      "To do": "A fazer",
+      "Book the table": "Reservar a mesa",
+      "Send the address": "Enviar o endereço",
+      "Pay the deposit": "Pagar o sinal"
+    }
+  },
+  "zh": {
+    "name": "清单",
+    "desc": "一起勾掉的待办事项",
+    "lines": {
+      "Checklist": "清单",
+      "To do": "待办",
+      "Book the table": "订餐桌",
+      "Send the address": "发送地址",
+      "Pay the deposit": "付定金"
+    }
+  },
+  "ar": {
+    "name": "قائمة مهام",
+    "desc": "مهام يشطبها الجميع معًا",
+    "lines": {
+      "Checklist": "قائمة مهام",
+      "To do": "المهام",
+      "Book the table": "حجز الطاولة",
+      "Send the address": "إرسال العنوان",
+      "Pay the deposit": "دفع العربون"
+    }
+  }
+}

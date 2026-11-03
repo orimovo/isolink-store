@@ -1,0 +1,86 @@
+{
+  "es": {
+    "name": "Tareas de casa",
+    "desc": "Tareas de la semana, con nombres",
+    "lines": {
+      "House chores": "Tareas de casa",
+      "Swap in your own names. Tick a job when it's done.": "Pon vuestros nombres. Marca cada tarea cuando esté hecha.",
+      "This week": "Esta semana",
+      "Bins out: Alex": "Sacar la basura: Alex",
+      "Dishes: Sam": "Platos: Sam",
+      "Hoovering: Jo": "Aspirar: Jo",
+      "Laundry: Robin": "Colada: Robin",
+      "Food shop: Kai": "Compra: Kai"
+    }
+  },
+  "fr": {
+    "name": "Tâches ménagères",
+    "desc": "Les tâches de la semaine, avec des prénoms",
+    "lines": {
+      "House chores": "Tâches ménagères",
+      "Swap in your own names. Tick a job when it's done.": "Mets vos prénoms. Coche une tâche une fois faite.",
+      "This week": "Cette semaine",
+      "Bins out: Alex": "Sortir les poubelles : Alex",
+      "Dishes: Sam": "Vaisselle : Sam",
+      "Hoovering: Jo": "Aspirateur : Jo",
+      "Laundry: Robin": "Lessive : Robin",
+      "Food shop: Kai": "Courses : Kai"
+    }
+  },
+  "de": {
+    "name": "Hausarbeit",
+    "desc": "Aufgaben für die Woche, mit Namen",
+    "lines": {
+      "House chores": "Hausarbeit",
+      "Swap in your own names. Tick a job when it's done.": "Setz eure eigenen Namen ein. Hake eine Aufgabe ab, wenn sie erledigt ist.",
+      "This week": "Diese Woche",
+      "Bins out: Alex": "Müll rausbringen: Alex",
+      "Dishes: Sam": "Abwasch: Sam",
+      "Hoovering: Jo": "Staubsaugen: Jo",
+      "Laundry: Robin": "Wäsche: Robin",
+      "Food shop: Kai": "Einkauf: Kai"
+    }
+  },
+  "pt": {
+    "name": "Tarefas da casa",
+    "desc": "Tarefas da semana, com nomes",
+    "lines": {
+      "House chores": "Tarefas da casa",
+      "Swap in your own names. Tick a job when it's done.": "Troque pelos nomes de vocês. Marque cada tarefa quando estiver feita.",
+      "This week": "Esta semana",
+      "Bins out: Alex": "Tirar o lixo: Alex",
+      "Dishes: Sam": "Louça: Sam",
+      "Hoovering: Jo": "Aspirar: Jo",
+      "Laundry: Robin": "Roupa: Robin",
+      "Food shop: Kai": "Compras: Kai"
+    }
+  },
+  "zh": {
+    "name": "家务",
+    "desc": "本周家务，附名字",
+    "lines": {
+      "House chores": "家务",
+      "Swap in your own names. Tick a job when it's done.": "换成你们自己的名字。做完一项就勾掉。",
+      "This week": "本周",
+      "Bins out: Alex": "倒垃圾：Alex",
+      "Dishes: Sam": "洗碗：Sam",
+      "Hoovering: Jo": "吸尘：Jo",
+      "Laundry: Robin": "洗衣：Robin",
+      "Food shop: Kai": "买菜：Kai"
+    }
+  },
+  "ar": {
+    "name": "أعمال المنزل",
+    "desc": "مهام الأسبوع، مع الأسماء",
+    "lines": {
+      "House chores": "أعمال المنزل",
+      "Swap in your own names. Tick a job when it's done.": "ضع أسماءكم. اشطب المهمة عند إنجازها.",
+      "This week": "هذا الأسبوع",
+      "Bins out: Alex": "إخراج القمامة: Alex",
+      "Dishes: Sam": "الصحون: Sam",
+      "Hoovering: Jo": "الكنس: Jo",
+      "Laundry: Robin": "الغسيل: Robin",
+      "Food shop: Kai": "التسوق: Kai"
+    }
+  }
+}

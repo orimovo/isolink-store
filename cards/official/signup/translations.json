@@ -1,0 +1,92 @@
+{
+  "es": {
+    "name": "Hoja de inscripción",
+    "desc": "Elige turnos y añade una nota",
+    "lines": {
+      "Sign-up sheet": "Hoja de inscripción",
+      "Pick the slots you can do.": "Elige los turnos que puedes cubrir.",
+      "Slots": "Turnos",
+      "Morning": "Mañana",
+      "Afternoon": "Tarde",
+      "Evening": "Noche",
+      "Anything to add?": "¿Algo más?",
+      "Times, a phone number, questions": "Horarios, un teléfono, preguntas",
+      "Sign up": "Apuntarme"
+    }
+  },
+  "fr": {
+    "name": "Feuille d'inscription",
+    "desc": "Choisir des créneaux et ajouter une note",
+    "lines": {
+      "Sign-up sheet": "Feuille d'inscription",
+      "Pick the slots you can do.": "Choisis les créneaux qui te conviennent.",
+      "Slots": "Créneaux",
+      "Morning": "Matin",
+      "Afternoon": "Après-midi",
+      "Evening": "Soir",
+      "Anything to add?": "Autre chose à ajouter ?",
+      "Times, a phone number, questions": "Horaires, un numéro, des questions",
+      "Sign up": "M’inscrire"
+    }
+  },
+  "de": {
+    "name": "Eintragsliste",
+    "desc": "Zeiten wählen und eine Notiz dazu",
+    "lines": {
+      "Sign-up sheet": "Eintragsliste",
+      "Pick the slots you can do.": "Wähle die Zeiten, die dir passen.",
+      "Slots": "Zeiten",
+      "Morning": "Morgen",
+      "Afternoon": "Nachmittag",
+      "Evening": "Abend",
+      "Anything to add?": "Noch etwas?",
+      "Times, a phone number, questions": "Zeiten, eine Telefonnummer, Fragen",
+      "Sign up": "Eintragen"
+    }
+  },
+  "pt": {
+    "name": "Lista de inscrição",
+    "desc": "Escolha horários e adicione uma nota",
+    "lines": {
+      "Sign-up sheet": "Lista de inscrição",
+      "Pick the slots you can do.": "Escolha os horários que você pode.",
+      "Slots": "Horários",
+      "Morning": "Manhã",
+      "Afternoon": "Tarde",
+      "Evening": "Noite",
+      "Anything to add?": "Algo a acrescentar?",
+      "Times, a phone number, questions": "Horários, um telefone, perguntas",
+      "Sign up": "Inscrever-me"
+    }
+  },
+  "zh": {
+    "name": "报名表",
+    "desc": "选时间段并留言",
+    "lines": {
+      "Sign-up sheet": "报名表",
+      "Pick the slots you can do.": "选择你能参加的时段。",
+      "Slots": "时段",
+      "Morning": "上午",
+      "Afternoon": "下午",
+      "Evening": "晚上",
+      "Anything to add?": "还有补充吗？",
+      "Times, a phone number, questions": "时间、电话号码、问题",
+      "Sign up": "报名"
+    }
+  },
+  "ar": {
+    "name": "قائمة التسجيل",
+    "desc": "اختر الأوقات وأضف ملاحظة",
+    "lines": {
+      "Sign-up sheet": "قائمة التسجيل",
+      "Pick the slots you can do.": "اختر الأوقات المناسبة لك.",
+      "Slots": "الأوقات",
+      "Morning": "الصباح",
+      "Afternoon": "بعد الظهر",
+      "Evening": "المساء",
+      "Anything to add?": "هل من إضافة؟",
+      "Times, a phone number, questions": "أوقات، رقم هاتف، أسئلة",
+      "Sign up": "سجّلني"
+    }
+  }
+}

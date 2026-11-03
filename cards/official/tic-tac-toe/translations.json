@@ -1,0 +1,122 @@
+{
+  "es": {
+    "name": "Tres en raya",
+    "desc": "Dos personas juegan por turnos",
+    "lines": {
+      "Tic-tac-toe": "Tres en raya",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Tap a square to start": "Toca una casilla para empezar",
+      "Your turn": "Tu turno",
+      "Waiting for {p0}": "Esperando a {p0}",
+      "the other player": "la otra persona",
+      "You won!": "¡Ganaste!",
+      "{p0} won": "{p0} ganó",
+      "It's a draw": "Empate",
+      "New game": "Nueva partida",
+      "The game is over": "La partida terminó",
+      "Two people are already playing": "Ya juegan dos personas",
+      "Not your turn": "No es tu turno",
+      "That square is taken": "Esa casilla está ocupada"
+    }
+  },
+  "fr": {
+    "name": "Morpion",
+    "desc": "Deux personnes jouent à tour de rôle",
+    "lines": {
+      "Tic-tac-toe": "Morpion",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Tap a square to start": "Touche une case pour commencer",
+      "Your turn": "À toi de jouer",
+      "Waiting for {p0}": "En attente de {p0}",
+      "the other player": "l'autre personne",
+      "You won!": "Tu as gagné !",
+      "{p0} won": "{p0} a gagné",
+      "It's a draw": "Match nul",
+      "New game": "Nouvelle partie",
+      "The game is over": "La partie est finie",
+      "Two people are already playing": "Deux personnes jouent déjà",
+      "Not your turn": "Ce n'est pas ton tour",
+      "That square is taken": "Cette case est prise"
+    }
+  },
+  "de": {
+    "name": "Tic-Tac-Toe",
+    "desc": "Zwei spielen abwechselnd",
+    "lines": {
+      "Tic-tac-toe": "Tic-Tac-Toe",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Tap a square to start": "Tippe auf ein Feld, um zu starten",
+      "Your turn": "Du bist dran",
+      "Waiting for {p0}": "Warten auf {p0}",
+      "the other player": "die andere Person",
+      "You won!": "Du hast gewonnen!",
+      "{p0} won": "{p0} hat gewonnen",
+      "It's a draw": "Unentschieden",
+      "New game": "Neues Spiel",
+      "The game is over": "Das Spiel ist vorbei",
+      "Two people are already playing": "Es spielen schon zwei",
+      "Not your turn": "Du bist nicht dran",
+      "That square is taken": "Das Feld ist schon belegt"
+    }
+  },
+  "pt": {
+    "name": "Jogo da velha",
+    "desc": "Duas pessoas jogam em turnos",
+    "lines": {
+      "Tic-tac-toe": "Jogo da velha",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Tap a square to start": "Toque em uma casa para começar",
+      "Your turn": "Sua vez",
+      "Waiting for {p0}": "Esperando {p0}",
+      "the other player": "a outra pessoa",
+      "You won!": "Você ganhou!",
+      "{p0} won": "{p0} ganhou",
+      "It's a draw": "Empate",
+      "New game": "Novo jogo",
+      "The game is over": "O jogo acabou",
+      "Two people are already playing": "Duas pessoas já estão jogando",
+      "Not your turn": "Não é sua vez",
+      "That square is taken": "Essa casa já está ocupada"
+    }
+  },
+  "zh": {
+    "name": "井字棋",
+    "desc": "两人轮流下",
+    "lines": {
+      "Tic-tac-toe": "井字棋",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Tap a square to start": "点按一个格子开始",
+      "Your turn": "轮到你了",
+      "Waiting for {p0}": "等待 {p0}",
+      "the other player": "对方",
+      "You won!": "你赢了！",
+      "{p0} won": "{p0} 赢了",
+      "It's a draw": "平局",
+      "New game": "新游戏",
+      "The game is over": "游戏结束了",
+      "Two people are already playing": "已经有两人在玩了",
+      "Not your turn": "还没轮到你",
+      "That square is taken": "这个格子已被占"
+    }
+  },
+  "ar": {
+    "name": "إكس-أو",
+    "desc": "شخصان يلعبان بالتناوب",
+    "lines": {
+      "Tic-tac-toe": "إكس-أو",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Tap a square to start": "انقر مربعًا للبدء",
+      "Your turn": "دورك",
+      "Waiting for {p0}": "بانتظار {p0}",
+      "the other player": "الطرف الآخر",
+      "You won!": "فزت!",
+      "{p0} won": "فاز {p0}",
+      "It's a draw": "تعادل",
+      "New game": "لعبة جديدة",
+      "The game is over": "انتهت اللعبة",
+      "Two people are already playing": "يلعب شخصان بالفعل",
+      "Not your turn": "ليس دورك",
+      "That square is taken": "هذا المربع مشغول"
+    }
+  }
+}

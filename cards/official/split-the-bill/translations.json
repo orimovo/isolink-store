@@ -1,0 +1,119 @@
+{
+  "es": {
+    "name": "Dividir la cuenta",
+    "desc": "Quién pagó qué, y quién debe",
+    "lines": {
+      "Split the bill": "Dividir la cuenta",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "{p0} each, split {p1} ways": "{p0} cada uno, entre {p1}",
+      "Owes {p0}": "Debe {p0}",
+      "Gets back {p0}": "Recibe {p0}",
+      "All square": "Todo en paz",
+      "What you paid, like 12.50 pizza": "Lo que pagaste, como 12,50 pizza",
+      "Count me in": "Cuenta conmigo",
+      "Undo my last": "Deshacer mi último",
+      "Nothing to undo": "Nada que deshacer",
+      "Start with an amount, like 12.50": "Empieza con una cantidad, como 12,50",
+      "Add what you paid. The card works out who owes what.": "Añade lo que pagaste. La tarjeta calcula quién debe qué.",
+      "That's a lot of payments. Start a new card.": "Son muchos pagos. Empieza una tarjeta nueva."
+    }
+  },
+  "fr": {
+    "name": "Partager l'addition",
+    "desc": "Qui a payé quoi, et qui doit quoi",
+    "lines": {
+      "Split the bill": "Partager l'addition",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "{p0} each, split {p1} ways": "{p0} chacun, divisé en {p1}",
+      "Owes {p0}": "Doit {p0}",
+      "Gets back {p0}": "Récupère {p0}",
+      "All square": "Tout est réglé",
+      "What you paid, like 12.50 pizza": "Ce que tu as payé, par ex. 12,50 pizza",
+      "Count me in": "Je suis partant",
+      "Undo my last": "Annuler mon dernier",
+      "Nothing to undo": "Rien à annuler",
+      "Start with an amount, like 12.50": "Commence par un montant, par ex. 12,50",
+      "Add what you paid. The card works out who owes what.": "Ajoute ce que tu as payé. La carte calcule qui doit quoi.",
+      "That's a lot of payments. Start a new card.": "Ça fait beaucoup de paiements. Commence une nouvelle carte."
+    }
+  },
+  "de": {
+    "name": "Rechnung teilen",
+    "desc": "Wer was bezahlt hat und wer was schuldet",
+    "lines": {
+      "Split the bill": "Rechnung teilen",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Total {p0}": "Gesamt {p0}",
+      "{p0} each, split {p1} ways": "{p0} pro Person, durch {p1} geteilt",
+      "Owes {p0}": "Schuldet {p0}",
+      "Gets back {p0}": "Bekommt {p0} zurück",
+      "All square": "Alles ausgeglichen",
+      "What you paid, like 12.50 pizza": "Was du bezahlt hast, z. B. 12,50 Pizza",
+      "Count me in": "Ich bin dabei",
+      "Undo my last": "Meinen letzten rückgängig",
+      "Nothing to undo": "Nichts rückgängig zu machen",
+      "Start with an amount, like 12.50": "Fang mit einem Betrag an, z. B. 12,50",
+      "Add what you paid. The card works out who owes what.": "Trag ein, was du bezahlt hast. Die Karte rechnet aus, wer wem was schuldet.",
+      "That's a lot of payments. Start a new card.": "Das sind viele Zahlungen. Fang eine neue Karte an."
+    }
+  },
+  "pt": {
+    "name": "Dividir a conta",
+    "desc": "Quem pagou o quê, e quem deve",
+    "lines": {
+      "Split the bill": "Dividir a conta",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "{p0} each, split {p1} ways": "{p0} cada, dividido por {p1}",
+      "Owes {p0}": "Deve {p0}",
+      "Gets back {p0}": "Recebe {p0}",
+      "All square": "Tudo certo",
+      "What you paid, like 12.50 pizza": "O que você pagou, como 12,50 pizza",
+      "Count me in": "Pode contar comigo",
+      "Undo my last": "Desfazer meu último",
+      "Nothing to undo": "Nada para desfazer",
+      "Start with an amount, like 12.50": "Comece com um valor, como 12,50",
+      "Add what you paid. The card works out who owes what.": "Adicione o que você pagou. O cartão calcula quem deve o quê.",
+      "That's a lot of payments. Start a new card.": "São muitos pagamentos. Comece um cartão novo."
+    }
+  },
+  "zh": {
+    "name": "分账",
+    "desc": "谁付了什么，谁欠多少",
+    "lines": {
+      "Split the bill": "分账",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Total {p0}": "共 {p0}",
+      "{p0} each, split {p1} ways": "每人 {p0}，{p1} 人平分",
+      "Owes {p0}": "应付 {p0}",
+      "Gets back {p0}": "应收 {p0}",
+      "All square": "已结清",
+      "What you paid, like 12.50 pizza": "你付了多少，例如 12.50 披萨",
+      "Count me in": "算我一个",
+      "Undo my last": "撤销我的上一笔",
+      "Nothing to undo": "没有可撤销的",
+      "Start with an amount, like 12.50": "以金额开头，例如 12.50",
+      "Add what you paid. The card works out who owes what.": "记下你付的钱。卡片会算出谁欠谁。",
+      "That's a lot of payments. Start a new card.": "付款太多了。新开一张卡片吧。"
+    }
+  },
+  "ar": {
+    "name": "تقسيم الحساب",
+    "desc": "من دفع ماذا، ومن عليه ماذا",
+    "lines": {
+      "Split the bill": "تقسيم الحساب",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Total {p0}": "المجموع {p0}",
+      "{p0} each, split {p1} ways": "{p0} لكل شخص، مقسومة على {p1}",
+      "Owes {p0}": "عليه {p0}",
+      "Gets back {p0}": "له {p0}",
+      "All square": "لا ديون",
+      "What you paid, like 12.50 pizza": "ما دفعته، مثل 12.50 بيتزا",
+      "Count me in": "أنا مشارك",
+      "Undo my last": "تراجع عن آخر دفعة لي",
+      "Nothing to undo": "لا شيء للتراجع عنه",
+      "Start with an amount, like 12.50": "ابدأ بالمبلغ، مثل 12.50",
+      "Add what you paid. The card works out who owes what.": "أضف ما دفعته. تحسب البطاقة من يدين لمن.",
+      "That's a lot of payments. Start a new card.": "هذه دفعات كثيرة. ابدأ بطاقة جديدة."
+    }
+  }
+}

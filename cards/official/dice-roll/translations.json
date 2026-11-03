@@ -1,0 +1,68 @@
+{
+  "es": {
+    "name": "Tirada de dados",
+    "desc": "Todos ven la misma tirada",
+    "lines": {
+      "Dice roll": "Tirada de dados",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Roll": "Tirar",
+      "Tap Roll to throw the dice": "Toca Tirar para lanzar los dados",
+      "{p0} rolled {p1}": "{p0} sacó {p1}"
+    }
+  },
+  "fr": {
+    "name": "Lancer de dés",
+    "desc": "Tout le monde voit le même lancer",
+    "lines": {
+      "Dice roll": "Lancer de dés",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Roll": "Lancer",
+      "Tap Roll to throw the dice": "Touche Lancer pour lancer les dés",
+      "{p0} rolled {p1}": "{p0} a fait {p1}"
+    }
+  },
+  "de": {
+    "name": "Würfeln",
+    "desc": "Alle sehen denselben Wurf",
+    "lines": {
+      "Dice roll": "Würfeln",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Roll": "Würfeln",
+      "Tap Roll to throw the dice": "Tippe auf Würfeln, um zu würfeln",
+      "{p0} rolled {p1}": "{p0} hat eine {p1} gewürfelt"
+    }
+  },
+  "pt": {
+    "name": "Jogar dados",
+    "desc": "Todos veem o mesmo resultado",
+    "lines": {
+      "Dice roll": "Jogar dados",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Roll": "Jogar",
+      "Tap Roll to throw the dice": "Toque em Jogar para lançar os dados",
+      "{p0} rolled {p1}": "{p0} tirou {p1}"
+    }
+  },
+  "zh": {
+    "name": "掷骰子",
+    "desc": "所有人看到同样的点数",
+    "lines": {
+      "Dice roll": "掷骰子",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Roll": "掷",
+      "Tap Roll to throw the dice": "点按“掷”来掷骰子",
+      "{p0} rolled {p1}": "{p0} 掷出了 {p1}"
+    }
+  },
+  "ar": {
+    "name": "رمي النرد",
+    "desc": "يرى الجميع الرمية نفسها",
+    "lines": {
+      "Dice roll": "رمي النرد",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Roll": "ارمِ",
+      "Tap Roll to throw the dice": "انقر «ارمِ» لرمي النرد",
+      "{p0} rolled {p1}": "رمى {p0} الرقم {p1}"
+    }
+  }
+}

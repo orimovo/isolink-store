@@ -1,0 +1,68 @@
+{
+  "es": {
+    "name": "Tablero de píxeles",
+    "desc": "Pintad un dibujo juntos, cuadro a cuadro",
+    "lines": {
+      "Pixel board": "Tablero de píxeles",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Pick a colour, then tap squares. Tap again to clear.": "Elige un color y toca cuadros. Vuelve a tocar para borrar.",
+      "Clear the board": "Borrar el tablero",
+      "{p0} squares painted": "{p0} cuadros pintados"
+    }
+  },
+  "fr": {
+    "name": "Tableau de pixels",
+    "desc": "Peignez une image ensemble, case par case",
+    "lines": {
+      "Pixel board": "Tableau de pixels",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Pick a colour, then tap squares. Tap again to clear.": "Choisissez une couleur, puis touchez des cases. Touchez à nouveau pour effacer.",
+      "Clear the board": "Effacer le tableau",
+      "{p0} squares painted": "{p0} cases peintes"
+    }
+  },
+  "de": {
+    "name": "Pixelbrett",
+    "desc": "Malt gemeinsam ein Bild, Feld für Feld",
+    "lines": {
+      "Pixel board": "Pixelbrett",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Pick a colour, then tap squares. Tap again to clear.": "Wähle eine Farbe und tippe auf Felder. Nochmal tippen löscht.",
+      "Clear the board": "Brett leeren",
+      "{p0} squares painted": "{p0} Felder bemalt"
+    }
+  },
+  "pt": {
+    "name": "Quadro de pixels",
+    "desc": "Pintem um desenho juntos, um quadrado por vez",
+    "lines": {
+      "Pixel board": "Quadro de pixels",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Pick a colour, then tap squares. Tap again to clear.": "Escolha uma cor e toque nos quadrados. Toque de novo para apagar.",
+      "Clear the board": "Limpar o quadro",
+      "{p0} squares painted": "{p0} quadrados pintados"
+    }
+  },
+  "zh": {
+    "name": "像素画板",
+    "desc": "一格一格，一起画一幅画",
+    "lines": {
+      "Pixel board": "像素画板",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Pick a colour, then tap squares. Tap again to clear.": "选一个颜色，然后点格子。再点一次可清除。",
+      "Clear the board": "清空画板",
+      "{p0} squares painted": "已涂 {p0} 格"
+    }
+  },
+  "ar": {
+    "name": "لوحة البكسل",
+    "desc": "ارسموا صورة معًا، مربعًا تلو الآخر",
+    "lines": {
+      "Pixel board": "لوحة البكسل",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Pick a colour, then tap squares. Tap again to clear.": "اختر لونًا ثم اضغط المربعات. اضغط مرة أخرى للمسح.",
+      "Clear the board": "امسح اللوحة",
+      "{p0} squares painted": "{p0} مربعات ملوّنة"
+    }
+  }
+}

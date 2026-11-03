@@ -1,0 +1,98 @@
+{
+  "es": {
+    "name": "Orden de turnos",
+    "desc": "Baraja nombres en un orden justo",
+    "lines": {
+      "Turn order": "Orden de turnos",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Add me": "Añadirme",
+      "Add a name": "Añadir un nombre",
+      "Shuffle": "Barajar",
+      "Clear": "Borrar",
+      "Add names, then shuffle": "Añade nombres y luego baraja",
+      "Shuffled by {p0}": "Barajado por {p0}",
+      "Twenty names at most": "Veinte nombres como mucho",
+      "{p0} is already on the list": "{p0} ya está en la lista"
+    }
+  },
+  "fr": {
+    "name": "Ordre de passage",
+    "desc": "Mélange des noms dans un ordre juste",
+    "lines": {
+      "Turn order": "Ordre de passage",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Add me": "M'ajouter",
+      "Add a name": "Ajouter un nom",
+      "Shuffle": "Mélanger",
+      "Clear": "Effacer",
+      "Add names, then shuffle": "Ajoute des noms, puis mélange",
+      "Shuffled by {p0}": "Mélangé par {p0}",
+      "Twenty names at most": "Vingt noms au plus",
+      "{p0} is already on the list": "{p0} est déjà sur la liste"
+    }
+  },
+  "de": {
+    "name": "Reihenfolge",
+    "desc": "Mischt Namen in eine faire Reihenfolge",
+    "lines": {
+      "Turn order": "Reihenfolge",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Add me": "Mich hinzufügen",
+      "Add a name": "Namen hinzufügen",
+      "Shuffle": "Mischen",
+      "Clear": "Löschen",
+      "Add names, then shuffle": "Namen hinzufügen, dann mischen",
+      "Shuffled by {p0}": "Gemischt von {p0}",
+      "Twenty names at most": "Höchstens zwanzig Namen",
+      "{p0} is already on the list": "{p0} steht schon auf der Liste"
+    }
+  },
+  "pt": {
+    "name": "Ordem da vez",
+    "desc": "Embaralha nomes numa ordem justa",
+    "lines": {
+      "Turn order": "Ordem da vez",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Add me": "Me adicionar",
+      "Add a name": "Adicionar um nome",
+      "Shuffle": "Embaralhar",
+      "Clear": "Limpar",
+      "Add names, then shuffle": "Adicione nomes e depois embaralhe",
+      "Shuffled by {p0}": "Embaralhado por {p0}",
+      "Twenty names at most": "No máximo vinte nomes",
+      "{p0} is already on the list": "{p0} já está na lista"
+    }
+  },
+  "zh": {
+    "name": "轮流顺序",
+    "desc": "把名字打乱成公平的顺序",
+    "lines": {
+      "Turn order": "轮流顺序",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Add me": "加上我",
+      "Add a name": "添加名字",
+      "Shuffle": "打乱",
+      "Clear": "清除",
+      "Add names, then shuffle": "先添加名字，再打乱",
+      "Shuffled by {p0}": "由 {p0} 打乱",
+      "Twenty names at most": "最多二十个名字",
+      "{p0} is already on the list": "{p0} 已在名单上"
+    }
+  },
+  "ar": {
+    "name": "ترتيب الأدوار",
+    "desc": "يخلط الأسماء في ترتيب عادل",
+    "lines": {
+      "Turn order": "ترتيب الأدوار",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Add me": "أضفني",
+      "Add a name": "أضف اسمًا",
+      "Shuffle": "خلط",
+      "Clear": "مسح",
+      "Add names, then shuffle": "أضف الأسماء، ثم اخلطها",
+      "Shuffled by {p0}": "خلطها {p0}",
+      "Twenty names at most": "عشرون اسمًا على الأكثر",
+      "{p0} is already on the list": "{p0} موجود في القائمة"
+    }
+  }
+}

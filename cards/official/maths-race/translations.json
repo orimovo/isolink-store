@@ -1,0 +1,104 @@
+{
+  "es": {
+    "name": "Carrera de cálculo",
+    "desc": "La primera respuesta correcta puntúa",
+    "lines": {
+      "Maths race": "Carrera de cálculo",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Start the race": "Empezar la carrera",
+      "Ten sums. The first right answer scores.": "Diez cuentas. La primera respuesta correcta puntúa.",
+      "Question {p0} of {p1}": "Pregunta {p0} de {p1}",
+      "{p0} got {p1}": "{p0} acertó {p1}",
+      "Wrong: wait for the next one": "Incorrecto: espera a la siguiente",
+      "You're out for this one": "Quedas fuera en esta",
+      "{p0} wins with {p1}": "{p0} gana con {p1}",
+      "Race again": "Otra carrera",
+      "Start the race first": "Primero empieza la carrera"
+    }
+  },
+  "fr": {
+    "name": "Course de calcul",
+    "desc": "La première bonne réponse marque",
+    "lines": {
+      "Maths race": "Course de calcul",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Start the race": "Lancer la course",
+      "Ten sums. The first right answer scores.": "Dix calculs. La première bonne réponse marque.",
+      "Question {p0} of {p1}": "Question {p0} sur {p1}",
+      "{p0} got {p1}": "{p0} a trouvé {p1}",
+      "Wrong: wait for the next one": "Faux : attendez la suivante",
+      "You're out for this one": "Vous êtes hors jeu pour celle-ci",
+      "{p0} wins with {p1}": "{p0} gagne avec {p1}",
+      "Race again": "Recommencer la course",
+      "Start the race first": "Lancez d'abord la course"
+    }
+  },
+  "de": {
+    "name": "Rechenrennen",
+    "desc": "Die erste richtige Antwort punktet",
+    "lines": {
+      "Maths race": "Rechenrennen",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Start the race": "Rennen starten",
+      "Ten sums. The first right answer scores.": "Zehn Rechnungen. Die erste richtige Antwort punktet.",
+      "Question {p0} of {p1}": "Frage {p0} von {p1}",
+      "{p0} got {p1}": "{p0} hatte {p1}",
+      "Wrong: wait for the next one": "Falsch: Warte auf die nächste",
+      "You're out for this one": "Bei dieser bist du raus",
+      "{p0} wins with {p1}": "{p0} gewinnt mit {p1}",
+      "Race again": "Noch ein Rennen",
+      "Start the race first": "Starte zuerst das Rennen"
+    }
+  },
+  "pt": {
+    "name": "Corrida de contas",
+    "desc": "A primeira resposta certa pontua",
+    "lines": {
+      "Maths race": "Corrida de contas",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Start the race": "Começar a corrida",
+      "Ten sums. The first right answer scores.": "Dez contas. A primeira resposta certa pontua.",
+      "Question {p0} of {p1}": "Pergunta {p0} de {p1}",
+      "{p0} got {p1}": "{p0} acertou {p1}",
+      "Wrong: wait for the next one": "Errado: espere a próxima",
+      "You're out for this one": "Você está fora desta",
+      "{p0} wins with {p1}": "{p0} vence com {p1}",
+      "Race again": "Correr de novo",
+      "Start the race first": "Comece a corrida primeiro"
+    }
+  },
+  "zh": {
+    "name": "算术竞赛",
+    "desc": "第一个答对的得分",
+    "lines": {
+      "Maths race": "算术竞赛",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Start the race": "开始比赛",
+      "Ten sums. The first right answer scores.": "十道算术题，第一个答对的得分。",
+      "Question {p0} of {p1}": "第 {p0} 题，共 {p1} 题",
+      "{p0} got {p1}": "{p0} 答对了 {p1}",
+      "Wrong: wait for the next one": "答错了：等下一题",
+      "You're out for this one": "这题你出局了",
+      "{p0} wins with {p1}": "{p0} 以 {p1} 分获胜",
+      "Race again": "再比一次",
+      "Start the race first": "请先开始比赛"
+    }
+  },
+  "ar": {
+    "name": "سباق الحساب",
+    "desc": "أول إجابة صحيحة تكسب",
+    "lines": {
+      "Maths race": "سباق الحساب",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Start the race": "ابدأ السباق",
+      "Ten sums. The first right answer scores.": "عشر عمليات حسابية. أول إجابة صحيحة تكسب.",
+      "Question {p0} of {p1}": "السؤال {p0} من {p1}",
+      "{p0} got {p1}": "{p0} أجاب {p1}",
+      "Wrong: wait for the next one": "خطأ: انتظر السؤال التالي",
+      "You're out for this one": "أنت خارج هذا السؤال",
+      "{p0} wins with {p1}": "{p0} يفوز بـ {p1}",
+      "Race again": "سباق جديد",
+      "Start the race first": "ابدأ السباق أولًا"
+    }
+  }
+}

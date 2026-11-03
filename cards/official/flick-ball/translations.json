@@ -1,0 +1,56 @@
+{
+  "es": {
+    "name": "Lanza la pelota",
+    "desc": "Lanza una pelota y mírala rebotar",
+    "lines": {
+      "Flick ball": "Lanza la pelota",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Drag the ball and flick it": "Arrastra la pelota y lánzala"
+    }
+  },
+  "fr": {
+    "name": "Lance la balle",
+    "desc": "Lance une balle et regarde-la rebondir",
+    "lines": {
+      "Flick ball": "Lance la balle",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Drag the ball and flick it": "Fais glisser la balle et lance-la"
+    }
+  },
+  "de": {
+    "name": "Ball schnippen",
+    "desc": "Schnipp einen Ball umher und sieh ihm beim Abprallen zu",
+    "lines": {
+      "Flick ball": "Ball schnippen",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Drag the ball and flick it": "Zieh den Ball und schnipp ihn weg"
+    }
+  },
+  "pt": {
+    "name": "Lançar bola",
+    "desc": "Lance uma bola e veja-a saltar",
+    "lines": {
+      "Flick ball": "Lançar bola",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Drag the ball and flick it": "Arraste a bola e lance-a"
+    }
+  },
+  "zh": {
+    "name": "弹球",
+    "desc": "弹动小球，看它弹来弹去",
+    "lines": {
+      "Flick ball": "弹球",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Drag the ball and flick it": "拖动小球把它弹出去"
+    }
+  },
+  "ar": {
+    "name": "نطّ الكرة",
+    "desc": "ألقِ الكرة وشاهدها ترتد",
+    "lines": {
+      "Flick ball": "نطّ الكرة",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Drag the ball and flick it": "اسحب الكرة وألقِ بها"
+    }
+  }
+}

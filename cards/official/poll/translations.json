@@ -1,0 +1,71 @@
+{
+  "es": {
+    "name": "Encuesta",
+    "desc": "Una pregunta, un voto cada uno, resultados en directo",
+    "lines": {
+      "Poll": "Encuesta",
+      "Where should dinner be?": "¿Dónde cenamos?",
+      "Burgers": "Hamburguesas",
+      "Something else": "Otra cosa",
+      "Results update as people vote.": "Los resultados cambian con cada voto."
+    }
+  },
+  "fr": {
+    "name": "Sondage",
+    "desc": "Une question, un vote chacun, résultats en direct",
+    "lines": {
+      "Poll": "Sondage",
+      "Where should dinner be?": "On dîne où ?",
+      "Something else": "Autre chose",
+      "Results update as people vote.": "Les résultats changent à chaque vote."
+    }
+  },
+  "de": {
+    "name": "Umfrage",
+    "desc": "Eine Frage, eine Stimme pro Person, Ergebnisse live",
+    "lines": {
+      "Poll": "Umfrage",
+      "Where should dinner be?": "Wo soll es Abendessen geben?",
+      "Burgers": "Burger",
+      "Something else": "Etwas anderes",
+      "Results update as people vote.": "Die Ergebnisse ändern sich mit jeder Stimme."
+    }
+  },
+  "pt": {
+    "name": "Enquete",
+    "desc": "Uma pergunta, um voto cada, resultados ao vivo",
+    "lines": {
+      "Poll": "Enquete",
+      "Where should dinner be?": "Onde vai ser o jantar?",
+      "Burgers": "Hambúrguer",
+      "Something else": "Outra coisa",
+      "Results update as people vote.": "Os resultados mudam a cada voto."
+    }
+  },
+  "zh": {
+    "name": "投票",
+    "desc": "一个问题，每人一票，实时结果",
+    "lines": {
+      "Poll": "投票",
+      "Where should dinner be?": "晚饭吃什么？",
+      "Pizza": "披萨",
+      "Curry": "咖喱",
+      "Burgers": "汉堡",
+      "Something else": "其他",
+      "Results update as people vote.": "每有人投票，结果就会更新。"
+    }
+  },
+  "ar": {
+    "name": "استطلاع",
+    "desc": "سؤال واحد، صوت واحد لكل شخص، نتائج مباشرة",
+    "lines": {
+      "Poll": "استطلاع",
+      "Where should dinner be?": "أين نتعشى؟",
+      "Pizza": "بيتزا",
+      "Curry": "كاري",
+      "Burgers": "برغر",
+      "Something else": "شيء آخر",
+      "Results update as people vote.": "تتحدث النتائج مع كل صوت."
+    }
+  }
+}
