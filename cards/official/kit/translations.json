@@ -1,0 +1,121 @@
+{
+  "es": {
+    "name": "Lista de equipo",
+    "desc": "Qué llevar a una salida",
+    "lines": {
+      "Kit list": "Lista de equipo",
+      "Tick things off once they're packed.": "Marca lo que ya esté en la mochila.",
+      "Everyone brings": "Cada uno lleva",
+      "Water": "Agua",
+      "Snacks": "Algo de picar",
+      "Waterproof jacket": "Chaqueta impermeable",
+      "Warm layer": "Capa de abrigo",
+      "Phone charger": "Cargador",
+      "Head torch": "Linterna frontal",
+      "Shared kit": "Material común",
+      "Tent": "Tienda",
+      "Stove and fuel": "Hornillo y combustible",
+      "First aid kit": "Botiquín",
+      "Map and compass": "Mapa y brújula"
+    }
+  },
+  "fr": {
+    "name": "Liste de matériel",
+    "desc": "Quoi emporter pour une sortie",
+    "lines": {
+      "Kit list": "Liste de matériel",
+      "Tick things off once they're packed.": "Coche ce qui est dans le sac.",
+      "Everyone brings": "Chacun apporte",
+      "Water": "Eau",
+      "Snacks": "Des en-cas",
+      "Waterproof jacket": "Veste imperméable",
+      "Warm layer": "Couche chaude",
+      "Phone charger": "Chargeur",
+      "Head torch": "Lampe frontale",
+      "Shared kit": "Matériel commun",
+      "Tent": "Tente",
+      "Stove and fuel": "Réchaud et combustible",
+      "First aid kit": "Trousse de secours",
+      "Map and compass": "Carte et boussole"
+    }
+  },
+  "de": {
+    "name": "Packliste",
+    "desc": "Was für eine Tour mit muss",
+    "lines": {
+      "Kit list": "Packliste",
+      "Tick things off once they're packed.": "Hake ab, was gepackt ist.",
+      "Everyone brings": "Alle bringen mit",
+      "Water": "Wasser",
+      "Waterproof jacket": "Regenjacke",
+      "Warm layer": "Warme Schicht",
+      "Phone charger": "Ladegerät",
+      "Head torch": "Stirnlampe",
+      "Shared kit": "Gemeinsame Ausrüstung",
+      "Tent": "Zelt",
+      "Stove and fuel": "Kocher und Brennstoff",
+      "First aid kit": "Erste-Hilfe-Set",
+      "Map and compass": "Karte und Kompass"
+    }
+  },
+  "pt": {
+    "name": "Lista de equipamento",
+    "desc": "O que levar numa viagem",
+    "lines": {
+      "Kit list": "Lista de equipamento",
+      "Tick things off once they're packed.": "Marque o que já estiver na mochila.",
+      "Everyone brings": "Cada um leva",
+      "Water": "Água",
+      "Snacks": "Petiscos",
+      "Waterproof jacket": "Jaqueta impermeável",
+      "Warm layer": "Agasalho",
+      "Phone charger": "Carregador",
+      "Head torch": "Lanterna de cabeça",
+      "Shared kit": "Equipamento comum",
+      "Tent": "Barraca",
+      "Stove and fuel": "Fogareiro e combustível",
+      "First aid kit": "Kit de primeiros socorros",
+      "Map and compass": "Mapa e bússola"
+    }
+  },
+  "zh": {
+    "name": "装备清单",
+    "desc": "出行要带什么",
+    "lines": {
+      "Kit list": "装备清单",
+      "Tick things off once they're packed.": "装好了就勾掉。",
+      "Everyone brings": "每人自带",
+      "Water": "水",
+      "Snacks": "零食",
+      "Waterproof jacket": "防水外套",
+      "Warm layer": "保暖层",
+      "Phone charger": "充电器",
+      "Head torch": "头灯",
+      "Shared kit": "公用装备",
+      "Tent": "帐篷",
+      "Stove and fuel": "炉具和燃料",
+      "First aid kit": "急救包",
+      "Map and compass": "地图和指南针"
+    }
+  },
+  "ar": {
+    "name": "قائمة المعدات",
+    "desc": "ما يجب أخذه في رحلة",
+    "lines": {
+      "Kit list": "قائمة المعدات",
+      "Tick things off once they're packed.": "اشطب ما تم توضيبه.",
+      "Everyone brings": "يحضر كل شخص",
+      "Water": "ماء",
+      "Snacks": "وجبات خفيفة",
+      "Waterproof jacket": "سترة مقاومة للماء",
+      "Warm layer": "طبقة دافئة",
+      "Phone charger": "شاحن الهاتف",
+      "Head torch": "مصباح رأس",
+      "Shared kit": "معدات مشتركة",
+      "Tent": "خيمة",
+      "Stove and fuel": "موقد ووقود",
+      "First aid kit": "حقيبة إسعافات أولية",
+      "Map and compass": "خريطة وبوصلة"
+    }
+  }
+}

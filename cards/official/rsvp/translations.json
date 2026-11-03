@@ -1,0 +1,91 @@
+{
+  "es": {
+    "name": "Confirmar asistencia",
+    "desc": "Sí, no o quizá, con una nota",
+    "lines": {
+      "You're invited": "Estás invitado",
+      "**Saturday, 7pm.** Add the place and any details here.": "**Sábado, 19:00.** Añade el lugar y los detalles aquí.",
+      "Are you coming?": "¿Vienes?",
+      "Yes": "Sí",
+      "Maybe": "Quizás",
+      "Anything the host should know?": "¿Algo que deba saber quien organiza?",
+      "Food needs, a plus one, running late": "Comida, un acompañante, si llegas tarde",
+      "Send my answer": "Enviar mi respuesta"
+    }
+  },
+  "fr": {
+    "name": "Réponse à l'invitation",
+    "desc": "Oui, non ou peut-être, avec une note",
+    "lines": {
+      "You're invited": "Tu es invité",
+      "**Saturday, 7pm.** Add the place and any details here.": "**Samedi, 19 h.** Ajoute le lieu et les détails ici.",
+      "Are you coming?": "Tu viens ?",
+      "Yes": "Oui",
+      "Maybe": "Peut-être",
+      "No": "Non",
+      "Anything the host should know?": "Quelque chose à dire à l'hôte ?",
+      "Food needs, a plus one, running late": "Régime alimentaire, un +1, un retard",
+      "Send my answer": "Envoyer ma réponse"
+    }
+  },
+  "de": {
+    "name": "Zu- oder Absage",
+    "desc": "Ja, nein oder vielleicht, mit Notiz",
+    "lines": {
+      "You're invited": "Du bist eingeladen",
+      "**Saturday, 7pm.** Add the place and any details here.": "**Samstag, 19 Uhr.** Ort und Details hier ergänzen.",
+      "Are you coming?": "Kommst du?",
+      "Yes": "Ja",
+      "Maybe": "Vielleicht",
+      "No": "Nein",
+      "Anything the host should know?": "Sollen die Gastgebenden etwas wissen?",
+      "Food needs, a plus one, running late": "Essenswünsche, eine Begleitung, Verspätung",
+      "Send my answer": "Meine Antwort senden"
+    }
+  },
+  "pt": {
+    "name": "Confirmação de presença",
+    "desc": "Sim, não ou talvez, com uma nota",
+    "lines": {
+      "You're invited": "Você está convidado",
+      "**Saturday, 7pm.** Add the place and any details here.": "**Sábado, 19h.** Adicione o local e os detalhes aqui.",
+      "Are you coming?": "Você vem?",
+      "Yes": "Sim",
+      "Maybe": "Talvez",
+      "No": "Não",
+      "Anything the host should know?": "Algo que quem organiza deva saber?",
+      "Food needs, a plus one, running late": "Restrições alimentares, um acompanhante, atraso",
+      "Send my answer": "Enviar minha resposta"
+    }
+  },
+  "zh": {
+    "name": "出席回复",
+    "desc": "去、不去或待定，附一句话",
+    "lines": {
+      "You're invited": "诚邀你参加",
+      "**Saturday, 7pm.** Add the place and any details here.": "**周六晚上 7 点。** 在这里补充地点和细节。",
+      "Are you coming?": "你来吗？",
+      "Yes": "是",
+      "Maybe": "也许",
+      "No": "否",
+      "Anything the host should know?": "有什么要告诉主人的吗？",
+      "Food needs, a plus one, running late": "饮食要求、带人同来、会迟到",
+      "Send my answer": "发送我的回答"
+    }
+  },
+  "ar": {
+    "name": "تأكيد الحضور",
+    "desc": "نعم أو لا أو ربما، مع ملاحظة",
+    "lines": {
+      "You're invited": "أنت مدعو",
+      "**Saturday, 7pm.** Add the place and any details here.": "**السبت، 7 مساءً.** أضف المكان والتفاصيل هنا.",
+      "Are you coming?": "هل ستأتي؟",
+      "Yes": "نعم",
+      "Maybe": "ربما",
+      "No": "لا",
+      "Anything the host should know?": "هل من شيء يجب أن يعرفه المضيف؟",
+      "Food needs, a plus one, running late": "احتياجات الطعام، مرافق، تأخير",
+      "Send my answer": "أرسل إجابتي"
+    }
+  }
+}

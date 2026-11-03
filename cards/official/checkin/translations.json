@@ -1,0 +1,74 @@
+{
+  "es": {
+    "name": "Dar señales",
+    "desc": "Di que estás bien, o pide ayuda",
+    "lines": {
+      "Check in": "Dar señales",
+      "Tap one so everyone knows how you are.": "Toca una para que todos sepan cómo estás.",
+      "I'm safe": "Estoy bien",
+      "Need help": "Necesito ayuda",
+      "Add a note": "Añadir una nota",
+      "Where you are, what's happening": "Dónde estás, qué pasa"
+    }
+  },
+  "fr": {
+    "name": "Donner des nouvelles",
+    "desc": "Dire que tout va bien, ou demander de l'aide",
+    "lines": {
+      "Check in": "Donner des nouvelles",
+      "Tap one so everyone knows how you are.": "Touche un bouton pour que tout le monde sache comment tu vas.",
+      "I'm safe": "Je suis en sécurité",
+      "Need help": "Besoin d'aide",
+      "Add a note": "Ajouter une note",
+      "Where you are, what's happening": "Où tu es, ce qui se passe"
+    }
+  },
+  "de": {
+    "name": "Melden",
+    "desc": "Sagen, dass alles gut ist, oder um Hilfe bitten",
+    "lines": {
+      "Check in": "Melden",
+      "Tap one so everyone knows how you are.": "Tippe auf eins, damit alle wissen, wie es dir geht.",
+      "I'm safe": "Mir geht's gut",
+      "Need help": "Brauche Hilfe",
+      "Add a note": "Notiz hinzufügen",
+      "Where you are, what's happening": "Wo du bist, was los ist"
+    }
+  },
+  "pt": {
+    "name": "Dar notícias",
+    "desc": "Diga que está tudo bem, ou peça ajuda",
+    "lines": {
+      "Check in": "Dar notícias",
+      "Tap one so everyone knows how you are.": "Toque em um para todos saberem como você está.",
+      "I'm safe": "Estou bem",
+      "Need help": "Preciso de ajuda",
+      "Add a note": "Adicionar uma nota",
+      "Where you are, what's happening": "Onde você está, o que está acontecendo"
+    }
+  },
+  "zh": {
+    "name": "报平安",
+    "desc": "报平安，或求助",
+    "lines": {
+      "Check in": "报平安",
+      "Tap one so everyone knows how you are.": "点一下，让大家知道你的情况。",
+      "I'm safe": "我很安全",
+      "Need help": "需要帮助",
+      "Add a note": "添加备注",
+      "Where you are, what's happening": "你在哪里，发生了什么"
+    }
+  },
+  "ar": {
+    "name": "طمأنة",
+    "desc": "قل إنك بخير، أو اطلب المساعدة",
+    "lines": {
+      "Check in": "طمأنة",
+      "Tap one so everyone knows how you are.": "اضغط على أحدها ليعرف الجميع كيف حالك.",
+      "I'm safe": "أنا بخير",
+      "Need help": "أحتاج مساعدة",
+      "Add a note": "أضف ملاحظة",
+      "Where you are, what's happening": "أين أنت، وماذا يحدث"
+    }
+  }
+}

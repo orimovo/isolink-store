@@ -1,0 +1,134 @@
+{
+  "es": {
+    "name": "Piedra, papel o tijera",
+    "desc": "Dos personas eligen en secreto",
+    "lines": {
+      "Rock paper scissors": "Piedra, papel o tijera",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Rock": "Piedra",
+      "Paper": "Papel",
+      "Scissors": "Tijera",
+      "Pick one. It stays hidden until both have picked.": "Elige una. Queda oculta hasta que elijan los dos.",
+      "You picked {p0}. Waiting for the other player.": "Elegiste {p0}. Esperando a la otra persona.",
+      "{p0} has picked": "{p0} ya ha elegido",
+      "You've already picked": "Ya has elegido",
+      "Two people are already playing": "Ya juegan dos personas",
+      "Two people are playing": "Están jugando dos personas",
+      "You won!": "¡Ganaste!",
+      "{p0} won": "{p0} ganó",
+      "It's a draw": "Empate",
+      "the other player": "la otra persona",
+      "New game": "Nueva partida"
+    }
+  },
+  "fr": {
+    "name": "Pierre-feuille-ciseaux",
+    "desc": "Deux joueurs choisissent en secret",
+    "lines": {
+      "Rock paper scissors": "Pierre-feuille-ciseaux",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Rock": "Pierre",
+      "Paper": "Papier",
+      "Scissors": "Ciseaux",
+      "Pick one. It stays hidden until both have picked.": "Choisis. Ça reste caché jusqu'à ce que les deux aient choisi.",
+      "You picked {p0}. Waiting for the other player.": "Tu as choisi {p0}. En attente de l'autre joueur.",
+      "{p0} has picked": "{p0} a choisi",
+      "You've already picked": "Tu as déjà choisi",
+      "Two people are already playing": "Deux personnes jouent déjà",
+      "Two people are playing": "Deux personnes jouent",
+      "You won!": "Tu as gagné !",
+      "{p0} won": "{p0} a gagné",
+      "It's a draw": "Match nul",
+      "the other player": "l'autre personne",
+      "New game": "Nouvelle partie"
+    }
+  },
+  "de": {
+    "name": "Schere, Stein, Papier",
+    "desc": "Zwei Personen wählen verdeckt",
+    "lines": {
+      "Rock paper scissors": "Schere, Stein, Papier",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Rock": "Stein",
+      "Paper": "Papier",
+      "Scissors": "Schere",
+      "Pick one. It stays hidden until both have picked.": "Wähle eins. Es bleibt verdeckt, bis beide gewählt haben.",
+      "You picked {p0}. Waiting for the other player.": "Du hast {p0} gewählt. Warte auf die andere Person.",
+      "{p0} has picked": "{p0} hat gewählt",
+      "You've already picked": "Du hast schon gewählt",
+      "Two people are already playing": "Es spielen schon zwei",
+      "Two people are playing": "Zwei Personen spielen",
+      "You won!": "Du hast gewonnen!",
+      "{p0} won": "{p0} hat gewonnen",
+      "It's a draw": "Unentschieden",
+      "the other player": "die andere Person",
+      "New game": "Neues Spiel"
+    }
+  },
+  "pt": {
+    "name": "Pedra, papel e tesoura",
+    "desc": "Duas pessoas escolhem em segredo",
+    "lines": {
+      "Rock paper scissors": "Pedra, papel e tesoura",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Rock": "Pedra",
+      "Paper": "Papel",
+      "Scissors": "Tesoura",
+      "Pick one. It stays hidden until both have picked.": "Escolha um. Fica escondido até os dois escolherem.",
+      "You picked {p0}. Waiting for the other player.": "Você escolheu {p0}. Esperando a outra pessoa.",
+      "{p0} has picked": "{p0} já escolheu",
+      "You've already picked": "Você já escolheu",
+      "Two people are already playing": "Duas pessoas já estão jogando",
+      "Two people are playing": "Duas pessoas estão jogando",
+      "You won!": "Você ganhou!",
+      "{p0} won": "{p0} ganhou",
+      "It's a draw": "Empate",
+      "the other player": "a outra pessoa",
+      "New game": "Novo jogo"
+    }
+  },
+  "zh": {
+    "name": "石头剪刀布",
+    "desc": "两人秘密出拳",
+    "lines": {
+      "Rock paper scissors": "石头剪刀布",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Rock": "石头",
+      "Paper": "纸张",
+      "Scissors": "剪刀",
+      "Pick one. It stays hidden until both have picked.": "选一个。双方都选好之前不会显示。",
+      "You picked {p0}. Waiting for the other player.": "你选了 {p0}。正在等另一位玩家。",
+      "{p0} has picked": "{p0} 已选好",
+      "You've already picked": "你已经选过了",
+      "Two people are already playing": "已经有两人在玩了",
+      "Two people are playing": "已有两人在玩",
+      "You won!": "你赢了！",
+      "{p0} won": "{p0} 赢了",
+      "It's a draw": "平局",
+      "the other player": "对方",
+      "New game": "新游戏"
+    }
+  },
+  "ar": {
+    "name": "حجر ورقة مقص",
+    "desc": "لاعبان يختاران سرًا",
+    "lines": {
+      "Rock paper scissors": "حجر ورقة مقص",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Rock": "حجر",
+      "Paper": "ورق",
+      "Scissors": "مقص",
+      "Pick one. It stays hidden until both have picked.": "اختر واحدًا. يبقى مخفيًا حتى يختار الاثنان.",
+      "You picked {p0}. Waiting for the other player.": "اخترت {p0}. بانتظار اللاعب الآخر.",
+      "{p0} has picked": "{p0} اختار",
+      "You've already picked": "لقد اخترت بالفعل",
+      "Two people are already playing": "يلعب شخصان بالفعل",
+      "Two people are playing": "شخصان يلعبان",
+      "You won!": "فزت!",
+      "{p0} won": "فاز {p0}",
+      "It's a draw": "تعادل",
+      "the other player": "الطرف الآخر",
+      "New game": "لعبة جديدة"
+    }
+  }
+}

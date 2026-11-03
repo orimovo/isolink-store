@@ -1,0 +1,66 @@
+{
+  "es": {
+    "name": "Cuenta atrás",
+    "desc": "Cuenta atrás hasta una hora",
+    "lines": {
+      "Countdown": "Cuenta atrás",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Until {p0}": "Hasta {p0}",
+      "{p0} days": "{p0} días",
+      "It's time!": "¡Es la hora!"
+    }
+  },
+  "fr": {
+    "name": "Compte à rebours",
+    "desc": "Compte jusqu'à une heure donnée",
+    "lines": {
+      "Countdown": "Compte à rebours",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Until {p0}": "Jusqu'à {p0}",
+      "{p0} days": "{p0} jours",
+      "It's time!": "C'est l'heure !"
+    }
+  },
+  "de": {
+    "desc": "Zählt bis zu einem Zeitpunkt herunter",
+    "lines": {
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Until {p0}": "Bis {p0}",
+      "{p0} days": "{p0} Tage",
+      "It's time!": "Es ist so weit!"
+    }
+  },
+  "pt": {
+    "name": "Contagem regressiva",
+    "desc": "Faz a contagem até um horário",
+    "lines": {
+      "Countdown": "Contagem regressiva",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Until {p0}": "Até {p0}",
+      "{p0} days": "{p0} dias",
+      "It's time!": "Chegou a hora!"
+    }
+  },
+  "zh": {
+    "name": "倒计时",
+    "desc": "倒数到某个时间",
+    "lines": {
+      "Countdown": "倒计时",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Until {p0}": "直到 {p0}",
+      "{p0} days": "{p0} 天",
+      "It's time!": "时间到了！"
+    }
+  },
+  "ar": {
+    "name": "عدّ تنازلي",
+    "desc": "يعدّ تنازليًا حتى موعد",
+    "lines": {
+      "Countdown": "عدّ تنازلي",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Until {p0}": "حتى {p0}",
+      "{p0} days": "{p0} أيام",
+      "It's time!": "حان الوقت!"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "es": {
+    "name": "Temporizador",
+    "desc": "Una cuenta atrás compartida que cualquiera puede iniciar",
+    "lines": {
+      "Timer": "Temporizador",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Pick a time to start": "Elige un tiempo para empezar",
+      "Time's up!": "¡Se acabó el tiempo!",
+      "Started by {p0}": "Iniciado por {p0}",
+      "Stop": "Dejar de hacerlo"
+    }
+  },
+  "fr": {
+    "name": "Minuteur",
+    "desc": "Un compte à rebours partagé que tout le monde peut lancer",
+    "lines": {
+      "Timer": "Minuteur",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Pick a time to start": "Choisis une durée pour lancer",
+      "Time's up!": "C'est l'heure !",
+      "Started by {p0}": "Lancé par {p0}",
+      "Stop": "Arrêter"
+    }
+  },
+  "de": {
+    "desc": "Ein gemeinsamer Countdown, den alle starten können",
+    "lines": {
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Pick a time to start": "Wähle eine Zeit zum Starten",
+      "{p0} min": "{p0} Min.",
+      "Time's up!": "Die Zeit ist um!",
+      "Started by {p0}": "Gestartet von {p0}",
+      "Stop": "Beenden"
+    }
+  },
+  "pt": {
+    "desc": "Uma contagem regressiva compartilhada que qualquer um pode iniciar",
+    "lines": {
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Pick a time to start": "Escolha um tempo para começar",
+      "Time's up!": "Acabou o tempo!",
+      "Started by {p0}": "Iniciado por {p0}",
+      "Stop": "Parar"
+    }
+  },
+  "zh": {
+    "name": "计时器",
+    "desc": "大家都能启动的共享倒计时",
+    "lines": {
+      "Timer": "计时器",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Pick a time to start": "选择时长开始",
+      "{p0} min": "{p0} 分钟",
+      "Time's up!": "时间到！",
+      "Started by {p0}": "由 {p0} 开始",
+      "Stop": "停止"
+    }
+  },
+  "ar": {
+    "name": "مؤقت",
+    "desc": "عد تنازلي مشترك يمكن لأي أحد بدؤه",
+    "lines": {
+      "Timer": "مؤقت",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Pick a time to start": "اختر مدة للبدء",
+      "{p0} min": "{p0} د",
+      "Time's up!": "انتهى الوقت!",
+      "Started by {p0}": "بدأه {p0}",
+      "Stop": "إيقاف"
+    }
+  }
+}

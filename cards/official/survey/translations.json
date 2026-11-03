@@ -1,0 +1,92 @@
+{
+  "es": {
+    "name": "Encuesta rápida",
+    "desc": "Estrellas, qué funcionó y qué cambiar",
+    "lines": {
+      "Quick survey": "Encuesta rápida",
+      "How did it go?": "¿Cómo fue?",
+      "What worked?": "¿Qué funcionó?",
+      "The place": "El lugar",
+      "The time": "La hora",
+      "The people": "La gente",
+      "The food": "La comida",
+      "What would make it better?": "¿Qué lo mejoraría?",
+      "Send answers": "Enviar respuestas"
+    }
+  },
+  "fr": {
+    "name": "Petit sondage",
+    "desc": "Des étoiles, ce qui a marché et quoi changer",
+    "lines": {
+      "Quick survey": "Petit sondage",
+      "How did it go?": "Comment ça s'est passé ?",
+      "What worked?": "Qu'est-ce qui a marché ?",
+      "The place": "Le lieu",
+      "The time": "L'heure",
+      "The people": "Les gens",
+      "The food": "La nourriture",
+      "What would make it better?": "Qu'est-ce qui l'améliorerait ?",
+      "Send answers": "Envoyer les réponses"
+    }
+  },
+  "de": {
+    "name": "Kurze Umfrage",
+    "desc": "Sterne, was gut lief und was anders sein soll",
+    "lines": {
+      "Quick survey": "Kurze Umfrage",
+      "How did it go?": "Wie lief es?",
+      "What worked?": "Was hat gut geklappt?",
+      "The place": "Der Ort",
+      "The time": "Die Zeit",
+      "The people": "Die Leute",
+      "The food": "Das Essen",
+      "What would make it better?": "Was würde es besser machen?",
+      "Send answers": "Antworten senden"
+    }
+  },
+  "pt": {
+    "name": "Pesquisa rápida",
+    "desc": "Estrelas, o que funcionou e o que mudar",
+    "lines": {
+      "Quick survey": "Pesquisa rápida",
+      "How did it go?": "Como foi?",
+      "What worked?": "O que funcionou?",
+      "The place": "O lugar",
+      "The time": "O horário",
+      "The people": "As pessoas",
+      "The food": "A comida",
+      "What would make it better?": "O que deixaria melhor?",
+      "Send answers": "Enviar respostas"
+    }
+  },
+  "zh": {
+    "name": "快速调查",
+    "desc": "星级、哪些不错、哪些要改",
+    "lines": {
+      "Quick survey": "快速调查",
+      "How did it go?": "进展如何？",
+      "What worked?": "哪些方面不错？",
+      "The place": "地点",
+      "The time": "时间",
+      "The people": "人",
+      "The food": "食物",
+      "What would make it better?": "怎样会更好？",
+      "Send answers": "发送回答"
+    }
+  },
+  "ar": {
+    "name": "استبيان سريع",
+    "desc": "نجوم، وما نجح، وما يجب تغييره",
+    "lines": {
+      "Quick survey": "استبيان سريع",
+      "How did it go?": "كيف جرى الأمر؟",
+      "What worked?": "ما الذي نجح؟",
+      "The place": "المكان",
+      "The time": "الوقت",
+      "The people": "الناس",
+      "The food": "الطعام",
+      "What would make it better?": "ما الذي يجعله أفضل؟",
+      "Send answers": "أرسل الإجابات"
+    }
+  }
+}

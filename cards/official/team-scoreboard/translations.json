@@ -1,0 +1,50 @@
+{
+  "es": {
+    "name": "Marcador",
+    "desc": "Dos equipos, hechos con componentes propios",
+    "lines": {
+      "Scoreboard": "Marcador",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta"
+    }
+  },
+  "fr": {
+    "name": "Tableau des scores",
+    "desc": "Deux équipes, faites de ses propres composants",
+    "lines": {
+      "Scoreboard": "Tableau des scores",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte"
+    }
+  },
+  "de": {
+    "name": "Punktestand",
+    "desc": "Zwei Teams, aus eigenen Komponenten gebaut",
+    "lines": {
+      "Scoreboard": "Punktestand",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen"
+    }
+  },
+  "pt": {
+    "name": "Placar",
+    "desc": "Duas equipes, feitas com componentes próprios",
+    "lines": {
+      "Scoreboard": "Placar",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão"
+    }
+  },
+  "zh": {
+    "name": "记分板",
+    "desc": "两支队伍，由它自己的组件搭成",
+    "lines": {
+      "Scoreboard": "记分板",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片"
+    }
+  },
+  "ar": {
+    "name": "لوحة النقاط",
+    "desc": "فريقان، مبنيّان من مكوّنات خاصة به",
+    "lines": {
+      "Scoreboard": "لوحة النقاط",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "es": {
+    "name": "Encuesta en vivo",
+    "desc": "Cualquiera añade opciones, todos votan",
+    "lines": {
+      "Live poll": "Encuesta en vivo",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "What should we ask?": "¿Qué preguntamos?",
+      "Ask a question, then add options": "Haz una pregunta y luego añade opciones",
+      "Add an option": "Añadir una opción",
+      "No options yet": "Aún no hay opciones",
+      "{p0} votes": "{p0} votos",
+      "{p0} is ahead": "{p0} va en cabeza",
+      "It's a tie": "Hay empate",
+      "Clear votes": "Borrar votos",
+      "Eight options at most": "Ocho opciones como máximo",
+      "{p0} is already an option": "{p0} ya es una opción",
+      "Only the person who sent the card can do that": "Solo quien envió la tarjeta puede hacer eso"
+    }
+  },
+  "fr": {
+    "name": "Sondage en direct",
+    "desc": "Chacun ajoute des options, tout le monde vote",
+    "lines": {
+      "Live poll": "Sondage en direct",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "What should we ask?": "Que demande-t-on ?",
+      "Ask a question, then add options": "Posez une question, puis ajoutez des options",
+      "Add an option": "Ajouter une option",
+      "No options yet": "Pas encore d'options",
+      "{p0} is ahead": "{p0} est en tête",
+      "It's a tie": "Égalité",
+      "Clear votes": "Effacer les votes",
+      "Eight options at most": "Huit options au maximum",
+      "{p0} is already an option": "{p0} est déjà une option",
+      "Only the person who sent the card can do that": "Seule la personne qui a envoyé la carte peut faire ça"
+    }
+  },
+  "de": {
+    "name": "Live-Umfrage",
+    "desc": "Alle fügen Optionen hinzu, alle stimmen ab",
+    "lines": {
+      "Live poll": "Live-Umfrage",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "What should we ask?": "Was sollen wir fragen?",
+      "Ask a question, then add options": "Stell eine Frage und füge dann Optionen hinzu",
+      "Add an option": "Option hinzufügen",
+      "No options yet": "Noch keine Optionen",
+      "{p0} votes": "{p0} Stimmen",
+      "{p0} is ahead": "{p0} liegt vorn",
+      "It's a tie": "Gleichstand",
+      "Clear votes": "Stimmen löschen",
+      "Eight options at most": "Höchstens acht Optionen",
+      "{p0} is already an option": "{p0} ist schon eine Option",
+      "Only the person who sent the card can do that": "Das kann nur, wer die Karte geschickt hat"
+    }
+  },
+  "pt": {
+    "name": "Enquete ao vivo",
+    "desc": "Qualquer um adiciona opções, todos votam",
+    "lines": {
+      "Live poll": "Enquete ao vivo",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "What should we ask?": "O que vamos perguntar?",
+      "Ask a question, then add options": "Faça uma pergunta e depois adicione opções",
+      "Add an option": "Adicionar uma opção",
+      "No options yet": "Ainda sem opções",
+      "{p0} votes": "{p0} votos",
+      "{p0} is ahead": "{p0} está na frente",
+      "It's a tie": "Empate",
+      "Clear votes": "Limpar votos",
+      "Eight options at most": "No máximo oito opções",
+      "{p0} is already an option": "{p0} já é uma opção",
+      "Only the person who sent the card can do that": "Só quem enviou o cartão pode fazer isso"
+    }
+  },
+  "zh": {
+    "name": "实时投票",
+    "desc": "人人可加选项，人人可投票",
+    "lines": {
+      "Live poll": "实时投票",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "What should we ask?": "我们要问什么？",
+      "Ask a question, then add options": "先提一个问题，再添加选项",
+      "Add an option": "添加选项",
+      "No options yet": "还没有选项",
+      "{p0} votes": "{p0} 票",
+      "{p0} is ahead": "{p0} 领先",
+      "It's a tie": "平局",
+      "Clear votes": "清除投票",
+      "Eight options at most": "最多八个选项",
+      "{p0} is already an option": "{p0} 已经是选项了",
+      "Only the person who sent the card can do that": "只有发送卡片的人能这样做"
+    }
+  },
+  "ar": {
+    "name": "استطلاع مباشر",
+    "desc": "يضيف أي شخص خيارات ويصوّت الجميع",
+    "lines": {
+      "Live poll": "استطلاع مباشر",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "What should we ask?": "ماذا نسأل؟",
+      "Ask a question, then add options": "اطرح سؤالًا ثم أضف خيارات",
+      "Add an option": "إضافة خيار",
+      "No options yet": "لا خيارات بعد",
+      "{p0} votes": "{p0} أصوات",
+      "{p0} is ahead": "{p0} في المقدمة",
+      "It's a tie": "تعادل",
+      "Clear votes": "امسح الأصوات",
+      "Eight options at most": "ثمانية خيارات على الأكثر",
+      "{p0} is already an option": "{p0} خيار موجود بالفعل",
+      "Only the person who sent the card can do that": "لا يستطيع ذلك إلا من أرسل البطاقة"
+    }
+  }
+}

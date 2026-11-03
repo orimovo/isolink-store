@@ -1,0 +1,68 @@
+{
+  "es": {
+    "name": "Valóralo",
+    "desc": "Estrellas y un comentario",
+    "lines": {
+      "Rate it": "Valóralo",
+      "How was it?": "¿Qué tal estuvo?",
+      "What stood out?": "¿Qué destacó?",
+      "The best bit, or the worst": "Lo mejor, o lo peor",
+      "Send": "Enviar"
+    }
+  },
+  "fr": {
+    "name": "Noter",
+    "desc": "Des étoiles et un commentaire",
+    "lines": {
+      "Rate it": "Noter",
+      "How was it?": "C'était comment ?",
+      "What stood out?": "Qu'est-ce qui a marqué ?",
+      "The best bit, or the worst": "Le meilleur moment, ou le pire",
+      "Send": "Envoyer"
+    }
+  },
+  "de": {
+    "name": "Bewerten",
+    "desc": "Sterne und ein Kommentar",
+    "lines": {
+      "Rate it": "Bewerten",
+      "How was it?": "Wie war es?",
+      "What stood out?": "Was ist aufgefallen?",
+      "The best bit, or the worst": "Das Beste oder das Schlechteste",
+      "Send": "Senden"
+    }
+  },
+  "pt": {
+    "name": "Avalie",
+    "desc": "Estrelas e um comentário",
+    "lines": {
+      "Rate it": "Avalie",
+      "How was it?": "Como foi?",
+      "What stood out?": "O que se destacou?",
+      "The best bit, or the worst": "A melhor parte, ou a pior",
+      "Send": "Enviar"
+    }
+  },
+  "zh": {
+    "name": "打分",
+    "desc": "星级和一句评价",
+    "lines": {
+      "Rate it": "打分",
+      "How was it?": "感觉怎么样？",
+      "What stood out?": "印象最深的是什么？",
+      "The best bit, or the worst": "最好的部分，或最差的",
+      "Send": "发送"
+    }
+  },
+  "ar": {
+    "name": "قيّمه",
+    "desc": "نجوم وتعليق",
+    "lines": {
+      "Rate it": "قيّمه",
+      "How was it?": "كيف كان؟",
+      "What stood out?": "ما الذي لفت الانتباه؟",
+      "The best bit, or the worst": "أفضل جزء، أو أسوأ جزء",
+      "Send": "إرسال"
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "es": {
+    "name": "Tablero de tareas",
+    "desc": "Pendiente, en curso y hecho, y quién hace qué",
+    "lines": {
+      "Task board": "Tablero de tareas",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "To do": "Por hacer",
+      "Doing": "En curso",
+      "Done": "Listo",
+      "Add a task": "Añade una tarea",
+      "Nothing here yet": "Aún no hay nada",
+      "I'll do it": "Me encargo yo",
+      "Let it go": "Dejarla",
+      "{p0} is on it": "{p0} se encarga",
+      "Nobody's on it": "Nadie se encarga",
+      "Add a note": "Añadir una nota",
+      "Back": "Atrás",
+      "Remove": "Quitar",
+      "That task is gone": "Esa tarea ya no existe",
+      "Forty tasks at most": "Cuarenta tareas como máximo",
+      "Only the person who sent the card can do that": "Solo quien envió la tarjeta puede hacer eso"
+    }
+  },
+  "fr": {
+    "name": "Tableau des tâches",
+    "desc": "À faire, en cours, terminé, et qui fait quoi",
+    "lines": {
+      "Task board": "Tableau des tâches",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "To do": "À faire",
+      "Doing": "En cours",
+      "Done": "OK",
+      "Add a task": "Ajouter une tâche",
+      "Nothing here yet": "Rien pour l'instant",
+      "I'll do it": "Je m'en occupe",
+      "Let it go": "Laisser",
+      "{p0} is on it": "{p0} s'en occupe",
+      "Nobody's on it": "Personne ne s'en occupe",
+      "Add a note": "Ajouter une note",
+      "Back": "Retour",
+      "Remove": "Retirer",
+      "That task is gone": "Cette tâche n'existe plus",
+      "Forty tasks at most": "Quarante tâches au maximum",
+      "Only the person who sent the card can do that": "Seule la personne qui a envoyé la carte peut faire ça"
+    }
+  },
+  "de": {
+    "name": "Aufgabenboard",
+    "desc": "Offen, in Arbeit, erledigt und wer was macht",
+    "lines": {
+      "Task board": "Aufgabenboard",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "To do": "Zu erledigen",
+      "Doing": "In Arbeit",
+      "Done": "Fertig",
+      "Add a task": "Aufgabe hinzufügen",
+      "Nothing here yet": "Noch nichts hier",
+      "I'll do it": "Mach ich",
+      "Let it go": "Abgeben",
+      "{p0} is on it": "{p0} kümmert sich darum",
+      "Nobody's on it": "Niemand kümmert sich darum",
+      "Add a note": "Notiz hinzufügen",
+      "Back": "Zurück",
+      "Remove": "Entfernen",
+      "That task is gone": "Diese Aufgabe gibt es nicht mehr",
+      "Forty tasks at most": "Höchstens vierzig Aufgaben",
+      "Only the person who sent the card can do that": "Das kann nur, wer die Karte geschickt hat"
+    }
+  },
+  "pt": {
+    "name": "Quadro de tarefas",
+    "desc": "A fazer, fazendo e feito, e quem faz o quê",
+    "lines": {
+      "Task board": "Quadro de tarefas",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "To do": "A fazer",
+      "Doing": "Fazendo",
+      "Done": "Concluído",
+      "Add a task": "Adicionar uma tarefa",
+      "Nothing here yet": "Nada aqui ainda",
+      "I'll do it": "Eu faço",
+      "Let it go": "Largar",
+      "{p0} is on it": "{p0} está nela",
+      "Nobody's on it": "Ninguém está nela",
+      "Add a note": "Adicionar uma nota",
+      "Back": "Voltar",
+      "Remove": "Remover",
+      "That task is gone": "Essa tarefa não existe mais",
+      "Forty tasks at most": "No máximo quarenta tarefas",
+      "Only the person who sent the card can do that": "Só quem enviou o cartão pode fazer isso"
+    }
+  },
+  "zh": {
+    "name": "任务看板",
+    "desc": "待办、进行中、已完成，以及谁在做什么",
+    "lines": {
+      "Task board": "任务看板",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "To do": "待办",
+      "Doing": "进行中",
+      "Done": "完成",
+      "Add a task": "添加任务",
+      "Nothing here yet": "这里还没有内容",
+      "I'll do it": "我来做",
+      "Let it go": "放手",
+      "{p0} is on it": "{p0} 在做",
+      "Nobody's on it": "还没人负责",
+      "Add a note": "添加备注",
+      "Back": "返回",
+      "Remove": "移除",
+      "That task is gone": "这个任务已不存在",
+      "Forty tasks at most": "最多四十个任务",
+      "Only the person who sent the card can do that": "只有发送卡片的人能这样做"
+    }
+  },
+  "ar": {
+    "name": "لوحة المهام",
+    "desc": "للتنفيذ وقيد التنفيذ ومنتهية، ومن يعمل على ماذا",
+    "lines": {
+      "Task board": "لوحة المهام",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "To do": "المهام",
+      "Doing": "قيد التنفيذ",
+      "Done": "تم",
+      "Add a task": "أضف مهمة",
+      "Nothing here yet": "لا شيء هنا بعد",
+      "I'll do it": "سأقوم بها",
+      "Let it go": "اتركها",
+      "{p0} is on it": "{p0} يعمل عليها",
+      "Nobody's on it": "لا أحد يعمل عليها",
+      "Add a note": "أضف ملاحظة",
+      "Back": "رجوع",
+      "Remove": "إزالة",
+      "That task is gone": "هذه المهمة لم تعد موجودة",
+      "Forty tasks at most": "أربعون مهمة على الأكثر",
+      "Only the person who sent the card can do that": "لا يستطيع ذلك إلا من أرسل البطاقة"
+    }
+  }
+}

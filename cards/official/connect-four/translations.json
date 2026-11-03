@@ -1,0 +1,122 @@
+{
+  "es": {
+    "name": "Cuatro en raya",
+    "desc": "Suelta fichas y haz cuatro en línea",
+    "lines": {
+      "Connect Four": "Cuatro en raya",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Tap a column to drop the first counter": "Toca una columna para soltar la primera ficha",
+      "Your turn": "Tu turno",
+      "Waiting for {p0}": "Esperando a {p0}",
+      "the other player": "la otra persona",
+      "Four in a row. You won!": "Cuatro en línea. ¡Ganaste!",
+      "{p0} won": "{p0} ganó",
+      "The board is full: a draw": "El tablero está lleno: empate",
+      "New game": "Nueva partida",
+      "The game is over": "La partida terminó",
+      "Two people are already playing": "Ya juegan dos personas",
+      "Not your turn": "No es tu turno",
+      "That column is full": "Esa columna está llena"
+    }
+  },
+  "fr": {
+    "name": "Puissance 4",
+    "desc": "Lâchez des jetons, alignez-en quatre",
+    "lines": {
+      "Connect Four": "Puissance 4",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Tap a column to drop the first counter": "Touchez une colonne pour lâcher le premier jeton",
+      "Your turn": "À toi de jouer",
+      "Waiting for {p0}": "En attente de {p0}",
+      "the other player": "l'autre personne",
+      "Four in a row. You won!": "Quatre alignés. Vous avez gagné !",
+      "{p0} won": "{p0} a gagné",
+      "The board is full: a draw": "Le plateau est plein : match nul",
+      "New game": "Nouvelle partie",
+      "The game is over": "La partie est finie",
+      "Two people are already playing": "Deux personnes jouent déjà",
+      "Not your turn": "Ce n'est pas ton tour",
+      "That column is full": "Cette colonne est pleine"
+    }
+  },
+  "de": {
+    "name": "Vier gewinnt",
+    "desc": "Steine einwerfen, vier in eine Reihe bringen",
+    "lines": {
+      "Connect Four": "Vier gewinnt",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Tap a column to drop the first counter": "Tippe auf eine Spalte, um den ersten Stein einzuwerfen",
+      "Your turn": "Du bist dran",
+      "Waiting for {p0}": "Warten auf {p0}",
+      "the other player": "die andere Person",
+      "Four in a row. You won!": "Vier in einer Reihe. Du hast gewonnen!",
+      "{p0} won": "{p0} hat gewonnen",
+      "The board is full: a draw": "Das Brett ist voll: Unentschieden",
+      "New game": "Neues Spiel",
+      "The game is over": "Das Spiel ist vorbei",
+      "Two people are already playing": "Es spielen schon zwei",
+      "Not your turn": "Du bist nicht dran",
+      "That column is full": "Diese Spalte ist voll"
+    }
+  },
+  "pt": {
+    "name": "Quatro em linha",
+    "desc": "Solte fichas e faça quatro em linha",
+    "lines": {
+      "Connect Four": "Quatro em linha",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Tap a column to drop the first counter": "Toque em uma coluna para soltar a primeira ficha",
+      "Your turn": "Sua vez",
+      "Waiting for {p0}": "Esperando {p0}",
+      "the other player": "a outra pessoa",
+      "Four in a row. You won!": "Quatro em linha. Você ganhou!",
+      "{p0} won": "{p0} ganhou",
+      "The board is full: a draw": "O tabuleiro está cheio: empate",
+      "New game": "Novo jogo",
+      "The game is over": "O jogo acabou",
+      "Two people are already playing": "Duas pessoas já estão jogando",
+      "Not your turn": "Não é sua vez",
+      "That column is full": "Essa coluna está cheia"
+    }
+  },
+  "zh": {
+    "name": "四子棋",
+    "desc": "投下棋子，连成四个",
+    "lines": {
+      "Connect Four": "四子棋",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Tap a column to drop the first counter": "点一列投下第一枚棋子",
+      "Your turn": "轮到你了",
+      "Waiting for {p0}": "等待 {p0}",
+      "the other player": "对方",
+      "Four in a row. You won!": "四子连珠，你赢了！",
+      "{p0} won": "{p0} 赢了",
+      "The board is full: a draw": "棋盘满了：平局",
+      "New game": "新游戏",
+      "The game is over": "游戏结束了",
+      "Two people are already playing": "已经有两人在玩了",
+      "Not your turn": "还没轮到你",
+      "That column is full": "这一列满了"
+    }
+  },
+  "ar": {
+    "name": "أربعة في صف",
+    "desc": "أسقط القطع واصنع أربعة في صف",
+    "lines": {
+      "Connect Four": "أربعة في صف",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Tap a column to drop the first counter": "اضغط عمودًا لإسقاط أول قطعة",
+      "Your turn": "دورك",
+      "Waiting for {p0}": "بانتظار {p0}",
+      "the other player": "الطرف الآخر",
+      "Four in a row. You won!": "أربعة في صف. لقد فزت!",
+      "{p0} won": "فاز {p0}",
+      "The board is full: a draw": "اللوحة ممتلئة: تعادل",
+      "New game": "لعبة جديدة",
+      "The game is over": "انتهت اللعبة",
+      "Two people are already playing": "يلعب شخصان بالفعل",
+      "Not your turn": "ليس دورك",
+      "That column is full": "هذا العمود ممتلئ"
+    }
+  }
+}

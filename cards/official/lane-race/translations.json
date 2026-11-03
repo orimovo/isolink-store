@@ -1,0 +1,50 @@
+{
+  "es": {
+    "name": "Carrera por carriles",
+    "desc": "Cada jugador corre en su propio carril; al mejor de 3",
+    "lines": {
+      "Lane race": "Carrera por carriles",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta"
+    }
+  },
+  "fr": {
+    "name": "Course en couloirs",
+    "desc": "Chaque joueur court dans son couloir ; au meilleur des 3",
+    "lines": {
+      "Lane race": "Course en couloirs",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte"
+    }
+  },
+  "de": {
+    "name": "Bahnenrennen",
+    "desc": "Jeder läuft seine eigene Bahn; Best of 3",
+    "lines": {
+      "Lane race": "Bahnenrennen",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen"
+    }
+  },
+  "pt": {
+    "name": "Corrida de raias",
+    "desc": "Cada jogador corre na sua raia; melhor de 3",
+    "lines": {
+      "Lane race": "Corrida de raias",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão"
+    }
+  },
+  "zh": {
+    "name": "赛道竞赛",
+    "desc": "每位玩家跑自己的赛道；三局两胜",
+    "lines": {
+      "Lane race": "赛道竞赛",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片"
+    }
+  },
+  "ar": {
+    "name": "سباق المسارات",
+    "desc": "كل لاعب يجري في مساره؛ الأفضل من 3",
+    "lines": {
+      "Lane race": "سباق المسارات",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة"
+    }
+  }
+}

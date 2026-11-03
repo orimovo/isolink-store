@@ -1,0 +1,88 @@
+{
+  "es": {
+    "name": "Prueba de reflejos",
+    "desc": "Espera al verde y toca",
+    "lines": {
+      "Reaction test": "Prueba de reflejos",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Start": "Empezar",
+      "Wait for green…": "Espera al verde…",
+      "Tap!": "¡Toca!",
+      "Too soon! Try again": "¡Demasiado pronto! Inténtalo otra vez",
+      "Fastest": "Los más rápidos",
+      "Tap Start, then tap as soon as it turns green.": "Toca Empezar y luego toca en cuanto se ponga verde."
+    }
+  },
+  "fr": {
+    "name": "Test de réflexes",
+    "desc": "Attendez le vert, puis touchez",
+    "lines": {
+      "Reaction test": "Test de réflexes",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Start": "Commencer",
+      "Wait for green…": "Attendez le vert…",
+      "Tap!": "Touchez !",
+      "Too soon! Try again": "Trop tôt ! Réessayez",
+      "Fastest": "Les plus rapides",
+      "Tap Start, then tap as soon as it turns green.": "Touchez Démarrer, puis touchez dès que ça devient vert."
+    }
+  },
+  "de": {
+    "name": "Reaktionstest",
+    "desc": "Warte auf Grün, dann tippe",
+    "lines": {
+      "Reaction test": "Reaktionstest",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Start": "Starten",
+      "Wait for green…": "Warte auf Grün…",
+      "Tap!": "Tippen!",
+      "Too soon! Try again": "Zu früh! Versuch es noch mal",
+      "Fastest": "Am schnellsten",
+      "Tap Start, then tap as soon as it turns green.": "Tippe auf Start und dann, sobald es grün wird."
+    }
+  },
+  "pt": {
+    "name": "Teste de reflexos",
+    "desc": "Espere o verde e toque",
+    "lines": {
+      "Reaction test": "Teste de reflexos",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Start": "Começar",
+      "Wait for green…": "Espere o verde…",
+      "Tap!": "Toque!",
+      "Too soon! Try again": "Cedo demais! Tente de novo",
+      "Fastest": "Mais rápidos",
+      "Tap Start, then tap as soon as it turns green.": "Toque em Começar e toque assim que ficar verde."
+    }
+  },
+  "zh": {
+    "name": "反应测试",
+    "desc": "等变绿再点",
+    "lines": {
+      "Reaction test": "反应测试",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Start": "开始",
+      "Wait for green…": "等待变绿…",
+      "Tap!": "点！",
+      "Too soon! Try again": "太早了！再试一次",
+      "{p0} ms": "{p0} 毫秒",
+      "Fastest": "最快",
+      "Tap Start, then tap as soon as it turns green.": "点“开始”，变绿后立刻点击。"
+    }
+  },
+  "ar": {
+    "name": "اختبار ردّ الفعل",
+    "desc": "انتظر الأخضر ثم اضغط",
+    "lines": {
+      "Reaction test": "اختبار ردّ الفعل",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Start": "ابدأ",
+      "Wait for green…": "انتظر الأخضر…",
+      "Tap!": "اضغط!",
+      "Too soon! Try again": "مبكر جدًا! حاول مرة أخرى",
+      "{p0} ms": "{p0} ملّي ثانية",
+      "Fastest": "الأسرع",
+      "Tap Start, then tap as soon as it turns green.": "اضغط ابدأ، ثم اضغط فور أن يصبح أخضر."
+    }
+  }
+}

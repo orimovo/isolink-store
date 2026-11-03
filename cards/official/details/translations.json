@@ -1,0 +1,86 @@
+{
+  "es": {
+    "name": "Pedir detalles",
+    "desc": "Unas preguntas que te responden en privado",
+    "lines": {
+      "Ask for details": "Pedir detalles",
+      "Just a few details, then press Send.": "Solo unos detalles y luego pulsa Enviar.",
+      "What do you need?": "¿Qué necesitas?",
+      "A few words": "Unas palabras",
+      "When by?": "¿Para cuándo?",
+      "A day or a time": "Un día o una hora",
+      "Anything else I should know?": "¿Algo más que deba saber?",
+      "Send answers": "Enviar respuestas"
+    }
+  },
+  "fr": {
+    "name": "Demander des détails",
+    "desc": "Quelques questions, auxquelles on te répond en privé",
+    "lines": {
+      "Ask for details": "Demander des détails",
+      "Just a few details, then press Send.": "Juste quelques détails, puis appuie sur Envoyer.",
+      "What do you need?": "De quoi as-tu besoin ?",
+      "A few words": "Quelques mots",
+      "When by?": "Pour quand ?",
+      "A day or a time": "Un jour ou une heure",
+      "Anything else I should know?": "Autre chose que je devrais savoir ?",
+      "Send answers": "Envoyer les réponses"
+    }
+  },
+  "de": {
+    "name": "Nach Details fragen",
+    "desc": "Ein paar Fragen, privat an dich beantwortet",
+    "lines": {
+      "Ask for details": "Nach Details fragen",
+      "Just a few details, then press Send.": "Nur ein paar Details, dann tippe auf Senden.",
+      "What do you need?": "Was brauchst du?",
+      "A few words": "Ein paar Worte",
+      "When by?": "Bis wann?",
+      "A day or a time": "Ein Tag oder eine Uhrzeit",
+      "Anything else I should know?": "Sonst noch etwas, das ich wissen sollte?",
+      "Send answers": "Antworten senden"
+    }
+  },
+  "pt": {
+    "name": "Pedir detalhes",
+    "desc": "Algumas perguntas, respondidas em privado para você",
+    "lines": {
+      "Ask for details": "Pedir detalhes",
+      "Just a few details, then press Send.": "Só alguns detalhes e depois toque em Enviar.",
+      "What do you need?": "Do que você precisa?",
+      "A few words": "Algumas palavras",
+      "When by?": "Até quando?",
+      "A day or a time": "Um dia ou um horário",
+      "Anything else I should know?": "Mais alguma coisa que eu deva saber?",
+      "Send answers": "Enviar respostas"
+    }
+  },
+  "zh": {
+    "name": "询问详情",
+    "desc": "几个问题，只私下回答给你",
+    "lines": {
+      "Ask for details": "询问详情",
+      "Just a few details, then press Send.": "填几个细节，然后点发送。",
+      "What do you need?": "你需要什么？",
+      "A few words": "几句话",
+      "When by?": "什么时候要？",
+      "A day or a time": "某天或某个时间",
+      "Anything else I should know?": "还有什么我该知道的吗？",
+      "Send answers": "发送回答"
+    }
+  },
+  "ar": {
+    "name": "طلب التفاصيل",
+    "desc": "بضعة أسئلة يُجاب عنها لك وحدك",
+    "lines": {
+      "Ask for details": "طلب التفاصيل",
+      "Just a few details, then press Send.": "بضعة تفاصيل فقط، ثم اضغط إرسال.",
+      "What do you need?": "ماذا تحتاج؟",
+      "A few words": "بضع كلمات",
+      "When by?": "متى؟",
+      "A day or a time": "يوم أو وقت",
+      "Anything else I should know?": "هل هناك شيء آخر يجب أن أعرفه؟",
+      "Send answers": "أرسل الإجابات"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "es": {
+    "name": "Opiniones",
+    "desc": "Todos rellenan un formulario; solo tú ves las respuestas",
+    "lines": {
+      "Feedback": "Opiniones",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "How did it go?": "¿Cómo fue?",
+      "Great": "Genial",
+      "Fine": "Fino",
+      "Not great": "No muy bien",
+      "The best bit": "Lo mejor",
+      "One thing to change": "Una cosa que cambiar",
+      "Send feedback": "Enviar opinión",
+      "Thanks! Your feedback went to the sender.": "¡Gracias! Tu opinión le ha llegado a quien la envió.",
+      "Change my answers": "Cambiar mis respuestas",
+      "No feedback yet": "Aún no hay opiniones",
+      "{p0} answered": "{p0} han respondido",
+      "You sent this, so you see the answers": "Tú lo enviaste, así que ves las respuestas"
+    }
+  },
+  "fr": {
+    "name": "Avis",
+    "desc": "Chacun remplit un formulaire ; toi seul vois les réponses",
+    "lines": {
+      "Feedback": "Avis",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "How did it go?": "Comment ça s'est passé ?",
+      "Great": "Super",
+      "Fine": "Fin",
+      "Not great": "Pas terrible",
+      "The best bit": "Le meilleur moment",
+      "One thing to change": "Une chose à changer",
+      "Send feedback": "Envoyer mon avis",
+      "Thanks! Your feedback went to the sender.": "Merci ! Ton avis est parti à la personne qui l’a envoyée.",
+      "Change my answers": "Modifier mes réponses",
+      "No feedback yet": "Pas encore d’avis",
+      "{p0} answered": "{p0} ont répondu",
+      "You sent this, so you see the answers": "Tu l’as envoyée, donc tu vois les réponses"
+    }
+  },
+  "de": {
+    "desc": "Alle füllen ein Formular aus; nur du siehst die Antworten",
+    "lines": {
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "How did it go?": "Wie lief es?",
+      "Great": "Super",
+      "Fine": "Fein",
+      "Not great": "Nicht so gut",
+      "The best bit": "Das Beste daran",
+      "One thing to change": "Eine Sache zum Ändern",
+      "Send feedback": "Feedback senden",
+      "Thanks! Your feedback went to the sender.": "Danke! Dein Feedback ging an den Absender.",
+      "Change my answers": "Meine Antworten ändern",
+      "No feedback yet": "Noch kein Feedback",
+      "{p0} answered": "{p0} haben geantwortet",
+      "You sent this, so you see the answers": "Du hast das geschickt, also siehst du die Antworten"
+    }
+  },
+  "pt": {
+    "desc": "Todos preenchem um formulário; só você vê as respostas",
+    "lines": {
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "How did it go?": "Como foi?",
+      "Great": "Ótimo",
+      "Fine": "Fino",
+      "Not great": "Não muito bom",
+      "The best bit": "A melhor parte",
+      "One thing to change": "Uma coisa para mudar",
+      "Send feedback": "Enviar feedback",
+      "Thanks! Your feedback went to the sender.": "Obrigado! Seu feedback foi para quem enviou.",
+      "Change my answers": "Alterar minhas respostas",
+      "No feedback yet": "Ainda sem feedback",
+      "{p0} answered": "{p0} responderam",
+      "You sent this, so you see the answers": "Você enviou, então vê as respostas"
+    }
+  },
+  "zh": {
+    "name": "反馈",
+    "desc": "大家填写表单，只有你能看到回答",
+    "lines": {
+      "Feedback": "反馈",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "How did it go?": "进展如何？",
+      "Great": "很好",
+      "Fine": "细",
+      "Not great": "不太好",
+      "The best bit": "最棒的部分",
+      "One thing to change": "一件需要改的事",
+      "Send feedback": "发送反馈",
+      "Thanks! Your feedback went to the sender.": "谢谢！你的反馈已发给发送者。",
+      "Change my answers": "更改我的回答",
+      "No feedback yet": "还没有反馈",
+      "{p0} answered": "{p0} 人已作答",
+      "You sent this, so you see the answers": "这是你发的，所以你能看到回答"
+    }
+  },
+  "ar": {
+    "name": "ملاحظات",
+    "desc": "يملأ الجميع نموذجًا، وأنت وحدك ترى الإجابات",
+    "lines": {
+      "Feedback": "ملاحظات",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "How did it go?": "كيف جرى الأمر؟",
+      "Great": "رائع",
+      "Fine": "رفيع",
+      "Not great": "ليس جيدًا",
+      "The best bit": "أفضل جزء",
+      "One thing to change": "شيء واحد يجب تغييره",
+      "Send feedback": "أرسل الملاحظات",
+      "Thanks! Your feedback went to the sender.": "شكرًا! وصلت ملاحظاتك إلى المرسل.",
+      "Change my answers": "غيّر إجاباتي",
+      "No feedback yet": "لا ملاحظات بعد",
+      "{p0} answered": "أجاب {p0}",
+      "You sent this, so you see the answers": "أنت أرسلت هذا، لذا ترى الإجابات"
+    }
+  }
+}

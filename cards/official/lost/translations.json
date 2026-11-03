@@ -1,0 +1,86 @@
+{
+  "es": {
+    "name": "Objetos perdidos",
+    "desc": "Pregunta de quién es algo",
+    "lines": {
+      "Lost and found": "Objetos perdidos",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "Encontrado: **una botella de agua azul**. Añade una foto si ayuda.",
+      "Whose is this?": "¿De quién es esto?",
+      "Mine": "Mío",
+      "Not mine": "No es mío",
+      "I know whose": "Sé de quién es",
+      "Whose is it?": "¿De quién es?",
+      "A name, or where to collect it": "Un nombre, o dónde recogerlo"
+    }
+  },
+  "fr": {
+    "name": "Objets trouvés",
+    "desc": "Demander à qui est un objet",
+    "lines": {
+      "Lost and found": "Objets trouvés",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "Trouvé : **une gourde bleue**. Ajoute une photo si ça aide.",
+      "Whose is this?": "À qui est-ce ?",
+      "Mine": "À moi",
+      "Not mine": "Pas à moi",
+      "I know whose": "Je sais à qui",
+      "Whose is it?": "À qui est-ce ?",
+      "A name, or where to collect it": "Un nom, ou où le récupérer"
+    }
+  },
+  "de": {
+    "name": "Fundsachen",
+    "desc": "Fragen, wem etwas gehört",
+    "lines": {
+      "Lost and found": "Fundsachen",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "Gefunden: **eine blaue Trinkflasche**. Ein Foto hilft.",
+      "Whose is this?": "Wem gehört das?",
+      "Mine": "Mir",
+      "Not mine": "Nicht mir",
+      "I know whose": "Ich weiß, wem",
+      "Whose is it?": "Wem gehört es?",
+      "A name, or where to collect it": "Ein Name oder wo es abzuholen ist"
+    }
+  },
+  "pt": {
+    "name": "Achados e perdidos",
+    "desc": "Pergunte de quem é algo",
+    "lines": {
+      "Lost and found": "Achados e perdidos",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "Achado: **uma garrafa de água azul**. Adicione uma foto se ajudar.",
+      "Whose is this?": "De quem é isto?",
+      "Mine": "É meu",
+      "Not mine": "Não é meu",
+      "I know whose": "Sei de quem é",
+      "Whose is it?": "De quem é?",
+      "A name, or where to collect it": "Um nome, ou onde buscar"
+    }
+  },
+  "zh": {
+    "name": "失物招领",
+    "desc": "问问东西是谁的",
+    "lines": {
+      "Lost and found": "失物招领",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "捡到：**一个蓝色水壶**。可以加张照片。",
+      "Whose is this?": "这是谁的？",
+      "Mine": "我的",
+      "Not mine": "不是我的",
+      "I know whose": "我知道是谁的",
+      "Whose is it?": "是谁的？",
+      "A name, or where to collect it": "名字，或去哪里领取"
+    }
+  },
+  "ar": {
+    "name": "المفقودات",
+    "desc": "اسأل لمن يعود شيء ما",
+    "lines": {
+      "Lost and found": "المفقودات",
+      "Found: **a blue water bottle**. Add a photo if it helps.": "وُجد: **قارورة ماء زرقاء**. أضف صورة إن كانت تساعد.",
+      "Whose is this?": "لمن هذا؟",
+      "Mine": "لي",
+      "Not mine": "ليس لي",
+      "I know whose": "أعرف صاحبه",
+      "Whose is it?": "لمن هو؟",
+      "A name, or where to collect it": "اسم، أو مكان استلامه"
+    }
+  }
+}

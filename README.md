@@ -33,6 +33,17 @@ themes/community/moon-garden/
   preview-dark.png
 ```
 
+Any folder may add `translations.json`, its name, `desc` and, for a card, its lines in the app's other languages (`es`, `fr`, `de`, `pt`, `zh`, `ar`), so Browse shows it in each person's language:
+
+```json
+{
+  "de": { "name": "Mondgarten", "desc": "Kleine Pilzblasen auf moosigem Waldboden." },
+  "fr": { "name": "Jardin lunaire" }
+}
+```
+
+A card's `lines` map each line as written in the card to its translation: `"lines": { "Tent": "Zelt" }`.
+
 `pack.json` is an ordinary v2 theme pack, with two differences:
 
 - its `"id"` is the folder's name (`"moon-garden"`), and

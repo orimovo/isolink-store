@@ -1,0 +1,98 @@
+{
+  "es": {
+    "name": "Compartir coche",
+    "desc": "Elige asiento y di dónde recogerte",
+    "lines": {
+      "Lift share": "Compartir coche",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**Salida:** sábado, 9:00\n**Desde:** la estación",
+      "Take a seat": "Elige asiento",
+      "Front seat": "Delante",
+      "Back left": "Detrás, izquierda",
+      "Back middle": "Detrás, centro",
+      "Back right": "Detrás, derecha",
+      "Pickup point": "Punto de recogida",
+      "A street, stop or landmark": "Una calle, parada o sitio conocido",
+      "Book my seat": "Reservar mi asiento"
+    }
+  },
+  "fr": {
+    "name": "Covoiturage",
+    "desc": "Prendre une place et dire où te récupérer",
+    "lines": {
+      "Lift share": "Covoiturage",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**Départ :** samedi, 9 h\n**De :** la gare",
+      "Take a seat": "Prendre une place",
+      "Front seat": "Siège avant",
+      "Back left": "Arrière gauche",
+      "Back middle": "Arrière milieu",
+      "Back right": "Arrière droite",
+      "Pickup point": "Point de rendez-vous",
+      "A street, stop or landmark": "Une rue, un arrêt ou un repère",
+      "Book my seat": "Réserver ma place"
+    }
+  },
+  "de": {
+    "name": "Mitfahren",
+    "desc": "Einen Platz nehmen und sagen, wo abgeholt werden soll",
+    "lines": {
+      "Lift share": "Mitfahren",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**Abfahrt:** Samstag, 9 Uhr\n**Ab:** Bahnhof",
+      "Take a seat": "Platz nehmen",
+      "Front seat": "Beifahrersitz",
+      "Back left": "Hinten links",
+      "Back middle": "Hinten Mitte",
+      "Back right": "Hinten rechts",
+      "Pickup point": "Abholort",
+      "A street, stop or landmark": "Eine Straße, Haltestelle oder ein Treffpunkt",
+      "Book my seat": "Meinen Platz buchen"
+    }
+  },
+  "pt": {
+    "name": "Carona",
+    "desc": "Escolha um lugar e diga onde buscar",
+    "lines": {
+      "Lift share": "Carona",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**Saída:** sábado, 9h\n**De:** a estação",
+      "Take a seat": "Escolha um lugar",
+      "Front seat": "Banco da frente",
+      "Back left": "Atrás, esquerda",
+      "Back middle": "Atrás, meio",
+      "Back right": "Atrás, direita",
+      "Pickup point": "Ponto de encontro",
+      "A street, stop or landmark": "Uma rua, parada ou referência",
+      "Book my seat": "Reservar meu lugar"
+    }
+  },
+  "zh": {
+    "name": "拼车",
+    "desc": "选个座位，说明在哪里上车",
+    "lines": {
+      "Lift share": "拼车",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**出发：** 周六上午 9 点\n**地点：** 车站",
+      "Take a seat": "选个座位",
+      "Front seat": "副驾驶",
+      "Back left": "后排左",
+      "Back middle": "后排中",
+      "Back right": "后排右",
+      "Pickup point": "上车地点",
+      "A street, stop or landmark": "街道、车站或地标",
+      "Book my seat": "订我的座位"
+    }
+  },
+  "ar": {
+    "name": "مشاركة السيارة",
+    "desc": "احجز مقعدًا وحدد مكان الالتقاء",
+    "lines": {
+      "Lift share": "مشاركة السيارة",
+      "**Leaving:** Saturday, 9am\n**From:** the station": "**المغادرة:** السبت، 9 صباحًا\n**من:** المحطة",
+      "Take a seat": "احجز مقعدًا",
+      "Front seat": "المقعد الأمامي",
+      "Back left": "الخلف يسارًا",
+      "Back middle": "الخلف وسطًا",
+      "Back right": "الخلف يمينًا",
+      "Pickup point": "نقطة الالتقاء",
+      "A street, stop or landmark": "شارع أو موقف أو معلم",
+      "Book my seat": "احجز مقعدي"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "es": {
+    "name": "Marcador",
+    "desc": "Puntos para cada equipo",
+    "lines": {
+      "Scoreboard": "Marcador",
+      "Update Isolink to use this card": "Actualiza Isolink para usar esta tarjeta",
+      "Team A": "Equipo A",
+      "Team B": "Equipo B",
+      "Add a team": "Añadir un equipo",
+      "Reset scores": "Poner a cero",
+      "Eight teams at most": "Ocho equipos como mucho",
+      "That team is gone": "Ese equipo ya no está",
+      "Only the person who sent the card can do that": "Solo quien envió la tarjeta puede hacer eso"
+    }
+  },
+  "fr": {
+    "name": "Tableau des scores",
+    "desc": "Des points pour chaque équipe",
+    "lines": {
+      "Scoreboard": "Tableau des scores",
+      "Update Isolink to use this card": "Mets Isolink à jour pour utiliser cette carte",
+      "Team A": "Équipe A",
+      "Team B": "Équipe B",
+      "Add a team": "Ajouter une équipe",
+      "Reset scores": "Remettre à zéro",
+      "Eight teams at most": "Huit équipes au plus",
+      "That team is gone": "Cette équipe n'existe plus",
+      "Only the person who sent the card can do that": "Seule la personne qui a envoyé la carte peut faire ça"
+    }
+  },
+  "de": {
+    "name": "Punktestand",
+    "desc": "Punkte für jedes Team",
+    "lines": {
+      "Scoreboard": "Punktestand",
+      "Update Isolink to use this card": "Aktualisiere Isolink, um diese Karte zu nutzen",
+      "Add a team": "Team hinzufügen",
+      "Reset scores": "Punkte zurücksetzen",
+      "Eight teams at most": "Höchstens acht Teams",
+      "That team is gone": "Dieses Team gibt es nicht mehr",
+      "Only the person who sent the card can do that": "Das kann nur, wer die Karte geschickt hat"
+    }
+  },
+  "pt": {
+    "name": "Placar",
+    "desc": "Pontos para cada time",
+    "lines": {
+      "Scoreboard": "Placar",
+      "Update Isolink to use this card": "Atualize o Isolink para usar este cartão",
+      "Team A": "Time A",
+      "Team B": "Time B",
+      "Add a team": "Adicionar um time",
+      "Reset scores": "Zerar placar",
+      "Eight teams at most": "No máximo oito times",
+      "That team is gone": "Esse time não existe mais",
+      "Only the person who sent the card can do that": "Só quem enviou o cartão pode fazer isso"
+    }
+  },
+  "zh": {
+    "name": "记分板",
+    "desc": "每队的分数",
+    "lines": {
+      "Scoreboard": "记分板",
+      "Update Isolink to use this card": "更新 Isolink 才能使用这张卡片",
+      "Team A": "A 队",
+      "Team B": "B 队",
+      "Add a team": "添加队伍",
+      "Reset scores": "分数清零",
+      "Eight teams at most": "最多八支队伍",
+      "That team is gone": "这支队伍已不在",
+      "Only the person who sent the card can do that": "只有发送卡片的人能这样做"
+    }
+  },
+  "ar": {
+    "name": "لوحة النقاط",
+    "desc": "نقاط لكل فريق",
+    "lines": {
+      "Scoreboard": "لوحة النقاط",
+      "Update Isolink to use this card": "حدّث Isolink لاستخدام هذه البطاقة",
+      "Team A": "الفريق أ",
+      "Team B": "الفريق ب",
+      "Add a team": "أضف فريقًا",
+      "Reset scores": "تصفير النقاط",
+      "Eight teams at most": "ثمانية فرق على الأكثر",
+      "That team is gone": "هذا الفريق لم يعد موجودًا",
+      "Only the person who sent the card can do that": "لا يستطيع ذلك إلا من أرسل البطاقة"
+    }
+  }
+}
