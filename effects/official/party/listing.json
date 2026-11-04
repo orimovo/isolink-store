@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Hats, balloons and stars",
+  "tags": [
+    "party",
+    "face"
+  ],
+  "minApp": "0.26.20"
+}
