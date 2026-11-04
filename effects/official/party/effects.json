@@ -1,0 +1,75 @@
+{
+  "v": 1,
+  "id": "party",
+  "name": "Party",
+  "by": "Isolink",
+  "effects": [
+    {
+      "id": "hat",
+      "name": "Party hat",
+      "icon": "🥳",
+      "layers": [
+        {
+          "type": "sticker",
+          "emoji": "🥳",
+          "anchor": "top",
+          "size": 1.8,
+          "y": -0.2,
+          "motion": "bob"
+        },
+        {
+          "type": "particles",
+          "emoji": "🎉",
+          "count": 14,
+          "motion": "fall",
+          "anchor": "screen",
+          "size": 0.06
+        }
+      ]
+    },
+    {
+      "id": "balloons",
+      "name": "Balloons",
+      "icon": "🎈",
+      "layers": [
+        {
+          "type": "particles",
+          "emoji": "🎈",
+          "count": 10,
+          "motion": "rise",
+          "anchor": "screen",
+          "size": 0.08
+        }
+      ]
+    },
+    {
+      "id": "star",
+      "name": "Star",
+      "icon": "🤩",
+      "layers": [
+        {
+          "type": "sticker",
+          "emoji": "⭐",
+          "anchor": "leftEye",
+          "size": 0.7,
+          "motion": "spin"
+        },
+        {
+          "type": "sticker",
+          "emoji": "⭐",
+          "anchor": "rightEye",
+          "size": 0.7,
+          "motion": "spin"
+        },
+        {
+          "type": "particles",
+          "emoji": "✨",
+          "count": 12,
+          "motion": "drift",
+          "anchor": "face",
+          "size": 0.3
+        }
+      ]
+    }
+  ]
+}

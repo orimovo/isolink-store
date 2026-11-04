@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Ears, noses and whiskers",
+  "tags": [
+    "animals",
+    "face"
+  ],
+  "minApp": "0.26.20"
+}

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Warm, cool, love and rain",
+  "tags": [
+    "mood",
+    "photo"
+  ],
+  "minApp": "0.26.20"
+}

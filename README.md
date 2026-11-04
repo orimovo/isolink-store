@@ -4,19 +4,19 @@
 
 <h1 align="center">Isolink store</h1>
 
-<p align="center">Theme packs and cards for <a href="https://isolink.app">Isolink</a>, the private, off-grid messenger.<br>Anyone can add one by pull request.</p>
+<p align="center">Theme packs, cards and effects for <a href="https://isolink.app">Isolink</a>, the private, off-grid messenger.<br>Anyone can add one by pull request.</p>
 
 ---
 
-Everything here shows up in the app under **Theme Studio → Library → Browse** and **My cards → Browse**. Isolink's cards tagged `template` are the app's New card templates. The app stays small because these are downloads, not built in.
+Everything here shows up in the app under **Theme Studio → Library → Browse**, **My cards → Browse** and the camera's **Store**. Isolink's cards tagged `template` are the app's New card templates. The app stays small because these are downloads, not built in.
 
 Apps never talk to GitHub. Relays pull this store, check its signatures, and hand packs to their members over the connection they already have. So nobody's IP, searches or picks reach GitHub or anyone else.
 
-## Add your theme pack or card
+## Add your theme pack, card or effects
 
 1. **Make it.** In Isolink, make a look in Theme Studio or a card in Card Studio, then save it as a file from its Share sheet (an `.isotheme` or `.isocard`). Or write one by hand from the format guides: [theme packs](https://isolink.app/docs/themes.html) and [cards](https://isolink.app/docs/cards.html). An AI model can write one from those pages too.
 2. **Check it.** Drop the file into the [theme pack checker](https://isolink.app/tools.html), which runs the app's own validator in your browser.
-3. **Fork this repo** and add **one folder** under `themes/community/` or `cards/community/` (see below). Copy one from [`examples/`](examples/) to start.
+3. **Fork this repo** and add **one folder** under `themes/community/`, `cards/community/` or `effects/community/` (see below). Copy one from [`examples/`](examples/) to start.
 4. **Open a pull request.** The check runs on it within a minute or two and says exactly what to fix.
 5. **A maintainer reviews it** and merges it. Within the hour it is signed and published, and it appears in Browse.
 
@@ -77,6 +77,17 @@ cards/community/kit-list/
 ```
 
 A scripted card that reaches the web must list every site it uses in `sites`. Browse shows them before anyone gets the card.
+
+### Effects
+
+```
+effects/community/party/
+  effects.json         the pack: its effects and their layers
+  listing.json
+  assets/*.png         optional, for stickers and frames
+```
+
+An effect is layers on a face or a photo: stickers (an emoji or a PNG), warps, a colour filter, particles and frames. Stickers sit on places on the face (`eyes`, `nose`, `mouth`, `top`, …) and follow it in the camera. The format is in [docs/theme-store.md](https://github.com/waggr-gb/Isolink/blob/main/docs/theme-store.md#extras-effect-packs-and-story-styles), and [`effects/official/`](effects/official/) has examples.
 
 ### listing.json
 
