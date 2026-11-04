@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Burbujas",
+    "desc": "Colores dulces, letras redondas y un saltito."
+  },
+  "fr": {
+    "name": "Pétillant",
+    "desc": "Couleurs sucrées, lettres rondes et petits bonds."
+  },
+  "de": {
+    "name": "Sprudelig",
+    "desc": "Süße Farben, runde Buchstaben und ein Hüpfer."
+  },
+  "pt": {
+    "name": "Borbulhante",
+    "desc": "Cores doces, letras redondas e um pulinho."
+  },
+  "zh": {
+    "name": "泡泡",
+    "desc": "甜美的颜色、圆润的字母和跳动效果。"
+  },
+  "ar": {
+    "name": "فقاعات",
+    "desc": "ألوان حلوة وحروف مستديرة وقفزة."
+  }
+}

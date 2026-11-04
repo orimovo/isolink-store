@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Fanzine",
+    "desc": "Papel fotocopiado, máquina de escribir y puntos de semitono."
+  },
+  "fr": {
+    "name": "Fanzine",
+    "desc": "Papier photocopié, machine à écrire et trame de points."
+  },
+  "de": {
+    "name": "Fanzine",
+    "desc": "Fotokopiertes Papier, Schreibmaschine und Rasterpunkte."
+  },
+  "pt": {
+    "name": "Fanzine",
+    "desc": "Papel fotocopiado, máquina de escrever e pontos de meio-tom."
+  },
+  "zh": {
+    "name": "小志",
+    "desc": "复印纸、打字机字体和网点。"
+  },
+  "ar": {
+    "name": "مجلة مصغّرة",
+    "desc": "ورق مصوَّر وآلة كاتبة ونقاط نصف لونية."
+  }
+}

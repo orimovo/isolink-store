@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Cinta retro",
+    "desc": "Líneas de barrido, color desplazado y fallos, como una cinta vieja."
+  },
+  "fr": {
+    "name": "Cassette rétro",
+    "desc": "Lignes de balayage, couleurs décalées et bugs, comme une vieille cassette."
+  },
+  "de": {
+    "name": "Retro-Kassette",
+    "desc": "Zeilen, Farbversatz und Glitches wie auf einem alten Band."
+  },
+  "pt": {
+    "name": "Fita retrô",
+    "desc": "Linhas de varredura, cor deslocada e falhas, como uma fita antiga."
+  },
+  "zh": {
+    "name": "复古磁带",
+    "desc": "扫描线、色彩错位和故障效果，像旧磁带一样。"
+  },
+  "ar": {
+    "name": "شريط قديم",
+    "desc": "خطوط مسح وانقسام ألوان وتشويش مثل شريط قديم."
+  }
+}

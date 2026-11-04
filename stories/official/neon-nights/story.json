@@ -1,0 +1,57 @@
+{
+  "v": 1,
+  "id": "neon-nights",
+  "name": "Neon nights",
+  "backgrounds": [
+    {
+      "id": "grid",
+      "name": "Grid",
+      "colors": [
+        4279371039,
+        4280945469
+      ],
+      "pattern": "grid",
+      "patternColor": 2164211912,
+      "motion": "pan",
+      "ink": 4294933734
+    },
+    {
+      "id": "club",
+      "name": "Club",
+      "colors": [
+        4278911521,
+        4281994403,
+        4294387077
+      ],
+      "angle": 200,
+      "motion": "pulse",
+      "ink": 4294967295
+    }
+  ],
+  "fonts": [
+    {
+      "id": "neon",
+      "name": "Neon",
+      "font": {
+        "file": "fonts/Monoton-Regular.ttf"
+      },
+      "scale": 0.9
+    }
+  ],
+  "motions": [
+    {
+      "id": "flicker",
+      "name": "Flicker",
+      "base": "flicker",
+      "speed": 1.2
+    }
+  ],
+  "filters": [
+    {
+      "id": "glow",
+      "name": "Glow",
+      "overlay": "glow",
+      "strength": 0.9
+    }
+  ]
+}

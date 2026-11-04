@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "Apache-2.0",
+  "desc": "Photocopied paper, a typewriter and halftone dots.",
+  "tags": [
+    "backgrounds",
+    "fonts",
+    "motions",
+    "filters"
+  ],
+  "minApp": "0.26.20"
+}
