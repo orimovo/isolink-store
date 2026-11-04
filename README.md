@@ -29,6 +29,7 @@ themes/community/moon-garden/
   pack.json            the pack (format: theme pack spec)
   listing.json         who made it, licence, version
   assets/head.png      pictures the pack names (optional)
+  sounds/drip.wav      notification sounds the pack names (optional)
   preview-light.png    thumbnails for Browse (optional)
   preview-dark.png
 ```
@@ -53,6 +54,14 @@ A card's `lines` map each line as written in the card to its translation: `"line
 "assets": {
   "head": { "file": "assets/head.png" }
 }
+```
+
+and a notification sound can be a WAV file beside it too (PCM, at most 5 seconds and 512 KB, up to four):
+
+```json
+"sounds": [
+  { "name": "Drip", "file": "sounds/drip.wav" }
+]
 ```
 
 Only have an exported `.isotheme`? Open the pull request with it in the folder and say so; a maintainer will unpack it into `pack.json` for you.
