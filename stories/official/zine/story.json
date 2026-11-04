@@ -1,0 +1,76 @@
+{
+  "v": 1,
+  "id": "zine",
+  "name": "Zine",
+  "backgrounds": [
+    {
+      "id": "riso",
+      "name": "Riso",
+      "colors": [
+        4294109656
+      ],
+      "pattern": "dots",
+      "patternColor": 1726105658,
+      "ink": 4279966491
+    },
+    {
+      "id": "kraft",
+      "name": "Kraft",
+      "colors": [
+        4291405692,
+        4289956701
+      ],
+      "pattern": "lines",
+      "patternColor": 436207616,
+      "ink": 4281015568
+    }
+  ],
+  "fonts": [
+    {
+      "id": "typewriter",
+      "name": "Typewriter",
+      "font": {
+        "file": "fonts/SpecialElite-Regular.ttf"
+      },
+      "scale": 0.95
+    }
+  ],
+  "motions": [
+    {
+      "id": "slowtype",
+      "name": "Slow type",
+      "base": "type",
+      "speed": 0.6
+    }
+  ],
+  "filters": [
+    {
+      "id": "halftone",
+      "name": "Halftone",
+      "overlay": "halftone",
+      "strength": 0.7,
+      "matrix": [
+        1.1,
+        0,
+        0,
+        0,
+        -8,
+        0,
+        1.05,
+        0,
+        0,
+        -6,
+        0,
+        0,
+        0.95,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    }
+  ]
+}

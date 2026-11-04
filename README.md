@@ -66,6 +66,31 @@ and a notification sound can be a WAV file beside it too (PCM, at most 5 seconds
 
 Only have an exported `.isotheme`? Open the pull request with it in the folder and say so; a maintainer will unpack it into `pack.json` for you.
 
+### A story pack
+
+Backgrounds, fonts, motions and filters for text stories:
+
+```
+stories/community/neon-nights/
+  story.json           the pack
+  listing.json         who made it, licence, version
+  fonts/neon.ttf       fonts the pack names (TrueType or OpenType, up to 1 MB each)
+  preview-light.png    thumbnails for Story packs (optional)
+  preview-dark.png
+```
+
+```json
+{
+  "v": 1, "id": "neon-nights", "name": "Neon nights",
+  "backgrounds": [{"id": "grid", "name": "Grid", "colors": [4279370015], "pattern": "grid", "motion": "pan"}],
+  "fonts": [{"id": "neon", "name": "Neon", "font": {"file": "fonts/neon.ttf"}}],
+  "motions": [{"id": "flicker", "name": "Flicker", "base": "flicker", "speed": 1.2}],
+  "filters": [{"id": "glow", "name": "Glow", "overlay": "glow", "strength": 0.9}]
+}
+```
+
+A background is one to four colours (`0xAARRGGBB`) with an `angle`, an optional `pattern` (`dots`, `grid`, `lines`, `stripes`), `motion` (`drift`, `pulse`, `pan`) and `image` (`{"file": "x.png"}`). A motion tunes one of the app's own (`fade`, `pop`, `type`, `wave`, `bounce`, `glitch`, `flicker`, `slide`, `zoom`) with `speed` and `amount`. A filter is a 4x5 colour `matrix`, an `overlay` (`grain`, `scanlines`, `halftone`, `vignette`, `glow`, `split`) or both. Tag it with what it has (`backgrounds`, `fonts`, `motions`, `filters`) so Story packs can filter it.
+
 ### A card
 
 ```

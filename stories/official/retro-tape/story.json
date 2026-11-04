@@ -1,0 +1,91 @@
+{
+  "v": 1,
+  "id": "retro-tape",
+  "name": "Retro tape",
+  "backgrounds": [
+    {
+      "id": "tape",
+      "name": "Tape",
+      "colors": [
+        4279900718,
+        4281998386
+      ],
+      "angle": 180,
+      "ink": 4294242559
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "colors": [
+        4281012309,
+        4292162409,
+        4294948972
+      ],
+      "angle": 180,
+      "pattern": "stripes",
+      "patternColor": 335544320,
+      "ink": 4294967295
+    }
+  ],
+  "fonts": [
+    {
+      "id": "block",
+      "name": "Block",
+      "font": {
+        "file": "fonts/RubikMonoOne-Regular.ttf"
+      },
+      "scale": 0.75
+    }
+  ],
+  "motions": [
+    {
+      "id": "glitch",
+      "name": "Glitch",
+      "base": "glitch",
+      "amount": 1.2
+    },
+    {
+      "id": "rewind",
+      "name": "Rewind",
+      "base": "slide",
+      "speed": 0.8,
+      "amount": 1.5
+    }
+  ],
+  "filters": [
+    {
+      "id": "vhs",
+      "name": "VHS",
+      "overlay": "scanlines",
+      "strength": 0.8,
+      "matrix": [
+        1.05,
+        0.05,
+        0,
+        0,
+        6,
+        0,
+        0.95,
+        0.05,
+        0,
+        0,
+        0.05,
+        0,
+        1.1,
+        0,
+        10,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "id": "split",
+      "name": "Split",
+      "overlay": "split",
+      "strength": 0.9
+    }
+  ]
+}

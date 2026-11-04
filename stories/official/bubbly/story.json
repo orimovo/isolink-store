@@ -1,0 +1,83 @@
+{
+  "v": 1,
+  "id": "bubbly",
+  "name": "Bubbly",
+  "backgrounds": [
+    {
+      "id": "candy",
+      "name": "Candy",
+      "colors": [
+        4294955496,
+        4294964144,
+        4290310399
+      ],
+      "angle": 135,
+      "motion": "drift",
+      "ink": 4291967098
+    },
+    {
+      "id": "bubblegum",
+      "name": "Bubblegum",
+      "colors": [
+        4294938567
+      ],
+      "pattern": "dots",
+      "patternColor": 1090519039,
+      "ink": 4294967295
+    }
+  ],
+  "fonts": [
+    {
+      "id": "round",
+      "name": "Round",
+      "font": {
+        "file": "fonts/Fredoka.ttf"
+      },
+      "scale": 1.05,
+      "weight": 600
+    }
+  ],
+  "motions": [
+    {
+      "id": "hop",
+      "name": "Hop",
+      "base": "bounce",
+      "speed": 1.1
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom",
+      "base": "zoom"
+    }
+  ],
+  "filters": [
+    {
+      "id": "soft",
+      "name": "Soft",
+      "matrix": [
+        0.9,
+        0.1,
+        0.05,
+        0,
+        18,
+        0.05,
+        0.9,
+        0.1,
+        0,
+        18,
+        0.1,
+        0.05,
+        0.9,
+        0,
+        22,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "overlay": "vignette",
+      "strength": 0.25
+    }
+  ]
+}

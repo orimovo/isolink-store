@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Noches de neón",
+    "desc": "Letreros brillantes, una cuadrícula en movimiento y un parpadeo."
+  },
+  "fr": {
+    "name": "Nuits néon",
+    "desc": "Enseignes lumineuses, grille mouvante et scintillement."
+  },
+  "de": {
+    "name": "Neonnächte",
+    "desc": "Leuchtschilder, ein bewegtes Raster und ein Flackern."
+  },
+  "pt": {
+    "name": "Noites de néon",
+    "desc": "Letreiros brilhantes, uma grade em movimento e um tremeluzir."
+  },
+  "zh": {
+    "name": "霓虹之夜",
+    "desc": "发光招牌、流动网格和闪烁效果。"
+  },
+  "ar": {
+    "name": "ليالي النيون",
+    "desc": "لافتات متوهجة وشبكة متحركة ووميض."
+  }
+}
