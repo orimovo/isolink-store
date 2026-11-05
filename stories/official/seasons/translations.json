@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Estaciones",
+    "desc": "Nieve, hojas que caen, praderas y un borde helado."
+  },
+  "fr": {
+    "name": "Saisons",
+    "desc": "Neige, feuilles qui tombent, prairies et un bord givré."
+  },
+  "de": {
+    "name": "Jahreszeiten",
+    "desc": "Schnee, fallende Blätter, Frühlingswiesen und ein frostiger Rand."
+  },
+  "pt": {
+    "name": "Estações",
+    "desc": "Neve, folhas caindo, prados e uma borda gelada."
+  },
+  "zh": {
+    "name": "四季",
+    "desc": "飘雪、落叶、春日草地和霜边。"
+  },
+  "ar": {
+    "name": "الفصول",
+    "desc": "ثلج وأوراق متساقطة ومروج وحافة متجمدة."
+  }
+}

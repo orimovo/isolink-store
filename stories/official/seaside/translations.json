@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Costa",
+    "desc": "Postales, olas y dunas."
+  },
+  "fr": {
+    "name": "Bord de mer",
+    "desc": "Cartes postales, vagues et dunes."
+  },
+  "de": {
+    "name": "Strand",
+    "desc": "Postkarten, Brandung und Dünen."
+  },
+  "pt": {
+    "name": "Litoral",
+    "desc": "Postais, ondas e dunas."
+  },
+  "zh": {
+    "name": "海边",
+    "desc": "明信片、浪花和沙丘。"
+  },
+  "ar": {
+    "name": "الشاطئ",
+    "desc": "بطاقات بريدية وأمواج وكثبان."
+  }
+}

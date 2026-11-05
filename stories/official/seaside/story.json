@@ -1,0 +1,101 @@
+{
+  "v": 1,
+  "id": "seaside",
+  "name": "Seaside",
+  "backgrounds": [
+    {
+      "id": "lagoon",
+      "name": "Lagoon",
+      "colors": [
+        4286564584,
+        4290372850,
+        4294176738
+      ],
+      "angle": 175,
+      "ink": 4279122514
+    }
+  ],
+  "layouts": [
+    {
+      "id": "postcard",
+      "name": "Postcard",
+      "slots": [
+        {
+          "id": "pic",
+          "kind": "image",
+          "x": 6,
+          "y": 9,
+          "w": 88,
+          "h": 42,
+          "radius": "24dp",
+          "generate": "A sunny beach with turquoise water"
+        },
+        {
+          "id": "words",
+          "kind": "text",
+          "x": 8,
+          "y": 54,
+          "w": 84,
+          "h": 20
+        },
+        {
+          "id": "shell",
+          "kind": "emoji",
+          "x": 74,
+          "y": 46,
+          "w": 16,
+          "h": 9,
+          "emoji": "🐚"
+        }
+      ]
+    },
+    {
+      "id": "shoreline",
+      "name": "Shoreline",
+      "slots": [
+        {
+          "id": "words",
+          "kind": "text",
+          "x": 6,
+          "y": 16,
+          "w": 88,
+          "h": 34
+        },
+        {
+          "id": "sun",
+          "kind": "emoji",
+          "x": 42,
+          "y": 52,
+          "w": 16,
+          "h": 9,
+          "emoji": "☀️"
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "id": "surf",
+      "name": "Surf",
+      "base": "waves",
+      "width": 30,
+      "colors": [
+        4288603104,
+        4282366153,
+        4280060838,
+        4279131258
+      ]
+    },
+    {
+      "id": "dunes",
+      "name": "Dunes",
+      "base": "hills",
+      "width": 22,
+      "colors": [
+        4294237616,
+        4293246590,
+        4291402327
+      ]
+    }
+  ]
+}

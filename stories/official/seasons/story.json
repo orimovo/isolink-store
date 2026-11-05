@@ -1,0 +1,62 @@
+{
+  "v": 1,
+  "id": "seasons",
+  "name": "Seasons",
+  "backgrounds": [
+    {
+      "id": "frost",
+      "name": "Frost",
+      "colors": [
+        4279179320,
+        4280563051,
+        4283128982
+      ],
+      "angle": 175
+    }
+  ],
+  "frames": [
+    {
+      "id": "blizzard",
+      "name": "Blizzard",
+      "base": "snow",
+      "width": 26,
+      "colors": [
+        4294967295,
+        4292667386
+      ]
+    },
+    {
+      "id": "autumn",
+      "name": "Autumn",
+      "base": "leaves",
+      "width": 24,
+      "colors": [
+        4292444715,
+        4288432670,
+        4294092097,
+        4290070314
+      ]
+    },
+    {
+      "id": "meadow",
+      "name": "Meadow",
+      "base": "hills",
+      "width": 26,
+      "colors": [
+        4290240650,
+        4285510490,
+        4282285372
+      ]
+    },
+    {
+      "id": "frost-edge",
+      "name": "Frost edge",
+      "base": "snow",
+      "place": "full",
+      "width": "14dp",
+      "colors": [
+        4294113279
+      ]
+    }
+  ]
+}

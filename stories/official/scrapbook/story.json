@@ -1,0 +1,141 @@
+{
+  "v": 1,
+  "id": "scrapbook",
+  "name": "Scrapbook",
+  "backgrounds": [
+    {
+      "id": "paper",
+      "name": "Paper",
+      "colors": [
+        4294373347,
+        4293582795
+      ],
+      "angle": 180,
+      "pattern": "dots",
+      "patternColor": 335544320,
+      "ink": 4282001950
+    }
+  ],
+  "layouts": [
+    {
+      "id": "polaroid",
+      "name": "Polaroid",
+      "slots": [
+        {
+          "id": "pic",
+          "kind": "image",
+          "x": 14,
+          "y": 12,
+          "w": 72,
+          "h": 44,
+          "radius": "4dp",
+          "generate": "A favourite moment, like an instant photo"
+        },
+        {
+          "id": "words",
+          "kind": "text",
+          "x": 10,
+          "y": 60,
+          "w": 80,
+          "h": 18
+        },
+        {
+          "id": "tape",
+          "kind": "emoji",
+          "x": 42,
+          "y": 8,
+          "w": 16,
+          "h": 8,
+          "emoji": "📌"
+        }
+      ]
+    },
+    {
+      "id": "two-photos",
+      "name": "Two photos",
+      "slots": [
+        {
+          "id": "left",
+          "kind": "image",
+          "x": 6,
+          "y": 12,
+          "w": 42,
+          "h": 34,
+          "radius": "12dp",
+          "generate": "A happy moment"
+        },
+        {
+          "id": "right",
+          "kind": "image",
+          "x": 52,
+          "y": 20,
+          "w": 42,
+          "h": 34,
+          "radius": "12dp",
+          "generate": "Another happy moment"
+        },
+        {
+          "id": "words",
+          "kind": "text",
+          "x": 8,
+          "y": 60,
+          "w": 84,
+          "h": 22
+        }
+      ]
+    },
+    {
+      "id": "stickers",
+      "name": "Stickers",
+      "slots": [
+        {
+          "id": "words",
+          "kind": "text",
+          "x": 10,
+          "y": 30,
+          "w": 80,
+          "h": 36
+        },
+        {
+          "id": "a",
+          "kind": "emoji",
+          "x": 10,
+          "y": 14,
+          "w": 16,
+          "h": 9,
+          "emoji": "✨"
+        },
+        {
+          "id": "b",
+          "kind": "emoji",
+          "x": 72,
+          "y": 20,
+          "w": 16,
+          "h": 9,
+          "emoji": "💛"
+        },
+        {
+          "id": "c",
+          "kind": "emoji",
+          "x": 44,
+          "y": 70,
+          "w": 16,
+          "h": 9,
+          "emoji": "🎉"
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "id": "paper-edge",
+      "name": "Paper edge",
+      "base": "snow",
+      "place": "full",
+      "width": "20dp",
+      "colors": [
+        4294966258
+      ]
+    }
+  ]
+}
