@@ -68,7 +68,7 @@ Only have an exported `.isotheme`? Open the pull request with it in the folder a
 
 ### A story pack
 
-Backgrounds, fonts, motions and filters for text stories:
+Backgrounds, fonts, motions, filters, layouts and frames for text stories:
 
 ```
 stories/community/neon-nights/
@@ -89,7 +89,17 @@ stories/community/neon-nights/
 }
 ```
 
-A background is one to four colours (`0xAARRGGBB`) with an `angle`, an optional `pattern` (`dots`, `grid`, `lines`, `stripes`), `motion` (`drift`, `pulse`, `pan`) and `image` (`{"file": "x.png"}`). A motion tunes one of the app's own (`fade`, `pop`, `type`, `wave`, `bounce`, `glitch`, `flicker`, `slide`, `zoom`) with `speed` and `amount`. A filter is a 4x5 colour `matrix`, an `overlay` (`grain`, `scanlines`, `halftone`, `vignette`, `glow`, `split`) or both. Tag it with what it has (`backgrounds`, `fonts`, `motions`, `filters`) so Story packs can filter it.
+A background is one to four colours (`0xAARRGGBB`) with an `angle`, an optional `pattern` (`dots`, `grid`, `lines`, `stripes`), `motion` (`drift`, `pulse`, `pan`) and `image` (`{"file": "x.png"}`). A motion tunes one of the app's own (`fade`, `pop`, `type`, `wave`, `bounce`, `glitch`, `flicker`, `slide`, `zoom`) with `speed` and `amount`. A filter is a 4x5 colour `matrix`, an `overlay` (`grain`, `scanlines`, `halftone`, `vignette`, `glow`, `split`) or both. A layout places the story in `slots`, drawn in order: one `text` slot for the words, and any `image` or `emoji` slots, each with `x`, `y`, `w` and `h` as a percentage of the story (`40` or `"40%"`), `"24dp"` (as on a story 360 wide) or `"120px"` (as on one 1080 wide), an optional `radius`, and for an image slot a `generate` prompt the app and bots start from, or for an emoji slot the `emoji` it starts with. A frame goes along the bottom or all round (`place`: `bottom` or `full`) with a set `width` in the same units, and is one of the app's own (`base`: `waves`, `snow`, `leaves`, `hills`) in up to four `colors`, an `image` (`{"file": "frame.png"}`) or both:
+
+```json
+"layouts": [{"id": "postcard", "name": "Postcard", "slots": [
+  {"id": "pic", "kind": "image", "x": 6, "y": 9, "w": 88, "h": 42, "radius": "24dp", "generate": "A sunny beach"},
+  {"id": "words", "kind": "text", "x": 8, "y": 54, "w": 84, "h": 20},
+  {"id": "shell", "kind": "emoji", "x": 74, "y": 46, "w": 16, "h": 9, "emoji": "🐚"}]}],
+"frames": [{"id": "surf", "name": "Surf", "base": "waves", "width": 30, "colors": [4288603104, 4282366153]}]
+```
+
+Tag it with what it has (`backgrounds`, `fonts`, `motions`, `filters`, `layouts`, `frames`) so Story packs can filter it. Packs with layouts or frames need `"minApp": "0.26.21"`.
 
 ### A card
 
