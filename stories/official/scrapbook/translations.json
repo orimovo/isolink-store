@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Álbum",
+    "desc": "Fotos instantáneas, páginas de dos fotos y pegatinas."
+  },
+  "fr": {
+    "name": "Album",
+    "desc": "Photos instantanées, pages à deux photos et autocollants."
+  },
+  "de": {
+    "name": "Fotoalbum",
+    "desc": "Sofortbilder, Seiten mit zwei Fotos und Sticker."
+  },
+  "pt": {
+    "name": "Álbum",
+    "desc": "Fotos instantâneas, páginas com duas fotos e adesivos."
+  },
+  "zh": {
+    "name": "手账",
+    "desc": "拍立得、双照片页和贴纸。"
+  },
+  "ar": {
+    "name": "ألبوم",
+    "desc": "صور فورية وصفحات بصورتين وملصقات."
+  }
+}

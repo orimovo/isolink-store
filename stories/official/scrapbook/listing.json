@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "Apache-2.0",
+  "desc": "Instant photos, two-photo pages and stickers.",
+  "tags": [
+    "backgrounds",
+    "layouts",
+    "frames"
+  ],
+  "minApp": "0.26.21"
+}
