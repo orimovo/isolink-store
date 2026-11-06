@@ -49,7 +49,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/checker"
           if curl -fsSL -o "$RUNNER_TEMP/checker.tar.gz" "$base/theme-store-linux-x64.tar.gz"; then
             tar -xzf "$RUNNER_TEMP/checker.tar.gz" -C "$RUNNER_TEMP/checker"
-            ln -sf "$RUNNER_TEMP/checker/bin/theme_store" "$RUNNER_TEMP/theme-store"
+            printf '#!/bin/sh\nexec "%s" "$@"\n' "$RUNNER_TEMP/checker/bin/theme_store" > "$RUNNER_TEMP/theme-store"
           elif curl -fsSL -o "$RUNNER_TEMP/theme-store" "$base/theme-store-linux-x64"; then
             :
           else
