@@ -43,11 +43,18 @@ jobs:
       - name: Get the checker
         id: get
         run: |
-          # Built by Isolink from its own validators, published with the store.
-          if ! curl -fsSL -o "$RUNNER_TEMP/theme-store" \
-            "https://raw.githubusercontent.com/${{ github.repository }}/store/tools/theme-store-linux-x64"; then
+          # Built by Isolink from its own validators, published with the store:
+          # a folder (with the app compiler's library) or, from before, one file.
+          base="https://raw.githubusercontent.com/${{ github.repository }}/store/tools"
+          mkdir -p "$RUNNER_TEMP/checker"
+          if curl -fsSL -o "$RUNNER_TEMP/checker.tar.gz" "$base/theme-store-linux-x64.tar.gz"; then
+            tar -xzf "$RUNNER_TEMP/checker.tar.gz" -C "$RUNNER_TEMP/checker"
+            ln -sf "$RUNNER_TEMP/checker/bin/theme_store" "$RUNNER_TEMP/theme-store"
+          elif curl -fsSL -o "$RUNNER_TEMP/theme-store" "$base/theme-store-linux-x64"; then
+            :
+          else
             # Before the store is first published there is no checker yet.
-            echo "::warning::The checker isn't published yet (the store branch has no tools/theme-store-linux-x64)."
+            echo "::warning::The checker isn't published yet (the store branch has no tools/theme-store-linux-x64.tar.gz)."
             [ "${{ github.event_name }}" = push ] && exit 0
             exit 1
           fi
