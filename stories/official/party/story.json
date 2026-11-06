@@ -1,0 +1,127 @@
+{
+  "v": 1,
+  "id": "party",
+  "name": "Party",
+  "backgrounds": [
+    {
+      "id": "dance-floor",
+      "name": "Dance floor",
+      "colors": [
+        4278912790,
+        4280946501,
+        4284158835
+      ],
+      "angle": 200,
+      "motion": "pulse",
+      "ink": 4294967295
+    }
+  ],
+  "frames": [
+    {
+      "id": "lasers",
+      "name": "Lasers",
+      "base": "layers",
+      "edges": [
+        "bottom"
+      ],
+      "width": 18,
+      "colors": [
+        4294912982,
+        4278248959,
+        4286381903,
+        4294959437
+      ],
+      "layers": [
+        {
+          "kind": "glow",
+          "at": [
+            "bottom"
+          ],
+          "move": "pulse",
+          "speed": 2,
+          "blend": "add",
+          "opacity": 0.7
+        },
+        {
+          "kind": "beam",
+          "at": [
+            "bottom-left",
+            "bottom-right"
+          ],
+          "count": 4,
+          "move": "sweep",
+          "speed": 1.4,
+          "hue": 0.25,
+          "blend": "add"
+        },
+        {
+          "kind": "strip",
+          "look": "band",
+          "colors": [
+            4279503398
+          ]
+        },
+        {
+          "kind": "fall",
+          "look": "stars",
+          "move": "rise",
+          "count": 24,
+          "colors": [
+            4294967295
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disco",
+      "name": "Disco",
+      "base": "layers",
+      "edges": [
+        "top"
+      ],
+      "width": 14,
+      "colors": [
+        4294922147,
+        4283422975,
+        4294957135,
+        4288900095
+      ],
+      "layers": [
+        {
+          "kind": "glow",
+          "at": [
+            "top"
+          ],
+          "move": "pulse",
+          "speed": 1.5,
+          "blend": "add",
+          "opacity": 0.6
+        },
+        {
+          "kind": "beam",
+          "at": [
+            "top"
+          ],
+          "count": 6,
+          "move": "sweep",
+          "speed": 0.8,
+          "amount": 1.6,
+          "hue": 0.15,
+          "blend": "add",
+          "opacity": 0.8
+        },
+        {
+          "kind": "strip",
+          "look": "dots",
+          "move": "drift",
+          "size": 0.8
+        },
+        {
+          "kind": "fall",
+          "look": "confetti",
+          "count": 36
+        }
+      ]
+    }
+  ]
+}

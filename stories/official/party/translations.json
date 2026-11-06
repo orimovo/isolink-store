@@ -1,0 +1,26 @@
+{
+  "es": {
+    "name": "Fiesta",
+    "desc": "Láseres, las luces de una bola de discoteca y una pista de baile."
+  },
+  "fr": {
+    "name": "Fête",
+    "desc": "Des lasers, les lumières d'une boule disco et une piste de danse."
+  },
+  "de": {
+    "name": "Party",
+    "desc": "Laser, die Lichter einer Discokugel und eine Tanzfläche."
+  },
+  "pt": {
+    "name": "Festa",
+    "desc": "Lasers, as luzes de uma bola de discoteca e uma pista de dança."
+  },
+  "zh": {
+    "name": "派对",
+    "desc": "激光、迪斯科球的灯光和舞池。"
+  },
+  "ar": {
+    "name": "حفلة",
+    "desc": "أشعة ليزر وأضواء كرة الديسكو وحلبة رقص."
+  }
+}

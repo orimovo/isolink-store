@@ -99,7 +99,25 @@ A background is one to four colours (`0xAARRGGBB`) with an `angle`, an optional 
 "frames": [{"id": "surf", "name": "Surf", "base": "waves", "width": 30, "colors": [4288603104, 4282366153]}]
 ```
 
-Tag it with what it has (`backgrounds`, `fonts`, `motions`, `filters`, `layouts`, `frames`) so Story packs can filter it. Packs with layouts or frames need `"minApp": "0.26.21"`.
+A frame can also be layers (`"base": "layers"`), which can draw new looks with no app update. It runs along any `edges` (`top`, `bottom`, `left`, `right`) in up to eight `colors`, with up to eight `layers` drawn in order:
+
+- `strip` along the edges: a `look` (`waves`, `hills`, `snow`, `leaves`, `grass`, `flowers`, `clouds`, `stars`, `bunting`, `hearts`, `scallop`, `confetti`, `band`, `zigzag`, `dots`) or `image` (`{"file": "frames/x.png"}`, a see-through PNG up to 256 KB, repeated with `tile` `mirror` or `loop`)
+- `fall`: up to 150 things falling or rising (`snow`, `rain`, `leaves`, `petals`, `confetti`, `hearts`, `stars`, `bubbles`, an `emoji` or an `image`)
+- `beam`: light beams from `at` anchors (`top`, `bottom-left`, `center`, …)
+- `glow`: a soft glow at `at` anchors
+
+Each layer can set `move` (`still`, `drift`, `sway`, `bob`, `pulse`, `fall`, `rise`, `sweep`, `spin`), `speed` (0 to 5), `amount`, `size`, `opacity`, `count`, its own `colors`, `hue` (colour cycles per second, up to 2), `blink` (up to 3 a second), `blend` (`add` for light) and a `seed`. [`stories/official/party/`](stories/official/party/) has lasers:
+
+```json
+{"id": "lasers", "name": "Lasers", "base": "layers", "edges": ["bottom"], "width": 18,
+ "colors": [4294912982, 4278248959, 4286381903, 4294959437],
+ "layers": [
+  {"kind": "glow", "at": ["bottom"], "move": "pulse", "speed": 2, "blend": "add", "opacity": 0.7},
+  {"kind": "beam", "at": ["bottom-left", "bottom-right"], "count": 4, "move": "sweep", "hue": 0.25, "blend": "add"},
+  {"kind": "strip", "look": "band", "colors": [4279503398]}]}
+```
+
+Tag it with what it has (`backgrounds`, `fonts`, `motions`, `filters`, `layouts`, `frames`) so Story packs can filter it. Packs with layouts or frames need `"minApp": "0.26.21"`, and packs with layered frames `"minApp": "0.26.33"`.
 
 ### A card
 
