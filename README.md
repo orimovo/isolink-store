@@ -152,7 +152,7 @@ apps/community/plant-care/
   translations.json    optional
 ```
 
-An app is a database to start from: tables of typed fields (text, markdown, number, yes or no, date, choice, tags, counter, person, link, a row of another table). Get makes one on the phone, encrypted end to end, which the person can share, sync over relays or only nearby, and let bots read. The schema format is in [designs/custom-databases.md](https://github.com/waggr-gb/Isolink/blob/main/docs/databases.md); [`apps/official/`](apps/official/) has examples.
+An app is a database to start from: tables of typed fields (text, markdown, number, yes or no, date, choice, tags, counter, person, link, a row of another table). Get makes one on the phone, encrypted end to end, which the person can share, sync over relays or only nearby, and let bots read. The schema format is in [docs/databases.md](https://github.com/waggr-gb/Isolink/blob/main/docs/databases.md); [`apps/official/`](apps/official/) has examples.
 
 ```json
 {
