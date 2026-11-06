@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "Apache-2.0",
+  "desc": "Lasers, a disco ball's lights and a dance floor.",
+  "tags": [
+    "backgrounds",
+    "frames"
+  ],
+  "minApp": "0.26.33"
+}
