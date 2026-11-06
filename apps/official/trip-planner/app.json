@@ -1,0 +1,44 @@
+{
+  "id": "trip-planner",
+  "name": "Trip planner",
+  "icon": "calendar",
+  "accent": 4281558271,
+  "schema": {
+    "tables": {
+      "plans": {
+        "name": "Plans",
+        "title": "what",
+        "fields": {
+          "what": { "id": 1, "type": "text", "max": 120, "required": true },
+          "day": { "id": 2, "type": "date" },
+          "kind": { "id": 3, "type": "choice", "options": [
+            { "id": "travel", "name": "Travel" },
+            { "id": "stay", "name": "Stay" },
+            { "id": "eat", "name": "Eat" },
+            { "id": "do", "name": "Do" }
+          ] },
+          "who": { "id": 4, "type": "person" },
+          "booked": { "id": 5, "type": "bool", "default": false },
+          "link": { "id": 6, "type": "link" },
+          "cost": { "id": 7, "type": "number", "decimals": 2 }
+        }
+      },
+      "packing": {
+        "name": "Packing",
+        "title": "item",
+        "fields": {
+          "item": { "id": 1, "type": "text", "max": 80, "required": true },
+          "packed": { "id": 2, "type": "bool", "default": false },
+          "who": { "id": 3, "type": "person" }
+        }
+      }
+    }
+  },
+  "starter": {
+    "packing": [
+      { "item": "Passports" },
+      { "item": "Chargers" },
+      { "item": "Toothbrush" }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Recipes with the method in markdown",
+  "tags": ["apps"],
+  "minApp": "0.26.37"
+}

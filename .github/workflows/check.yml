@@ -28,9 +28,9 @@ jobs:
         run: |
           changed=$(git diff --name-only "$BASE"...HEAD)
           echo "$changed"
-          outside=$(echo "$changed" | grep -Ev '^(themes|cards|effects|stories)/community/[a-z0-9][a-z0-9_-]{0,31}/' || true)
+          outside=$(echo "$changed" | grep -Ev '^(themes|cards|effects|stories|apps)/community/[a-z0-9][a-z0-9_-]{0,31}/' || true)
           if [ -n "$outside" ]; then
-            echo "::error::A pull request may only change files under themes/, cards/, effects/ or stories/community/<id>/. Outside them:"
+            echo "::error::A pull request may only change files under themes/, cards/, effects/, stories/ or apps/community/<id>/. Outside them:"
             echo "$outside"
             exit 1
           fi

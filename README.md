@@ -12,7 +12,7 @@ Everything here shows up in the app under **Theme Studio → Library → Browse*
 
 Apps never talk to GitHub. Relays pull this store, check its signatures, and hand packs to their members over the connection they already have. So nobody's IP, searches or picks reach GitHub or anyone else.
 
-## Add your theme pack, card or effects
+## Add your theme pack, card, effects or app
 
 1. **Make it.** In Isolink, make a look in Theme Studio or a card in Card Studio, then save it as a file from its Share sheet (an `.isotheme` or `.isocard`). Or write one by hand from the format guides: [theme packs](https://isolink.app/docs/themes.html) and [cards](https://isolink.app/docs/cards.html). An AI model can write one from those pages too.
 2. **Check it.** Drop the file into the [theme pack checker](https://isolink.app/tools.html), which runs the app's own validator in your browser.
@@ -141,6 +141,31 @@ effects/community/party/
 ```
 
 An effect is layers on a face or a photo: stickers (an emoji or a PNG), warps, a colour filter, particles and frames. Stickers sit on places on the face (`eyes`, `nose`, `mouth`, `top`, …) and follow it in the camera. The format is in [docs/theme-store.md](https://github.com/waggr-gb/Isolink/blob/main/docs/theme-store.md#extras-effect-packs-and-story-styles), and [`effects/official/`](effects/official/) has examples.
+
+### An app
+
+```
+apps/community/plant-care/
+  app.json             its id, name, icon, accent, schema and starter rows
+  schema.json          the schema, when it isn't in app.json (optional)
+  listing.json
+  translations.json    optional
+```
+
+An app is a database to start from: tables of typed fields (text, markdown, number, yes or no, date, choice, tags, counter, person, link, a row of another table). Get makes one on the phone, encrypted end to end, which the person can share, sync over relays or only nearby, and let bots read. The schema format is in [designs/custom-databases.md](https://github.com/waggr-gb/Isolink/blob/main/docs/databases.md); [`apps/official/`](apps/official/) has examples.
+
+```json
+{
+  "id": "plant-care",
+  "name": "Plant care",
+  "icon": "star",
+  "schema": { "tables": { "plants": { "title": "name", "fields": {
+    "name": { "type": "text", "required": true },
+    "watered": { "type": "date" }
+  } } } },
+  "starter": { "plants": [{ "name": "Monstera" }] }
+}
+```
 
 ### listing.json
 

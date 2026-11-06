@@ -1,0 +1,39 @@
+{
+  "id": "habits",
+  "name": "Habits",
+  "icon": "star",
+  "accent": 4294928970,
+  "schema": {
+    "tables": {
+      "habits": {
+        "name": "Habits",
+        "title": "name",
+        "fields": {
+          "name": { "id": 1, "type": "text", "max": 60, "required": true },
+          "goal": { "id": 2, "type": "choice", "options": [
+            { "id": "daily", "name": "Every day" },
+            { "id": "weekdays", "name": "Weekdays" },
+            { "id": "weekly", "name": "Once a week" }
+          ] },
+          "streak": { "id": 3, "type": "counter", "down": true },
+          "last": { "id": 4, "type": "date" }
+        }
+      },
+      "checkins": {
+        "name": "Check-ins",
+        "fields": {
+          "habit": { "id": 1, "type": "ref", "table": "habits", "required": true },
+          "day": { "id": 2, "type": "date", "required": true },
+          "note": { "id": 3, "type": "text", "max": 200 }
+        }
+      }
+    }
+  },
+  "starter": {
+    "habits": [
+      { "name": "Drink water", "goal": "daily" },
+      { "name": "Read", "goal": "daily" },
+      { "name": "Call home", "goal": "weekly" }
+    ]
+  }
+}
