@@ -1,6 +1,6 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Pressable, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
+  StickyNote, Corkboard, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
   useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
 } from 'isolink';
 import s from './app.css';
@@ -399,6 +399,9 @@ function NoteScreen() {
 
   return (
     <Screen title={noteTitle({ ...row, body })} actions={actions}>
+      {/* Wide: the note, and beside it what's done to it. Narrow: one under the other. */}
+      <Split first={0.62} gap={24}>
+      <Box>
       <StickyNote color={colorOf(row)} fold={36} onDoubleTap={canEdit ? () => setEditing(true) : undefined}>
         {editing ? (
           <Editor value={body} onChange={type} plain autofocus toolbar placeholder={t('New note')} />
@@ -426,8 +429,18 @@ function NoteScreen() {
           <Upload accept="png,jpg,jpeg,heic,webp" label={t('Add a photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
         </Box>
       ) : null}
+      </Box>
+      <Box class={s.panel}>
       {canEdit && (
-        <Row gap={6} wrap justify="center" class={s.tools}>
+        <Box class={s.swatches}>
+          {COLORS.map(([c, hex]) => (
+            <Pressable key={c} class={[s.swatch, colorOf(row) === c && s.on]} style={{ background: hex }}
+                       onPress={() => edit('notes', id, { color: c })} />
+          ))}
+        </Box>
+      )}
+      {canEdit && (
+        <Row gap={6} wrap class={s.tools}>
           {!row.photo && kind !== 'photo' && (
             <Upload accept="png,jpg,jpeg,heic,webp" label={t('Photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
           )}
@@ -441,14 +454,6 @@ function NoteScreen() {
           )}
         </Row>
       )}
-      {canEdit && (
-        <Box class={s.swatches}>
-          {COLORS.map(([c, hex]) => (
-            <Pressable key={c} class={[s.swatch, colorOf(row) === c && s.on]} style={{ background: hex }}
-                       onPress={() => edit('notes', id, { color: c })} />
-          ))}
-        </Box>
-      )}
       <Box class={s.block}>
         <TagInput value={row.tags ?? []} placeholder={t('Tags')}
                   onChange={canEdit ? (tags: string[]) => edit('notes', id, { tags }) : undefined} />
@@ -461,6 +466,8 @@ function NoteScreen() {
           ))}
         </Box>
       )}
+      </Box>
+      </Split>
     </Screen>
   );
 }
