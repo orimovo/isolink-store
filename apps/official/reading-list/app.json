@@ -3,22 +3,181 @@
   "name": "Reading list",
   "icon": "book",
   "accent": 4285684222,
+  "main": "src/app.tsx",
+  "version": 2,
+  "needs": {
+    "device": [
+      "camera"
+    ],
+    "web": [
+      "openlibrary.org",
+      "covers.openlibrary.org"
+    ]
+  },
+  "summary": {
+    "table": "books",
+    "none": "No books yet",
+    "one": "1 book",
+    "many": "{p0} books"
+  },
   "schema": {
     "tables": {
       "books": {
         "name": "Books",
         "title": "title",
         "fields": {
-          "title": { "id": 1, "type": "text", "max": 200, "required": true, "search": true },
-          "author": { "id": 2, "type": "text", "max": 120, "search": true },
-          "status": { "id": 3, "type": "choice", "options": [
-            { "id": "want", "name": "Want to read" },
-            { "id": "reading", "name": "Reading" },
-            { "id": "done", "name": "Read" }
-          ], "default": "want" },
-          "rating": { "id": 4, "type": "number", "min": 1, "max": 5 },
-          "lent": { "id": 5, "type": "person" },
-          "notes": { "id": 6, "type": "markdown", "max": 16000 }
+          "title": {
+            "id": 1,
+            "type": "text",
+            "max": 200,
+            "required": true,
+            "search": true
+          },
+          "author": {
+            "id": 2,
+            "type": "text",
+            "max": 120,
+            "search": true
+          },
+          "status": {
+            "id": 3,
+            "type": "choice",
+            "options": [
+              {
+                "id": "want",
+                "name": "Want to read"
+              },
+              {
+                "id": "reading",
+                "name": "Reading"
+              },
+              {
+                "id": "done",
+                "name": "Read"
+              }
+            ],
+            "default": "want"
+          },
+          "rating": {
+            "id": 4,
+            "type": "number",
+            "min": 1,
+            "max": 5
+          },
+          "lent": {
+            "id": 5,
+            "type": "person"
+          },
+          "notes": {
+            "id": 6,
+            "type": "markdown",
+            "max": 16000
+          },
+          "pages": {
+            "id": 7,
+            "type": "number",
+            "min": 0,
+            "max": 20000
+          },
+          "page": {
+            "id": 8,
+            "type": "number",
+            "min": 0,
+            "max": 20000
+          },
+          "cover": {
+            "id": 9,
+            "type": "text",
+            "max": 300
+          },
+          "isbn": {
+            "id": 10,
+            "type": "text",
+            "max": 20
+          },
+          "started": {
+            "id": 11,
+            "type": "date"
+          },
+          "finished": {
+            "id": 12,
+            "type": "date"
+          },
+          "tags": {
+            "id": 13,
+            "type": "tags",
+            "max": 8
+          }
+        }
+      },
+      "sessions": {
+        "name": "Reading",
+        "title": "day",
+        "fields": {
+          "book": {
+            "id": 1,
+            "type": "ref",
+            "table": "books",
+            "required": true,
+            "index": true
+          },
+          "day": {
+            "id": 2,
+            "type": "date",
+            "required": true
+          },
+          "pages": {
+            "id": 3,
+            "type": "number",
+            "min": 0,
+            "max": 20000
+          }
+        }
+      },
+      "quotes": {
+        "name": "Quotes",
+        "title": "text",
+        "fields": {
+          "book": {
+            "id": 1,
+            "type": "ref",
+            "table": "books",
+            "required": true,
+            "index": true
+          },
+          "text": {
+            "id": 2,
+            "type": "text",
+            "max": 2000,
+            "required": true,
+            "search": true
+          },
+          "page": {
+            "id": 3,
+            "type": "number",
+            "min": 0,
+            "max": 20000
+          }
+        }
+      },
+      "goals": {
+        "name": "Goals",
+        "title": "year",
+        "fields": {
+          "year": {
+            "id": 1,
+            "type": "number",
+            "min": 2000,
+            "max": 2200,
+            "required": true
+          },
+          "books": {
+            "id": 2,
+            "type": "number",
+            "min": 1,
+            "max": 365,
+            "required": true
+          }
         }
       }
     }
