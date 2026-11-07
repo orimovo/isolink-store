@@ -1,0 +1,36 @@
+{
+  "id": "todo",
+  "name": "Todo",
+  "icon": "checklist",
+  "accent": 4284181759,
+  "main": "src/app.tsx",
+  "schema": {
+    "name": "Todo",
+    "icon": "checklist",
+    "tables": {
+      "lists": {
+        "title": "name",
+        "order": "pos",
+        "fields": {
+          "name": { "id": 1, "type": "text", "max": 60, "required": true },
+          "pos": { "id": 2, "type": "order" }
+        }
+      },
+      "tasks": {
+        "title": "title",
+        "order": "pos",
+        "fields": {
+          "title": { "id": 1, "type": "text", "max": 200, "required": true, "search": true },
+          "done": { "id": 2, "type": "bool", "index": true, "default": false },
+          "due": { "id": 3, "type": "datetime", "remind": true, "index": true },
+          "list": { "id": 4, "type": "ref", "table": "lists" },
+          "who": { "id": 5, "type": "person" },
+          "flag": { "id": 6, "type": "bool" },
+          "notes": { "id": 7, "type": "markdown", "max": 16000 },
+          "pos": { "id": 8, "type": "order" },
+          "doneAt": { "id": 9, "type": "datetime" }
+        }
+      }
+    }
+  }
+}

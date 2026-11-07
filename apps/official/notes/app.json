@@ -1,0 +1,29 @@
+{
+  "id": "notes",
+  "name": "Notes",
+  "icon": "note",
+  "accent": 4293436221,
+  "main": "src/app.tsx",
+  "schema": {
+    "name": "Notes",
+    "icon": "note",
+    "tables": {
+      "folders": {
+        "title": "name",
+        "fields": {
+          "name": { "id": 1, "type": "text", "max": 60, "required": true }
+        }
+      },
+      "notes": {
+        "title": "title",
+        "fields": {
+          "title": { "id": 1, "type": "text", "max": 200, "search": true },
+          "body": { "id": 2, "type": "markdown", "max": 48000, "search": true },
+          "tags": { "id": 3, "type": "tags", "max": 12 },
+          "pinned": { "id": 4, "type": "bool", "default": false },
+          "folder": { "id": 5, "type": "ref", "table": "folders" }
+        }
+      }
+    }
+  }
+}
