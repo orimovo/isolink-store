@@ -6,9 +6,25 @@
   "main": "src/app.tsx",
   "version": 1,
   "needs": {
-    "system": [{ "name": "open" }]
+    "system": [
+      {
+        "name": "open"
+      }
+    ]
   },
   "schema": {
-    "tables": {}
+    "tables": {
+      "opened": {
+        "name": "Opened",
+        "title": "at",
+        "fields": {
+          "at": {
+            "id": 1,
+            "type": "datetime",
+            "required": true
+          }
+        }
+      }
+    }
   }
 }
