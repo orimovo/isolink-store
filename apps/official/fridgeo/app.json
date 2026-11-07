@@ -1,0 +1,14 @@
+{
+  "id": "fridgeo",
+  "name": "Fridgeo",
+  "icon": "restaurant",
+  "accent": 4280459371,
+  "main": "src/app.tsx",
+  "version": 1,
+  "needs": {
+    "system": [{ "name": "open" }]
+  },
+  "schema": {
+    "tables": {}
+  }
+}

@@ -1,0 +1,5 @@
+.page { padding: 48px 16px; }
+.art { width: 120px; height: 120px; border-radius: 34px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #34d399, #059669); }
+.emoji { font-size: 64px; }
+.name { font-size: 28px; font-weight: 800; }
+.buttons { width: 280px; padding-top: 12px; }

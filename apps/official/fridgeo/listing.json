@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Opens Fridgeo, for your fridge and meals",
+  "tags": ["apps"],
+  "minApp": "0.26.41"
+}
