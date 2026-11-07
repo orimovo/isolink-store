@@ -16,5 +16,7 @@
   "Meat & fish": "Fleisch und Fisch",
   "Nothing to get": "Nichts zu besorgen",
   "Other": "Andere",
-  "Shopping": "Einkauf"
+  "Shopping": "Einkauf",
+  "{p0} got": "{p0} geholt",
+  "{p0} to get": "{p0} zu holen"
 }

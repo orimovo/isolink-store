@@ -17,5 +17,7 @@
   "Name": "名字",
   "Nothing to get": "没有要买的",
   "Other": "其他",
-  "Shopping": "购物"
+  "Shopping": "购物",
+  "{p0} got": "已买 {p0} 样",
+  "{p0} to get": "还要买 {p0} 样"
 }

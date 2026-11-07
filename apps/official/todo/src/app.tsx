@@ -1,9 +1,10 @@
 import {
-  defineApp, Screen, Stack, Row, List, ListItem, Checkbox, Text, TextField, Editor, Select, Button, Chip,
-  Scroll, Icon, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, Sheet, useQuery, useData, useLocal,
+  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Chip,
+  Scroll, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, Sheet, useQuery, useData, useLocal,
   useMe, useChat, useDialog, useNow, useRef, useEffect, t,
 } from 'isolink';
 import { between, last } from './pos';
+import s from './app.css';
 
 type Task = {
   id: string; title: string; done?: boolean; due?: number; list?: string; who?: string; flag?: boolean;
@@ -98,64 +99,79 @@ function Home() {
     setView(id);
   };
 
+  const tasksToday = all.filter((r) => !r.done && typeof r.due === 'number' && r.due < end).length;
   const chips: [string, string][] = [
-    [TODAY, t('Today')],
+    [TODAY, tasksToday > 0 ? `${t('Today')} ${tasksToday}` : t('Today')],
     [UPCOMING, t('Upcoming')],
     ...lists.map((l) => [l.id, l.name] as [string, string]),
     [DONE, t('Done')],
   ];
   const task = all.find((r) => r.id === open);
+  // Ticked off today, in this view: still there, crossed out.
+  const startOfToday = end - 86400000;
+  const doneToday =
+    shown === DONE
+      ? []
+      : all
+          .filter((r) => r.done && (r.doneAt ?? 0) >= startOfToday)
+          .filter((r) => (shown === TODAY ? true : shown === UPCOMING ? false : r.list === shown))
+          .sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0));
+
+  const row = (r: Task) => {
+    const list = shown.startsWith('_') ? lists.find((l) => l.id === r.list) : undefined;
+    const late = r.due !== undefined && !r.done && r.due < now;
+    return (
+      <Pressable key={r.id} class={s.task} onPress={() => setOpen(r.id)}>
+        <Checkbox round checked={!!r.done} onChange={() => toggle(r)} />
+        <Box class={s.words} grow>
+          <Text class={r.done ? s.done : s.title}>{r.title}</Text>
+          {!r.done && (r.due !== undefined || list) && (
+            <Box class={s.meta}>
+              {r.due !== undefined && <Text class={late ? s.late : s.due}>{when(r.due, now)}</Text>}
+              {list && <Text class={s.due}>{list.name}</Text>}
+            </Box>
+          )}
+        </Box>
+        {r.flag && !r.done && <Icon name="flag" tone="warning" size={18} />}
+        {r.who && members.length > 1 && <Avatar person={r.who} size={24} />}
+      </Pressable>
+    );
+  };
 
   return (
     <Screen
       title={t('Todo')}
       footer={
         canAdd && shown !== DONE ? (
-          <TextField value={draft} onChange={setDraft} placeholder={t('New task')} onSubmit={submit} />
+          <Row gap={8} align="center">
+            <Stack grow>
+              <TextField value={draft} onChange={setDraft} placeholder={t('New task')} onSubmit={submit} />
+            </Stack>
+            <IconButton icon="arrow_upward" variant="filled" label={t('Add')} onPress={submit} />
+          </Row>
         ) : undefined
       }
     >
       <Scroll direction="horizontal">
-        <Row gap={6}>
+        <Box class={s.chips}>
           {chips.map(([id, label]) => (
             <Chip key={id} selected={shown === id} onPress={() => setView(id)}>{label}</Chip>
           ))}
           {canAdd && <Chip icon="add" onPress={newList}>{t('List')}</Chip>}
-        </Row>
+        </Box>
       </Scroll>
-      {tasks.length === 0 ? (
-        <Stack align="center" gap={8} pad={48}>
+      {tasks.length === 0 && doneToday.length === 0 ? (
+        <Stack align="center" gap={8} class={s.empty}>
           <Icon name={shown === DONE ? 'check_circle' : 'checklist'} size={40} />
           <Text tone="muted">{shown === DONE ? t('Nothing done yet') : t('All clear')}</Text>
         </Stack>
-      ) : (
-        <List>
-          {tasks.map((r) => {
-            const list = shown.startsWith('_') ? lists.find((l) => l.id === r.list) : undefined;
-            const parts = [r.due !== undefined ? when(r.due, now) : null, list?.name].filter(Boolean);
-            const late = r.due !== undefined && !r.done && r.due < now;
-            return (
-              <ListItem
-                key={r.id}
-                leading={<Checkbox round checked={!!r.done} onChange={() => toggle(r)} />}
-                trailing={
-                  <Row gap={4} align="center">
-                    {r.flag && <Icon name="flag" tone="warning" size={18} />}
-                    {r.who && members.length > 1 && <Avatar person={r.who} size={24} />}
-                  </Row>
-                }
-                title={r.title}
-                subtitle={parts.length > 0 ? parts.join(' · ') : undefined}
-                subtitleTone={late ? 'danger' : undefined}
-                onPress={() => setOpen(r.id)}
-                onSwipe={{
-                  start: { icon: 'check', tone: 'success', do: () => toggle(r), keep: true },
-                  end: { icon: 'delete', tone: 'danger', do: () => remove('tasks', r.id) },
-                }}
-              />
-            );
-          })}
-        </List>
+      ) : null}
+      {tasks.length > 0 && <Box class={s.card}>{tasks.map(row)}</Box>}
+      {doneToday.length > 0 && (
+        <>
+          <Text class={s.h}>{t('Done today')}</Text>
+          <Box class={s.card}>{doneToday.map(row)}</Box>
+        </>
       )}
       <Sheet open={!!task} onClose={() => setOpen(null)}>
         {task && <TaskSheet key={task.id} task={task} lists={lists} shared={members.length > 1} canEdit={canAdd}

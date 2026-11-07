@@ -1,0 +1,7 @@
+.title { font-weight: 800; font-size: 14.5px; margin-bottom: 2px; }
+.body { font-size: 13px; line-clamp: 8; }
+.chips { display: flex; gap: 6px; padding: 0 0 12px; }
+.empty { padding: 64px 0; }
+.swatches { display: flex; gap: 12px; justify-content: center; padding: 14px 0 4px; }
+.swatch { width: 30px; height: 30px; border-radius: 15px; }
+.on { border: 3px solid var(--ink); }
