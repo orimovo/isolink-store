@@ -1,8 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
-  "desc": "Plans and packing for a trip, together",
-  "tags": ["apps"],
-  "minApp": "0.26.36"
+  "desc": "Trips day by day, a map, shared costs, packing and the weather",
+  "tags": [
+    "apps"
+  ],
+  "minApp": "0.26.41"
 }
