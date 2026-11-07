@@ -12,30 +12,197 @@
         "title": "name",
         "order": "pos",
         "fields": {
-          "name": { "id": 1, "type": "text", "max": 80, "required": true, "search": true },
-          "qty": { "id": 2, "type": "text", "max": 20 },
-          "aisle": { "id": 3, "type": "choice", "options": [
-            { "id": "fruit", "name": "Fruit & veg" },
-            { "id": "bakery", "name": "Bakery" },
-            { "id": "dairy", "name": "Dairy" },
-            { "id": "meat", "name": "Meat & fish" },
-            { "id": "cupboard", "name": "Cupboard" },
-            { "id": "frozen", "name": "Frozen" },
-            { "id": "drinks", "name": "Drinks" },
-            { "id": "home", "name": "Home" },
-            { "id": "other", "name": "Other" }
-          ] },
-          "got": { "id": 4, "type": "bool", "index": true, "default": false },
-          "pos": { "id": 5, "type": "order" }
+          "name": {
+            "id": 1,
+            "type": "text",
+            "max": 80,
+            "required": true,
+            "search": true
+          },
+          "qty": {
+            "id": 2,
+            "type": "text",
+            "max": 20
+          },
+          "aisle": {
+            "id": 3,
+            "type": "choice",
+            "options": [
+              {
+                "id": "fruit",
+                "name": "Fruit & veg"
+              },
+              {
+                "id": "bakery",
+                "name": "Bakery"
+              },
+              {
+                "id": "dairy",
+                "name": "Dairy"
+              },
+              {
+                "id": "meat",
+                "name": "Meat & fish"
+              },
+              {
+                "id": "cupboard",
+                "name": "Cupboard"
+              },
+              {
+                "id": "frozen",
+                "name": "Frozen"
+              },
+              {
+                "id": "drinks",
+                "name": "Drinks"
+              },
+              {
+                "id": "home",
+                "name": "Home"
+              },
+              {
+                "id": "other",
+                "name": "Other"
+              }
+            ]
+          },
+          "got": {
+            "id": 4,
+            "type": "bool",
+            "index": true,
+            "default": false
+          },
+          "pos": {
+            "id": 5,
+            "type": "order"
+          },
+          "price": {
+            "id": 6,
+            "type": "number",
+            "min": 0,
+            "max": 100000,
+            "decimals": 2
+          }
         }
       },
       "usuals": {
         "title": "name",
         "fields": {
-          "name": { "id": 1, "type": "text", "max": 80, "required": true, "search": true },
-          "aisle": { "id": 2, "type": "choice", "options": ["fruit", "bakery", "dairy", "meat", "cupboard", "frozen", "drinks", "home", "other"] }
+          "name": {
+            "id": 1,
+            "type": "text",
+            "max": 80,
+            "required": true,
+            "search": true
+          },
+          "aisle": {
+            "id": 2,
+            "type": "choice",
+            "options": [
+              "fruit",
+              "bakery",
+              "dairy",
+              "meat",
+              "cupboard",
+              "frozen",
+              "drinks",
+              "home",
+              "other"
+            ]
+          },
+          "emoji": {
+            "id": 3,
+            "type": "text",
+            "max": 8
+          },
+          "price": {
+            "id": 4,
+            "type": "number",
+            "min": 0,
+            "max": 100000,
+            "decimals": 2
+          },
+          "barcode": {
+            "id": 5,
+            "type": "text",
+            "max": 32,
+            "index": true
+          },
+          "times": {
+            "id": 6,
+            "type": "counter"
+          }
+        }
+      },
+      "trips": {
+        "title": "day",
+        "fields": {
+          "day": {
+            "id": 1,
+            "type": "date",
+            "required": true
+          },
+          "total": {
+            "id": 2,
+            "type": "number",
+            "min": 0,
+            "max": 1000000,
+            "decimals": 2
+          },
+          "count": {
+            "id": 3,
+            "type": "number",
+            "min": 0,
+            "max": 10000
+          },
+          "who": {
+            "id": 4,
+            "type": "person"
+          }
+        }
+      },
+      "out": {
+        "title": "who",
+        "fields": {
+          "who": {
+            "id": 1,
+            "type": "person",
+            "required": true
+          },
+          "since": {
+            "id": 2,
+            "type": "datetime"
+          }
         }
       }
     }
+  },
+  "version": 3,
+  "needs": {
+    "device": [
+      "camera"
+    ],
+    "web": [
+      "world.openfoodfacts.org"
+    ],
+    "system": [
+      {
+        "name": "share",
+        "optional": true
+      }
+    ]
+  },
+  "summary": {
+    "table": "items",
+    "where": [
+      [
+        "got",
+        "=",
+        false
+      ]
+    ],
+    "none": "Nothing to get",
+    "one": "1 to get",
+    "many": "{p0} to get"
   }
 }

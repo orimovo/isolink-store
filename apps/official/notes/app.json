@@ -82,16 +82,84 @@
           "pos": {
             "id": 7,
             "type": "order"
+          },
+          "x": {
+            "id": 8,
+            "type": "number",
+            "min": 0,
+            "max": 4000
+          },
+          "y": {
+            "id": 9,
+            "type": "number",
+            "min": 0,
+            "max": 4000
+          },
+          "tilt": {
+            "id": 10,
+            "type": "number",
+            "min": -4,
+            "max": 4,
+            "decimals": 1
+          },
+          "kind": {
+            "id": 11,
+            "type": "choice",
+            "options": [
+              {
+                "id": "note",
+                "name": "Note"
+              },
+              {
+                "id": "list",
+                "name": "List"
+              },
+              {
+                "id": "photo",
+                "name": "Photo"
+              },
+              {
+                "id": "voice",
+                "name": "Voice"
+              },
+              {
+                "id": "sketch",
+                "name": "Sketch"
+              }
+            ]
+          },
+          "photo": {
+            "id": 12,
+            "type": "file"
+          },
+          "voice": {
+            "id": 13,
+            "type": "file"
+          },
+          "sketch": {
+            "id": 14,
+            "type": "file"
+          },
+          "links": {
+            "id": 15,
+            "type": "ref",
+            "table": "notes",
+            "many": true
           }
         }
       }
     }
   },
-  "version": 2,
+  "version": 3,
   "summary": {
     "table": "notes",
     "none": "No notes yet",
     "one": "1 note",
     "many": "{p0} notes"
+  },
+  "needs": {
+    "device": [
+      "microphone"
+    ]
   }
 }

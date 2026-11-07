@@ -1,8 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Daily habits and streaks",
-  "tags": ["apps"],
-  "minApp": "0.26.36"
+  "tags": [
+    "apps"
+  ],
+  "minApp": "0.26.41"
 }

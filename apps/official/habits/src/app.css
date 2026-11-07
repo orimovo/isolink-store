@@ -1,0 +1,31 @@
+.empty { padding: 64px 0; }
+.bigEmoji { font-size: 40px; }
+.week { padding: 2px 0 12px; }
+.day { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.dayName { font-size: 11px; font-weight: 700; color: var(--muted); }
+.dayOn { font-size: 11px; font-weight: 800; color: var(--accent); }
+.head { padding: 2px 4px 8px; }
+.big { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+.h { font-size: 11px; font-weight: 800; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted); padding: 10px 4px 8px; }
+.habit { display: flex; gap: 12px; align-items: center; background: var(--surface); border-radius: 18px; padding: 10px 14px 10px 10px; }
+.ringWrap { display: flex; }
+.ring { display: flex; align-items: center; justify-content: center; }
+.sub { font-size: 12px; color: var(--muted); }
+.flame { font-weight: 800; font-size: 15px; }
+.card { background: var(--surface); border-radius: 18px; padding: 12px 14px; margin-top: 10px; }
+.cardHead { padding-bottom: 8px; }
+.stat { background: var(--surface); border-radius: 14px; padding: 10px; margin-top: 10px; }
+.badges { margin: 4px 0 8px; }
+.badge { width: 54px; height: 54px; border-radius: 27px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #fde68a, #f59e0b); }
+.locked { background: var(--outline); opacity: 0.45; }
+.badgeEmoji { font-size: 26px; }
+.badgeName { font-size: 11px; font-weight: 700; }
+.person { padding: 4px 0; }
+.hero { border-radius: 20px; height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+.heroEmoji { font-size: 48px; }
+.pick { display: flex; align-items: center; justify-content: center; height: 42px; border-radius: 12px; background: var(--surface); border: 2px solid transparent; }
+.picked { border: 2px solid var(--accent); background: var(--accent-soft); }
+.pickEmoji { font-size: 22px; }
+.swatch { width: 28px; height: 28px; border-radius: 14px; }
+.swatchOn { border: 3px solid var(--ink); }
+.label { font-size: 12px; font-weight: 700; color: var(--muted); padding-bottom: 4px; }

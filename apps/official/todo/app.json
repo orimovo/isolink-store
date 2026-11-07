@@ -12,25 +12,197 @@
         "title": "name",
         "order": "pos",
         "fields": {
-          "name": { "id": 1, "type": "text", "max": 60, "required": true },
-          "pos": { "id": 2, "type": "order" }
+          "name": {
+            "id": 1,
+            "type": "text",
+            "max": 60,
+            "required": true
+          },
+          "pos": {
+            "id": 2,
+            "type": "order"
+          }
         }
       },
       "tasks": {
         "title": "title",
         "order": "pos",
         "fields": {
-          "title": { "id": 1, "type": "text", "max": 200, "required": true, "search": true },
-          "done": { "id": 2, "type": "bool", "index": true, "default": false },
-          "due": { "id": 3, "type": "datetime", "remind": true, "index": true },
-          "list": { "id": 4, "type": "ref", "table": "lists" },
-          "who": { "id": 5, "type": "person" },
-          "flag": { "id": 6, "type": "bool" },
-          "notes": { "id": 7, "type": "markdown", "max": 16000 },
-          "pos": { "id": 8, "type": "order" },
-          "doneAt": { "id": 9, "type": "datetime" }
+          "title": {
+            "id": 1,
+            "type": "text",
+            "max": 200,
+            "required": true,
+            "search": true
+          },
+          "done": {
+            "id": 2,
+            "type": "bool",
+            "index": true,
+            "default": false
+          },
+          "due": {
+            "id": 3,
+            "type": "datetime",
+            "remind": true,
+            "index": true
+          },
+          "list": {
+            "id": 4,
+            "type": "ref",
+            "table": "lists"
+          },
+          "who": {
+            "id": 5,
+            "type": "person"
+          },
+          "flag": {
+            "id": 6,
+            "type": "bool"
+          },
+          "notes": {
+            "id": 7,
+            "type": "markdown",
+            "max": 16000
+          },
+          "pos": {
+            "id": 8,
+            "type": "order"
+          },
+          "doneAt": {
+            "id": 9,
+            "type": "datetime"
+          },
+          "status": {
+            "id": 10,
+            "type": "choice",
+            "options": [
+              {
+                "id": "todo",
+                "name": "To do"
+              },
+              {
+                "id": "doing",
+                "name": "Doing"
+              },
+              {
+                "id": "done",
+                "name": "Done"
+              }
+            ]
+          },
+          "repeat": {
+            "id": 11,
+            "type": "choice",
+            "options": [
+              {
+                "id": "never",
+                "name": "Never"
+              },
+              {
+                "id": "daily",
+                "name": "Every day"
+              },
+              {
+                "id": "weekdays",
+                "name": "Weekdays"
+              },
+              {
+                "id": "weekly",
+                "name": "Every week"
+              },
+              {
+                "id": "monthly",
+                "name": "Every month"
+              }
+            ]
+          }
+        }
+      },
+      "steps": {
+        "title": "title",
+        "order": "pos",
+        "fields": {
+          "task": {
+            "id": 1,
+            "type": "ref",
+            "table": "tasks",
+            "required": true,
+            "index": true
+          },
+          "title": {
+            "id": 2,
+            "type": "text",
+            "max": 200,
+            "required": true
+          },
+          "done": {
+            "id": 3,
+            "type": "bool",
+            "default": false
+          },
+          "pos": {
+            "id": 4,
+            "type": "order"
+          }
+        }
+      },
+      "comments": {
+        "title": "text",
+        "fields": {
+          "task": {
+            "id": 1,
+            "type": "ref",
+            "table": "tasks",
+            "required": true,
+            "index": true
+          },
+          "text": {
+            "id": 2,
+            "type": "text",
+            "max": 2000,
+            "required": true
+          }
+        }
+      },
+      "attachments": {
+        "title": "task",
+        "fields": {
+          "task": {
+            "id": 1,
+            "type": "ref",
+            "table": "tasks",
+            "required": true,
+            "index": true
+          },
+          "file": {
+            "id": 2,
+            "type": "file",
+            "required": true
+          }
         }
       }
     }
+  },
+  "version": 3,
+  "summary": {
+    "table": "tasks",
+    "where": [
+      [
+        "done",
+        "=",
+        false
+      ],
+      [
+        "due",
+        "<",
+        {
+          "today": 1
+        }
+      ]
+    ],
+    "none": "All clear",
+    "one": "1 today",
+    "many": "{p0} today"
   }
 }
