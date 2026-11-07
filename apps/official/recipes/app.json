@@ -3,26 +3,176 @@
   "name": "Recipes",
   "icon": "note",
   "accent": 4294940184,
+  "main": "src/app.tsx",
+  "version": 2,
+  "needs": {
+    "web": [
+      "www.bbcgoodfood.com",
+      "www.bbc.co.uk",
+      "www.allrecipes.com",
+      "www.jamieoliver.com",
+      "www.seriouseats.com",
+      "www.recipetineats.com",
+      "www.simplyrecipes.com",
+      "www.budgetbytes.com",
+      "www.foodnetwork.com",
+      "www.epicurious.com",
+      "www.tasteofhome.com",
+      "www.olivemagazine.com",
+      "www.deliciousmagazine.co.uk",
+      "www.kitchensanctuary.com",
+      "www.loveandlemons.com",
+      "www.delish.com"
+    ]
+  },
+  "summary": {
+    "table": "recipes",
+    "none": "No recipes yet",
+    "one": "1 recipe",
+    "many": "{p0} recipes"
+  },
   "schema": {
     "tables": {
       "recipes": {
         "name": "Recipes",
         "title": "name",
         "fields": {
-          "name": { "id": 1, "type": "text", "max": 120, "required": true, "search": true },
-          "course": { "id": 2, "type": "choice", "options": [
-            { "id": "breakfast", "name": "Breakfast" },
-            { "id": "main", "name": "Main" },
-            { "id": "side", "name": "Side" },
-            { "id": "sweet", "name": "Sweet" }
-          ] },
-          "minutes": { "id": 3, "type": "number", "min": 0, "max": 1440, "unit": "min" },
-          "serves": { "id": 4, "type": "number", "min": 1, "max": 50 },
-          "tags": { "id": 5, "type": "tags", "max": 8 },
-          "method": { "id": 6, "type": "markdown", "max": 32000, "search": true },
-          "link": { "id": 7, "type": "link" }
+          "name": {
+            "id": 1,
+            "type": "text",
+            "max": 120,
+            "required": true,
+            "search": true
+          },
+          "course": {
+            "id": 2,
+            "type": "choice",
+            "options": [
+              {
+                "id": "breakfast",
+                "name": "Breakfast"
+              },
+              {
+                "id": "main",
+                "name": "Main"
+              },
+              {
+                "id": "side",
+                "name": "Side"
+              },
+              {
+                "id": "sweet",
+                "name": "Sweet"
+              }
+            ]
+          },
+          "minutes": {
+            "id": 3,
+            "type": "number",
+            "min": 0,
+            "max": 1440,
+            "unit": "min"
+          },
+          "serves": {
+            "id": 4,
+            "type": "number",
+            "min": 1,
+            "max": 50
+          },
+          "tags": {
+            "id": 5,
+            "type": "tags",
+            "max": 8
+          },
+          "method": {
+            "id": 6,
+            "type": "markdown",
+            "max": 32000,
+            "search": true
+          },
+          "link": {
+            "id": 7,
+            "type": "link"
+          },
+          "emoji": {
+            "id": 8,
+            "type": "text",
+            "max": 8
+          },
+          "photo": {
+            "id": 9,
+            "type": "file"
+          },
+          "ingredients": {
+            "id": 10,
+            "type": "text",
+            "max": 8000,
+            "search": true
+          },
+          "fave": {
+            "id": 11,
+            "type": "bool",
+            "default": false
+          },
+          "cooked": {
+            "id": 12,
+            "type": "date"
+          },
+          "times": {
+            "id": 13,
+            "type": "counter"
+          }
+        }
+      },
+      "plans": {
+        "name": "Plan",
+        "title": "day",
+        "order": "pos",
+        "fields": {
+          "day": {
+            "id": 1,
+            "type": "date",
+            "required": true,
+            "index": true
+          },
+          "recipe": {
+            "id": 2,
+            "type": "ref",
+            "table": "recipes",
+            "required": true,
+            "index": true
+          },
+          "pos": {
+            "id": 3,
+            "type": "order"
+          }
         }
       }
     }
+  },
+  "starter": {
+    "recipes": [
+      {
+        "name": "Tomato pasta",
+        "course": "main",
+        "minutes": 25,
+        "serves": 2,
+        "emoji": "🍝",
+        "tags": [
+          "quick"
+        ],
+        "ingredients": "200g pasta\n1 tin chopped tomatoes\n2 cloves garlic\n1 tbsp olive oil\nA handful of basil",
+        "method": "1. Boil the pasta for 10 minutes.\n2. Fry the garlic in the oil for 1 minute, add the tomatoes and simmer for 10 minutes.\n3. Stir in the pasta and basil."
+      },
+      {
+        "name": "Pancakes",
+        "course": "breakfast",
+        "minutes": 20,
+        "serves": 4,
+        "emoji": "🥞",
+        "ingredients": "100g plain flour\n2 eggs\n300ml milk\n1 tbsp butter",
+        "method": "1. Whisk the flour, eggs and milk until smooth, then rest for 5 minutes.\n2. Melt a little butter in a pan and cook each pancake for 1 minute a side."
+      }
+    ]
   }
 }

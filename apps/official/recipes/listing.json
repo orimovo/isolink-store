@@ -1,8 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
-  "desc": "Recipes with the method in markdown",
-  "tags": ["apps"],
-  "minApp": "0.26.36"
+  "desc": "Recipes, a week of meals and cooking step by step",
+  "tags": [
+    "apps"
+  ],
+  "minApp": "0.26.41"
 }

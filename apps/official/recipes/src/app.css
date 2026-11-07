@@ -1,0 +1,31 @@
+.empty { padding: 64px 0; }
+.bigEmoji { font-size: 40px; }
+.chips { padding: 10px 0 12px; }
+.card { background: var(--surface); border-radius: 18px; overflow: hidden; }
+.cardPhoto { border-radius: 0; }
+.cardArt { height: 110px; display: flex; align-items: center; justify-content: center; background: var(--accent-soft); }
+.cardEmoji { font-size: 44px; }
+.cardBody { padding: 10px 12px 12px; }
+.sub { font-size: 12px; color: var(--muted); }
+.weekBar { padding-bottom: 8px; }
+.day { background: var(--surface); border-radius: 16px; padding: 6px 6px 6px 14px; }
+.today { border: 2px solid var(--accent); }
+.dayOn { color: var(--accent); }
+.meal { padding: 2px 0; }
+.mealTap { display: flex; flex-direction: row; gap: 10px; align-items: center; flex-grow: 1; padding: 4px 0; }
+.mealEmoji { font-size: 22px; }
+.hero { border-radius: 20px; }
+.heroArt { height: 150px; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: var(--accent-soft); }
+.heroEmoji { font-size: 72px; }
+.facts { padding: 12px 0 4px; }
+.panel { background: var(--surface); border-radius: 18px; padding: 12px 14px; margin-top: 12px; gap: 4px; }
+.panelHead { gap: 8px; padding-bottom: 4px; }
+.h { font-size: 11px; font-weight: 800; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted); }
+.dots { padding: 4px 0 20px; }
+.dot { height: 4px; flex-grow: 1; border-radius: 2px; background: var(--outline); }
+.dotOn { background: var(--accent); }
+.step { font-size: 24px; line-height: 1.4; font-weight: 600; padding-bottom: 20px; }
+.pick { display: flex; align-items: center; justify-content: center; height: 42px; border-radius: 12px; background: var(--surface); border: 2px solid transparent; }
+.picked { border: 2px solid var(--accent); background: var(--accent-soft); }
+.pickEmoji { font-size: 22px; }
+.label { font-size: 12px; font-weight: 700; color: var(--muted); padding-bottom: 4px; }
