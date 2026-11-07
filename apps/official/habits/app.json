@@ -3,37 +3,178 @@
   "name": "Habits",
   "icon": "star",
   "accent": 4294928970,
+  "main": "src/app.tsx",
+  "version": 2,
+  "needs": {
+    "system": [
+      {
+        "name": "remind",
+        "optional": true
+      }
+    ]
+  },
+  "summary": {
+    "table": "habits",
+    "none": "No habits yet",
+    "one": "1 habit",
+    "many": "{p0} habits"
+  },
   "schema": {
     "tables": {
       "habits": {
         "name": "Habits",
         "title": "name",
         "fields": {
-          "name": { "id": 1, "type": "text", "max": 60, "required": true },
-          "goal": { "id": 2, "type": "choice", "options": [
-            { "id": "daily", "name": "Every day" },
-            { "id": "weekdays", "name": "Weekdays" },
-            { "id": "weekly", "name": "Once a week" }
-          ] },
-          "streak": { "id": 3, "type": "counter", "down": true },
-          "last": { "id": 4, "type": "date" }
-        }
+          "name": {
+            "id": 1,
+            "type": "text",
+            "max": 60,
+            "required": true
+          },
+          "goal": {
+            "id": 2,
+            "type": "choice",
+            "options": [
+              {
+                "id": "daily",
+                "name": "Every day"
+              },
+              {
+                "id": "weekdays",
+                "name": "Weekdays"
+              },
+              {
+                "id": "weekly",
+                "name": "Once a week"
+              }
+            ]
+          },
+          "streak": {
+            "id": 3,
+            "type": "counter",
+            "down": true
+          },
+          "last": {
+            "id": 4,
+            "type": "date"
+          },
+          "emoji": {
+            "id": 5,
+            "type": "text",
+            "max": 8
+          },
+          "color": {
+            "id": 6,
+            "type": "text",
+            "max": 9
+          },
+          "part": {
+            "id": 7,
+            "type": "choice",
+            "options": [
+              {
+                "id": "morning",
+                "name": "Morning"
+              },
+              {
+                "id": "afternoon",
+                "name": "Afternoon"
+              },
+              {
+                "id": "evening",
+                "name": "Evening"
+              },
+              {
+                "id": "any",
+                "name": "Any time"
+              }
+            ]
+          },
+          "target": {
+            "id": 8,
+            "type": "number",
+            "min": 1,
+            "max": 100
+          },
+          "unit": {
+            "id": 9,
+            "type": "text",
+            "max": 20
+          },
+          "remind": {
+            "id": 10,
+            "type": "text",
+            "max": 5
+          },
+          "with": {
+            "id": 11,
+            "type": "person",
+            "many": true
+          },
+          "pos": {
+            "id": 12,
+            "type": "order"
+          }
+        },
+        "order": "pos"
       },
       "checkins": {
         "name": "Check-ins",
         "fields": {
-          "habit": { "id": 1, "type": "ref", "table": "habits", "required": true },
-          "day": { "id": 2, "type": "date", "required": true },
-          "note": { "id": 3, "type": "text", "max": 200 }
+          "habit": {
+            "id": 1,
+            "type": "ref",
+            "table": "habits",
+            "required": true,
+            "index": true
+          },
+          "day": {
+            "id": 2,
+            "type": "date",
+            "required": true
+          },
+          "note": {
+            "id": 3,
+            "type": "text",
+            "max": 200
+          },
+          "count": {
+            "id": 4,
+            "type": "number",
+            "min": 1,
+            "max": 100
+          }
         }
       }
     }
   },
   "starter": {
     "habits": [
-      { "name": "Drink water", "goal": "daily" },
-      { "name": "Read", "goal": "daily" },
-      { "name": "Call home", "goal": "weekly" }
+      {
+        "name": "Drink water",
+        "goal": "daily",
+        "emoji": "💧",
+        "color": "#3b82f6",
+        "part": "morning",
+        "target": 8,
+        "unit": "glasses"
+      },
+      {
+        "name": "Read",
+        "goal": "daily",
+        "emoji": "📖",
+        "color": "#f59e0b",
+        "part": "evening",
+        "target": 1
+      },
+      {
+        "name": "Call home",
+        "goal": "weekly",
+        "emoji": "📞",
+        "color": "#22c55e",
+        "part": "any",
+        "target": 1
+      }
     ]
   }
 }
