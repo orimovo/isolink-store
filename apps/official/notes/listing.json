@@ -1,8 +1,10 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Isolink's own Notes app",
-  "tags": ["apps"],
-  "minApp": "0.26.38"
+  "tags": [
+    "apps"
+  ],
+  "minApp": "0.26.39"
 }

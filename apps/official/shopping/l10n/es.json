@@ -17,5 +17,7 @@
   "Name": "Nombre",
   "Nothing to get": "Nada que comprar",
   "Other": "Otro",
-  "Shopping": "Compras"
+  "Shopping": "Compras",
+  "{p0} got": "{p0} comprados",
+  "{p0} to get": "{p0} por comprar"
 }

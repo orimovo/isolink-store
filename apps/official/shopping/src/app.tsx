@@ -1,7 +1,8 @@
 import {
-  defineApp, Screen, Stack, Row, List, ListItem, Section, Checkbox, Text, TextField, Select, Button,
+  defineApp, Screen, Stack, Row, Box, Pressable, Section, Checkbox, Text, TextField, Select, Button,
   IconButton, Icon, Sheet, useQuery, useData, useLocal, useMe, t,
 } from 'isolink';
+import s from './app.css';
 import { between, last } from './pos';
 
 type Item = { id: string; name: string; qty?: string; aisle?: string; got?: boolean; pos?: string; _edited?: number };
@@ -75,17 +76,21 @@ function Home() {
     setOpen(null);
   };
 
-  const tile = (r: Item) => (
-    <ListItem
-      key={r.id}
-      leading={<Checkbox checked={!!r.got} onChange={() => edit('items', r.id, { got: !r.got })} />}
-      trailing={r.qty ? <Text tone="muted" variant="label">{r.qty}</Text> : undefined}
-      onPress={() => show(r)}
-      onSwipe={{ end: { icon: 'delete', tone: 'danger', do: () => remove('items', r.id) } }}
-    >
-      {r.name}
-    </ListItem>
+  const DOTS: Record<string, string> = {
+    fruit: '#4ade80', bakery: '#fbbf24', dairy: '#60a5fa', meat: '#f87171', cupboard: '#c084fc',
+    frozen: '#67e8f9', drinks: '#f472b6', home: '#a3a3a3', other: '#a3a3a3', '': '#a3a3a3',
+  };
+  const row = (r: Item) => (
+    <Pressable key={r.id} class={s.item} onPress={() => show(r)} onLongPress={() => show(r)}>
+      <Checkbox checked={!!r.got} onChange={() => edit('items', r.id, { got: !r.got })} />
+      <Text grow class={r.got ? s.got : s.name}>{r.name}</Text>
+      {r.qty ? <Text class={s.qty}>{r.qty}</Text> : null}
+    </Pressable>
   );
+  // Usual things not on the list: one tap puts them back.
+  const onList = new Set(toGet.map((r) => r.name.toLowerCase()));
+  const again = usuals.filter((u) => !onList.has(u.name.toLowerCase())).slice(0, 4);
+  const readd = (u: Usual) => add('items', { name: u.name, aisle: u.aisle, pos: between(last(items), '') });
 
   return (
     <Screen
@@ -101,18 +106,36 @@ function Home() {
         ) : undefined
       }
     >
-      {items.length === 0 && (
+      {items.length === 0 ? (
         <Stack align="center" gap={8} pad={48}>
           <Icon name="shopping_cart" size={40} />
           <Text tone="muted">{t('Nothing to get')}</Text>
         </Stack>
+      ) : (
+        <Box class={s.head}>
+          <Text class={s.count}>{toGet.length === 0 ? t('Nothing to get') : t('{p0} to get', { p0: toGet.length })}</Text>
+          {got.length > 0 && <Text class={s.sub}>{t('{p0} got', { p0: got.length })}</Text>}
+        </Box>
       )}
       {groups.map(([a, rows]) =>
         rows.length === 0 ? null : (
-          <Section key={a || 'none'} title={t(AISLES.find(([id]) => id === a)?.[1] ?? 'Other')}>
-            <List>{rows.map(tile)}</List>
-          </Section>
+          <Box key={a || 'none'} class={s.card}>
+            <Box class={s.aisle}>
+              <Box class={s.dot} style={{ background: DOTS[a] }} />
+              <Text>{t(AISLES.find(([id]) => id === a)?.[1] ?? 'Other')}</Text>
+            </Box>
+            {rows.map(row)}
+          </Box>
         ),
+      )}
+      {canAdd && again.length > 0 && (
+        <Box class={s.usuals}>
+          {again.map((u) => (
+            <Pressable key={u.id} class={s.usual} onPress={() => readd(u)}>
+              <Text>{`+ ${u.name}`}</Text>
+            </Pressable>
+          ))}
+        </Box>
       )}
       {got.length > 0 && (
         <Section
@@ -124,7 +147,7 @@ function Home() {
             ) : undefined
           }
         >
-          <List>{got.map(tile)}</List>
+          <Box class={s.card}>{got.map(row)}</Box>
         </Section>
       )}
       <Sheet open={!!editing} onClose={close}>

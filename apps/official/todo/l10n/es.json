@@ -1,4 +1,5 @@
 {
+  "Add": "Añadir",
   "All clear": "Todo listo",
   "Apr": "abr",
   "Aug": "ago",
@@ -6,6 +7,7 @@
   "Dec": "dic",
   "Delete": "Eliminar",
   "Done": "Listo",
+  "Done today": "Hecho hoy",
   "Due": "Vence",
   "Feb": "feb",
   "Flag": "Marcar",
