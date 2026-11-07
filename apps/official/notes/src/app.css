@@ -1,7 +1,13 @@
 .title { font-weight: 800; font-size: 14.5px; margin-bottom: 2px; }
-.body { font-size: 13px; line-clamp: 8; }
+.body { font-size: 13px; line-clamp: 10; }
+.small { font-size: 12px; }
+.thumb { border-radius: 4px; margin: 4px 0; }
+.photo { border-radius: 6px; margin-top: 10px; }
 .chips { display: flex; gap: 6px; padding: 0 0 12px; }
 .empty { padding: 64px 0; }
+.card { background: var(--surface); border-radius: 18px; padding: 4px 6px; margin-top: 12px; }
+.block { margin-top: 12px; }
+.tools { padding: 14px 0 2px; }
 .swatches { display: flex; gap: 12px; justify-content: center; padding: 14px 0 4px; }
 .swatch { width: 30px; height: 30px; border-radius: 15px; }
 .on { border: 3px solid var(--ink); }
