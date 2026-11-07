@@ -250,6 +250,7 @@ function Home() {
   return (
     <Screen
       title={t('Notes')}
+      immersive={tab === 'board' && inFolder.length > 0}
       tabs={[
         { value: 'board', label: t('Board'), icon: 'dashboard' },
         { value: 'notes', label: t('Notes'), icon: 'sticky_note_2' },
