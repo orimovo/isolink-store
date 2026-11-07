@@ -1,20 +1,22 @@
 import {
-  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Chip,
-  Scroll, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, Sheet, useQuery, useData, useLocal,
-  useMe, useChat, useDialog, useNow, useRef, useEffect, t,
+  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Chip, Card,
+  Scroll, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board, Upload,
+  Timer, Section, Progress, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
+  useRef, useEffect, format, t,
 } from 'isolink';
 import { between, last } from './pos';
 import s from './app.css';
 
 type Task = {
   id: string; title: string; done?: boolean; due?: number; list?: string; who?: string; flag?: boolean;
-  notes?: string; pos?: string; doneAt?: number; _at?: number;
+  notes?: string; pos?: string; doneAt?: number; status?: string; repeat?: string; _at?: number;
 };
 type List_ = { id: string; name: string; pos?: string };
+type Step = { id: string; task: string; title: string; done?: boolean; pos?: string };
+type Comment = { id: string; task: string; text: string; _by?: string; _at?: number };
+type Attachment = { id: string; task: string; file: unknown };
 
-/** Which tasks show: Today, Upcoming, Done, or a list by its id. */
-const TODAY = '_today', UPCOMING = '_upcoming', DONE = '_done';
-
+const DAY = 86400000;
 const endOfToday = (now: number) => {
   const d = new Date(now);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
@@ -33,116 +35,285 @@ const at = (day: string, time: string) => {
   const [h, min] = (time || '09:00').split(':').map(Number);
   return new Date(y, m - 1, d, h, min).getTime();
 };
+const MONTHS = [/*t*/'Jan', /*t*/'Feb', /*t*/'Mar', /*t*/'Apr', /*t*/'May', /*t*/'Jun', /*t*/'Jul', /*t*/'Aug',
+  /*t*/'Sep', /*t*/'Oct', /*t*/'Nov', /*t*/'Dec'];
+const DAYS = [/*t*/'Sunday', /*t*/'Monday', /*t*/'Tuesday', /*t*/'Wednesday', /*t*/'Thursday', /*t*/'Friday', /*t*/'Saturday'];
+const REPEATS: [string, string][] = [
+  ['never', /*t*/'Never'], ['daily', /*t*/'Every day'], ['weekdays', /*t*/'Weekdays'], ['weekly', /*t*/'Every week'],
+  ['monthly', /*t*/'Every month'],
+];
+const STATUSES: [string, string][] = [['todo', /*t*/'To do'], ['doing', /*t*/'Doing'], ['done', /*t*/'Done']];
+/** A list's colour, the same on every device. */
+const HUES = ['#3b82f6', '#f59e0b', '#22c55e', '#a855f7', '#ef4444', '#14b8a6', '#ec4899'];
+const hueOf = (id?: string) => {
+  let h = 0;
+  for (const c of id ?? '') h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return HUES[h % HUES.length];
+};
 
 /** When it's due, in a few words: the time today, else the day. */
 function when(ms: number, now: number) {
   const end = endOfToday(now);
-  if (ms < end && ms >= end - 86400000) return timeOf(ms);
-  if (ms >= end && ms < end + 86400000) return t('Tomorrow');
-  if (ms < end - 86400000 && ms >= end - 2 * 86400000) return t('Yesterday');
+  if (ms < end && ms >= end - DAY) return timeOf(ms);
+  if (ms >= end && ms < end + DAY) return t('Tomorrow');
+  if (ms < end - DAY && ms >= end - 2 * DAY) return t('Yesterday');
   const d = new Date(ms);
   return `${d.getDate()} ${t(MONTHS[d.getMonth()])}`;
 }
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+/** The next time a repeating task is due after [ms]. */
+function next(ms: number, repeat: string) {
+  const d = new Date(ms);
+  if (repeat === 'daily') d.setDate(d.getDate() + 1);
+  else if (repeat === 'weekly') d.setDate(d.getDate() + 7);
+  else if (repeat === 'monthly') d.setMonth(d.getMonth() + 1);
+  else if (repeat === 'weekdays') {
+    do d.setDate(d.getDate() + 1); while (d.getDay() === 0 || d.getDay() === 6);
+  }
+  return d.getTime();
+}
 
-function Home() {
+function useTodo() {
   const lists = (useQuery('lists', { limit: 500 }) as List_[]).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
-  const all = useQuery('tasks', { limit: 500 }) as Task[];
-  const { add, edit, remove } = useData();
+  const all = useQuery('tasks', { limit: 1000 }) as Task[];
+  const steps = useQuery('steps', { limit: 2000 }) as Step[];
+  const data = useData();
   const me = useMe();
-  const members = useChat() as { id: string }[];
-  const dialog = useDialog();
-  const now = useNow(60000);
-  const [view, setView] = useLocal<string>(TODAY);
-  const [draft, setDraft] = useLocal<string>('');
-  const [open, setOpen] = useLocal<string | null>(null);
-  const canAdd = me.role !== 'view';
-  const shown = !view.startsWith('_') && !lists.some((l) => l.id === view) ? TODAY : view;
-
-  const end = endOfToday(now);
-  const isOpen = (r: Task) => !r.done;
-  const tasks = all.filter((r) =>
-    shown === TODAY ? isOpen(r) && typeof r.due === 'number' && r.due < end
-    : shown === UPCOMING ? isOpen(r) && typeof r.due === 'number' && r.due >= end
-    : shown === DONE ? !isOpen(r)
-    : isOpen(r) && r.list === shown,
-  );
-  tasks.sort((a, b) => {
-    if (shown === DONE) return (b.doneAt ?? 0) - (a.doneAt ?? 0);
-    const da = a.due ?? 2 ** 52, db = b.due ?? 2 ** 52;
-    if (da !== db) return da - db;
-    return (a._at ?? 0) - (b._at ?? 0);
-  });
-
+  const members = useChat() as { id: string; name: string }[];
+  /** Ticked, or unticked. A repeating one comes back for next time. */
   const toggle = (r: Task) => {
     const done = !r.done;
-    edit('tasks', r.id, { done, doneAt: done ? Date.now() : null });
+    data.edit('tasks', r.id, { done, doneAt: done ? Date.now() : null, status: done ? 'done' : r.status === 'done' ? 'todo' : r.status });
+    if (done && r.repeat && r.repeat !== 'never' && typeof r.due === 'number') {
+      data.add('tasks', { title: r.title, due: next(r.due, r.repeat), repeat: r.repeat, list: r.list, who: r.who, flag: r.flag, notes: r.notes });
+    }
   };
+  return { lists, all, steps, ...data, me, members, canAdd: me.role !== 'view', toggle };
+}
 
+function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof useTodo>; now: number; showList: boolean }) {
+  const nav = useNav();
+  const list = showList ? todo.lists.find((l) => l.id === r.list) : undefined;
+  const late = r.due !== undefined && !r.done && r.due < now;
+  const mine = todo.steps.filter((x) => x.task === r.id);
+  const stepsDone = mine.filter((x) => x.done).length;
+  return (
+    <Pressable class={s.task} onPress={() => nav.push('Task', { id: r.id })}>
+      <Checkbox round checked={!!r.done} onChange={() => todo.toggle(r)} />
+      <Box class={s.words} grow>
+        <Text class={r.done ? s.done : s.title}>{r.title}</Text>
+        {!r.done && (r.due !== undefined || list || mine.length > 0 || (r.repeat && r.repeat !== 'never')) && (
+          <Box class={s.meta}>
+            {r.due !== undefined && <Text class={late ? s.late : s.due}>{when(r.due, now)}</Text>}
+            {mine.length > 0 && <Text class={s.due}>{`☑ ${stepsDone}/${mine.length}`}</Text>}
+            {r.repeat && r.repeat !== 'never' && <Icon name="repeat" size={14} />}
+            {list && <Text class={s.tag} style={{ color: hueOf(list.id) }}>{list.name}</Text>}
+          </Box>
+        )}
+      </Box>
+      {r.flag && !r.done && <Icon name="flag" tone="warning" size={18} />}
+      {r.who && todo.members.length > 1 && <Avatar person={r.who} size={24} />}
+    </Pressable>
+  );
+}
+
+function Empty({ icon, words }: { icon: string; words: string }) {
+  return (
+    <Stack align="center" gap={8} class={s.empty}>
+      <Icon name={icon} size={40} />
+      <Text tone="muted">{words}</Text>
+    </Stack>
+  );
+}
+
+function TodayTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
+  const now = useNow(60000);
+  const end = endOfToday(now);
+  const start = end - DAY;
+  const open = todo.all.filter((r) => !r.done && typeof r.due === 'number' && r.due < end).sort((a, b) => a.due! - b.due!);
+  const doneToday = todo.all.filter((r) => r.done && (r.doneAt ?? 0) >= start).sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0));
+  const late = open.filter((r) => r.due! < start).length;
+  const total = open.length + doneToday.length;
+  const hour = (r: Task) => new Date(r.due!).getHours();
+  const parts: [string, Task[]][] = [
+    [t('Late'), open.filter((r) => r.due! < start)],
+    [t('Morning'), open.filter((r) => r.due! >= start && hour(r) < 12)],
+    [t('Afternoon'), open.filter((r) => r.due! >= start && hour(r) >= 12 && hour(r) < 17)],
+    [t('Evening'), open.filter((r) => r.due! >= start && hour(r) >= 17)],
+  ];
+  return (
+    <>
+      <Row gap={14} align="center" class={s.head}>
+        <ProgressRing value={total ? doneToday.length / total : 0} size={58} label={`${doneToday.length}/${total}`} />
+        <Stack>
+          <Text class={s.big}>{t(DAYS[new Date(now).getDay()])}</Text>
+          <Text tone="muted">
+            {open.length === 0 ? t('All clear') : late ? t('{p0} to go · {p1} late', { p0: open.length, p1: late }) : t('{p0} to go', { p0: open.length })}
+          </Text>
+        </Stack>
+      </Row>
+      {total === 0 && <Empty icon="wb_sunny" words={t('All clear')} />}
+      {parts.map(([name, rows]) =>
+        rows.length === 0 ? null : (
+          <Box key={name}>
+            <Text class={s.h}>{name}</Text>
+            <Box class={s.card}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+          </Box>
+        ),
+      )}
+      {doneToday.length > 0 && (
+        <>
+          <Text class={s.h}>{t('Done today')}</Text>
+          <Box class={s.card}>{doneToday.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+        </>
+      )}
+    </>
+  );
+}
+
+function ProjectsTab({ todo, project, setProject }: { todo: ReturnType<typeof useTodo>; project: string | null; setProject: (id: string) => void }) {
+  const nav = useNav();
+  const dialog = useDialog();
+  const shown = todo.lists.find((l) => l.id === project) ?? todo.lists[0];
+  const newList = async () => {
+    const name = ((await dialog.prompt({ title: t('New project'), placeholder: t('Name') })) ?? '').trim();
+    if (name) setProject(todo.add('lists', { name, pos: between(last(todo.lists), '') }));
+  };
+  const items = shown
+    ? todo.all
+        .filter((r) => r.list === shown.id)
+        .map((r) => ({ ...r, status: r.done ? 'done' : r.status || 'todo' }))
+        .sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? '') || (a._at ?? 0) - (b._at ?? 0))
+    : [];
+  const doneCount = items.filter((r) => r.status === 'done').length;
+  return (
+    <>
+      <Scroll direction="horizontal">
+        <Box class={s.chips}>
+          {todo.lists.map((l) => (
+            <Chip key={l.id} selected={shown?.id === l.id} onPress={() => setProject(l.id)}>{l.name}</Chip>
+          ))}
+          {todo.canAdd && <Chip icon="add" onPress={newList}>{todo.lists.length ? '' : t('Project')}</Chip>}
+        </Box>
+      </Scroll>
+      {!shown ? (
+        <Empty icon="view_kanban" words={t('No projects yet')} />
+      ) : (
+        <>
+          {items.length > 0 && (
+            <Row gap={10} align="center" class={s.progress}>
+              <Stack grow><Progress value={doneCount / items.length} /></Stack>
+              <Text tone="muted">{`${doneCount}/${items.length}`}</Text>
+            </Row>
+          )}
+          <Board
+            items={items}
+            by="status"
+            columns={STATUSES.map(([value, label]) => ({ value, label: t(label) }))}
+            height={460}
+            onMove={todo.canAdd ? (id: string, status: string) => {
+              const r = todo.all.find((x) => x.id === id);
+              if (!r) return;
+              if (status === 'done' && !r.done) todo.toggle({ ...r, status });
+              else todo.edit('tasks', id, { status, ...(status !== 'done' && r.done ? { done: false, doneAt: null } : {}) });
+            } : undefined}
+          >
+            {items.map((r) => {
+              const mine = todo.steps.filter((x) => x.task === r.id);
+              return (
+                <Card key={r.id} pad={10} onPress={() => nav.push('Task', { id: r.id })}>
+                  <Stack gap={6}>
+                    <Text bold strike={r.status === 'done'}>{r.title}</Text>
+                    <Row gap={6} align="center">
+                      {r.who && <Avatar person={r.who} size={20} />}
+                      {r.due !== undefined && <Text class={s.due}>{when(r.due, Date.now())}</Text>}
+                      {mine.length > 0 && <Text class={s.due}>{`☑ ${mine.filter((x) => x.done).length}/${mine.length}`}</Text>}
+                      {r.flag && <Icon name="flag" tone="warning" size={14} />}
+                    </Row>
+                  </Stack>
+                </Card>
+              );
+            })}
+          </Board>
+        </>
+      )}
+    </>
+  );
+}
+
+function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
+  const now = useNow(60000);
+  const end = endOfToday(now);
+  const later = todo.all.filter((r) => !r.done && typeof r.due === 'number' && r.due >= end).sort((a, b) => a.due! - b.due!);
+  const someday = todo.all.filter((r) => !r.done && r.due === undefined && !r.list);
+  const done = todo.all.filter((r) => r.done).sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0)).slice(0, 30);
+  const days = new Map<string, Task[]>();
+  for (const r of later) {
+    const k = dayOf(r.due!);
+    days.set(k, [...(days.get(k) ?? []), r]);
+  }
+  const title = (k: string) => {
+    const ms = at(k, '12:00');
+    if (ms < end + DAY) return t('Tomorrow');
+    const d = new Date(ms);
+    return ms < end + 6 * DAY ? t(DAYS[d.getDay()]) : `${t(DAYS[d.getDay()])} ${d.getDate()} ${t(MONTHS[d.getMonth()])}`;
+  };
+  return (
+    <>
+      {later.length === 0 && someday.length === 0 && <Empty icon="event_available" words={t('Nothing coming up')} />}
+      {[...days.entries()].map(([k, rows]) => (
+        <Box key={k}>
+          <Text class={s.h}>{title(k)}</Text>
+          <Box class={s.card}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+        </Box>
+      ))}
+      {someday.length > 0 && (
+        <>
+          <Text class={s.h}>{t('Someday')}</Text>
+          <Box class={s.card}>{someday.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+        </>
+      )}
+      {done.length > 0 && (
+        <Section title={t('Done · {p0}', { p0: done.length })} folded>
+          <Box class={s.card}>{done.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+        </Section>
+      )}
+    </>
+  );
+}
+
+function Home() {
+  const todo = useTodo();
+  const [tab, setTab] = useStore<string>('tab', 'today');
+  const [project, setProject] = useStore<string | null>('project', null);
+  const [draft, setDraft] = useLocal<string>('');
+  const now = useNow(60000);
   const submit = () => {
     const title = draft.trim();
     if (!title) return;
     setDraft('');
-    add('tasks', {
+    const end = endOfToday(now);
+    const list = tab === 'projects' ? (todo.lists.find((l) => l.id === project) ?? todo.lists[0])?.id : undefined;
+    todo.add('tasks', {
       title,
-      list: shown.startsWith('_') ? undefined : shown,
+      list,
+      status: list ? 'todo' : undefined,
       // Added to Today: due today.
-      due: shown === TODAY ? end - 60000 : undefined,
+      due: tab === 'today' ? end - 60000 : undefined,
     });
   };
-
-  const newList = async () => {
-    const name = ((await dialog.prompt({ title: t('New list'), placeholder: t('Name') })) ?? '').trim();
-    if (!name) return;
-    const id = add('lists', { name, pos: between(last(lists), '') });
-    setView(id);
-  };
-
-  const tasksToday = all.filter((r) => !r.done && typeof r.due === 'number' && r.due < end).length;
-  const chips: [string, string][] = [
-    [TODAY, tasksToday > 0 ? `${t('Today')} ${tasksToday}` : t('Today')],
-    [UPCOMING, t('Upcoming')],
-    ...lists.map((l) => [l.id, l.name] as [string, string]),
-    [DONE, t('Done')],
-  ];
-  const task = all.find((r) => r.id === open);
-  // Ticked off today, in this view: still there, crossed out.
-  const startOfToday = end - 86400000;
-  const doneToday =
-    shown === DONE
-      ? []
-      : all
-          .filter((r) => r.done && (r.doneAt ?? 0) >= startOfToday)
-          .filter((r) => (shown === TODAY ? true : shown === UPCOMING ? false : r.list === shown))
-          .sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0));
-
-  const row = (r: Task) => {
-    const list = shown.startsWith('_') ? lists.find((l) => l.id === r.list) : undefined;
-    const late = r.due !== undefined && !r.done && r.due < now;
-    return (
-      <Pressable key={r.id} class={s.task} onPress={() => setOpen(r.id)}>
-        <Checkbox round checked={!!r.done} onChange={() => toggle(r)} />
-        <Box class={s.words} grow>
-          <Text class={r.done ? s.done : s.title}>{r.title}</Text>
-          {!r.done && (r.due !== undefined || list) && (
-            <Box class={s.meta}>
-              {r.due !== undefined && <Text class={late ? s.late : s.due}>{when(r.due, now)}</Text>}
-              {list && <Text class={s.due}>{list.name}</Text>}
-            </Box>
-          )}
-        </Box>
-        {r.flag && !r.done && <Icon name="flag" tone="warning" size={18} />}
-        {r.who && members.length > 1 && <Avatar person={r.who} size={24} />}
-      </Pressable>
-    );
-  };
-
   return (
     <Screen
       title={t('Todo')}
+      tabs={[
+        { value: 'today', label: t('Today'), icon: 'wb_sunny' },
+        { value: 'projects', label: t('Projects'), icon: 'view_kanban' },
+        { value: 'upcoming', label: t('Upcoming'), icon: 'calendar_month' },
+      ]}
+      tab={tab}
+      onTab={setTab}
       footer={
-        canAdd && shown !== DONE ? (
+        todo.canAdd && !(tab === 'projects' && todo.lists.length === 0) ? (
           <Row gap={8} align="center">
             <Stack grow>
               <TextField value={draft} onChange={setDraft} placeholder={t('New task')} onSubmit={submit} />
@@ -152,76 +323,199 @@ function Home() {
         ) : undefined
       }
     >
-      <Scroll direction="horizontal">
-        <Box class={s.chips}>
-          {chips.map(([id, label]) => (
-            <Chip key={id} selected={shown === id} onPress={() => setView(id)}>{label}</Chip>
-          ))}
-          {canAdd && <Chip icon="add" onPress={newList}>{t('List')}</Chip>}
-        </Box>
-      </Scroll>
-      {tasks.length === 0 && doneToday.length === 0 ? (
-        <Stack align="center" gap={8} class={s.empty}>
-          <Icon name={shown === DONE ? 'check_circle' : 'checklist'} size={40} />
-          <Text tone="muted">{shown === DONE ? t('Nothing done yet') : t('All clear')}</Text>
-        </Stack>
-      ) : null}
-      {tasks.length > 0 && <Box class={s.card}>{tasks.map(row)}</Box>}
-      {doneToday.length > 0 && (
-        <>
-          <Text class={s.h}>{t('Done today')}</Text>
-          <Box class={s.card}>{doneToday.map(row)}</Box>
-        </>
-      )}
-      <Sheet open={!!task} onClose={() => setOpen(null)}>
-        {task && <TaskSheet key={task.id} task={task} lists={lists} shared={members.length > 1} canEdit={canAdd}
-                            onDone={() => setOpen(null)} />}
-      </Sheet>
+      {tab === 'today' && <TodayTab todo={todo} />}
+      {tab === 'projects' && <ProjectsTab todo={todo} project={project} setProject={setProject} />}
+      {tab === 'upcoming' && <UpcomingTab todo={todo} />}
     </Screen>
   );
 }
 
-function TaskSheet({ task, lists, shared, canEdit, onDone }:
-  { task: Task; lists: List_[]; shared: boolean; canEdit: boolean; onDone: () => void }) {
-  const { edit, remove } = useData();
-  const [title, setTitle] = useLocal<string>(task.title);
-  const [notes, setNotes] = useLocal<string>(task.notes ?? '');
-  // Kept when the sheet goes, however it goes.
+/** One task: its steps, when, who, files, what people said, and a focus timer. */
+function TaskScreen() {
+  const nav = useNav();
+  const { id } = nav.params as { id: string };
+  const todo = useTodo();
+  const task = todo.all.find((r) => r.id === id);
+  const comments = (useQuery('comments', { limit: 500 }) as Comment[]).filter((c) => c.task === id).sort((a, b) => (a._at ?? 0) - (b._at ?? 0));
+  const files = (useQuery('attachments', { limit: 200 }) as Attachment[]).filter((f) => f.task === id);
+  const dialog = useDialog();
+  const [title, setTitle] = useLocal<string>(task?.title ?? '');
+  const [notes, setNotes] = useLocal<string>(task?.notes ?? '');
+  const [step, setStep] = useLocal<string>('');
+  const [said, setSaid] = useLocal<string>('');
+  const [focus, setFocus] = useLocal<boolean>(false);
+  // Kept when leaving, however you leave.
   const latest = useRef({ title, notes, task });
   latest.current = { title, notes, task };
   useEffect(() => () => {
-    if (!canEdit) return;
     const { title, notes, task } = latest.current;
-    const next = title.trim();
+    if (!task || !todo.canAdd) return;
     const changes: Record<string, unknown> = {};
-    if (next && next !== task.title) changes.title = next;
+    if (title.trim() && title.trim() !== task.title) changes.title = title.trim();
     if (notes !== (task.notes ?? '')) changes.notes = notes || null;
-    if (Object.keys(changes).length) edit('tasks', task.id, changes);
+    if (Object.keys(changes).length) todo.edit('tasks', task.id, changes);
   }, []);
-  const set = (fields: Record<string, unknown>) => canEdit && edit('tasks', task.id, fields);
+  if (!task) return <Screen title={t('Todo')} />;
+  const set = (fields: Record<string, unknown>) => todo.canAdd && todo.edit('tasks', task.id, fields);
+  const mine = todo.steps.filter((x) => x.task === id).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
+  const addStep = () => {
+    const words = step.trim();
+    if (!words) return;
+    setStep('');
+    todo.add('steps', { task: id, title: words, pos: between(last(mine), '') });
+  };
+  const say = () => {
+    const words = said.trim();
+    if (!words) return;
+    setSaid('');
+    todo.add('comments', { task: id, text: words });
+  };
+  const nameOf = (who?: string) => todo.members.find((m) => m.id === who)?.name ?? '';
   return (
-    <Stack gap={12}>
-      <TextField label={t('Title')} value={title} max={200} onChange={setTitle} />
+    <Screen
+      title={task.title}
+      actions={
+        todo.canAdd ? (
+          <IconButton icon="delete" label={t('Delete')} onPress={async () => {
+            const ok = await dialog.confirm({ title: t('Delete this task?'), ok: t('Delete'), danger: true });
+            if (!ok) return;
+            for (const x of mine) todo.remove('steps', x.id);
+            todo.remove('tasks', task.id);
+            nav.pop();
+          }} />
+        ) : undefined
+      }
+    >
       <Row gap={8} align="center">
-        <DatePicker value={task.due !== undefined ? dayOf(task.due) : undefined} placeholder={t('Due')}
-                    onChange={(day: string) => set({ due: day ? at(day, task.due !== undefined ? timeOf(task.due) : '09:00') : null })} />
-        {task.due !== undefined && (
-          <TimePicker value={timeOf(task.due)} onChange={(time: string) => set({ due: at(dayOf(task.due!), time) })} />
+        <Checkbox round checked={!!task.done} onChange={() => todo.toggle(task)} />
+        <Stack grow><TextField value={title} max={200} onChange={setTitle} /></Stack>
+      </Row>
+      <Box class={s.card}>
+        {mine.map((x) => (
+          <Row key={x.id} gap={4} align="center">
+            <Checkbox checked={!!x.done} onChange={() => todo.edit('steps', x.id, { done: !x.done })} />
+            <Text grow class={x.done ? s.done : s.title}>{x.title}</Text>
+            {todo.canAdd && <IconButton icon="close" label={t('Delete')} onPress={() => todo.remove('steps', x.id)} />}
+          </Row>
+        ))}
+        {todo.canAdd && (
+          <Row gap={8} align="center" class={s.addStep}>
+            <Icon name="add" size={18} />
+            <Stack grow><TextField value={step} onChange={setStep} placeholder={t('Add a step')} onSubmit={addStep} /></Stack>
+          </Row>
         )}
-        {task.due !== undefined && <Button variant="plain" onPress={() => set({ due: null })}>{t('Clear')}</Button>}
-      </Row>
-      <Select label={t('List')} value={task.list ?? null}
-              options={lists.map((l) => ({ value: l.id, label: l.name }))}
-              onChange={(list: string) => set({ list })} />
-      {shared && <PersonPicker label={t('Who')} value={task.who ?? null} onChange={(who: string) => set({ who })} />}
-      <Toggle label={t('Flag')} checked={!!task.flag} onChange={(flag: boolean) => set({ flag })} />
-      <Editor value={notes} onChange={setNotes} placeholder={t('Notes')} lines={8} />
-      <Row gap={8} justify="end">
-        {canEdit && <Button variant="danger" onPress={() => { remove('tasks', task.id); onDone(); }}>{t('Delete')}</Button>}
-        <Button onPress={onDone}>{t('Done')}</Button>
-      </Row>
-    </Stack>
+      </Box>
+      <Box class={s.card}>
+        <Stack gap={10} pad={[8, 4]}>
+          <Row gap={8} align="center" wrap>
+            <Icon name="alarm" />
+            <DatePicker value={task.due !== undefined ? dayOf(task.due) : undefined} placeholder={t('Due')}
+                        late={task.due !== undefined && !task.done && task.due < Date.now()}
+                        onChange={(day: string) => set({ due: day ? at(day, task.due !== undefined ? timeOf(task.due) : '09:00') : null })} />
+            {task.due !== undefined && (
+              <TimePicker value={timeOf(task.due)} onChange={(time: string) => set({ due: at(dayOf(task.due!), time) })} />
+            )}
+            {task.due !== undefined && <IconButton icon="close" label={t('Clear')} onPress={() => set({ due: null })} />}
+          </Row>
+          <Select label={t('Repeat')} value={task.repeat ?? 'never'}
+                  options={REPEATS.map(([value, label]) => ({ value, label: t(label) }))}
+                  onChange={(repeat: string) => set({ repeat })} />
+          <Select label={t('Project')} value={task.list ?? null}
+                  options={todo.lists.map((l) => ({ value: l.id, label: l.name }))}
+                  onChange={(list: string) => set({ list, status: task.status ?? 'todo' })} />
+          {todo.members.length > 1 && (
+            <PersonPicker label={t('Who')} value={task.who ?? null} onChange={(who: string) => set({ who })} />
+          )}
+          <Toggle label={t('Flag')} checked={!!task.flag} onChange={(flag: boolean) => set({ flag })} />
+        </Stack>
+      </Box>
+      <Editor value={notes} onChange={setNotes} placeholder={t('Notes')} lines={6} />
+      <Box class={s.block}>
+        <Upload value={files.map((f) => f.file)} label={t('Add a file')}
+                onUpload={todo.canAdd ? (file: unknown) => todo.add('attachments', { task: id, file }) : undefined}
+                onRemove={todo.canAdd ? (file: any) => {
+                  const f = files.find((x) => (x.file as any)?.id === file?.id || x.file === file);
+                  if (f) todo.remove('attachments', f.id);
+                } : undefined} />
+      </Box>
+      {focus ? (
+        <Box class={s.focus}>
+          <Timer seconds={25 * 60} label={t('Focus')} onDone={() => setFocus(false)} />
+          <Button variant="plain" onPress={() => setFocus(false)}>{t('Stop')}</Button>
+        </Box>
+      ) : (
+        <Button variant="tonal" icon="timer" expand onPress={() => setFocus(true)}>{t('Focus')}</Button>
+      )}
+      {(comments.length > 0 || todo.members.length > 1) && (
+        <Box class={s.card}>
+          <Stack gap={10} pad={[8, 4]}>
+            {comments.map((c) => (
+              <Row key={c.id} gap={8} align="start">
+                {c._by && <Avatar person={c._by} size={26} />}
+                <Stack grow>
+                  <Text bold>{nameOf(c._by)}</Text>
+                  <Text>{c.text}</Text>
+                </Stack>
+                {c._at ? <Text class={s.when}>{format.relative(c._at)}</Text> : null}
+              </Row>
+            ))}
+            {todo.canAdd && (
+              <Row gap={8} align="center">
+                <Stack grow><TextField value={said} onChange={setSaid} placeholder={t('Comment')} onSubmit={say} /></Stack>
+                <IconButton icon="send" label={t('Send')} onPress={say} />
+              </Row>
+            )}
+          </Stack>
+        </Box>
+      )}
+    </Screen>
   );
 }
 
-export default defineApp({ screens: { Home } });
+const findTask = (rows: Task[], title: string) => {
+  const want = String(title).toLowerCase();
+  return rows.find((r) => !r.done && r.title.toLowerCase() === want) ?? rows.find((r) => !r.done && r.title.toLowerCase().includes(want));
+};
+
+export default defineApp({
+  screens: { Home, Task: TaskScreen },
+  actions: {
+    add: {
+      title: 'Add a task',
+      params: {
+        title: 'string',
+        due: { type: 'string', optional: true, title: 'When it is due, as an ISO date and time' },
+        project: { type: 'string', optional: true, title: "A project's name" },
+        repeat: { type: 'string', optional: true, options: REPEATS.map(([v]) => v) },
+      },
+      run: ({ title, due, project, repeat }: { title: string; due?: string; project?: string; repeat?: string }, { data }: any) => {
+        const lists = data.query('lists', { limit: 500 }) as List_[];
+        const list = project ? lists.find((l) => l.name.toLowerCase() === String(project).toLowerCase()) : undefined;
+        if (project && !list) throw new Error(`No project called ${project}`);
+        const ms = due ? Date.parse(String(due)) : NaN;
+        const id = data.add('tasks', {
+          title: String(title).slice(0, 200),
+          due: Number.isFinite(ms) ? ms : undefined,
+          list: list?.id,
+          status: list ? 'todo' : undefined,
+          repeat: repeat && REPEATS.some(([v]) => v === repeat) ? repeat : undefined,
+        });
+        return { id };
+      },
+    },
+    done: {
+      title: 'Tick off a task',
+      params: { title: 'string' },
+      run: ({ title }: { title: string }, { data }: any) => {
+        const rows = data.query('tasks', { limit: 1000 }) as Task[];
+        const r = findTask(rows, title);
+        if (!r) throw new Error(`No open task called ${title}`);
+        data.edit('tasks', r.id, { done: true, doneAt: Date.now(), status: 'done' });
+        if (r.repeat && r.repeat !== 'never' && typeof r.due === 'number') {
+          data.add('tasks', { title: r.title, due: next(r.due, r.repeat), repeat: r.repeat, list: r.list, who: r.who });
+        }
+        return { done: r.title };
+      },
+    },
+  },
+});
