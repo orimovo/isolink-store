@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Plans and packing for a trip, together",
+  "tags": ["apps"],
+  "minApp": "0.26.36"
+}

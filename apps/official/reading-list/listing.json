@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Books to read, reading and read",
+  "tags": ["apps"],
+  "minApp": "0.26.36"
+}

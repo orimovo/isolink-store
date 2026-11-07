@@ -1,0 +1,28 @@
+{
+  "id": "recipes",
+  "name": "Recipes",
+  "icon": "note",
+  "accent": 4294940184,
+  "schema": {
+    "tables": {
+      "recipes": {
+        "name": "Recipes",
+        "title": "name",
+        "fields": {
+          "name": { "id": 1, "type": "text", "max": 120, "required": true, "search": true },
+          "course": { "id": 2, "type": "choice", "options": [
+            { "id": "breakfast", "name": "Breakfast" },
+            { "id": "main", "name": "Main" },
+            { "id": "side", "name": "Side" },
+            { "id": "sweet", "name": "Sweet" }
+          ] },
+          "minutes": { "id": 3, "type": "number", "min": 0, "max": 1440, "unit": "min" },
+          "serves": { "id": 4, "type": "number", "min": 1, "max": 50 },
+          "tags": { "id": 5, "type": "tags", "max": 8 },
+          "method": { "id": 6, "type": "markdown", "max": 32000, "search": true },
+          "link": { "id": 7, "type": "link" }
+        }
+      }
+    }
+  }
+}

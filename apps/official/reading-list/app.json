@@ -1,0 +1,26 @@
+{
+  "id": "reading-list",
+  "name": "Reading list",
+  "icon": "book",
+  "accent": 4285684222,
+  "schema": {
+    "tables": {
+      "books": {
+        "name": "Books",
+        "title": "title",
+        "fields": {
+          "title": { "id": 1, "type": "text", "max": 200, "required": true, "search": true },
+          "author": { "id": 2, "type": "text", "max": 120, "search": true },
+          "status": { "id": 3, "type": "choice", "options": [
+            { "id": "want", "name": "Want to read" },
+            { "id": "reading", "name": "Reading" },
+            { "id": "done", "name": "Read" }
+          ], "default": "want" },
+          "rating": { "id": 4, "type": "number", "min": 1, "max": 5 },
+          "lent": { "id": 5, "type": "person" },
+          "notes": { "id": 6, "type": "markdown", "max": 16000 }
+        }
+      }
+    }
+  }
+}
