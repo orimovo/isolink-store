@@ -35,13 +35,17 @@ function hash(id: string) {
 }
 const colorOf = (r: Note) => r.color || COLORS[hash(r.id) % COLORS.length][0];
 const tiltOf = (r: Note) => (typeof r.tilt === 'number' ? r.tilt : ((hash(r.id) % 50) - 25) / 10);
-const clean = (line: string) => line.replace(/^[#>*\-\s]+/, '').replace(/^\[[ xX]\]\s*/, '').trim();
+const clean = (line: string) =>
+  line.replace(/^[#>*\-\s]+/, '').replace(/^\[[ xX]\]\s*/, '').replace(/\*\*|__|~~|`/g, '').trim();
+/** A code block's opening line: not a title. */
+const fence = (line: string) => /^\s*(`{3,}|~{3,})/.test(line);
 
 /** A note's title: its own, or its first line. */
 function noteTitle(r: Note) {
   const own = (r.title ?? '').trim();
   if (own) return own;
-  const first = clean((r.body ?? '').split('\n').find((l) => l.trim()) ?? '');
+  const line = (r.body ?? '').split('\n').find((l) => l.trim()) ?? '';
+  const first = fence(line) ? '' : clean(line);
   if (first) return first;
   return t(KINDS.find(([k]) => k === r.kind)?.[1] ?? 'New note');
 }
@@ -54,6 +58,8 @@ function rest(r: Note) {
   const first = lines[i] ?? '';
   // A list's first line is one of its boxes: it stays.
   if (/^\s*[-*+]\s+\[[ xX]\]/.test(first)) return lines.join('\n').trim();
+  // Nor does a code block's opening line, or the code would break.
+  if (fence(first)) return lines.join('\n').trim();
   return lines.slice(i + 1).join('\n').trim();
 }
 
