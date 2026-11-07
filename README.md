@@ -167,6 +167,14 @@ An app is a database to start from: tables of typed fields (text, markdown, numb
 }
 ```
 
+An app can also carry its own screens in TSX (`"main": "src/app.tsx"`) and use parts of the phone or computer: reminders that ring on all your devices, notifications, the calendar, Apple Reminders, alarms, contacts, files, photos, maps and calls, the clipboard, the screen lock and Share. It lists them in `needs.system`, each one either needed or `optional`:
+
+```json
+"needs": { "system": ["remind", { "name": "calendar.add", "optional": true }] }
+```
+
+The app asks for the needed ones when it first opens and the optional ones the first time they're used. The names, what each does on each platform, and the `isolink/system` module are in [docs/databases.md](https://github.com/waggr-gb/Isolink/blob/main/docs/databases.md#using-the-phone-or-computer). An app with `needs.system` needs `"minApp": "0.26.37"` in its listing.
+
 ### listing.json
 
 ```json
