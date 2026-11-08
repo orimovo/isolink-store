@@ -1,6 +1,6 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Chip, Card,
-  Scroll, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board, Upload,
+  Filter, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board, Upload,
   Timer, Section, Progress, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
   useRef, useEffect, format, t,
 } from 'isolink';
@@ -188,14 +188,13 @@ function ProjectsTab({ todo, project, setProject }: { todo: ReturnType<typeof us
   const doneCount = items.filter((r) => r.status === 'done').length;
   return (
     <>
-      <Scroll direction="horizontal">
-        <Box class={s.chips}>
-          {todo.lists.map((l) => (
-            <Chip key={l.id} selected={shown?.id === l.id} onPress={() => setProject(l.id)}>{l.name}</Chip>
-          ))}
-          {todo.canAdd && <Chip icon="add" onPress={newList}>{todo.lists.length ? '' : t('Project')}</Chip>}
-        </Box>
-      </Scroll>
+      {todo.lists.length ? (
+        <Filter value={shown?.id ?? ''} onChange={setProject}
+          options={todo.lists.map((l) => ({ value: l.id, label: l.name }))}
+          onAdd={todo.canAdd ? newList : undefined} addLabel={t('Project')} />
+      ) : todo.canAdd ? (
+        <Box class={s.chips}><Chip icon="add" onPress={newList}>{t('Project')}</Chip></Box>
+      ) : null}
       {!shown ? (
         <Empty icon="view_kanban" words={t('No projects yet')} />
       ) : (
@@ -479,6 +478,8 @@ const findTask = (rows: Task[], title: string) => {
 
 export default defineApp({
   screens: { Home, Task: TaskScreen },
+  // A task opens beside the list on a wide window.
+  split: ['Home'],
   actions: {
     add: {
       title: 'Add a task',

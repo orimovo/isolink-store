@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Select, Button, IconButton, Icon, Fab, Grid,
   ProgressRing, Heatmap, Chart, Segmented, Stat, Confetti, Sheet, Avatar, Checkbox, TimePicker, Stepper,
-  useQuery, useData, useLocal, useStore, useMe, useChat, useNav, useNow, useDialog, useShare, t,
+  useQuery, useData, useLocal, useStore, useMe, useChat, useNav, useNow, useDialog, useShare, useHaptics, t,
 } from 'isolink';
 import { remind } from 'isolink/system';
 import s from './app.css';
@@ -85,6 +85,7 @@ function useHabits() {
   const now = useNow(60000);
   const today = new Date(now);
   const key = iso(today);
+  const haptic = useHaptics();
   const mine = (h: Habit) => !h.with?.length || h._by === me.id || (h.with ?? []).includes(me.id) || !h._by;
   /** One more toward today's goal; past it, back to none. */
   const tick = (h: Habit, day = key) => {
@@ -94,7 +95,10 @@ function useHabits() {
       return false;
     }
     data.add('checkins', { habit: h.id, day, count: 1 });
-    return had + 1 >= targetOf(h);
+    const done = had + 1 >= targetOf(h);
+    if (done) haptic.success();
+    else haptic('light');
+    return done;
   };
   return { habits: habits.filter(mine), all: habits, checkins, ...data, me, today, key, tick, canEdit: me.role !== 'view' };
 }
@@ -494,6 +498,8 @@ const habitNamed = (rows: Habit[], name: string) => {
 
 export default defineApp({
   screens: { Home, Habit: HabitScreen, Edit: EditScreen },
+  // What you open from the list sits beside it on a wide window.
+  split: ['Home'],
   actions: {
     tick: {
       title: "Tick a habit for today",

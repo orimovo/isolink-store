@@ -1,10 +1,10 @@
 {
-  "version": 2,
+  "version": 3,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Recipes, a week of meals and cooking step by step",
   "tags": [
     "apps"
   ],
-  "minApp": "0.26.41"
+  "minApp": "0.26.45"
 }

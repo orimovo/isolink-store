@@ -472,6 +472,8 @@ const named = (rows: Book[], title: string) => {
 
 export default defineApp({
   screens: { Home, Book: BookScreen, Add: AddScreen, Edit: EditScreen, Goal: GoalScreen, Lend: LendScreen },
+  // What you open from the list sits beside it on a wide window.
+  split: ['Home'],
   actions: {
     add: {
       title: 'Add a book to the list',

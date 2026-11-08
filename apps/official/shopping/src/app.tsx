@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Section, Checkbox, Text, TextField, Select, Button, IconButton,
   Icon, Sheet, Banner, Chart, Scanner, Avatar, ListItem, Grid, MoneyField, useQuery, useData, useLocal, useStore,
-  useLayout, useMe, useChat, useNow, useNav, useToast, fetch, format, t,
+  useLayout, useMe, useChat, useNow, useNav, useToast, useHaptics, fetch, format, t,
 } from 'isolink';
 import { useShared } from 'isolink/system';
 import s from './app.css';
@@ -101,6 +101,7 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
   const now = useNow(60000);
   const shared = useShared() as { text?: string; from?: string } | null;
   const toast = useToast();
+  const haptic = useHaptics();
   const [taken, setTaken] = useLocal<boolean>(false);
   const [open, setOpen] = useLocal<string | null>(null);
   const [form, setForm] = useLocal<{ name: string; qty: string; price: number | null }>({ name: '', qty: '', price: null });
@@ -148,9 +149,9 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
   };
 
   const row = (r: Item) => (
-    <Pressable key={r.id} class={mine ? s.bigItem : s.item} onPress={() => (mine ? edit('items', r.id, { got: !r.got }) : show(r))}
+    <Pressable key={r.id} class={mine ? s.bigItem : s.item} onPress={() => (mine ? (haptic('select'), edit('items', r.id, { got: !r.got })) : show(r))}
                onLongPress={() => show(r)}>
-      <Checkbox round={!!mine} checked={!!r.got} onChange={() => edit('items', r.id, { got: !r.got })} />
+      <Checkbox round={!!mine} checked={!!r.got} onChange={() => { haptic('select'); edit('items', r.id, { got: !r.got }); }} />
       <Text grow class={r.got ? s.got : mine ? s.bigName : s.name}>{r.name}</Text>
       {r.qty ? <Text class={s.qty}>{r.qty}</Text> : null}
       {r.price ? <Text class={s.price}>{format.money(cost(r), currency)}</Text> : null}
@@ -257,7 +258,7 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
           <Button onPress={finish}>{t('Done')}</Button>
         </Box>
       )}
-      <Sheet open={!!editing} onClose={close}>
+      <Sheet open={!!editing} onClose={close} detents={['medium', 'large']}>
         {editing && (
           <Stack gap={12}>
             <TextField label={t('Name')} value={form.name} max={80}
@@ -330,7 +331,7 @@ function UsualsTab({ shop }: { shop: ReturnType<typeof useShop> }) {
           })}
         </Grid>
       )}
-      <Sheet open={!!editing} onClose={close}>
+      <Sheet open={!!editing} onClose={close} detents={['medium', 'large']}>
         {editing && (
           <Stack gap={12}>
             <Row gap={8}>

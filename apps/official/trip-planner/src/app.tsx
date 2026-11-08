@@ -125,7 +125,8 @@ function PlanTab({ c }: { c: Ctx }) {
       )}
       {view === 'map' && pinned.length > 0 ? (
         <Box class={s.map}>
-          <Map pins={pinned.map((p) => ({ lat: p.place!.lat, lng: p.place!.lng, label: p.what }))} />
+          <Map pins={pinned.map((p) => ({ lat: p.place!.lat, lng: p.place!.lng, label: p.what }))}
+               lines={pinned.length > 1 ? [{ points: pinned.map((p) => p.place!) }] : undefined} />
         </Box>
       ) : (
         <>
@@ -501,6 +502,8 @@ function CostScreen() {
 
 export default defineApp({
   screens: { Home, Trip: TripScreen, Plan: PlanScreen, Cost: CostScreen },
+  // What you open from the list sits beside it on a wide window.
+  split: ['Home'],
   actions: {
     plan: {
       title: 'Add a plan to the trip',
