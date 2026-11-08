@@ -1,6 +1,6 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
+  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
   useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
 } from 'isolink';
 import s from './app.css';
@@ -179,17 +179,13 @@ function Folders({ folders, folder, setFolder, canEdit, newFolder }: {
 }) {
   if (folders.length === 0 && !canEdit) return null;
   return (
-    <Box class={s.chips}>
-      <Chip selected={!folder} onPress={() => setFolder(null)}>{t('All')}</Chip>
-      {folders.map((f) => (
-        <Chip key={f.id} selected={folder === f.id} onPress={() => setFolder(f.id)}>{f.name}</Chip>
-      ))}
-      {canEdit && (
-        <Chip icon="add" onPress={async () => { const id = await newFolder(); if (id) setFolder(id); }}>
-          {folders.length ? '' : t('Folder')}
-        </Chip>
-      )}
-    </Box>
+    <Filter
+      value={folder ?? ''}
+      options={[{ value: '', label: t('All') }, ...folders.map((f) => ({ value: f.id, label: f.name }))]}
+      onChange={(v: string) => setFolder(v || null)}
+      onAdd={canEdit ? async () => { const id = await newFolder(); if (id) setFolder(id); } : undefined}
+      addLabel={t('Folder')}
+    />
   );
 }
 
@@ -243,7 +239,6 @@ function Home() {
   const tags = new Map<string, number>();
   for (const r of all) for (const g of r.tags ?? []) tags.set(g, (tags.get(g) ?? 0) + 1);
 
-  const tall = Math.max(800, ...inFolder.map((r) => (r.y ?? 0) + 320));
   const links: [string, string][] = [];
   for (const r of inFolder) for (const l of r.links ?? []) if (inFolder.some((o) => o.id === l)) links.push([r.id, l]);
 
@@ -273,7 +268,6 @@ function Home() {
           ) : (
             <Corkboard
               width={1000}
-              height={tall}
               item={190}
               links={links}
               onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
