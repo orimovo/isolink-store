@@ -116,6 +116,10 @@
                 "name": "Every month"
               }
             ]
+          },
+          "link": {
+            "id": 12,
+            "type": "link"
           }
         }
       },
@@ -184,7 +188,7 @@
       }
     }
   },
-  "version": 3,
+  "version": 4,
   "summary": {
     "table": "tasks",
     "where": [

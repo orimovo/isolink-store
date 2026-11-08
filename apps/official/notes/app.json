@@ -145,12 +145,21 @@
             "type": "ref",
             "table": "notes",
             "many": true
+          },
+          "due": {
+            "id": 16,
+            "type": "datetime",
+            "remind": true
+          },
+          "link": {
+            "id": 17,
+            "type": "link"
           }
         }
       }
     }
   },
-  "version": 3,
+  "version": 4,
   "summary": {
     "table": "notes",
     "none": "No notes yet",

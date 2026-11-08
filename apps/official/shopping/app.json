@@ -82,6 +82,18 @@
             "min": 0,
             "max": 100000,
             "decimals": 2
+          },
+          "due": {
+            "id": 7,
+            "type": "date"
+          },
+          "link": {
+            "id": 8,
+            "type": "link"
+          },
+          "file": {
+            "id": 9,
+            "type": "file"
           }
         }
       },
@@ -177,7 +189,7 @@
       }
     }
   },
-  "version": 4,
+  "version": 5,
   "needs": {
     "device": [
       "camera"
