@@ -1,0 +1,43 @@
+name: Publish
+
+# Asks Isolink's Publish theme store workflow to build the store as soon
+# as a merge to main passes its checks, instead of waiting for the hourly
+# run. The build and the signing keys stay on Isolink's build machine;
+# this only sends the signal.
+#
+# Needs ISOLINK_DISPATCH_TOKEN: a fine-grained token with Contents read and
+# write on waggr-gb/Isolink only. Without it the hourly run still publishes.
+on:
+  workflow_run:
+    workflows: [Check]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask Isolink to publish
+        env:
+          TOKEN: ${{ secrets.ISOLINK_DISPATCH_TOKEN }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::Set the ISOLINK_DISPATCH_TOKEN secret to publish on merge. Until then the store publishes hourly."
+            exit 0
+          fi
+          curl -fsS -X POST \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/waggr-gb/Isolink/dispatches \
+            -d "{\"event_type\":\"theme-store-merged\",\"client_payload\":{\"sha\":\"$SHA\"}}"
+          echo "Asked Isolink to publish $SHA."

@@ -18,7 +18,7 @@ Apps never talk to GitHub. Relays pull this store, check its signatures, and han
 2. **Check it.** Drop the file into the [theme pack checker](https://isolink.app/tools.html), which runs the app's own validator in your browser.
 3. **Fork this repo** and add **one folder** under `themes/community/`, `cards/community/` or `effects/community/` (see below). Copy one from [`examples/`](examples/) to start.
 4. **Open a pull request.** The check runs on it within a minute or two and says exactly what to fix.
-5. **A maintainer reviews it** and merges it. Within the hour it is signed and published, and it appears in Browse.
+5. **A maintainer reviews it** and merges it. Within minutes it is signed and published, and it appears in Browse.
 
 To change your pack later, edit its folder and raise `version` in `listing.json` by one.
 
