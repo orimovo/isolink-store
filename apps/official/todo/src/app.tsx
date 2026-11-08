@@ -1,15 +1,17 @@
 import {
-  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Chip, Card,
-  Filter, Icon, IconButton, Avatar, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board, Upload,
-  Timer, Section, Progress, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
+  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Card, Grid,
+  Icon, IconButton, Avatar, AvatarStack, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board,
+  Upload, Timer, Section, Progress, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
   useRef, useEffect, format, t,
 } from 'isolink';
 import { between, last } from './pos';
 import s from './app.css';
+import { useAddBar } from './addbar';
+import { siteOf } from './smart';
 
 type Task = {
   id: string; title: string; done?: boolean; due?: number; list?: string; who?: string; flag?: boolean;
-  notes?: string; pos?: string; doneAt?: number; status?: string; repeat?: string; _at?: number;
+  notes?: string; pos?: string; doneAt?: number; status?: string; repeat?: string; link?: string; _at?: number;
 };
 type List_ = { id: string; name: string; pos?: string };
 type Step = { id: string; task: string; title: string; done?: boolean; pos?: string };
@@ -38,6 +40,7 @@ const at = (day: string, time: string) => {
 const MONTHS = [/*t*/'Jan', /*t*/'Feb', /*t*/'Mar', /*t*/'Apr', /*t*/'May', /*t*/'Jun', /*t*/'Jul', /*t*/'Aug',
   /*t*/'Sep', /*t*/'Oct', /*t*/'Nov', /*t*/'Dec'];
 const DAYS = [/*t*/'Sunday', /*t*/'Monday', /*t*/'Tuesday', /*t*/'Wednesday', /*t*/'Thursday', /*t*/'Friday', /*t*/'Saturday'];
+const SHORT_DAYS = [/*t*/'Sun', /*t*/'Mon', /*t*/'Tue', /*t*/'Wed', /*t*/'Thu', /*t*/'Fri', /*t*/'Sat'];
 const REPEATS: [string, string][] = [
   ['never', /*t*/'Never'], ['daily', /*t*/'Every day'], ['weekdays', /*t*/'Weekdays'], ['weekly', /*t*/'Every week'],
   ['monthly', /*t*/'Every month'],
@@ -97,32 +100,70 @@ function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof 
   const late = r.due !== undefined && !r.done && r.due < now;
   const mine = todo.steps.filter((x) => x.task === r.id);
   const stepsDone = mine.filter((x) => x.done).length;
+  const extra = !r.done && (r.due !== undefined || list || mine.length > 0 || (r.repeat && r.repeat !== 'never') || r.link);
   return (
     <Pressable class={s.task} onPress={() => nav.push('Task', { id: r.id })}>
       <Checkbox round checked={!!r.done} onChange={() => todo.toggle(r)} />
-      <Box class={s.words} grow>
+      <Stack grow gap={3}>
         <Text class={r.done ? s.done : s.title}>{r.title}</Text>
-        {!r.done && (r.due !== undefined || list || mine.length > 0 || (r.repeat && r.repeat !== 'never')) && (
-          <Box class={s.meta}>
-            {r.due !== undefined && <Text class={late ? s.late : s.due}>{when(r.due, now)}</Text>}
-            {mine.length > 0 && <Text class={s.due}>{`☑ ${stepsDone}/${mine.length}`}</Text>}
-            {r.repeat && r.repeat !== 'never' && <Icon name="repeat" size={14} />}
-            {list && <Text class={s.tag} style={{ color: hueOf(list.id) }}>{list.name}</Text>}
-          </Box>
-        )}
-      </Box>
+        {extra ? (
+          <Row gap={10} align="center" wrap>
+            {r.due !== undefined && (
+              <Row gap={4} align="center">
+                <Icon name={late ? 'alarm' : 'schedule'} size={14} tone={late ? 'danger' : 'muted'} />
+                <Text class={late ? s.late : s.meta}>{when(r.due, now)}</Text>
+              </Row>
+            )}
+            {list && (
+              <Row gap={6} align="center">
+                <Box class={s.dot} style={{ background: hueOf(list.id) }} />
+                <Text class={s.tag} style={{ color: hueOf(list.id) }}>{list.name}</Text>
+              </Row>
+            )}
+            {mine.length > 0 && <Text class={s.meta}>{`☑ ${stepsDone}/${mine.length}`}</Text>}
+            {r.repeat && r.repeat !== 'never' && <Icon name="autorenew" size={14} />}
+            {r.link && (
+              <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
+            )}
+          </Row>
+        ) : null}
+      </Stack>
       {r.flag && !r.done && <Icon name="flag" tone="warning" size={18} />}
       {r.who && todo.members.length > 1 && <Avatar person={r.who} size={24} />}
     </Pressable>
   );
 }
 
-function Empty({ icon, words }: { icon: string; words: string }) {
+function Rows({ title, rows, todo, now }: { title: string; rows: Task[]; todo: ReturnType<typeof useTodo>; now: number }) {
+  if (rows.length === 0) return null;
   return (
-    <Stack align="center" gap={8} class={s.empty}>
-      <Icon name={icon} size={40} />
-      <Text tone="muted">{words}</Text>
+    <Box class={s.group}>
+      <Text class={s.h}>{title}</Text>
+      <Box class={s.card}>
+        <Box class={s.rows}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+      </Box>
+    </Box>
+  );
+}
+
+function Empty({ emoji, words }: { emoji: string; words: string }) {
+  return (
+    <Stack align="center" gap={12} class={s.empty}>
+      <Box class={s.emptyArt}><Text class={s.emptyEmoji}>{emoji}</Text></Box>
+      <Text class={s.emptyText}>{words}</Text>
     </Stack>
+  );
+}
+
+function Hero({ big, line, children }: { big: string; line?: string; children?: unknown }) {
+  return (
+    <Row gap={16} align="center" class={s.hero}>
+      <Stack grow gap={4}>
+        <Text class={s.big}>{big}</Text>
+        {line ? <Text class={s.line}>{line}</Text> : null}
+      </Stack>
+      {children}
+    </Row>
   );
 }
 
@@ -135,76 +176,66 @@ function TodayTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
   const late = open.filter((r) => r.due! < start).length;
   const total = open.length + doneToday.length;
   const hour = (r: Task) => new Date(r.due!).getHours();
-  const parts: [string, Task[]][] = [
-    [t('Late'), open.filter((r) => r.due! < start)],
-    [t('Morning'), open.filter((r) => r.due! >= start && hour(r) < 12)],
-    [t('Afternoon'), open.filter((r) => r.due! >= start && hour(r) >= 12 && hour(r) < 17)],
-    [t('Evening'), open.filter((r) => r.due! >= start && hour(r) >= 17)],
-  ];
+  const d = new Date(now);
   return (
     <>
-      <Row gap={14} align="center" class={s.head}>
-        <ProgressRing value={total ? doneToday.length / total : 0} size={58} label={`${doneToday.length}/${total}`} />
-        <Stack>
-          <Text class={s.big}>{t(DAYS[new Date(now).getDay()])}</Text>
-          <Text tone="muted">
-            {open.length === 0 ? t('All clear') : late ? t('{p0} to go · {p1} late', { p0: open.length, p1: late }) : t('{p0} to go', { p0: open.length })}
-          </Text>
-        </Stack>
-      </Row>
-      {total === 0 && <Empty icon="wb_sunny" words={t('All clear')} />}
-      {parts.map(([name, rows]) =>
-        rows.length === 0 ? null : (
-          <Box key={name}>
-            <Text class={s.h}>{name}</Text>
-            <Box class={s.card}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
-          </Box>
-        ),
-      )}
-      {doneToday.length > 0 && (
-        <>
-          <Text class={s.h}>{t('Done today')}</Text>
-          <Box class={s.card}>{doneToday.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
-        </>
-      )}
+      <Hero big={`${t(DAYS[d.getDay()])} ${d.getDate()} ${t(MONTHS[d.getMonth()])}`}
+            line={open.length === 0 ? t('All clear') : late ? t('{p0} to go · {p1} late', { p0: open.length, p1: late }) : t('{p0} to go', { p0: open.length })}>
+        {total > 0 ? <ProgressRing value={doneToday.length / total} size={60} stroke={6} label={`${doneToday.length}/${total}`} /> : null}
+      </Hero>
+      {total === 0 && <Empty emoji="☀️" words={t('All clear')} />}
+      <Rows title={t('Late')} rows={open.filter((r) => r.due! < start)} todo={todo} now={now} />
+      <Rows title={t('Morning')} rows={open.filter((r) => r.due! >= start && hour(r) < 12)} todo={todo} now={now} />
+      <Rows title={t('Afternoon')} rows={open.filter((r) => r.due! >= start && hour(r) >= 12 && hour(r) < 17)} todo={todo} now={now} />
+      <Rows title={t('Evening')} rows={open.filter((r) => r.due! >= start && hour(r) >= 17)} todo={todo} now={now} />
+      <Rows title={t('Done today')} rows={doneToday} todo={todo} now={now} />
     </>
   );
 }
 
-function ProjectsTab({ todo, project, setProject }: { todo: ReturnType<typeof useTodo>; project: string | null; setProject: (id: string) => void }) {
+function ProjectsTab({ todo, project, setProject, newList }: {
+  todo: ReturnType<typeof useTodo>; project: string | null; setProject: (id: string) => void; newList: () => Promise<string | null>;
+}) {
   const nav = useNav();
-  const dialog = useDialog();
   const shown = todo.lists.find((l) => l.id === project) ?? todo.lists[0];
-  const newList = async () => {
-    const name = ((await dialog.prompt({ title: t('New project'), placeholder: t('Name') })) ?? '').trim();
-    if (name) setProject(todo.add('lists', { name, pos: between(last(todo.lists), '') }));
-  };
   const items = shown
     ? todo.all
         .filter((r) => r.list === shown.id)
         .map((r) => ({ ...r, status: r.done ? 'done' : r.status || 'todo' }))
         .sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? '') || (a._at ?? 0) - (b._at ?? 0))
     : [];
-  const doneCount = items.filter((r) => r.status === 'done').length;
+  const openCount = todo.all.filter((r) => !r.done && r.list).length;
   return (
     <>
-      {todo.lists.length ? (
-        <Filter value={shown?.id ?? ''} onChange={setProject}
-          options={todo.lists.map((l) => ({ value: l.id, label: l.name }))}
-          onAdd={todo.canAdd ? newList : undefined} addLabel={t('Project')} />
-      ) : todo.canAdd ? (
-        <Box class={s.chips}><Chip icon="add" onPress={newList}>{t('Project')}</Chip></Box>
-      ) : null}
+      <Hero big={t('Projects')}
+            line={todo.lists.length ? `${todo.lists.length === 1 ? t('1 project') : t('{p0} projects', { p0: todo.lists.length })} · ${t('{p0} open', { p0: openCount })}` : undefined}>
+        {todo.canAdd ? <Button variant="tonal" icon="add" onPress={newList}>{t('New')}</Button> : null}
+      </Hero>
       {!shown ? (
-        <Empty icon="view_kanban" words={t('No projects yet')} />
+        <Empty emoji="🗂️" words={t('No projects yet')} />
       ) : (
         <>
-          {items.length > 0 && (
-            <Row gap={10} align="center" class={s.progress}>
-              <Stack grow><Progress value={doneCount / items.length} /></Stack>
-              <Text tone="muted">{`${doneCount}/${items.length}`}</Text>
-            </Row>
-          )}
+          <Grid min={200} gap={16}>
+            {todo.lists.map((l) => {
+              const rows = todo.all.filter((r) => r.list === l.id);
+              const done = rows.filter((r) => r.done).length;
+              const people = [...new Set(rows.map((r) => r.who).filter(Boolean))] as string[];
+              return (
+                <Pressable key={l.id} class={l.id === shown.id ? [s.project, s.projectOn] : s.project} onPress={() => setProject(l.id)}>
+                  <Row align="start" justify="between">
+                    <Box class={s.projectArt} style={{ background: `${hueOf(l.id)}2e` }}>
+                      <Text class={s.projectLetter} style={{ color: hueOf(l.id) }}>{(l.name.trim()[0] ?? '·').toUpperCase()}</Text>
+                    </Box>
+                    {people.length > 0 && todo.members.length > 1 ? <AvatarStack people={people} max={3} size={24} /> : null}
+                  </Row>
+                  <Text class={s.projectName} lines={1}>{l.name}</Text>
+                  <Text class={s.meta}>{rows.length === 0 ? t('Empty') : done === rows.length ? t('All done') : t('{p0} open', { p0: rows.length - done })}</Text>
+                  <Progress value={rows.length ? done / rows.length : 0} />
+                </Pressable>
+              );
+            })}
+          </Grid>
+          <Box class={s.boardGap} />
           <Board
             items={items}
             by="status"
@@ -220,13 +251,14 @@ function ProjectsTab({ todo, project, setProject }: { todo: ReturnType<typeof us
             {items.map((r) => {
               const mine = todo.steps.filter((x) => x.task === r.id);
               return (
-                <Card key={r.id} pad={10} onPress={() => nav.push('Task', { id: r.id })}>
-                  <Stack gap={6}>
+                <Card key={r.id} pad={12} onPress={() => nav.push('Task', { id: r.id })}>
+                  <Stack gap={8}>
                     <Text bold strike={r.status === 'done'}>{r.title}</Text>
-                    <Row gap={6} align="center">
+                    <Row gap={8} align="center">
                       {r.who && <Avatar person={r.who} size={20} />}
-                      {r.due !== undefined && <Text class={s.due}>{when(r.due, Date.now())}</Text>}
-                      {mine.length > 0 && <Text class={s.due}>{`☑ ${mine.filter((x) => x.done).length}/${mine.length}`}</Text>}
+                      {r.due !== undefined && <Text class={s.meta}>{when(r.due, Date.now())}</Text>}
+                      {mine.length > 0 && <Text class={s.meta}>{`☑ ${mine.filter((x) => x.done).length}/${mine.length}`}</Text>}
+                      {r.link && <Icon name="link" size={14} />}
                       {r.flag && <Icon name="flag" tone="warning" size={14} />}
                     </Row>
                   </Stack>
@@ -243,6 +275,7 @@ function ProjectsTab({ todo, project, setProject }: { todo: ReturnType<typeof us
 function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
   const now = useNow(60000);
   const end = endOfToday(now);
+  const [picked, setPicked] = useLocal<string | null>(null);
   const later = todo.all.filter((r) => !r.done && typeof r.due === 'number' && r.due >= end).sort((a, b) => a.due! - b.due!);
   const someday = todo.all.filter((r) => !r.done && r.due === undefined && !r.list);
   const done = todo.all.filter((r) => r.done).sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0)).slice(0, 30);
@@ -251,30 +284,48 @@ function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
     const k = dayOf(r.due!);
     days.set(k, [...(days.get(k) ?? []), r]);
   }
+  const week = Array.from({ length: 7 }, (_, i) => dayOf(end + i * DAY + DAY / 2));
   const title = (k: string) => {
     const ms = at(k, '12:00');
     if (ms < end + DAY) return t('Tomorrow');
     const d = new Date(ms);
     return ms < end + 6 * DAY ? t(DAYS[d.getDay()]) : `${t(DAYS[d.getDay()])} ${d.getDate()} ${t(MONTHS[d.getMonth()])}`;
   };
+  const first = new Date(at(week[0], '12:00'));
+  const lastDay = new Date(at(week[6], '12:00'));
+  const range = first.getMonth() === lastDay.getMonth()
+    ? `${first.getDate()} – ${lastDay.getDate()} ${t(MONTHS[first.getMonth()])}`
+    : `${first.getDate()} ${t(MONTHS[first.getMonth()])} – ${lastDay.getDate()} ${t(MONTHS[lastDay.getMonth()])}`;
+  const shown = [...days.entries()].filter(([k]) => !picked || k === picked);
   return (
     <>
-      {later.length === 0 && someday.length === 0 && <Empty icon="event_available" words={t('Nothing coming up')} />}
-      {[...days.entries()].map(([k, rows]) => (
-        <Box key={k}>
-          <Text class={s.h}>{title(k)}</Text>
-          <Box class={s.card}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
-        </Box>
-      ))}
-      {someday.length > 0 && (
-        <>
-          <Text class={s.h}>{t('Someday')}</Text>
-          <Box class={s.card}>{someday.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
-        </>
-      )}
-      {done.length > 0 && (
+      <Hero big={t('Next 7 days')} line={range} />
+      <Grid columns={7} gap={8}>
+        {week.map((k) => {
+          const d = new Date(at(k, '12:00'));
+          const rows = days.get(k) ?? [];
+          const hues = [...new Set(rows.map((r) => (r.list ? hueOf(r.list) : '#9ca3af')))].slice(0, 3);
+          return (
+            <Pressable key={k} class={picked === k ? [s.day, s.dayOn] : s.day} onPress={() => setPicked(picked === k ? null : k)}>
+              <Text class={s.dayName}>{t(SHORT_DAYS[d.getDay()])}</Text>
+              <Text class={s.dayNumber}>{String(d.getDate())}</Text>
+              <Row gap={3} justify="center" class={s.dots}>
+                {hues.map((h) => <Box key={h} class={s.dot} style={{ background: h }} />)}
+              </Row>
+            </Pressable>
+          );
+        })}
+      </Grid>
+      <Box class={s.boardGap} />
+      {later.length === 0 && someday.length === 0 && <Empty emoji="📅" words={t('Nothing coming up')} />}
+      {picked && shown.length === 0 && <Empty emoji="🌤️" words={t('Nothing that day')} />}
+      {shown.map(([k, rows]) => <Rows key={k} title={title(k)} rows={rows} todo={todo} now={now} />)}
+      {!picked && <Rows title={t('Someday')} rows={someday} todo={todo} now={now} />}
+      {!picked && done.length > 0 && (
         <Section title={t('Done · {p0}', { p0: done.length })} folded>
-          <Box class={s.card}>{done.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+          <Box class={s.card}>
+            <Box class={s.rows}>{done.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+          </Box>
         </Section>
       )}
     </>
@@ -283,24 +334,47 @@ function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
 
 function Home() {
   const todo = useTodo();
+  const dialog = useDialog();
   const [tab, setTab] = useStore<string>('tab', 'today');
   const [project, setProject] = useStore<string | null>('project', null);
-  const [draft, setDraft] = useLocal<string>('');
   const now = useNow(60000);
-  const submit = () => {
-    const title = draft.trim();
-    if (!title) return;
-    setDraft('');
-    const end = endOfToday(now);
-    const list = tab === 'projects' ? (todo.lists.find((l) => l.id === project) ?? todo.lists[0])?.id : undefined;
-    todo.add('tasks', {
-      title,
-      list,
-      status: list ? 'todo' : undefined,
-      // Added to Today: due today.
-      due: tab === 'today' ? end - 60000 : undefined,
-    });
+  const newList = async () => {
+    const name = ((await dialog.prompt({ title: t('New project'), placeholder: t('Name') })) ?? '').trim();
+    if (!name) return null;
+    const id = todo.add('lists', { name, pos: between(last(todo.lists), '') });
+    setProject(id);
+    return id;
   };
+  const shownProject = tab === 'projects' ? (todo.lists.find((l) => l.id === project) ?? todo.lists[0])?.id : undefined;
+  const adder = useAddBar({
+    placeholder: t('New task'),
+    time: true,
+    pick: {
+      icon: 'view_kanban',
+      label: t('Project'),
+      options: todo.lists.map((l) => ({ id: l.id, label: l.name, icon: 'circle' })),
+      onNew: newList,
+    },
+    sources: ['link', 'file'],
+    onAdd: (said) => {
+      const end = endOfToday(now);
+      const today = dayOf(now);
+      let due: number | undefined;
+      if (said.day && (said.time || said.day !== today)) due = at(said.day, said.time ?? '09:00');
+      // Added to Today, or for today without a time: due today.
+      else if (said.day || tab === 'today') due = end - 60000;
+      const list = said.pick ?? shownProject;
+      const id = todo.add('tasks', {
+        // A #tag that isn't a project stays in the words.
+        title: (said.tag ? `${said.text} #${said.tag}` : said.text).slice(0, 200),
+        list,
+        status: list ? 'todo' : undefined,
+        due,
+        link: said.link,
+      });
+      if (said.file && id) todo.add('attachments', { task: id, file: said.file });
+    },
+  });
   return (
     <Screen
       title={t('Todo')}
@@ -311,20 +385,16 @@ function Home() {
       ]}
       tab={tab}
       onTab={setTab}
-      footer={
-        todo.canAdd && !(tab === 'projects' && todo.lists.length === 0) ? (
-          <Row gap={8} align="center">
-            <Stack grow>
-              <TextField value={draft} onChange={setDraft} placeholder={t('New task')} onSubmit={submit} />
-            </Stack>
-            <IconButton icon="arrow_upward" variant="filled" label={t('Add')} onPress={submit} />
-          </Row>
-        ) : undefined
-      }
+      footer={todo.canAdd ? adder.bar : undefined}
     >
-      {tab === 'today' && <TodayTab todo={todo} />}
-      {tab === 'projects' && <ProjectsTab todo={todo} project={project} setProject={setProject} />}
-      {tab === 'upcoming' && <UpcomingTab todo={todo} />}
+      <Box class={s.center}>
+        <Box class={tab === 'projects' ? [s.column, s.wide] : s.column}>
+          {tab === 'today' && <TodayTab todo={todo} />}
+          {tab === 'projects' && <ProjectsTab todo={todo} project={project} setProject={setProject} newList={newList} />}
+          {tab === 'upcoming' && <UpcomingTab todo={todo} />}
+        </Box>
+      </Box>
+      {adder.sheet}
     </Screen>
   );
 }
@@ -340,18 +410,22 @@ function TaskScreen() {
   const dialog = useDialog();
   const [title, setTitle] = useLocal<string>(task?.title ?? '');
   const [notes, setNotes] = useLocal<string>(task?.notes ?? '');
+  const [link, setLink] = useLocal<string>(task?.link ?? '');
   const [step, setStep] = useLocal<string>('');
   const [said, setSaid] = useLocal<string>('');
   const [focus, setFocus] = useLocal<boolean>(false);
   // Kept when leaving, however you leave.
-  const latest = useRef({ title, notes, task });
-  latest.current = { title, notes, task };
+  const latest = useRef({ title, notes, link, task });
+  latest.current = { title, notes, link, task };
   useEffect(() => () => {
-    const { title, notes, task } = latest.current;
+    const { title, notes, link, task } = latest.current;
     if (!task || !todo.canAdd) return;
     const changes: Record<string, unknown> = {};
     if (title.trim() && title.trim() !== task.title) changes.title = title.trim();
     if (notes !== (task.notes ?? '')) changes.notes = notes || null;
+    const typed = link.trim();
+    const url = typed && !/^https?:\/\//i.test(typed) ? `https://${typed}` : typed;
+    if (url !== (task.link ?? '')) changes.link = url || null;
     if (Object.keys(changes).length) todo.edit('tasks', task.id, changes);
   }, []);
   if (!task) return <Screen title={t('Todo')} />;
@@ -425,6 +499,7 @@ function TaskScreen() {
           {todo.members.length > 1 && (
             <PersonPicker label={t('Who')} value={task.who ?? null} onChange={(who: string) => set({ who })} />
           )}
+          <TextField label={t('Link')} type="url" value={link} placeholder="https://" onChange={setLink} />
           <Toggle label={t('Flag')} checked={!!task.flag} onChange={(flag: boolean) => set({ flag })} />
         </Stack>
       </Box>

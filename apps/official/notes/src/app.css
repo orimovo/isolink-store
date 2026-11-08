@@ -3,8 +3,7 @@
 .small { font-size: 12px; }
 .thumb { border-radius: 4px; margin: 4px 0; }
 .photo { border-radius: 6px; margin-top: 10px; }
-.chips { display: flex; gap: 6px; padding: 0 0 12px; }
-.empty { padding: 64px 0; }
+.chips { display: flex; gap: 8px; padding: 0 0 16px; }
 .card { background: var(--surface); border-radius: 18px; padding: 4px 6px; margin-top: 12px; }
 .block { margin-top: 12px; }
 .panel { padding-top: 6px; }
@@ -12,3 +11,17 @@
 .swatches { display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 0 4px; }
 .swatch { width: 30px; height: 30px; border-radius: 15px; }
 .on { border: 3px solid var(--ink); }
+.center { place-items: center; }
+.column { width: 100%; max-width: 1040px; padding: 8px 0 24px; }
+.hero { padding: 8px 4px 24px; }
+.big { font-size: 30px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.1; }
+.line { color: var(--muted); font-size: 14px; }
+.empty { padding: 72px 0 48px; }
+.emptyArt { width: 88px; height: 88px; border-radius: 28px; background: var(--accent-soft); place-items: center; }
+.emptyEmoji { font-size: 42px; }
+.emptyText { font-size: 17px; font-weight: 700; }
+.paperMeta { padding-top: 6px; opacity: 0.75; }
+.tagCard { display: flex; gap: 12px; align-items: center; background: var(--surface); border-radius: 16px; padding: 16px; border: 2px solid transparent; }
+.tagCard:hover { border: 2px solid var(--outline); }
+.tagArt { width: 40px; height: 40px; border-radius: 12px; place-items: center; }
+.tagName { font-size: 15px; font-weight: 700; }
