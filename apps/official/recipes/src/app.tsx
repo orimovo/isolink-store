@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Select, Button, IconButton, Icon, Fab, Grid,
-  Chip, Image, Upload, Editor, Markdown, Checkbox, Stepper, TagInput, Timer, Segmented, Badge,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, fetch, t,
+  Chip, Filter, Image, Upload, Editor, Markdown, Checkbox, Stepper, TagInput, Timer, Segmented, Badge,
+  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, useKeys, fetch, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -80,10 +80,9 @@ function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
       <Row gap={6} class={s.chips} wrap>
         <Chip label={t('Favourites')} icon="favorite" selected={faves} onPress={() => setFaves(!faves)} />
         <Chip label={t('Quick')} icon="bolt" selected={quick} onPress={() => setQuick(!quick)} />
-        {COURSES.map(([id, label]) => (
-          <Chip key={id} label={t(label)} selected={course === id} onPress={() => setCourse(course === id ? '' : id)} />
-        ))}
       </Row>
+      <Filter value={course} onChange={setCourse}
+        options={[{ value: '', label: t('All') }, ...COURSES.map(([value, label]) => ({ value, label: t(label) }))]} />
       {shown.length === 0 ? <Text tone="muted" align="center" class={s.empty}>{t('Nothing here')}</Text> : (
         <Grid min={150} gap={10}>
           {shown.map((r) => <Card key={r.id} r={r} onPress={() => nav.push('Recipe', { id: r.id })} />)}
@@ -174,6 +173,7 @@ function Home() {
     if (how === 'new') nav.push('Edit', {});
     if (how === 'link') nav.push('Import', {});
   };
+  useKeys(rc.canEdit ? { 'mod+n': { run: () => nav.push('Edit', {}), label: t('New recipe') } } : {});
   return (
     <Screen
       title={t('Recipes')}
@@ -428,6 +428,8 @@ const named = (rows: Recipe[], name: string) => {
 
 export default defineApp({
   screens: { Home, Recipe: RecipeScreen, Cook: CookScreen, Import: ImportScreen, Edit: EditScreen },
+  // A recipe opens beside the list on a wide window.
+  split: ['Home'],
   actions: {
     add: {
       title: 'Add a recipe',
