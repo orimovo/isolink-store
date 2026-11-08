@@ -75,5 +75,8 @@
   "Weekend": "Fim de semana",
   "Yellow": "Amarelo",
   "{p0} notes": "{p0} notas",
-  "{p0} tags": "{p0} etiquetas"
+  "{p0} tags": "{p0} etiquetas",
+  "Remove photo": "Remover foto",
+  "Remove voice": "Remover áudio",
+  "Remove sketch": "Remover esboço"
 }

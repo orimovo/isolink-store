@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem,
-  Grid, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
+  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
+  Grid, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
@@ -103,10 +103,10 @@ function dueWords(ms: number) {
 function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void }) {
   const more = rest(r);
   return (
-    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} onPress={onPress}>
+    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} sketch={r.sketch}
+                onPress={onPress}>
       <Text class={s.title}>{noteTitle(r)}</Text>
       {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
-      {r.sketch ? <Image src={r.sketch} ratio={4 / 3} fit="contain" class={s.thumb} /> : null}
       {more ? (
         <Markdown class={s.body} onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
       ) : null}
@@ -393,8 +393,9 @@ function Home() {
   );
 }
 
-/** One note, big: drawn when you're not typing, words when you are. Saves as
- *  you go; two devices editing apart merge by paragraph. */
+/** One note, written on as it reads: formatting as you type, and a photo,
+ *  a voice clip and a sketch on the paper itself. Saves as you go; two
+ *  devices editing apart merge by paragraph. */
 function NoteScreen() {
   const nav = useNav();
   const { id, fresh } = nav.params as { id: string; fresh?: boolean };
@@ -403,8 +404,10 @@ function NoteScreen() {
   const { edit, remove } = useData();
   const me = useMe();
   const dialog = useDialog();
+  const wide = useLayout().width >= 760;
   const kind = row?.kind ?? 'note';
-  const [editing, setEditing] = useLocal<boolean>(!!fresh && (kind === 'note' || kind === 'list'));
+  // Drawing on the note, or recording onto it.
+  const [mode, setMode] = useLocal<string | null>(fresh && (kind === 'sketch' || kind === 'voice') ? kind : null);
   const [draft, setDraft] = useLocal<string | null>(null);
   const saved = useRef({ text: row?.body ?? '', turn: 0 });
 
@@ -441,14 +444,6 @@ function NoteScreen() {
     <Row>
       <IconButton icon="push_pin" label={row.pinned ? t('Unpin') : t('Pin')}
                   onPress={() => edit('notes', id, { pinned: !row.pinned })} />
-      <IconButton icon={editing ? 'check' : 'edit'} label={editing ? t('Done') : t('Edit')}
-                  onPress={() => {
-                    if (editing) {
-                      flush(body);
-                      setDraft(null);
-                    }
-                    setEditing(!editing);
-                  }} />
       <IconButton icon="delete" label={t('Delete')}
                   onPress={async () => {
                     const ok = await dialog.confirm({
@@ -466,38 +461,56 @@ function NoteScreen() {
   ) : undefined;
   const strung = all.filter((o) => (row.links ?? []).includes(o.id) || (o.links ?? []).includes(id));
 
-  return (
-    <Screen title={noteTitle({ ...row, body })} actions={actions}>
-      {/* Wide: the note, and beside it what's done to it. Narrow: one under the other. */}
-      <Split first={0.62} gap={24}>
-      <Box>
-      <StickyNote color={colorOf(row)} fold={36} onDoubleTap={canEdit ? () => setEditing(true) : undefined}>
-        {editing ? (
-          <Editor value={body} onChange={type} plain autofocus toolbar placeholder={t('New note')} />
-        ) : body.trim() ? (
-          <Pressable onDoubleTap={canEdit ? () => setEditing(true) : undefined}>
-            <Markdown onChange={canEdit ? (text: string) => { setDraft(null); saved.current.text = text; edit('notes', id, { body: text }); } : undefined}>
-              {body}
-            </Markdown>
-          </Pressable>
-        ) : !row.photo && !row.voice && !row.sketch ? (
-          <Text>{t('Empty note')}</Text>
-        ) : null}
-        {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
-        {row.sketch && kind !== 'sketch' ? <Image src={row.sketch} fit="contain" class={s.photo} /> : null}
-      </StickyNote>
-      {kind === 'sketch' && canEdit ? (
-        <Box class={s.block}><Sketch value={row.sketch} height={320} onChange={(f: unknown) => edit('notes', id, { sketch: f })} /></Box>
+  const bar = canEdit ? (
+    <FormatBar for="note">
+      {row.photo ? (
+        <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => edit('notes', id, { photo: null })} />
+      ) : (
+        <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp"
+                onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
+      )}
+      {row.voice ? (
+        <IconButton icon="mic_off" label={t('Remove voice')} onPress={() => edit('notes', id, { voice: null })} />
+      ) : (
+        <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
+                    onPress={() => setMode(mode === 'voice' ? null : 'voice')} />
+      )}
+      <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
+                  onPress={() => setMode(mode === 'sketch' ? null : 'sketch')} />
+      {row.sketch && (
+        <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => edit('notes', id, { sketch: null })} />
+      )}
+    </FormatBar>
+  ) : undefined;
+
+  const note = (
+    <StickyNote color={colorOf(row)} fold={36} sketch={row.sketch} sketching={mode === 'sketch'}
+                onSketch={(f: unknown) => { edit('notes', id, { sketch: f }); setMode(null); }}>
+      {canEdit ? (
+        <Editor id="note" rich plain value={body} onChange={type} autofocus={!!fresh && mode === null}
+                placeholder={t('New note')} />
+      ) : body.trim() ? (
+        <Markdown>{body}</Markdown>
+      ) : !row.photo && !row.voice && !row.sketch ? (
+        <Text>{t('Empty note')}</Text>
       ) : null}
+      {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
       {row.voice ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
-      {canEdit && kind === 'voice' && !row.voice ? (
-        <Box class={s.block}><Recorder onDone={(f: unknown) => edit('notes', id, { voice: f })} /></Box>
-      ) : null}
-      {canEdit && kind === 'photo' && !row.photo ? (
+      {mode === 'voice' && !row.voice ? (
         <Box class={s.block}>
-          <Upload accept="png,jpg,jpeg,heic,webp" label={t('Add a photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
+          <Recorder onDone={(f: unknown) => { edit('notes', id, { voice: f }); setMode(null); }} />
         </Box>
       ) : null}
+    </StickyNote>
+  );
+
+  return (
+    <Screen title={noteTitle({ ...row, body })} actions={actions} footer={wide ? undefined : bar}>
+      {/* Wide: the note, and beside it its colour and tags. Narrow: one under the other. */}
+      <Split first={0.62} gap={24}>
+      <Box>
+        {wide && bar ? <Box class={s.bar}>{bar}</Box> : null}
+        {note}
       </Box>
       <Box class={s.panel}>
       {canEdit && (
@@ -507,21 +520,6 @@ function NoteScreen() {
                        onPress={() => edit('notes', id, { color: c })} />
           ))}
         </Box>
-      )}
-      {canEdit && (
-        <Row gap={6} wrap class={s.tools}>
-          {!row.photo && kind !== 'photo' && (
-            <Upload accept="png,jpg,jpeg,heic,webp" label={t('Photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
-          )}
-          {row.photo && <Button variant="plain" icon="hide_image" onPress={() => edit('notes', id, { photo: null })}>{t('Photo')}</Button>}
-          {!row.voice && kind !== 'voice' && (
-            <Button variant="tonal" icon="mic" onPress={() => edit('notes', id, { kind: 'voice' })}>{t('Voice')}</Button>
-          )}
-          {row.voice && <Button variant="plain" icon="mic_off" onPress={() => edit('notes', id, { voice: null })}>{t('Voice')}</Button>}
-          {kind !== 'sketch' && (
-            <Button variant="tonal" icon="brush" onPress={() => edit('notes', id, { kind: 'sketch' })}>{t('Sketch')}</Button>
-          )}
-        </Row>
       )}
       <Box class={s.block}>
         <TagInput value={row.tags ?? []} placeholder={t('Tags')}

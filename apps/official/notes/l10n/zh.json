@@ -75,5 +75,8 @@
   "Weekend": "周末",
   "Yellow": "黄色",
   "{p0} notes": "{p0} 条笔记",
-  "{p0} tags": "{p0} 个标签"
+  "{p0} tags": "{p0} 个标签",
+  "Remove photo": "移除照片",
+  "Remove voice": "移除语音",
+  "Remove sketch": "移除涂鸦"
 }

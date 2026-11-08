@@ -75,5 +75,8 @@
   "Weekend": "Wochenende",
   "Yellow": "Gelb",
   "{p0} notes": "{p0} Notizen",
-  "{p0} tags": "{p0} Schlagwörter"
+  "{p0} tags": "{p0} Schlagwörter",
+  "Remove photo": "Foto entfernen",
+  "Remove voice": "Sprachnotiz entfernen",
+  "Remove sketch": "Skizze entfernen"
 }
