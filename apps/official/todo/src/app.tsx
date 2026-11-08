@@ -75,8 +75,8 @@ function next(ms: number, repeat: string) {
 
 function useTodo() {
   const lists = (useQuery('lists', { limit: 500 }) as List_[]).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
-  const all = useQuery('tasks', { limit: 1000 }) as Task[];
-  const steps = useQuery('steps', { limit: 2000 }) as Step[];
+  const all = useQuery('tasks', { limit: 500 }) as Task[];
+  const steps = useQuery('steps', { limit: 500 }) as Step[];
   const data = useData();
   const me = useMe();
   const members = useChat() as { id: string; name: string }[];
@@ -507,7 +507,7 @@ export default defineApp({
       title: 'Tick off a task',
       params: { title: 'string' },
       run: ({ title }: { title: string }, { data }: any) => {
-        const rows = data.query('tasks', { limit: 1000 }) as Task[];
+        const rows = data.query('tasks', { limit: 500 }) as Task[];
         const r = findTask(rows, title);
         if (!r) throw new Error(`No open task called ${title}`);
         data.edit('tasks', r.id, { done: true, doneAt: Date.now(), status: 'done' });

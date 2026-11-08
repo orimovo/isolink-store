@@ -25,9 +25,9 @@ const tintOf = (b: Book) => TINTS[[...b.title].reduce((n, c) => n + c.charCodeAt
 const progressOf = (b: Book) => (b.status === 'done' ? 1 : b.pages ? Math.min(1, (b.page ?? 0) / b.pages) : 0);
 
 function useBooks() {
-  const books = (useQuery('books', { limit: 2000 }) as Book[]).sort((a, b) => (b._edited ?? 0) - (a._edited ?? 0));
-  const sessions = useQuery('sessions', { limit: 5000 }) as Session[];
-  const quotes = useQuery('quotes', { limit: 2000 }) as Quote[];
+  const books = (useQuery('books', { limit: 500 }) as Book[]).sort((a, b) => (b._edited ?? 0) - (a._edited ?? 0));
+  const sessions = useQuery('sessions', { sort: ['-day'], limit: 500 }) as Session[];
+  const quotes = useQuery('quotes', { limit: 500 }) as Quote[];
   const goals = useQuery('goals', { limit: 50 }) as Goal[];
   const data = useData();
   const me = useMe();
@@ -493,7 +493,7 @@ export default defineApp({
       title: 'Say which page a book is up to',
       params: { book: { type: 'string', title: "The book's title" }, page: 'number' },
       run: ({ book, page }: { book: string; page: number }, { data }: any) => {
-        const b = named(data.query('books', { limit: 2000 }) as Book[], book);
+        const b = named(data.query('books', { limit: 500 }) as Book[], book);
         if (!b) throw new Error(`No book called ${book}`);
         const to = Math.max(0, Math.round(b.pages ? Math.min(b.pages, page) : page));
         if (to > (b.page ?? 0)) data.add('sessions', { book: b.id, day: iso(new Date()), pages: to - (b.page ?? 0) });
@@ -506,7 +506,7 @@ export default defineApp({
       title: 'What is being read now',
       params: {},
       run: (_: unknown, { data }: any) => ({
-        books: (data.query('books', { limit: 2000 }) as Book[])
+        books: (data.query('books', { limit: 500 }) as Book[])
           .filter((b) => b.status === 'reading')
           .map((b) => ({ title: b.title, author: b.author ?? null, page: b.page ?? 0, pages: b.pages ?? null })),
       }),

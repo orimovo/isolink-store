@@ -79,7 +79,7 @@ function best(cs: Checkin[], h: Habit, who: string) {
 function useHabits() {
   const habits = (useQuery('habits', { limit: 200 }) as Habit[])
     .sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? '') || a.name.localeCompare(b.name));
-  const checkins = useQuery('checkins', { limit: 5000 }) as Checkin[];
+  const checkins = useQuery('checkins', { sort: ['-day'], limit: 500 }) as Checkin[];
   const data = useData();
   const me = useMe();
   const now = useNow(60000);

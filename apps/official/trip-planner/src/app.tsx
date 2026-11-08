@@ -38,9 +38,9 @@ const iconOf = (kind?: string) => KINDS.find(([k]) => k === kind)?.[2] ?? 'event
 
 function useTrips() {
   const trips = (useQuery('trips', { limit: 100 }) as Trip[]).sort((a, b) => (a.start ?? '9').localeCompare(b.start ?? '9'));
-  const plans = useQuery('plans', { limit: 2000 }) as Plan[];
-  const packing = useQuery('packing', { limit: 2000 }) as Item[];
-  const costs = useQuery('costs', { limit: 2000 }) as Cost[];
+  const plans = useQuery('plans', { limit: 500 }) as Plan[];
+  const packing = useQuery('packing', { limit: 500 }) as Item[];
+  const costs = useQuery('costs', { limit: 500 }) as Cost[];
   const data = useData();
   const me = useMe();
   const members = useChat() as Member[];

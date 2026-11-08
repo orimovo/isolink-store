@@ -25,7 +25,7 @@ const weekOf = (d: Date) => addDays(d, -((d.getDay() + 6) % 7));
 const emojiOf = (r: Recipe) => r.emoji || EMOJIS[(r.name.length + (r.course ?? '').length) % EMOJIS.length];
 
 function useRecipes() {
-  const recipes = (useQuery('recipes', { limit: 1000 }) as Recipe[]).sort((a, b) => a.name.localeCompare(b.name));
+  const recipes = (useQuery('recipes', { limit: 500 }) as Recipe[]).sort((a, b) => a.name.localeCompare(b.name));
   const plans = useQuery('plans', { limit: 500 }) as Plan[];
   const data = useData();
   const me = useMe();
@@ -454,7 +454,7 @@ export default defineApp({
       title: 'Plan a recipe for a day',
       params: { recipe: { type: 'string', title: "The recipe's name" }, day: { type: 'string', title: 'YYYY-MM-DD' } },
       run: ({ recipe, day }: { recipe: string; day: string }, { data }: any) => {
-        const r = named(data.query('recipes', { limit: 1000 }) as Recipe[], recipe);
+        const r = named(data.query('recipes', { limit: 500 }) as Recipe[], recipe);
         if (!r) throw new Error(`No recipe called ${recipe}`);
         if (!/^\d{4}-\d{2}-\d{2}$/.test(String(day))) throw new Error('day is YYYY-MM-DD');
         data.add('plans', { day, recipe: r.id });
@@ -465,7 +465,7 @@ export default defineApp({
       title: "A recipe's ingredients",
       params: { recipe: { type: 'string', title: "The recipe's name" } },
       run: ({ recipe }: { recipe: string }, { data }: any) => {
-        const r = named(data.query('recipes', { limit: 1000 }) as Recipe[], recipe);
+        const r = named(data.query('recipes', { limit: 500 }) as Recipe[], recipe);
         if (!r) throw new Error(`No recipe called ${recipe}`);
         return { name: r.name, serves: r.serves ?? null, ingredients: linesOf(r.ingredients) };
       },
