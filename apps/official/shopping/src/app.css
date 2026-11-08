@@ -24,3 +24,8 @@
 .tileOn { border: 2px solid var(--accent); }
 .emoji { font-size: 26px; }
 .tileName { font-size: 12px; font-weight: 700; }
+.center { place-items: center; }
+.column { max-width: 620px; padding: 8px 0 24px; }
+.add { background: var(--surface); border-radius: 12px; padding: 0 14px; min-height: 44px; margin-bottom: 10px; }
+.usualsMid { justify-content: center; flex-wrap: wrap; }
+.emptyText { font-size: 17px; font-weight: 700; }

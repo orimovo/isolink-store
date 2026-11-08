@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Section, Checkbox, Text, TextField, Select, Button, IconButton,
   Icon, Sheet, Banner, Chart, Scanner, Avatar, ListItem, Grid, MoneyField, useQuery, useData, useLocal, useStore,
-  useMe, useChat, useNow, useNav, useToast, fetch, format, t,
+  useLayout, useMe, useChat, useNow, useNav, useToast, fetch, format, t,
 } from 'isolink';
 import { useShared } from 'isolink/system';
 import s from './app.css';
@@ -89,7 +89,12 @@ function useShop() {
   return { items, usuals, ...data, me, canAdd: me.role !== 'view', put, usualFor };
 }
 
-function ListTab({ shop, currency }: { shop: ReturnType<typeof useShop>; currency: string }) {
+/** Wide windows get one centred column and an Add row in the list, in place of the bar at the bottom. */
+const WIDE = 760;
+
+type Adder = { draft: string; setDraft: (t: string) => void; submit: () => void } | null;
+
+function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; currency: string; adder: Adder }) {
   const { items, usuals, edit, remove, add, put, canAdd, me } = shop;
   const out = (useQuery('out', { limit: 20 }) as Out[]);
   const members = useChat() as { id: string; name: string }[];
@@ -171,10 +176,12 @@ function ListTab({ shop, currency }: { shop: ReturnType<typeof useShop>; currenc
         </Box>
       )}
       {items.length === 0 ? (
-        <Stack align="center" gap={8} pad={48}>
-          <Icon name="shopping_cart" size={40} />
-          <Text tone="muted">{t('Nothing to get')}</Text>
-        </Stack>
+        adder ? null : (
+          <Stack align="center" gap={8} pad={48}>
+            <Icon name="shopping_cart" size={40} />
+            <Text tone="muted">{t('Nothing to get')}</Text>
+          </Stack>
+        )
       ) : (
         <Row class={s.head} align="center">
           <Stack grow>
@@ -183,6 +190,29 @@ function ListTab({ shop, currency }: { shop: ReturnType<typeof useShop>; currenc
           </Stack>
           {canAdd && !mine && toGet.length > 0 && <Button variant="tonal" icon="storefront" onPress={start}>{t('Shop')}</Button>}
         </Row>
+      )}
+      {adder && canAdd && (
+        <Row class={s.add} align="center" gap={10}>
+          <Icon name="add_circle_outline" size={20} />
+          <Stack grow>
+            <TextField plain value={adder.draft} onChange={adder.setDraft} placeholder={t('Add')} onSubmit={adder.submit} />
+          </Stack>
+        </Row>
+      )}
+      {adder && items.length === 0 && (
+        <Stack align="center" gap={10} pad={64}>
+          <Icon name="shopping_cart" size={44} />
+          <Text class={s.emptyText}>{t('Nothing to get')}</Text>
+        </Stack>
+      )}
+      {adder && canAdd && !mine && again.length > 0 && (
+        <Box class={items.length === 0 ? [s.usuals, s.usualsMid] : s.usuals}>
+          {again.map((u) => (
+            <Pressable key={u.id} class={s.usual} onPress={() => put(u.name)}>
+              <Text>{`+ ${u.name}`}</Text>
+            </Pressable>
+          ))}
+        </Box>
       )}
       {groups.map(([a, rows]) =>
         rows.length === 0 ? null : (
@@ -195,7 +225,7 @@ function ListTab({ shop, currency }: { shop: ReturnType<typeof useShop>; currenc
           </Box>
         ),
       )}
-      {canAdd && !mine && again.length > 0 && (
+      {!adder && canAdd && !mine && again.length > 0 && (
         <Box class={s.usuals}>
           {again.map((u) => (
             <Pressable key={u.id} class={s.usual} onPress={() => put(u.name)}>
@@ -372,12 +402,20 @@ function Home() {
   const [tab, setTab] = useStore<string>('tab', 'list');
   const [currency, setCurrency] = useStore<string>('currency', 'GBP');
   const [draft, setDraft] = useLocal<string>('');
+  const wide = useLayout().width >= WIDE;
   const submit = () => {
     const text = draft.trim();
     if (!text) return;
     setDraft('');
     shop.put(text);
   };
+  const body = (
+    <>
+      {tab === 'list' && <ListTab shop={shop} currency={currency} adder={wide ? { draft, setDraft, submit } : null} />}
+      {tab === 'usuals' && <UsualsTab shop={shop} />}
+      {tab === 'spend' && <SpendTab currency={currency} setCurrency={setCurrency} />}
+    </>
+  );
   return (
     <Screen
       title={t('Shopping')}
@@ -389,7 +427,7 @@ function Home() {
       tab={tab}
       onTab={setTab}
       footer={
-        shop.canAdd && tab === 'list' ? (
+        shop.canAdd && tab === 'list' && !wide ? (
           <Row gap={8} align="center">
             <Stack grow>
               <TextField value={draft} onChange={setDraft} placeholder={t('Add')} onSubmit={submit} />
@@ -399,9 +437,11 @@ function Home() {
         ) : undefined
       }
     >
-      {tab === 'list' && <ListTab shop={shop} currency={currency} />}
-      {tab === 'usuals' && <UsualsTab shop={shop} />}
-      {tab === 'spend' && <SpendTab currency={currency} setCurrency={setCurrency} />}
+      {wide ? (
+        <Box class={s.center}>
+          <Box class={s.column}>{body}</Box>
+        </Box>
+      ) : body}
     </Screen>
   );
 }
