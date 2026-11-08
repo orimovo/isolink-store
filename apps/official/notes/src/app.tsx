@@ -245,7 +245,7 @@ function Home() {
   return (
     <Screen
       title={t('Notes')}
-      immersive={tab === 'board' && inFolder.length > 0}
+      immersive={tab === 'board'}
       tabs={[
         { value: 'board', label: t('Board'), icon: 'dashboard' },
         { value: 'notes', label: t('Notes'), icon: 'sticky_note_2' },
@@ -263,21 +263,18 @@ function Home() {
       {tab === 'board' && (
         <>
           <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
-          {inFolder.length === 0 ? (
-            <Empty />
-          ) : (
-            <Corkboard
-              width={1000}
-              item={190}
-              links={links}
-              onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
-              onHold={n.hold}
-            >
-              {inFolder.map((r) => (
-                <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => open(r)} onTick={tick(r)} />
-              ))}
-            </Corkboard>
-          )}
+          {/* Empty, it's still the board: the folders stay where they are. */}
+          <Corkboard
+            width={1000}
+            item={190}
+            links={links}
+            onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
+            onHold={n.hold}
+          >
+            {inFolder.map((r) => (
+              <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => open(r)} onTick={tick(r)} />
+            ))}
+          </Corkboard>
         </>
       )}
       {tab === 'notes' && (
