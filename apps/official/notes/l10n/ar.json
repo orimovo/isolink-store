@@ -35,5 +35,8 @@
   "Unpin": "إلغاء التثبيت",
   "Voice": "صوت",
   "Yellow": "أصفر",
-  "{p0} notes": "{p0} ملاحظات"
+  "{p0} notes": "{p0} ملاحظات",
+  "Remove photo": "إزالة الصورة",
+  "Remove voice": "إزالة الصوت",
+  "Remove sketch": "إزالة الرسم"
 }

@@ -35,5 +35,8 @@
   "Unpin": "Desafixar",
   "Voice": "Voz",
   "Yellow": "Amarelo",
-  "{p0} notes": "{p0} notas"
+  "{p0} notes": "{p0} notas",
+  "Remove photo": "Remover foto",
+  "Remove voice": "Remover áudio",
+  "Remove sketch": "Remover esboço"
 }

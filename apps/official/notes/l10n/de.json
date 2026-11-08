@@ -35,5 +35,8 @@
   "Unpin": "Lösen",
   "Voice": "Sprache",
   "Yellow": "Gelb",
-  "{p0} notes": "{p0} Notizen"
+  "{p0} notes": "{p0} Notizen",
+  "Remove photo": "Foto entfernen",
+  "Remove voice": "Sprachnotiz entfernen",
+  "Remove sketch": "Skizze entfernen"
 }

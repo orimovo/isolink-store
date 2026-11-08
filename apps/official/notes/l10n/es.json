@@ -35,5 +35,8 @@
   "Unpin": "Dejar de fijar",
   "Voice": "Voz",
   "Yellow": "Amarillo",
-  "{p0} notes": "{p0} notas"
+  "{p0} notes": "{p0} notas",
+  "Remove photo": "Quitar foto",
+  "Remove voice": "Quitar audio",
+  "Remove sketch": "Quitar dibujo"
 }

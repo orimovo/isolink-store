@@ -35,5 +35,8 @@
   "Unpin": "取消置顶",
   "Voice": "语音",
   "Yellow": "黄色",
-  "{p0} notes": "{p0} 条笔记"
+  "{p0} notes": "{p0} 条笔记",
+  "Remove photo": "移除照片",
+  "Remove voice": "移除语音",
+  "Remove sketch": "移除涂鸦"
 }
