@@ -1,6 +1,6 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Pressable, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
+  StickyNote, Corkboard, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
   useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
 } from 'isolink';
 import s from './app.css';
@@ -35,13 +35,17 @@ function hash(id: string) {
 }
 const colorOf = (r: Note) => r.color || COLORS[hash(r.id) % COLORS.length][0];
 const tiltOf = (r: Note) => (typeof r.tilt === 'number' ? r.tilt : ((hash(r.id) % 50) - 25) / 10);
-const clean = (line: string) => line.replace(/^[#>*\-\s]+/, '').replace(/^\[[ xX]\]\s*/, '').trim();
+const clean = (line: string) =>
+  line.replace(/^[#>*\-\s]+/, '').replace(/^\[[ xX]\]\s*/, '').replace(/\*\*|__|~~|`/g, '').trim();
+/** A code block's opening line: not a title. */
+const fence = (line: string) => /^\s*(`{3,}|~{3,})/.test(line);
 
 /** A note's title: its own, or its first line. */
 function noteTitle(r: Note) {
   const own = (r.title ?? '').trim();
   if (own) return own;
-  const first = clean((r.body ?? '').split('\n').find((l) => l.trim()) ?? '');
+  const line = (r.body ?? '').split('\n').find((l) => l.trim()) ?? '';
+  const first = fence(line) ? '' : clean(line);
   if (first) return first;
   return t(KINDS.find(([k]) => k === r.kind)?.[1] ?? 'New note');
 }
@@ -54,6 +58,8 @@ function rest(r: Note) {
   const first = lines[i] ?? '';
   // A list's first line is one of its boxes: it stays.
   if (/^\s*[-*+]\s+\[[ xX]\]/.test(first)) return lines.join('\n').trim();
+  // Nor does a code block's opening line, or the code would break.
+  if (fence(first)) return lines.join('\n').trim();
   return lines.slice(i + 1).join('\n').trim();
 }
 
@@ -244,6 +250,7 @@ function Home() {
   return (
     <Screen
       title={t('Notes')}
+      immersive={tab === 'board' && inFolder.length > 0}
       tabs={[
         { value: 'board', label: t('Board'), icon: 'dashboard' },
         { value: 'notes', label: t('Notes'), icon: 'sticky_note_2' },
@@ -393,6 +400,9 @@ function NoteScreen() {
 
   return (
     <Screen title={noteTitle({ ...row, body })} actions={actions}>
+      {/* Wide: the note, and beside it what's done to it. Narrow: one under the other. */}
+      <Split first={0.62} gap={24}>
+      <Box>
       <StickyNote color={colorOf(row)} fold={36} onDoubleTap={canEdit ? () => setEditing(true) : undefined}>
         {editing ? (
           <Editor value={body} onChange={type} plain autofocus toolbar placeholder={t('New note')} />
@@ -420,8 +430,18 @@ function NoteScreen() {
           <Upload accept="png,jpg,jpeg,heic,webp" label={t('Add a photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
         </Box>
       ) : null}
+      </Box>
+      <Box class={s.panel}>
       {canEdit && (
-        <Row gap={6} wrap justify="center" class={s.tools}>
+        <Box class={s.swatches}>
+          {COLORS.map(([c, hex]) => (
+            <Pressable key={c} class={[s.swatch, colorOf(row) === c && s.on]} style={{ background: hex }}
+                       onPress={() => edit('notes', id, { color: c })} />
+          ))}
+        </Box>
+      )}
+      {canEdit && (
+        <Row gap={6} wrap class={s.tools}>
           {!row.photo && kind !== 'photo' && (
             <Upload accept="png,jpg,jpeg,heic,webp" label={t('Photo')} onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
           )}
@@ -435,14 +455,6 @@ function NoteScreen() {
           )}
         </Row>
       )}
-      {canEdit && (
-        <Box class={s.swatches}>
-          {COLORS.map(([c, hex]) => (
-            <Pressable key={c} class={[s.swatch, colorOf(row) === c && s.on]} style={{ background: hex }}
-                       onPress={() => edit('notes', id, { color: c })} />
-          ))}
-        </Box>
-      )}
       <Box class={s.block}>
         <TagInput value={row.tags ?? []} placeholder={t('Tags')}
                   onChange={canEdit ? (tags: string[]) => edit('notes', id, { tags }) : undefined} />
@@ -455,6 +467,8 @@ function NoteScreen() {
           ))}
         </Box>
       )}
+      </Box>
+      </Split>
     </Screen>
   );
 }

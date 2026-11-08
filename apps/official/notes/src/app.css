@@ -7,7 +7,8 @@
 .empty { padding: 64px 0; }
 .card { background: var(--surface); border-radius: 18px; padding: 4px 6px; margin-top: 12px; }
 .block { margin-top: 12px; }
-.tools { padding: 14px 0 2px; }
-.swatches { display: flex; gap: 12px; justify-content: center; padding: 14px 0 4px; }
+.panel { padding-top: 6px; }
+.tools { padding: 10px 0 2px; }
+.swatches { display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 0 4px; }
 .swatch { width: 30px; height: 30px; border-radius: 15px; }
 .on { border: 3px solid var(--ink); }
