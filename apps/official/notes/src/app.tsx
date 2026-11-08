@@ -1,15 +1,17 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem, Badge,
-  useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
+  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Sketch, Upload, Button, ListItem,
+  Grid, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
+import { useAddBar } from './addbar';
+import { dayWords, isoDay, siteOf } from './smart';
 
 type Note = {
   id: string; title?: string; body?: string; pinned?: boolean; color?: string; pos?: string; folder?: string;
   tags?: string[]; x?: number; y?: number; tilt?: number; kind?: string; photo?: unknown; voice?: unknown;
-  sketch?: unknown; links?: string[]; _by?: string; _edited?: number;
+  sketch?: unknown; links?: string[]; due?: number; link?: string; _by?: string; _edited?: number;
 };
 type Folder = { id: string; name: string };
 
@@ -24,7 +26,7 @@ const NAMES: Record<string, string> = {
 const TILTS = [-1.2, 0.9, -0.5, 1.4, -0.8, 0.6];
 const KINDS: [string, string, string][] = [
   ['note', /*t*/'Note', 'sticky_note_2'], ['list', /*t*/'List', 'checklist'], ['photo', /*t*/'Photo', 'photo_camera'],
-  ['voice', /*t*/'Voice', 'mic'], ['sketch', /*t*/'Sketch', 'draw'],
+  ['voice', /*t*/'Voice', 'mic'], ['sketch', /*t*/'Sketch', 'brush'],
 ];
 
 /** A number the same for the same id: a note's colour or tilt before it has one. */
@@ -35,6 +37,13 @@ function hash(id: string) {
 }
 const colorOf = (r: Note) => r.color || COLORS[hash(r.id) % COLORS.length][0];
 const tiltOf = (r: Note) => (typeof r.tilt === 'number' ? r.tilt : ((hash(r.id) % 50) - 25) / 10);
+const pad = (n: number) => String(n).padStart(2, '0');
+/** [day] (`YYYY-MM-DD`) at [time] (`HH:MM`), here. */
+const at = (day: string, time: string) => {
+  const [y, m, d] = day.split('-').map(Number);
+  const [h, min] = time.split(':').map(Number);
+  return new Date(y, m - 1, d, h, min).getTime();
+};
 const clean = (line: string) =>
   line.replace(/^[#>*\-\s]+/, '').replace(/^\[[ xX]\]\s*/, '').replace(/\*\*|__|~~|`/g, '').trim();
 /** A code block's opening line: not a title. */
@@ -83,6 +92,13 @@ function order(notes: Note[]) {
   });
 }
 
+/** When a note reminds you: "Tomorrow 17:00". */
+function dueWords(ms: number) {
+  const d = new Date(ms);
+  const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `${dayWords(isoDay(d), Date.now())}${time === '09:00' ? '' : ` ${time}`}`;
+}
+
 /** A note as it is on the board and in the grid. */
 function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void }) {
   const more = rest(r);
@@ -96,6 +112,14 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
       ) : null}
       {r.voice ? (
         <Row gap={4} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
+      ) : null}
+      {typeof r.due === 'number' || r.link ? (
+        <Row gap={10} align="center" wrap class={s.paperMeta}>
+          {typeof r.due === 'number' ? (
+            <Row gap={4} align="center"><Icon name="alarm" size={14} /><Text class={s.small}>{dueWords(r.due)}</Text></Row>
+          ) : null}
+          {r.link ? <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.small} lines={1}>{siteOf(r.link)}</Text></Row> : null}
+        </Row>
       ) : null}
     </StickyNote>
   );
@@ -131,7 +155,7 @@ function useNotes() {
     const picked = await dialog.menu([
       { id: 'pin', icon: 'push_pin', label: r.pinned ? t('Unpin') : t('Pin') },
       { id: 'color', icon: 'palette', label: t('Colour') },
-      ...(others.length ? [{ id: 'link', icon: 'timeline', label: t('String to') }] : []),
+      ...(others.length ? [{ id: 'link', icon: 'linear_scale', label: t('String to') }] : []),
       ...(r.links?.length ? [{ id: 'unlink', icon: 'link_off', label: t('Cut string') }] : []),
       ...(folders.length ? [{ id: 'move', icon: 'folder', label: t('Move to') }] : []),
       { divider: true },
@@ -189,14 +213,27 @@ function Folders({ folders, folder, setFolder, canEdit, newFolder }: {
   );
 }
 
-function Empty() {
+function Empty({ emoji = '🗒️', words = t('No notes yet') }: { emoji?: string; words?: string }) {
   return (
-    <Stack align="center" gap={8} class={s.empty}>
-      <Icon name="sticky_note_2" size={40} />
-      <Text tone="muted">{t('No notes yet')}</Text>
+    <Stack align="center" gap={12} class={s.empty}>
+      <Box class={s.emptyArt}><Text class={s.emptyEmoji}>{emoji}</Text></Box>
+      <Text class={s.emptyText}>{words}</Text>
     </Stack>
   );
 }
+
+function Hero({ big, line }: { big: string; line?: string }) {
+  return (
+    <Stack gap={4} class={s.hero}>
+      <Text class={s.big}>{big}</Text>
+      {line ? <Text class={s.line}>{line}</Text> : null}
+    </Stack>
+  );
+}
+
+/** A tag's colour, the same on every device. */
+const TAG_HUES = ['#f87171', '#38bdf8', '#a78bfa', '#4ade80', '#f472b6', '#fbbf24', '#2dd4bf'];
+const hueOfTag = (tag: string) => TAG_HUES[hash(tag) % TAG_HUES.length];
 
 function Home() {
   const n = useNotes();
@@ -238,6 +275,32 @@ function Home() {
 
   const tags = new Map<string, number>();
   for (const r of all) for (const g of r.tags ?? []) tags.set(g, (tags.get(g) ?? 0) + 1);
+  const tagNames = [...tags.keys()].sort((a, b) => a.localeCompare(b));
+
+  const adder = useAddBar({
+    placeholder: t('New note'),
+    time: true,
+    pick: {
+      icon: 'sell',
+      label: t('Tag'),
+      options: tagNames.map((g) => ({ id: g, label: g, icon: 'sell' })),
+      onNew: async () => ((await n.dialog.prompt({ title: t('New tag'), placeholder: t('Name') })) ?? '').trim() || null,
+    },
+    sources: ['link', 'photo'],
+    onAdd: (said) => {
+      const noteTags = [...new Set([said.pick, said.tag].filter(Boolean) as string[])];
+      n.add('notes', {
+        body: said.text,
+        kind: said.photo ? 'photo' : 'note',
+        photo: said.photo,
+        folder: folder ?? undefined,
+        tags: noteTags.length ? noteTags : undefined,
+        color: COLORS[all.length % 6][0],
+        due: said.day ? at(said.day, said.time ?? '09:00') : undefined,
+        link: said.link,
+      });
+    },
+  });
 
   const links: [string, string][] = [];
   for (const r of inFolder) for (const l of r.links ?? []) if (inFolder.some((o) => o.id === l)) links.push([r.id, l]);
@@ -247,7 +310,7 @@ function Home() {
       title={t('Notes')}
       immersive={tab === 'board'}
       tabs={[
-        { value: 'board', label: t('Board'), icon: 'dashboard' },
+        { value: 'board', label: t('Board'), icon: 'space_dashboard' },
         { value: 'notes', label: t('Notes'), icon: 'sticky_note_2' },
         { value: 'tags', label: t('Tags'), icon: 'sell' },
       ]}
@@ -258,7 +321,8 @@ function Home() {
           <IconButton icon="search" label={t('Search')} onPress={() => { setSearching(!searching); setSearch(''); }} />
         ) : undefined
       }
-      fab={canEdit && tab !== 'tags' ? <Fab icon="add" onPress={() => n.create(folder)} /> : undefined}
+      fab={canEdit && tab === 'board' ? <Fab icon="add" onPress={() => n.create(folder)} /> : undefined}
+      footer={canEdit && tab === 'notes' ? adder.bar : undefined}
     >
       {tab === 'board' && (
         <>
@@ -278,40 +342,53 @@ function Home() {
         </>
       )}
       {tab === 'notes' && (
-        <>
-          {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
-          <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
-          {tag && (
-            <Box class={s.chips}>
-              <Chip icon="close" selected onPress={() => setTag(null)}>{`# ${tag}`}</Chip>
-            </Box>
-          )}
-          {shown.length === 0 ? (
-            <Empty />
-          ) : (
-            <Masonry min={160} gap={14} onReorder={canEdit ? move : undefined} onHold={n.hold}>
-              {shown.map((r, i) => (
-                <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} onPress={() => open(r)} onTick={tick(r)} />
-              ))}
-            </Masonry>
-          )}
-        </>
+        <Box class={s.center}>
+          <Box class={s.column}>
+            <Hero big={t('Notes')} line={inFolder.length === 1 ? t('1 note') : t('{p0} notes', { p0: inFolder.length })} />
+            {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
+            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
+            {tag && (
+              <Box class={s.chips}>
+                <Chip icon="close" selected onPress={() => setTag(null)}>{`# ${tag}`}</Chip>
+              </Box>
+            )}
+            {shown.length === 0 ? (
+              <Empty />
+            ) : (
+              <Masonry min={200} gap={16} onReorder={canEdit ? move : undefined} onHold={n.hold}>
+                {shown.map((r, i) => (
+                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} onPress={() => open(r)} onTick={tick(r)} />
+                ))}
+              </Masonry>
+            )}
+          </Box>
+        </Box>
       )}
       {tab === 'tags' && (
-        tags.size === 0 ? (
-          <Stack align="center" gap={8} class={s.empty}>
-            <Icon name="sell" size={40} />
-            <Text tone="muted">{t('No tags yet')}</Text>
-          </Stack>
-        ) : (
-          <Box class={s.card}>
-            {[...tags.entries()].sort((a, b) => b[1] - a[1]).map(([g, count]) => (
-              <ListItem key={g} title={`# ${g}`} leading={<Icon name="sell" />} trailing={<Badge count={count} />}
-                        onPress={() => { setTag(g); setTab('notes'); }} />
-            ))}
+        <Box class={s.center}>
+          <Box class={s.column}>
+            <Hero big={t('Tags')} line={tags.size === 0 ? undefined : tags.size === 1 ? t('1 tag') : t('{p0} tags', { p0: tags.size })} />
+            {tags.size === 0 ? (
+              <Empty emoji="🏷️" words={t('No tags yet')} />
+            ) : (
+              <Grid min={200} gap={12}>
+                {[...tags.entries()].sort((a, b) => b[1] - a[1]).map(([g, count]) => (
+                  <Pressable key={g} class={s.tagCard} onPress={() => { setTag(g); setTab('notes'); }}>
+                    <Box class={s.tagArt} style={{ background: `${hueOfTag(g)}2e` }}>
+                      <Icon name="sell" size={18} />
+                    </Box>
+                    <Stack grow gap={2}>
+                      <Text class={s.tagName} lines={1}>{g}</Text>
+                      <Text class={s.small}>{count === 1 ? t('1 note') : t('{p0} notes', { p0: count })}</Text>
+                    </Stack>
+                  </Pressable>
+                ))}
+              </Grid>
+            )}
           </Box>
-        )
+        </Box>
       )}
+      {adder.sheet}
     </Screen>
   );
 }
@@ -442,7 +519,7 @@ function NoteScreen() {
           )}
           {row.voice && <Button variant="plain" icon="mic_off" onPress={() => edit('notes', id, { voice: null })}>{t('Voice')}</Button>}
           {kind !== 'sketch' && (
-            <Button variant="tonal" icon="draw" onPress={() => edit('notes', id, { kind: 'sketch' })}>{t('Sketch')}</Button>
+            <Button variant="tonal" icon="brush" onPress={() => edit('notes', id, { kind: 'sketch' })}>{t('Sketch')}</Button>
           )}
         </Row>
       )}
@@ -453,7 +530,7 @@ function NoteScreen() {
       {strung.length > 0 && (
         <Box class={s.card}>
           {strung.map((o) => (
-            <ListItem key={o.id} title={noteTitle(o)} leading={<Icon name="timeline" />}
+            <ListItem key={o.id} title={noteTitle(o)} leading={<Icon name="linear_scale" />}
                       onPress={() => nav.push('Note', { id: o.id })} />
           ))}
         </Box>

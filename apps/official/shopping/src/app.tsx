@@ -1,35 +1,34 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Section, Checkbox, Text, TextField, Select, Button, IconButton,
-  Icon, Sheet, Banner, Chart, Scanner, Avatar, ListItem, Grid, MoneyField, useQuery, useData, useLocal, useStore,
-  useLayout, useMe, useChat, useNow, useNav, useToast, useHaptics, fetch, format, t,
+  Icon, Sheet, Banner, Chart, Scanner, Avatar, Grid, MoneyField, DatePicker, Upload, useQuery, useData, useLocal,
+  useStore, useLayout, useMe, useChat, useNow, useNav, useToast, useHaptics, fetch, format, t,
 } from 'isolink';
 import { useShared } from 'isolink/system';
 import s from './app.css';
 import { between, last } from './pos';
+import { useAddBar } from './addbar';
+import { dayWords, isoDay, siteOf, MONTH_NAMES } from './smart';
 
 type Item = {
   id: string; name: string; qty?: string; aisle?: string; got?: boolean; pos?: string; price?: number;
-  _edited?: number; _by?: string;
+  due?: string; link?: string; file?: unknown; _edited?: number; _by?: string;
 };
 type Usual = { id: string; name: string; aisle?: string; emoji?: string; price?: number; barcode?: string; times?: number };
 type Trip = { id: string; day: string; total?: number; count?: number; who?: string };
 type Out = { id: string; who: string; since: number };
 
-const AISLES: [string, string][] = [
-  ['fruit', /*t*/'Fruit & veg'],
-  ['bakery', /*t*/'Bakery'],
-  ['dairy', /*t*/'Dairy'],
-  ['meat', /*t*/'Meat & fish'],
-  ['cupboard', /*t*/'Cupboard'],
-  ['frozen', /*t*/'Frozen'],
-  ['drinks', /*t*/'Drinks'],
-  ['home', /*t*/'Home'],
-  ['other', /*t*/'Other'],
+/** Each aisle: its name, a picture and a colour. */
+const AISLES: [string, string, string, string][] = [
+  ['fruit', /*t*/'Fruit & veg', '🥦', '#22c55e'],
+  ['bakery', /*t*/'Bakery', '🥖', '#f59e0b'],
+  ['dairy', /*t*/'Dairy', '🧀', '#60a5fa'],
+  ['meat', /*t*/'Meat & fish', '🐟', '#f87171'],
+  ['cupboard', /*t*/'Cupboard', '🥫', '#c084fc'],
+  ['frozen', /*t*/'Frozen', '🧊', '#22d3ee'],
+  ['drinks', /*t*/'Drinks', '🧃', '#f472b6'],
+  ['home', /*t*/'Home', '🧻', '#94a3b8'],
+  ['other', /*t*/'Other', '🛍️', '#a3a3a3'],
 ];
-const DOTS: Record<string, string> = {
-  fruit: '#4ade80', bakery: '#fbbf24', dairy: '#60a5fa', meat: '#f87171', cupboard: '#c084fc',
-  frozen: '#67e8f9', drinks: '#f472b6', home: '#a3a3a3', other: '#a3a3a3', '': '#a3a3a3',
-};
 /** A picture for the usual things, from a word in their name. */
 const EMOJI: [RegExp, string][] = [
   [/milk/i, '🥛'], [/bread|loaf|sourdough/i, '🍞'], [/egg/i, '🥚'], [/butter/i, '🧈'], [/banana/i, '🍌'],
@@ -77,24 +76,34 @@ function useShop() {
     return undefined;
   };
   const usualFor = (name: string) => usuals.find((u) => u.name.toLowerCase() === name.toLowerCase());
-  const put = (text: string) => {
+  const put = (text: string, more: { aisle?: string; due?: string; link?: string; file?: unknown } = {}) => {
     const { name, qty } = parse(text.trim());
     if (!name) return;
     const u = usualFor(name);
-    data.add('items', { name, qty, aisle: aisleFor(name), price: u?.price, pos: between(last(items), '') });
+    const aisle = more.aisle ?? aisleFor(name);
+    data.add('items', {
+      name, qty, aisle, price: u?.price, pos: between(last(items), ''), due: more.due, link: more.link, file: more.file,
+    });
     // Remembered for next time, and counted, so the usual ones come first.
     if (u) data.edit('usuals', u.id, { times: (u.times ?? 0) + 1 });
-    else data.add('usuals', { name, aisle: aisleFor(name), times: 1 });
+    else data.add('usuals', { name, aisle, times: 1 });
   };
-  return { items, usuals, ...data, me, canAdd: me.role !== 'view', put, usualFor };
+  return { items, usuals, ...data, me, canAdd: me.role !== 'view', put, usualFor, aisleFor };
 }
 
-/** Wide windows get one centred column and an Add row in the list, in place of the bar at the bottom. */
+/** Wide windows get aisles side by side. */
 const WIDE = 760;
 
-type Adder = { draft: string; setDraft: (t: string) => void; submit: () => void } | null;
+function Empty({ emoji, words }: { emoji: string; words: string }) {
+  return (
+    <Stack align="center" gap={12} class={s.empty}>
+      <Box class={s.emptyArt}><Text class={s.emptyEmoji}>{emoji}</Text></Box>
+      <Text class={s.emptyText}>{words}</Text>
+    </Stack>
+  );
+}
 
-function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; currency: string; adder: Adder }) {
+function ListTab({ shop, currency, wide }: { shop: ReturnType<typeof useShop>; currency: string; wide: boolean }) {
   const { items, usuals, edit, remove, add, put, canAdd, me } = shop;
   const out = (useQuery('out', { limit: 20 }) as Out[]);
   const members = useChat() as { id: string; name: string }[];
@@ -104,12 +113,13 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
   const haptic = useHaptics();
   const [taken, setTaken] = useLocal<boolean>(false);
   const [open, setOpen] = useLocal<string | null>(null);
-  const [form, setForm] = useLocal<{ name: string; qty: string; price: number | null }>({ name: '', qty: '', price: null });
+  const [form, setForm] = useLocal<{ name: string; qty: string; price: number | null; link: string }>({ name: '', qty: '', price: null, link: '' });
 
   const sorted = [...items].sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
   const toGet = sorted.filter((r) => !r.got);
   const got = sorted.filter((r) => r.got).sort((a, b) => (b._edited ?? 0) - (a._edited ?? 0));
-  const groups = [...AISLES.map(([id]) => id), ''].map((a) => [a, toGet.filter((r) => (r.aisle ?? '') === a)] as const);
+  const groups = [...AISLES.map(([id]) => id), ''].map((a) => [a, toGet.filter((r) => (r.aisle ?? '') === a)] as const)
+    .filter(([, rows]) => rows.length > 0);
   const here = out.filter((o) => now - o.since < HOURS_OUT);
   const mine = here.find((o) => o.who === me.id);
   const others = here.filter((o) => o.who !== me.id);
@@ -117,6 +127,7 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
   const left = toGet.reduce((n, r) => n + cost(r), 0);
   const inBasket = got.reduce((n, r) => n + cost(r), 0);
   const handed = shared?.text && !taken ? linesOf(shared.text) : [];
+  const today = isoDay(new Date(now));
 
   const start = () => add('out', { who: me.id, since: Date.now() });
   /** Home again: the shop is kept for Spend, and what was got comes off the list. */
@@ -130,7 +141,7 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
 
   const editing = items.find((r) => r.id === open);
   const show = (r: Item) => {
-    setForm({ name: r.name, qty: r.qty ?? '', price: r.price ?? null });
+    setForm({ name: r.name, qty: r.qty ?? '', price: r.price ?? null, link: r.link ?? '' });
     setOpen(r.id);
   };
   // Kept when the sheet goes, however it goes.
@@ -139,8 +150,10 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
       const name = form.name.trim() || editing.name;
       const qty = form.qty.trim();
       const price = form.price ?? null;
-      if (name !== editing.name || qty !== (editing.qty ?? '') || price !== (editing.price ?? null)) {
-        edit('items', editing.id, { name, qty: qty || null, price });
+      const typed = form.link.trim();
+      const link = typed ? (/^https?:\/\//i.test(typed) ? typed : `https://${typed}`) : '';
+      if (name !== editing.name || qty !== (editing.qty ?? '') || price !== (editing.price ?? null) || link !== (editing.link ?? '')) {
+        edit('items', editing.id, { name, qty: qty || null, price, link: link || null });
         const u = shop.usualFor(editing.name);
         if (u && price !== null) edit('usuals', u.id, { price });
       }
@@ -148,23 +161,60 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
     setOpen(null);
   };
 
-  const row = (r: Item) => (
-    <Pressable key={r.id} class={mine ? s.bigItem : s.item} onPress={() => (mine ? (haptic('select'), edit('items', r.id, { got: !r.got })) : show(r))}
-               onLongPress={() => show(r)}>
-      <Checkbox round={!!mine} checked={!!r.got} onChange={() => { haptic('select'); edit('items', r.id, { got: !r.got }); }} />
-      <Text grow class={r.got ? s.got : mine ? s.bigName : s.name}>{r.name}</Text>
-      {r.qty ? <Text class={s.qty}>{r.qty}</Text> : null}
-      {r.price ? <Text class={s.price}>{format.money(cost(r), currency)}</Text> : null}
-    </Pressable>
-  );
+  const row = (r: Item) => {
+    const extra = !r.got && (r.due || r.link || r.file);
+    return (
+      <Pressable key={r.id} class={mine ? s.bigItem : s.item} onPress={() => (mine ? (haptic('select'), edit('items', r.id, { got: !r.got })) : show(r))}
+                 onLongPress={() => show(r)}>
+        <Checkbox round checked={!!r.got} onChange={() => { haptic('select'); edit('items', r.id, { got: !r.got }); }} />
+        <Stack grow gap={2}>
+          <Text class={r.got ? s.got : mine ? s.bigName : s.name}>{r.name}</Text>
+          {extra ? (
+            <Row gap={10} align="center">
+              {r.due ? (
+                <Row gap={4} align="center">
+                  <Icon name="event" size={14} tone={r.due < today ? 'danger' : 'muted'} />
+                  <Text class={r.due < today ? s.late : s.meta}>{dayWords(r.due, now)}</Text>
+                </Row>
+              ) : null}
+              {r.link ? (
+                <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
+              ) : null}
+              {r.file ? <Icon name="attach_file" size={14} /> : null}
+            </Row>
+          ) : null}
+        </Stack>
+        {r.qty ? <Text class={s.qty}>{r.qty}</Text> : null}
+        {r.price ? <Text class={s.price}>{format.money(cost(r), currency)}</Text> : null}
+      </Pressable>
+    );
+  };
   const onList = new Set(toGet.map((r) => r.name.toLowerCase()));
   const again = [...usuals].sort((a, b) => (b.times ?? 0) - (a.times ?? 0))
-    .filter((u) => !onList.has(u.name.toLowerCase())).slice(0, 4);
+    .filter((u) => !onList.has(u.name.toLowerCase())).slice(0, 6);
+  const cards = groups.map(([a, rows]) => {
+    const [, name, emoji, hue] = AISLES.find(([id]) => id === a) ?? ['', 'Other', '🛍️', '#a3a3a3'];
+    return (
+      <Box key={a || 'none'} class={s.card}>
+        <Row gap={10} align="center" class={s.cardHead}>
+          <Box class={s.badge} style={{ background: `${hue}2e` }}><Text class={s.badgeEmoji}>{emoji}</Text></Box>
+          <Text class={s.cardTitle} grow>{t(name)}</Text>
+          <Text class={s.cardCount}>{String(rows.length)}</Text>
+        </Row>
+        <Box class={s.rows}>{rows.map(row)}</Box>
+      </Box>
+    );
+  });
+  const facts = [
+    left > 0 ? format.money(left, currency) : '',
+    groups.length === 1 ? t('1 aisle') : groups.length > 1 ? t('{p0} aisles', { p0: groups.length }) : '',
+    got.length > 0 ? t('{p0} got', { p0: got.length }) : '',
+  ].filter(Boolean);
 
   return (
     <>
       {handed.length > 0 && canAdd && (
-        <Banner icon="playlist_add"
+        <Banner icon="add_circle_outline"
                 text={shared?.from ? t('{p0} from {p1}', { p0: handed.length, p1: shared.from }) : t('{p0} to add', { p0: handed.length })}
                 action={t('Add')}
                 onAction={() => { handed.forEach(put); setTaken(true); toast(t('Added {p0}', { p0: handed.length })); }}
@@ -177,64 +227,26 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
         </Box>
       )}
       {items.length === 0 ? (
-        adder ? null : (
-          <Stack align="center" gap={8} pad={48}>
-            <Icon name="shopping_cart" size={40} />
-            <Text tone="muted">{t('Nothing to get')}</Text>
-          </Stack>
-        )
+        <Empty emoji="🛒" words={t('Nothing to get')} />
       ) : (
-        <Row class={s.head} align="center">
-          <Stack grow>
-            <Text class={s.count}>{toGet.length === 0 ? t('Nothing to get') : mine ? t('{p0} left', { p0: toGet.length }) : t('{p0} to get', { p0: toGet.length })}</Text>
-            {got.length > 0 && <Text class={s.sub}>{t('{p0} got', { p0: got.length })}</Text>}
+        <Row gap={16} align="end" class={s.hero}>
+          <Stack grow gap={4}>
+            <Text class={s.big}>{toGet.length === 0 ? t('Nothing to get') : mine ? t('{p0} left', { p0: toGet.length }) : t('{p0} to get', { p0: toGet.length })}</Text>
+            {facts.length > 0 && <Text class={s.line}>{facts.join(' · ')}</Text>}
           </Stack>
-          {canAdd && !mine && toGet.length > 0 && <Button variant="tonal" icon="storefront" onPress={start}>{t('Shop')}</Button>}
+          {canAdd && !mine && toGet.length > 0 && <Button icon="storefront" onPress={start}>{t('Shop')}</Button>}
         </Row>
       )}
-      {adder && canAdd && (
-        <Row class={s.add} align="center" gap={10}>
-          <Icon name="add_circle_outline" size={20} />
-          <Stack grow>
-            <TextField plain value={adder.draft} onChange={adder.setDraft} placeholder={t('Add')} onSubmit={adder.submit} />
-          </Stack>
-        </Row>
-      )}
-      {adder && items.length === 0 && (
-        <Stack align="center" gap={10} pad={64}>
-          <Icon name="shopping_cart" size={44} />
-          <Text class={s.emptyText}>{t('Nothing to get')}</Text>
-        </Stack>
-      )}
-      {adder && canAdd && !mine && again.length > 0 && (
-        <Box class={items.length === 0 ? [s.usuals, s.usualsMid] : s.usuals}>
+      {canAdd && !mine && again.length > 0 && (
+        <Box class={items.length === 0 ? [s.quick, s.quickMid] : s.quick}>
           {again.map((u) => (
-            <Pressable key={u.id} class={s.usual} onPress={() => put(u.name)}>
-              <Text>{`+ ${u.name}`}</Text>
+            <Pressable key={u.id} class={s.chip} onPress={() => put(u.name)}>
+              <Text class={s.chipText}>{`${emojiFor(u)}  ${u.name}`}</Text>
             </Pressable>
           ))}
         </Box>
       )}
-      {groups.map(([a, rows]) =>
-        rows.length === 0 ? null : (
-          <Box key={a || 'none'} class={s.card}>
-            <Box class={s.aisle}>
-              <Box class={s.dot} style={{ background: DOTS[a] }} />
-              <Text>{t(AISLES.find(([id]) => id === a)?.[1] ?? 'Other')}</Text>
-            </Box>
-            {rows.map(row)}
-          </Box>
-        ),
-      )}
-      {!adder && canAdd && !mine && again.length > 0 && (
-        <Box class={s.usuals}>
-          {again.map((u) => (
-            <Pressable key={u.id} class={s.usual} onPress={() => put(u.name)}>
-              <Text>{`+ ${u.name}`}</Text>
-            </Pressable>
-          ))}
-        </Box>
-      )}
+      {wide && !mine && cards.length > 1 ? <Grid min={300} gap={16}>{cards}</Grid> : cards}
       {got.length > 0 && (
         <Section
           title={t('Got · {p0}', { p0: got.length })}
@@ -245,7 +257,7 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
             ) : undefined
           }
         >
-          <Box class={s.card}>{got.map(row)}</Box>
+          <Box class={s.card}><Box class={s.rows}>{got.map(row)}</Box></Box>
         </Section>
       )}
       {mine && (
@@ -260,10 +272,10 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
       )}
       <Sheet open={!!editing} onClose={close} detents={['medium', 'large']}>
         {editing && (
-          <Stack gap={12}>
+          <Stack gap={16}>
             <TextField label={t('Name')} value={form.name} max={80}
                        onChange={(name: string) => setForm({ ...form, name })} />
-            <Row gap={8}>
+            <Row gap={12}>
               <Stack grow>
                 <TextField label={t('Amount')} value={form.qty} max={20}
                            onChange={(qty: string) => setForm({ ...form, qty })} />
@@ -274,12 +286,23 @@ function ListTab({ shop, currency, adder }: { shop: ReturnType<typeof useShop>; 
               </Stack>
             </Row>
             <Select label={t('Aisle')} value={editing.aisle ?? null}
-                    options={AISLES.map(([value, label]) => ({ value, label: t(label) }))}
+                    options={AISLES.map(([value, label, emoji]) => ({ value, label: `${emoji}  ${t(label)}` }))}
                     onChange={(aisle: string) => {
                       edit('items', editing.id, { aisle });
                       const u = shop.usualFor(editing.name);
                       if (u) edit('usuals', u.id, { aisle });
                     }} />
+            <Row gap={12} align="center" wrap>
+              <Icon name="event" />
+              <DatePicker value={editing.due} placeholder={t('Date')} late={!!editing.due && editing.due < today}
+                          onChange={(due: string) => edit('items', editing.id, { due: due || null })} />
+              {editing.due ? <IconButton icon="close" label={t('Clear')} onPress={() => edit('items', editing.id, { due: null })} /> : null}
+            </Row>
+            <TextField label={t('Link')} type="url" value={form.link} placeholder="https://"
+                       onChange={(link: string) => setForm({ ...form, link })} />
+            <Upload value={editing.file ? [editing.file] : []} label={t('Add a file')}
+                    onUpload={canAdd ? (file: unknown) => edit('items', editing.id, { file }) : undefined}
+                    onRemove={canAdd ? () => edit('items', editing.id, { file: null }) : undefined} />
             <Row gap={8} justify="end">
               <Button variant="danger" onPress={() => { remove('items', editing.id); setOpen(null); }}>{t('Delete')}</Button>
               <Button onPress={close}>{t('Done')}</Button>
@@ -308,24 +331,27 @@ function UsualsTab({ shop }: { shop: ReturnType<typeof useShop> }) {
   };
   return (
     <>
-      {canAdd && (
-        <Button variant="tonal" icon="barcode_reader" expand onPress={() => nav.push('Scan')}>{t('Scan')}</Button>
-      )}
-      {sorted.length === 0 ? (
-        <Stack align="center" gap={8} pad={48}>
-          <Icon name="star" size={40} />
-          <Text tone="muted">{t('No usuals yet')}</Text>
+      <Row gap={16} align="end" class={s.hero}>
+        <Stack grow gap={4}>
+          <Text class={s.big}>{t('Usuals')}</Text>
+          {sorted.length > 0 && <Text class={s.line}>{sorted.length === 1 ? t('1 thing') : t('{p0} things', { p0: sorted.length })}</Text>}
         </Stack>
+        {canAdd && <Button variant="tonal" icon="qr_code_scanner" onPress={() => nav.push('Scan')}>{t('Scan')}</Button>}
+      </Row>
+      {sorted.length === 0 ? (
+        <Empty emoji="⭐" words={t('No usuals yet')} />
       ) : (
-        <Grid min={84} gap={8} class={s.tiles}>
+        <Grid min={112} gap={12}>
           {sorted.map((u) => {
             const on = onList(u);
+            const hue = AISLES.find(([id]) => id === u.aisle)?.[3] ?? '#a3a3a3';
             return (
               <Pressable key={u.id} class={on ? [s.tile, s.tileOn] : s.tile}
                          onPress={canAdd ? () => (on ? remove('items', on.id) : put(u.name)) : undefined}
                          onLongPress={canAdd ? () => { setForm({ name: u.name, emoji: u.emoji ?? '' }); setOpen(u.id); } : undefined}>
-                <Text class={s.emoji}>{emojiFor(u)}</Text>
+                <Box class={s.tileArt} style={{ background: `${hue}2e` }}><Text class={s.emoji}>{emojiFor(u)}</Text></Box>
                 <Text class={s.tileName} lines={1}>{u.name}</Text>
+                {u.times ? <Text class={s.tileCount}>{`× ${u.times}`}</Text> : null}
               </Pressable>
             );
           })}
@@ -333,8 +359,8 @@ function UsualsTab({ shop }: { shop: ReturnType<typeof useShop> }) {
       )}
       <Sheet open={!!editing} onClose={close} detents={['medium', 'large']}>
         {editing && (
-          <Stack gap={12}>
-            <Row gap={8}>
+          <Stack gap={16}>
+            <Row gap={12}>
               <Stack width={84}>
                 <TextField label={t('Emoji')} value={form.emoji} max={8} onChange={(emoji: string) => setForm({ ...form, emoji })} />
               </Stack>
@@ -356,67 +382,89 @@ function UsualsTab({ shop }: { shop: ReturnType<typeof useShop> }) {
 function SpendTab({ currency, setCurrency }: { currency: string; setCurrency: (c: string) => void }) {
   const trips = (useQuery('trips', { limit: 500 }) as Trip[]).sort((a, b) => b.day.localeCompare(a.day));
   const now = new Date();
-  const months: { label: string; value: number }[] = [];
+  const months: { label: string; value: number; shops: number }[] = [];
   for (let i = 5; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    const these = trips.filter((x) => x.day.startsWith(key));
     months.push({
-      label: t(MONTHS[d.getMonth()]),
-      value: trips.filter((x) => x.day.startsWith(key)).reduce((n, x) => n + (x.total ?? 0), 0),
+      label: t(MONTH_NAMES[d.getMonth()]),
+      value: these.reduce((n, x) => n + (x.total ?? 0), 0),
+      shops: these.length,
     });
   }
-  const thisMonth = months[months.length - 1].value;
-  const count = trips.filter((x) => x.day.startsWith(format.date(Date.now(), 'iso').slice(0, 7))).length;
+  const [lastMonth, thisMonth] = months.slice(-2);
+  const per = (m: { value: number; shops: number }) => (m.shops ? m.value / m.shops : 0);
+  const change = thisMonth.shops && lastMonth.shops ? per(thisMonth) - per(lastMonth) : 0;
+  const sixMonths = months.reduce((n, m) => n + m.value, 0);
   return (
     <>
-      <Row align="center" class={s.head}>
-        <Stack grow>
-          <Text class={s.count}>{format.money(thisMonth, currency)}</Text>
-          <Text class={s.sub}>{count === 1 ? t('This month · 1 shop') : t('This month · {p0} shops', { p0: count })}</Text>
-        </Stack>
+      <Grid min={180} gap={16}>
+        <Box class={[s.stat, s.statHero]}>
+          <Text class={s.statKeyOn}>{t('This month')}</Text>
+          <Text class={s.statValueOn}>{format.money(thisMonth.value, currency)}</Text>
+          <Text class={s.statSubOn}>{thisMonth.shops === 1 ? t('1 shop') : t('{p0} shops', { p0: thisMonth.shops })}</Text>
+        </Box>
+        <Box class={s.stat}>
+          <Text class={s.statKey}>{t('Per shop')}</Text>
+          <Text class={s.statValue}>{format.money(per(thisMonth), currency)}</Text>
+          {change ? <Text class={change > 0 ? s.statUp : s.statDown}>{`${change > 0 ? '↑' : '↓'} ${format.money(Math.abs(change), currency)}`}</Text> : null}
+        </Box>
+        <Box class={s.stat}>
+          <Text class={s.statKey}>{t('6 months')}</Text>
+          <Text class={s.statValue}>{format.money(sixMonths, currency)}</Text>
+          <Text class={s.statSub}>{t('{p0} a month', { p0: format.money(sixMonths / 6, currency) })}</Text>
+        </Box>
+      </Grid>
+      <Box class={[s.card, s.chartCard]}><Chart kind="bar" data={months.map(({ label, value }) => ({ label, value }))} height={160} /></Box>
+      <Row align="center" class={s.sectionRow}>
+        <Text class={s.section} grow>{t('Shops')}</Text>
         <Select variant="chip" value={currency} options={CURRENCIES} onChange={setCurrency} />
       </Row>
-      <Box class={s.card}><Chart kind="bar" data={months} height={140} /></Box>
       {trips.length === 0 ? (
-        <Stack align="center" gap={8} pad={32}>
-          <Icon name="receipt_long" size={36} />
-          <Text tone="muted">{t('No shops yet')}</Text>
-        </Stack>
+        <Empty emoji="🧾" words={t('No shops yet')} />
       ) : (
         <Box class={s.card}>
-          {trips.slice(0, 20).map((x) => (
-            <ListItem key={x.id} title={format.date(x.day)}
-                      subtitle={x.count === 1 ? t('1 thing') : t('{p0} things', { p0: x.count ?? 0 })}
-                      leading={x.who ? <Avatar person={x.who} size={28} /> : <Icon name="storefront" />}
-                      trailing={<Text bold>{format.money(x.total ?? 0, currency)}</Text>} />
-          ))}
+          <Box class={s.rows}>
+            {trips.slice(0, 20).map((x) => (
+              <Row key={x.id} gap={12} align="center" class={s.item}>
+                {x.who ? <Avatar person={x.who} size={32} /> : <Box class={s.badge}><Icon name="storefront" size={16} /></Box>}
+                <Stack grow gap={2}>
+                  <Text class={s.name}>{format.date(x.day)}</Text>
+                  <Text class={s.meta}>{x.count === 1 ? t('1 thing') : t('{p0} things', { p0: x.count ?? 0 })}</Text>
+                </Stack>
+                <Text class={s.amount}>{format.money(x.total ?? 0, currency)}</Text>
+              </Row>
+            ))}
+          </Box>
         </Box>
       )}
     </>
   );
 }
-const MONTHS = [/*t*/'Jan', /*t*/'Feb', /*t*/'Mar', /*t*/'Apr', /*t*/'May', /*t*/'Jun', /*t*/'Jul', /*t*/'Aug',
-  /*t*/'Sep', /*t*/'Oct', /*t*/'Nov', /*t*/'Dec'];
 
 function Home() {
   const shop = useShop();
   const [tab, setTab] = useStore<string>('tab', 'list');
   const [currency, setCurrency] = useStore<string>('currency', 'GBP');
-  const [draft, setDraft] = useLocal<string>('');
+  const out = (useQuery('out', { limit: 20 }) as Out[]);
+  const now = useNow(60000);
+  const shopping = out.some((o) => o.who === shop.me.id && now - o.since < HOURS_OUT);
   const wide = useLayout().width >= WIDE;
-  const submit = () => {
-    const text = draft.trim();
-    if (!text) return;
-    setDraft('');
-    shop.put(text);
-  };
-  const body = (
-    <>
-      {tab === 'list' && <ListTab shop={shop} currency={currency} adder={wide ? { draft, setDraft, submit } : null} />}
-      {tab === 'usuals' && <UsualsTab shop={shop} />}
-      {tab === 'spend' && <SpendTab currency={currency} setCurrency={setCurrency} />}
-    </>
-  );
+  const adder = useAddBar({
+    placeholder: t('Add to list'),
+    qty: true,
+    pick: {
+      icon: 'category',
+      label: t('Aisle'),
+      options: AISLES.map(([id, label, emoji]) => ({ id, label: `${emoji}  ${t(label)}` })),
+      guess: (said) => shop.aisleFor(said.text),
+    },
+    sources: ['link', 'file'],
+    onAdd: (said) => shop.put(said.qty ? `${said.qty} ${said.text}` : said.text, {
+      aisle: said.pick, due: said.day, link: said.link, file: said.file,
+    }),
+  });
   return (
     <Screen
       title={t('Shopping')}
@@ -427,22 +475,16 @@ function Home() {
       ]}
       tab={tab}
       onTab={setTab}
-      footer={
-        shop.canAdd && tab === 'list' && !wide ? (
-          <Row gap={8} align="center">
-            <Stack grow>
-              <TextField value={draft} onChange={setDraft} placeholder={t('Add')} onSubmit={submit} />
-            </Stack>
-            <IconButton icon="arrow_upward" variant="filled" label={t('Add')} onPress={submit} />
-          </Row>
-        ) : undefined
-      }
+      footer={shop.canAdd && tab === 'list' && !shopping ? adder.bar : undefined}
     >
-      {wide ? (
-        <Box class={s.center}>
-          <Box class={s.column}>{body}</Box>
+      <Box class={s.center}>
+        <Box class={s.column}>
+          {tab === 'list' && <ListTab shop={shop} currency={currency} wide={wide} />}
+          {tab === 'usuals' && <UsualsTab shop={shop} />}
+          {tab === 'spend' && <SpendTab currency={currency} setCurrency={setCurrency} />}
         </Box>
-      ) : body}
+      </Box>
+      {adder.sheet}
     </Screen>
   );
 }
@@ -490,10 +532,10 @@ function Scan() {
   return (
     <Screen title={t('Scan')}>
       <Scanner height={260} formats={['ean13', 'ean8', 'upca', 'upce']} onScan={scanned} />
-      {looking && <Text tone="muted" align="center" class={s.sub}>{'…'}</Text>}
+      {looking && <Text tone="muted" align="center" class={s.meta}>{'…'}</Text>}
       {found && (
         <Box class={s.card}>
-          <Stack gap={10}>
+          <Stack gap={12} pad={[12, 0]}>
             <TextField label={t('Name')} value={found.name} max={80} autofocus={!found.name}
                        onChange={(name: string) => setFound({ ...found, name })} onSubmit={keep} />
             <Row gap={8} justify="end">
