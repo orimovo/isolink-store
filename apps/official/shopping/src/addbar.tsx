@@ -2,8 +2,8 @@
 // It reads when, how many, a #tag and a link out of what's typed, and offers a
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
-  Box, Row, Stack, Scroll, Text, TextField, Icon, Pressable, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
-  Button, useLocal, useDialog, useNow, has, t,
+  Box, Row, Stack, Scroll, Text, TextField, Icon, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
+  Button, IconButton, Glass, useLocal, useDialog, useNow, usePlatform, has, t,
 } from 'isolink';
 import a from './addbar.css';
 import { read, dayFrom, nextWeekday, dayWords, siteOf, Said } from './smart';
@@ -38,6 +38,9 @@ const nameOf = (file: unknown) => {
 /** The bar, for a Screen's `footer`, and its sheet, for the Screen's children. */
 export function useAddBar(o: AddBarOptions) {
   const now = useNow(60000);
+  // As the chat's message box: thumb-sized on a phone, a size smaller with a mouse.
+  const desk = !!usePlatform().desktop;
+  const h = desk ? 40 : 48;
   const dialog = useDialog();
   const [draft, setDraft] = useLocal<string>('');
   const [day, setDay] = useLocal<string | null>(null);
@@ -116,85 +119,85 @@ export function useAddBar(o: AddBarOptions) {
     }
   };
 
+  // Only an icon until it's set; then what it's set to, beside it.
   const token = (on: boolean, icon: string, words: string) => (
-    <Box class={on ? [a.abToken, a.abOn] : a.abToken}>
-      <Icon name={icon} size={16} tone={on ? 'accent' : 'muted'} />
-      <Text class={on ? a.abTokenOnText : a.abTokenText} lines={1}>{short(words)}</Text>
+    <Box class={on ? [a.abToken, a.abOn] : [a.abToken, desk ? a.abIconD : a.abIcon]}>
+      <Icon name={icon} size={desk ? 17 : 20} tone={on ? 'accent' : 'muted'} />
+      {on && <Text class={a.abTokenOnText} lines={1}>{short(words)}</Text>}
     </Box>
   );
 
+  const menus = (
+    <Row gap={1} align="center">
+      <Menu
+        items={[
+          { id: 'today', label: t('Today'), icon: 'event' },
+          { id: 'tomorrow', label: t('Tomorrow'), icon: 'wb_sunny' },
+          { id: 'weekend', label: t('Weekend'), icon: 'beach_access' },
+          { id: 'next', label: t('Next week'), icon: 'arrow_forward' },
+          { divider: true },
+          { id: 'pick', label: o.time ? t('Date and time') : t('Pick a date'), icon: 'calendar_month' },
+          ...(dated ? [{ id: 'clear', label: t('Clear'), icon: 'close' }] : []),
+        ]}
+        onPick={onDate}
+      >
+        {token(dated, 'event', dateWords)}
+      </Menu>
+      {o.pick && (
+        <Menu
+          items={[
+            ...o.pick.options.map((x) => ({ id: x.id, label: x.label, icon: x.icon, checked: x.id === picked })),
+            ...(o.pick.onNew ? [{ divider: true }, { id: '+new', label: t('New'), icon: 'add' }] : []),
+            ...(picked ? [{ id: '', label: t('None'), icon: 'close' }] : []),
+          ]}
+          onPick={async (id: string) => {
+            if (id === '+new') {
+              const made = await o.pick!.onNew!();
+              if (made) setPick(made);
+              return;
+            }
+            setPick(id || null);
+          }}
+        >
+          {token(!!picked, o.pick.icon, pickLabel ?? o.pick.label)}
+        </Menu>
+      )}
+      {sources.length > 0 && (
+        <Menu
+          items={[
+            ...(sources.includes('link') ? [{ id: 'link', label: t('Link'), icon: 'link' }] : []),
+            ...(sources.includes('file') ? [{ id: 'file', label: t('File'), icon: 'attach_file' }] : []),
+            ...(sources.includes('photo') ? [{ id: 'photo', label: t('Photo'), icon: 'image' }] : []),
+            ...(sourced ? [{ divider: true }, { id: 'remove', label: t('Remove'), icon: 'close' }] : []),
+          ]}
+          onPick={onSource}
+        >
+          {token(!!sourced, linkNow ? 'link' : photo ? 'image' : 'attach_file', sourced ?? t('Source'))}
+        </Menu>
+      )}
+      {said.qty && token(true, 'tag', `× ${said.qty}`)}
+      {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
+    </Row>
+  );
+
+  // One pill, as the chat's message box: what's typed, then a date, the
+  // app's pick and a source, then + on a round of the accent to add it.
   const bar = (
     <Box class={a.abWrap}>
       <Box class={a.abBar}>
-        <Row gap={12} align="center" class={a.abLine}>
-          <Box class={a.abPlus}><Icon name="add" size={16} tone="accent" /></Box>
-          <Stack grow>
-            {/* Older Isolink makes a plain field multiline, so Enter wouldn't add. */}
-            <TextField plain={has('field.submit')} value={draft} onChange={setDraft} placeholder={o.placeholder} onSubmit={submit} />
-          </Stack>
-        </Row>
-        <Row gap={8} align="center" class={a.abAcc}>
-          {/* One line: it scrolls only when it can't fit. */}
-          <Stack grow>
-            <Scroll direction="horizontal">
-              <Row gap={1} align="center">
-                <Menu
-                  items={[
-                    { id: 'today', label: t('Today'), icon: 'event' },
-                    { id: 'tomorrow', label: t('Tomorrow'), icon: 'wb_sunny' },
-                    { id: 'weekend', label: t('Weekend'), icon: 'beach_access' },
-                    { id: 'next', label: t('Next week'), icon: 'arrow_forward' },
-                    { divider: true },
-                    { id: 'pick', label: o.time ? t('Date and time') : t('Pick a date'), icon: 'calendar_month' },
-                    ...(dated ? [{ id: 'clear', label: t('Clear'), icon: 'close' }] : []),
-                  ]}
-                  onPick={onDate}
-                >
-                  {token(dated, 'event', dateWords)}
-                </Menu>
-                {o.pick && (
-                  <Menu
-                    items={[
-                      ...o.pick.options.map((x) => ({ id: x.id, label: x.label, icon: x.icon, checked: x.id === picked })),
-                      ...(o.pick.onNew ? [{ divider: true }, { id: '+new', label: t('New'), icon: 'add' }] : []),
-                      ...(picked ? [{ id: '', label: t('None'), icon: 'close' }] : []),
-                    ]}
-                    onPick={async (id: string) => {
-                      if (id === '+new') {
-                        const made = await o.pick!.onNew!();
-                        if (made) setPick(made);
-                        return;
-                      }
-                      setPick(id || null);
-                    }}
-                  >
-                    {token(!!picked, o.pick.icon, pickLabel ?? o.pick.label)}
-                  </Menu>
-                )}
-                {sources.length > 0 && (
-                  <Menu
-                    items={[
-                      ...(sources.includes('link') ? [{ id: 'link', label: t('Link'), icon: 'link' }] : []),
-                      ...(sources.includes('file') ? [{ id: 'file', label: t('File'), icon: 'attach_file' }] : []),
-                      ...(sources.includes('photo') ? [{ id: 'photo', label: t('Photo'), icon: 'image' }] : []),
-                      ...(sourced ? [{ divider: true }, { id: 'remove', label: t('Remove'), icon: 'close' }] : []),
-                    ]}
-                    onPick={onSource}
-                  >
-                    {token(!!sourced, linkNow ? 'link' : photo ? 'image' : 'attach_file', sourced ?? t('Source'))}
-                  </Menu>
-                )}
-                {said.qty && token(true, 'tag', `× ${said.qty}`)}
-                {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
-              </Row>
-            </Scroll>
-          </Stack>
-          <Pressable class={a.abHit} onPress={submit}>
-            <Box class={ready ? a.abSend : [a.abSend, a.abOff]}>
-              <Icon name="arrow_upward" size={18} tone={ready ? 'accent' : 'muted'} />
+        <Glass radius={h / 2} padding={0}>
+          <Row gap={1} align="center" class={desk ? a.abLineD : a.abLine}>
+            <Stack grow>
+              {/* Older Isolink makes a plain field multiline, so Enter wouldn't add. */}
+              <TextField plain={has('field.submit')} value={draft} onChange={setDraft} placeholder={o.placeholder} onSubmit={submit} />
+            </Stack>
+            {/* As many as fit: the rest scroll. */}
+            <Box class={a.abMenus}>
+              <Scroll direction="horizontal">{menus}</Scroll>
             </Box>
-          </Pressable>
-        </Row>
+            <IconButton icon="add" label={t('Add')} variant="filled" size={desk ? 34 : 40} onPress={submit} />
+          </Row>
+        </Glass>
       </Box>
     </Box>
   );
