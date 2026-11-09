@@ -1,13 +1,13 @@
 import {
-  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Select, Button, Card, Grid,
-  Icon, IconButton, Avatar, AvatarStack, Toggle, DatePicker, TimePicker, PersonPicker, ProgressRing, Board,
-  Upload, Timer, Section, Progress, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
+  defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Button, Card, Grid,
+  Icon, IconButton, Avatar, AvatarStack, Toggle, TimePicker, ProgressRing, Board,
+  Upload, Timer, Section, Progress, Menu, Sheet, Calendar, Chip, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
   useRef, useEffect, format, t,
 } from 'isolink';
 import { between, last } from './pos';
 import s from './app.css';
 import { useAddBar } from './addbar';
-import { siteOf } from './smart';
+import { siteOf, dayWords, dayFrom, nextWeekday } from './smart';
 
 type Task = {
   id: string; title: string; done?: boolean; due?: number; list?: string; who?: string; flag?: boolean;
@@ -184,7 +184,7 @@ function TodayTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
     <>
       <Hero big={`${t(DAYS[d.getDay()])} ${d.getDate()} ${t(MONTHS[d.getMonth()])}`}
             line={open.length === 0 ? t('All clear') : late ? t('{p0} to go · {p1} late', { p0: open.length, p1: late }) : t('{p0} to go', { p0: open.length })}>
-        {total > 0 ? <ProgressRing value={doneToday.length / total} size={60} stroke={6} label={`${doneToday.length}/${total}`} /> : null}
+        {total > 0 ? <ProgressRing value={doneToday.length / total} size={40} stroke={4} label={`${doneToday.length}/${total}`} /> : null}
       </Hero>
       {total === 0 && <Empty emoji="☀️" words={t('All clear')} />}
       <Rows title={t('Late')} rows={open.filter((r) => r.due! < start)} todo={todo} now={now} />
@@ -403,38 +403,38 @@ function Home() {
   );
 }
 
-/** One task: its steps, when, who, files, what people said, and a focus timer. */
+/** One task: its details, steps, notes, files, what people said, and a focus timer. */
 function TaskScreen() {
   const nav = useNav();
   const { id } = nav.params as { id: string };
   const todo = useTodo();
+  const now = useNow(60000);
   const task = todo.all.find((r) => r.id === id);
   const comments = (useQuery('comments', { limit: 500 }) as Comment[]).filter((c) => c.task === id).sort((a, b) => (a._at ?? 0) - (b._at ?? 0));
   const files = (useQuery('attachments', { limit: 200 }) as Attachment[]).filter((f) => f.task === id);
   const dialog = useDialog();
   const [title, setTitle] = useLocal<string>(task?.title ?? '');
   const [notes, setNotes] = useLocal<string>(task?.notes ?? '');
-  const [link, setLink] = useLocal<string>(task?.link ?? '');
   const [step, setStep] = useLocal<string>('');
   const [said, setSaid] = useLocal<string>('');
   const [focus, setFocus] = useLocal<boolean>(false);
+  const [picking, setPicking] = useLocal<boolean>(false);
   // Kept when leaving, however you leave.
-  const latest = useRef({ title, notes, link, task });
-  latest.current = { title, notes, link, task };
+  const latest = useRef({ title, notes, task });
+  latest.current = { title, notes, task };
   useEffect(() => () => {
-    const { title, notes, link, task } = latest.current;
+    const { title, notes, task } = latest.current;
     if (!task || !todo.canAdd) return;
     const changes: Record<string, unknown> = {};
     if (title.trim() && title.trim() !== task.title) changes.title = title.trim();
     if (notes !== (task.notes ?? '')) changes.notes = notes || null;
-    const typed = link.trim();
-    const url = typed && !/^https?:\/\//i.test(typed) ? `https://${typed}` : typed;
-    if (url !== (task.link ?? '')) changes.link = url || null;
     if (Object.keys(changes).length) todo.edit('tasks', task.id, changes);
   }, []);
   if (!task) return <Screen title={t('Todo')} />;
-  const set = (fields: Record<string, unknown>) => todo.canAdd && todo.edit('tasks', task.id, fields);
+  const can = todo.canAdd;
+  const set = (fields: Record<string, unknown>) => can && todo.edit('tasks', task.id, fields);
   const mine = todo.steps.filter((x) => x.task === id).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
+  const stepsDone = mine.filter((x) => x.done).length;
   const addStep = () => {
     const words = step.trim();
     if (!words) return;
@@ -448,104 +448,206 @@ function TaskScreen() {
     todo.add('comments', { task: id, text: words });
   };
   const nameOf = (who?: string) => todo.members.find((m) => m.id === who)?.name ?? '';
+  const due = task.due;
+  const late = due !== undefined && !task.done && due < now;
+  const time = due !== undefined ? timeOf(due) : '09:00';
+  const day = (d: string) => set({ due: at(d, time) });
+  const onDate = (pick: string) => {
+    if (pick === 'today') day(dayFrom(now, 0));
+    if (pick === 'tomorrow') day(dayFrom(now, 1));
+    if (pick === 'weekend') day(new Date(now).getDay() === 6 ? dayFrom(now, 0) : nextWeekday(now, 6));
+    if (pick === 'next') day(nextWeekday(now, 1));
+    if (pick === 'pick') setPicking(true);
+    if (pick === 'clear') set({ due: null });
+  };
+  const list = todo.lists.find((l) => l.id === task.list);
+  const repeat = REPEATS.find(([v]) => v === (task.repeat ?? 'never'));
+
+  // One detail: what it is, then its value, which opens what changes it.
+  const prop = (icon: string, key: string, value: unknown, set_: boolean, first = false) => (
+    <Row gap={12} align="center" class={first ? s.prop : [s.prop, s.split]}>
+      <Icon name={icon} size={18} />
+      <Text class={s.propKey}>{key}</Text>
+      <Row grow gap={8} align="center">{typeof value === 'string' ? <Text class={set_ ? s.propValue : s.propNone} lines={1}>{value}</Text> : value}</Row>
+    </Row>
+  );
+
   return (
     <Screen
-      title={task.title}
+      title=""
       actions={
-        todo.canAdd ? (
-          <IconButton icon="delete" label={t('Delete')} onPress={async () => {
-            const ok = await dialog.confirm({ title: t('Delete this task?'), ok: t('Delete'), danger: true });
-            if (!ok) return;
-            for (const x of mine) todo.remove('steps', x.id);
-            todo.remove('tasks', task.id);
-            nav.pop();
-          }} />
-        ) : undefined
+        <Row gap={1} align="center">
+          <IconButton icon="timer" label={t('Focus')} onPress={() => setFocus(!focus)} />
+          {can && (
+            <IconButton icon="delete" label={t('Delete')} onPress={async () => {
+              const ok = await dialog.confirm({ title: t('Delete this task?'), ok: t('Delete'), danger: true });
+              if (!ok) return;
+              for (const x of mine) todo.remove('steps', x.id);
+              todo.remove('tasks', task.id);
+              nav.pop();
+            }} />
+          )}
+        </Row>
       }
     >
-      <Row gap={8} align="center">
-        <Checkbox round checked={!!task.done} onChange={() => todo.toggle(task)} />
-        <Stack grow><TextField value={title} max={200} onChange={setTitle} /></Stack>
-      </Row>
-      <Box class={s.card}>
-        {mine.map((x) => (
-          <Row key={x.id} gap={1} align="center">
-            <Checkbox checked={!!x.done} onChange={() => todo.edit('steps', x.id, { done: !x.done })} />
-            <Text grow class={x.done ? s.done : s.title}>{x.title}</Text>
-            {todo.canAdd && <IconButton icon="close" label={t('Delete')} onPress={() => todo.remove('steps', x.id)} />}
-          </Row>
-        ))}
-        {todo.canAdd && (
-          <Row gap={8} align="center" class={s.addStep}>
-            <Icon name="add" size={18} />
-            <Stack grow><TextField value={step} onChange={setStep} placeholder={t('Add a step')} onSubmit={addStep} /></Stack>
+      <Box class={s.pane}>
+        <Row gap={12} align="center" class={s.head}>
+          <Checkbox round checked={!!task.done} onChange={() => todo.toggle(task)} />
+          <Stack grow><TextField plain class={s.taskTitle} value={title} max={200} onChange={setTitle} /></Stack>
+        </Row>
+
+        {focus && (
+          <Row gap={12} align="center" class={s.focus}>
+            <Stack grow><Timer seconds={25 * 60} label={t('Focus')} onDone={() => setFocus(false)} /></Stack>
+            <Button variant="plain" onPress={() => setFocus(false)}>{t('Stop')}</Button>
           </Row>
         )}
-      </Box>
-      <Box class={s.card}>
-        <Stack gap={10} pad={[8, 4]}>
-          <Row gap={8} align="center" wrap>
-            <Icon name="alarm" />
-            <DatePicker value={task.due !== undefined ? dayOf(task.due) : undefined} placeholder={t('Due')}
-                        late={task.due !== undefined && !task.done && task.due < Date.now()}
-                        onChange={(day: string) => set({ due: day ? at(day, task.due !== undefined ? timeOf(task.due) : '09:00') : null })} />
-            {task.due !== undefined && (
-              <TimePicker value={timeOf(task.due)} onChange={(time: string) => set({ due: at(dayOf(task.due!), time) })} />
+
+        <Box class={s.inspector}>
+          <Box class={s.rows}>
+            <Menu
+              items={[
+                { id: 'today', label: t('Today'), icon: 'event' },
+                { id: 'tomorrow', label: t('Tomorrow'), icon: 'wb_sunny' },
+                { id: 'weekend', label: t('Weekend'), icon: 'beach_access' },
+                { id: 'next', label: t('Next week'), icon: 'arrow_forward' },
+                { divider: true },
+                { id: 'pick', label: t('Date and time'), icon: 'calendar_month' },
+                ...(due !== undefined ? [{ id: 'clear', label: t('Clear'), icon: 'close' }] : []),
+              ]}
+              onPick={onDate}
+            >
+              {prop('event', t('Date'), due === undefined ? t('None')
+                : <Text class={late ? s.propLate : s.propValue}>{`${dayWords(dayOf(due), now)}, ${timeOf(due)}`}</Text>, due !== undefined, true)}
+            </Menu>
+            <Menu items={REPEATS.map(([v, label]) => ({ id: v, label: t(label), checked: v === (task.repeat ?? 'never') }))}
+                  onPick={(v: string) => set({ repeat: v })}>
+              {prop('autorenew', t('Repeat'), t(repeat ? repeat[1] : 'Never'), !!task.repeat && task.repeat !== 'never')}
+            </Menu>
+            <Menu
+              items={[
+                ...todo.lists.map((l) => ({ id: l.id, label: l.name, checked: l.id === task.list })),
+                ...(task.list ? [{ divider: true }, { id: '', label: t('None'), icon: 'close' }] : []),
+              ]}
+              onPick={(v: string) => set(v ? { list: v, status: task.status ?? 'todo' } : { list: null })}
+            >
+              {prop('space_dashboard', t('Project'), list ? (
+                <Row gap={8} align="center"><Box class={s.dot} style={{ background: hueOf(list.id) }} /><Text class={s.propValue}>{list.name}</Text></Row>
+              ) : t('None'), !!list)}
+            </Menu>
+            {todo.members.length > 1 && (
+              <Menu
+                items={[
+                  ...todo.members.map((m) => ({ id: m.id, label: m.name, checked: m.id === task.who })),
+                  ...(task.who ? [{ divider: true }, { id: '', label: t('Nobody'), icon: 'close' }] : []),
+                ]}
+                onPick={(v: string) => set({ who: v || null })}
+              >
+                {prop('person', t('Who'), task.who ? (
+                  <Row gap={8} align="center"><Avatar person={task.who} size={20} /><Text class={s.propValue}>{nameOf(task.who)}</Text></Row>
+                ) : t('Nobody'), !!task.who)}
+              </Menu>
             )}
-            {task.due !== undefined && <IconButton icon="close" label={t('Clear')} onPress={() => set({ due: null })} />}
-          </Row>
-          <Select label={t('Repeat')} value={task.repeat ?? 'never'}
-                  options={REPEATS.map(([value, label]) => ({ value, label: t(label) }))}
-                  onChange={(repeat: string) => set({ repeat })} />
-          <Select label={t('Project')} value={task.list ?? null}
-                  options={todo.lists.map((l) => ({ value: l.id, label: l.name }))}
-                  onChange={(list: string) => set({ list, status: task.status ?? 'todo' })} />
-          {todo.members.length > 1 && (
-            <PersonPicker label={t('Who')} value={task.who ?? null} onChange={(who: string) => set({ who })} />
-          )}
-          <TextField label={t('Link')} type="url" value={link} placeholder="https://" onChange={setLink} />
-          <Toggle label={t('Flag')} checked={!!task.flag} onChange={(flag: boolean) => set({ flag })} />
-        </Stack>
-      </Box>
-      <Editor value={notes} onChange={setNotes} placeholder={t('Notes')} lines={6} />
-      <Box class={s.block}>
-        <Upload value={files.map((f) => f.file)} label={t('Add a file')}
-                onUpload={todo.canAdd ? (file: unknown) => todo.add('attachments', { task: id, file }) : undefined}
-                onRemove={todo.canAdd ? (file: any) => {
-                  const f = files.find((x) => (x.file as any)?.id === file?.id || x.file === file);
-                  if (f) todo.remove('attachments', f.id);
-                } : undefined} />
-      </Box>
-      {focus ? (
-        <Box class={s.focus}>
-          <Timer seconds={25 * 60} label={t('Focus')} onDone={() => setFocus(false)} />
-          <Button variant="plain" onPress={() => setFocus(false)}>{t('Stop')}</Button>
+            <Menu
+              items={[
+                { id: 'edit', label: task.link ? t('Edit') : t('Add'), icon: 'link' },
+                ...(task.link ? [{ id: 'remove', label: t('Remove'), icon: 'close' }] : []),
+              ]}
+              onPick={async (v: string) => {
+                if (v === 'remove') return set({ link: null });
+                const typed = await dialog.prompt({ title: t('Link'), placeholder: 'https://', value: task.link ?? '' });
+                if (typed === null || typed === undefined) return;
+                const w = String(typed).trim();
+                set({ link: w ? (/^https?:\/\//i.test(w) ? w : `https://${w}`) : null });
+              }}
+            >
+              {prop('link', t('Link'), task.link ? siteOf(task.link) : t('None'), !!task.link)}
+            </Menu>
+            {/* As far in as the rows above, which their menus pad. */}
+            <Box class={s.inset}>
+              <Row gap={12} align="center" class={[s.prop, s.split]}>
+                <Icon name="flag" size={18} tone={task.flag ? 'warning' : 'muted'} />
+                <Text class={s.propKey} grow>{t('Flag')}</Text>
+                <Toggle checked={!!task.flag} onChange={(flag: boolean) => set({ flag })} />
+              </Row>
+            </Box>
+          </Box>
         </Box>
-      ) : (
-        <Button variant="tonal" icon="timer" expand onPress={() => setFocus(true)}>{t('Focus')}</Button>
-      )}
-      {(comments.length > 0 || todo.members.length > 1) && (
+
+        <Text class={s.h}>{mine.length ? t('Steps · {p0}/{p1}', { p0: stepsDone, p1: mine.length }) : t('Steps')}</Text>
         <Box class={s.card}>
-          <Stack gap={10} pad={[8, 4]}>
-            {comments.map((c) => (
-              <Row key={c.id} gap={8} align="start">
-                {c._by && <Avatar person={c._by} size={26} />}
-                <Stack grow>
-                  <Text bold>{nameOf(c._by)}</Text>
-                  <Text>{c.text}</Text>
-                </Stack>
-                {c._at ? <Text class={s.when}>{format.relative(c._at)}</Text> : null}
+          <Box class={s.rows}>
+            {mine.map((x, i) => (
+              <Row key={x.id} gap={12} align="center" class={i === 0 ? s.step : [s.step, s.split]}>
+                <Checkbox round checked={!!x.done} onChange={() => todo.edit('steps', x.id, { done: !x.done })} />
+                <Text grow class={x.done ? s.done : s.title}>{x.title}</Text>
+                {can && <IconButton icon="close" label={t('Delete')} onPress={() => todo.remove('steps', x.id)} />}
               </Row>
             ))}
-            {todo.canAdd && (
-              <Row gap={8} align="center">
-                <Stack grow><TextField value={said} onChange={setSaid} placeholder={t('Comment')} onSubmit={say} /></Stack>
-                <IconButton icon="send" label={t('Send')} onPress={say} />
+            {can && (
+              <Row gap={12} align="center" class={mine.length ? [s.step, s.split] : s.step}>
+                <Icon name="add" size={18} />
+                <Stack grow><TextField plain value={step} onChange={setStep} placeholder={t('Add a step')} onSubmit={addStep} /></Stack>
               </Row>
             )}
-          </Stack>
+          </Box>
         </Box>
-      )}
+
+        <Text class={s.h}>{t('Notes')}</Text>
+        <Box class={s.block}>
+          <Editor value={notes} onChange={setNotes} placeholder={t('Notes')} lines={4} />
+        </Box>
+
+        <Box class={s.block}>
+          <Upload value={files.map((f) => f.file)} label={t('Attach')}
+                  onUpload={can ? (file: unknown) => todo.add('attachments', { task: id, file }) : undefined}
+                  onRemove={can ? (file: any) => {
+                    const f = files.find((x) => (x.file as any)?.id === file?.id || x.file === file);
+                    if (f) todo.remove('attachments', f.id);
+                  } : undefined} />
+        </Box>
+
+        {(comments.length > 0 || todo.members.length > 1) && (
+          <>
+            <Text class={s.h}>{t('Activity')}</Text>
+            <Stack gap={12} class={s.block}>
+              {comments.map((c) => (
+                <Row key={c.id} gap={10} align="start">
+                  {c._by && <Avatar person={c._by} size={24} />}
+                  <Stack grow gap="2px">
+                    <Row gap={8} align="center">
+                      <Text class={s.who}>{nameOf(c._by)}</Text>
+                      {c._at ? <Text class={s.when}>{format.relative(c._at)}</Text> : null}
+                    </Row>
+                    <Text>{c.text}</Text>
+                  </Stack>
+                </Row>
+              ))}
+              {can && (
+                <Row gap={8} align="center" class={s.say}>
+                  <Stack grow><TextField plain value={said} onChange={setSaid} placeholder={t('Comment')} onSubmit={say} /></Stack>
+                  <IconButton icon="arrow_upward" label={t('Send')} onPress={say} />
+                </Row>
+              )}
+            </Stack>
+          </>
+        )}
+      </Box>
+
+      <Sheet open={picking} onClose={() => setPicking(false)} detents={['medium', 'large']}>
+        <Stack gap={16}>
+          <Calendar month={due !== undefined ? dayOf(due) : undefined} onPick={(d: string) => day(d)} />
+          <Row gap={8} align="center" wrap>
+            {['09:00', '12:00', '17:30', '20:00'].map((x) => (
+              <Chip key={x} label={x} selected={due !== undefined && timeOf(due) === x}
+                    onPress={() => set({ due: at(due !== undefined ? dayOf(due) : dayFrom(now, 0), x) })} />
+            ))}
+            <TimePicker value={due !== undefined ? timeOf(due) : undefined} placeholder={t('Other')}
+                        onChange={(x: string) => set({ due: at(due !== undefined ? dayOf(due) : dayFrom(now, 0), x) })} />
+          </Row>
+          <Row justify="end"><Button onPress={() => setPicking(false)}>{t('Done')}</Button></Row>
+        </Stack>
+      </Sheet>
     </Screen>
   );
 }
