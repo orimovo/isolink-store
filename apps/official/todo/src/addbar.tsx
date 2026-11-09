@@ -2,7 +2,7 @@
 // It reads when, how many, a #tag and a link out of what's typed, and offers a
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
-  Box, Row, Stack, Text, TextField, Icon, IconButton, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
+  Box, Row, Stack, Text, TextField, Icon, Pressable, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
   Button, useLocal, useDialog, useNow, has, t,
 } from 'isolink';
 import a from './addbar.css';
@@ -134,7 +134,7 @@ export function useAddBar(o: AddBarOptions) {
           </Stack>
         </Row>
         <Row gap={8} align="center" class={a.acc}>
-          <Row grow gap={4} align="center" wrap>
+          <Row grow gap={1} align="center" wrap>
             <Menu
               items={[
                 { id: 'today', label: t('Today'), icon: 'event' },
@@ -184,9 +184,9 @@ export function useAddBar(o: AddBarOptions) {
             {said.qty && token(true, 'tag', `× ${said.qty}`)}
             {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
           </Row>
-          <Box class={ready ? a.send : [a.send, a.off]}>
-            <IconButton icon="arrow_upward" variant="filled" label={t('Add')} onPress={submit} />
-          </Box>
+          <Pressable class={ready ? a.send : [a.send, a.off]} onPress={submit}>
+            <Icon name="arrow_upward" size={18} tone={ready ? 'accent' : 'muted'} />
+          </Pressable>
         </Row>
       </Box>
     </Box>

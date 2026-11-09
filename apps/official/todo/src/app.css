@@ -1,9 +1,9 @@
 /* One spacing everywhere: 16 inside cards, 24 between sections, 48 rows. */
 .center { place-items: center; }
-.column { width: 100%; max-width: 720px; padding: 8px 0 24px; }
+.column { width: 100%; max-width: 720px; padding: 0 0 24px; }
 .wide { max-width: 960px; }
 
-.hero { padding: 8px 4px 24px; }
+.hero { padding: 0 4px 24px; }
 .big { font-size: 30px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.1; }
 .line { color: var(--muted); font-size: 14px; }
 
@@ -11,8 +11,9 @@
 .h { font-size: 13px; font-weight: 700; color: var(--muted); padding: 0 4px 8px; }
 .card { background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 4px 16px; margin-bottom: 16px; }
 .rows { display: flex; flex-direction: column; }
-.task { display: flex; gap: 12px; align-items: center; min-height: 48px; padding: 8px 0; border-top: 1px solid var(--outline); }
-.rows .task:first-child { border-top: 0; }
+.task { display: flex; gap: 12px; align-items: center; min-height: 48px; padding: 8px 0; }
+/* Every row but the first: a component's place among siblings isn't known to :first-child. */
+.split { border-top: 1px solid var(--outline); }
 .title { font-size: 15px; }
 .done { font-size: 15px; color: var(--muted); text-decoration: line-through; }
 .meta { font-size: 12px; color: var(--muted); }

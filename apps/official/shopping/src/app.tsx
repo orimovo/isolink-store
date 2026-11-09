@@ -167,18 +167,18 @@ function ListTab({ shop, currency, wide }: { shop: ReturnType<typeof useShop>; c
       <Pressable key={r.id} class={mine ? s.bigItem : s.item} onPress={() => (mine ? (haptic('select'), edit('items', r.id, { got: !r.got })) : show(r))}
                  onLongPress={() => show(r)}>
         <Checkbox round checked={!!r.got} onChange={() => { haptic('select'); edit('items', r.id, { got: !r.got }); }} />
-        <Stack grow gap={2}>
+        <Stack grow gap="2px">
           <Text class={r.got ? s.got : mine ? s.bigName : s.name}>{r.name}</Text>
           {extra ? (
             <Row gap={10} align="center">
               {r.due ? (
-                <Row gap={4} align="center">
+                <Row gap={1} align="center">
                   <Icon name="event" size={14} tone={r.due < today ? 'danger' : 'muted'} />
                   <Text class={r.due < today ? s.late : s.meta}>{dayWords(r.due, now)}</Text>
                 </Row>
               ) : null}
               {r.link ? (
-                <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
+                <Row gap={1} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
               ) : null}
               {r.file ? <Icon name="attach_file" size={14} /> : null}
             </Row>
@@ -230,7 +230,7 @@ function ListTab({ shop, currency, wide }: { shop: ReturnType<typeof useShop>; c
         <Empty emoji="🛒" words={t('Nothing to get')} />
       ) : (
         <Row gap={16} align="end" class={s.hero}>
-          <Stack grow gap={4}>
+          <Stack grow gap={1}>
             <Text class={s.big}>{toGet.length === 0 ? t('Nothing to get') : mine ? t('{p0} left', { p0: toGet.length }) : t('{p0} to get', { p0: toGet.length })}</Text>
             {facts.length > 0 && <Text class={s.line}>{facts.join(' · ')}</Text>}
           </Stack>
@@ -246,7 +246,7 @@ function ListTab({ shop, currency, wide }: { shop: ReturnType<typeof useShop>; c
           ))}
         </Box>
       )}
-      {wide && !mine && cards.length > 1 ? <Grid min={300} gap={16}>{cards}</Grid> : cards}
+      {wide && !mine && cards.length > 1 ? <Grid min={300} gap={16} class={s.cardGrid}>{cards}</Grid> : cards}
       {got.length > 0 && (
         <Section
           title={t('Got · {p0}', { p0: got.length })}
@@ -332,7 +332,7 @@ function UsualsTab({ shop }: { shop: ReturnType<typeof useShop> }) {
   return (
     <>
       <Row gap={16} align="end" class={s.hero}>
-        <Stack grow gap={4}>
+        <Stack grow gap={1}>
           <Text class={s.big}>{t('Usuals')}</Text>
           {sorted.length > 0 && <Text class={s.line}>{sorted.length === 1 ? t('1 thing') : t('{p0} things', { p0: sorted.length })}</Text>}
         </Stack>
@@ -429,7 +429,7 @@ function SpendTab({ currency, setCurrency }: { currency: string; setCurrency: (c
             {trips.slice(0, 20).map((x) => (
               <Row key={x.id} gap={12} align="center" class={s.item}>
                 {x.who ? <Avatar person={x.who} size={32} /> : <Box class={s.badge}><Icon name="storefront" size={16} /></Box>}
-                <Stack grow gap={2}>
+                <Stack grow gap="2px">
                   <Text class={s.name}>{format.date(x.day)}</Text>
                   <Text class={s.meta}>{x.count === 1 ? t('1 thing') : t('{p0} things', { p0: x.count ?? 0 })}</Text>
                 </Stack>

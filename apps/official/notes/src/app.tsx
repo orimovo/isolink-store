@@ -111,14 +111,14 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
         <Markdown class={s.body} onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
       ) : null}
       {r.voice ? (
-        <Row gap={4} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
+        <Row gap={1} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
       ) : null}
       {typeof r.due === 'number' || r.link ? (
         <Row gap={10} align="center" wrap class={s.paperMeta}>
           {typeof r.due === 'number' ? (
-            <Row gap={4} align="center"><Icon name="alarm" size={14} /><Text class={s.small}>{dueWords(r.due)}</Text></Row>
+            <Row gap={1} align="center"><Icon name="alarm" size={14} /><Text class={s.small}>{dueWords(r.due)}</Text></Row>
           ) : null}
-          {r.link ? <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.small} lines={1}>{siteOf(r.link)}</Text></Row> : null}
+          {r.link ? <Row gap={1} align="center"><Icon name="link" size={14} /><Text class={s.small} lines={1}>{siteOf(r.link)}</Text></Row> : null}
         </Row>
       ) : null}
     </StickyNote>
@@ -224,7 +224,7 @@ function Empty({ emoji = '🗒️', words = t('No notes yet') }: { emoji?: strin
 
 function Hero({ big, line }: { big: string; line?: string }) {
   return (
-    <Stack gap={4} class={s.hero}>
+    <Stack gap={1} class={s.hero}>
       <Text class={s.big}>{big}</Text>
       {line ? <Text class={s.line}>{line}</Text> : null}
     </Stack>
@@ -377,7 +377,7 @@ function Home() {
                     <Box class={s.tagArt} style={{ background: `${hueOfTag(g)}2e` }}>
                       <Icon name="sell" size={18} />
                     </Box>
-                    <Stack grow gap={2}>
+                    <Stack grow gap="2px">
                       <Text class={s.tagName} lines={1}>{g}</Text>
                       <Text class={s.small}>{count === 1 ? t('1 note') : t('{p0} notes', { p0: count })}</Text>
                     </Stack>

@@ -95,7 +95,7 @@ function useTodo() {
   return { lists, all, steps, ...data, me, members, canAdd: me.role !== 'view', toggle };
 }
 
-function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof useTodo>; now: number; showList: boolean }) {
+function TaskRow({ r, todo, now, showList, first }: { r: Task; todo: ReturnType<typeof useTodo>; now: number; showList: boolean; first?: boolean }) {
   const nav = useNav();
   const list = showList ? todo.lists.find((l) => l.id === r.list) : undefined;
   const late = r.due !== undefined && !r.done && r.due < now;
@@ -103,20 +103,20 @@ function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof 
   const stepsDone = mine.filter((x) => x.done).length;
   const extra = !r.done && ((r.due !== undefined && (late || !!when(r.due, now))) || list || mine.length > 0 || (r.repeat && r.repeat !== 'never') || r.link);
   return (
-    <Pressable class={s.task} onPress={() => nav.push('Task', { id: r.id })}>
+    <Pressable class={first ? s.task : [s.task, s.split]} onPress={() => nav.push('Task', { id: r.id })}>
       <Checkbox round checked={!!r.done} onChange={() => todo.toggle(r)} />
-      <Stack grow gap={3}>
+      <Stack grow gap={1}>
         <Text class={r.done ? s.done : s.title}>{r.title}</Text>
         {extra ? (
           <Row gap={10} align="center" wrap>
             {r.due !== undefined && (late || when(r.due, now)) && (
-              <Row gap={4} align="center">
+              <Row gap={1} align="center">
                 <Icon name={late ? 'alarm' : 'schedule'} size={14} tone={late ? 'danger' : 'muted'} />
                 <Text class={late ? s.late : s.meta}>{when(r.due, now)}</Text>
               </Row>
             )}
             {list && (
-              <Row gap={6} align="center">
+              <Row gap="6px" align="center">
                 <Box class={s.dot} style={{ background: hueOf(list.id) }} />
                 <Text class={s.tag} style={{ color: hueOf(list.id) }}>{list.name}</Text>
               </Row>
@@ -124,7 +124,7 @@ function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof 
             {mine.length > 0 && <Text class={s.meta}>{`☑ ${stepsDone}/${mine.length}`}</Text>}
             {r.repeat && r.repeat !== 'never' && <Icon name="autorenew" size={14} />}
             {r.link && (
-              <Row gap={4} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
+              <Row gap={1} align="center"><Icon name="link" size={14} /><Text class={s.meta} lines={1}>{siteOf(r.link)}</Text></Row>
             )}
           </Row>
         ) : null}
@@ -141,7 +141,7 @@ function Rows({ title, rows, todo, now }: { title: string; rows: Task[]; todo: R
     <Box class={s.group}>
       <Text class={s.h}>{title}</Text>
       <Box class={s.card}>
-        <Box class={s.rows}>{rows.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+        <Box class={s.rows}>{rows.map((r, i) => <TaskRow key={r.id} first={i === 0} r={r} todo={todo} now={now} showList />)}</Box>
       </Box>
     </Box>
   );
@@ -159,7 +159,7 @@ function Empty({ emoji, words }: { emoji: string; words: string }) {
 function Hero({ big, line, children }: { big: string; line?: string; children?: unknown }) {
   return (
     <Row gap={16} align="center" class={s.hero}>
-      <Stack grow gap={4}>
+      <Stack grow gap={1}>
         <Text class={s.big}>{big}</Text>
         {line ? <Text class={s.line}>{line}</Text> : null}
       </Stack>
@@ -313,7 +313,7 @@ function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
             <Pressable key={k} class={picked === k ? [s.day, s.dayOn] : s.day} onPress={() => setPicked(picked === k ? null : k)}>
               <Text class={s.dayName}>{t(SHORT_DAYS[d.getDay()])}</Text>
               <Text class={s.dayNumber}>{String(d.getDate())}</Text>
-              <Row gap={3} justify="center" class={s.dots}>
+              <Row gap={1} justify="center" class={s.dots}>
                 {hues.map((h) => <Box key={h} class={s.dot} style={{ background: h }} />)}
               </Row>
             </Pressable>
@@ -328,7 +328,7 @@ function UpcomingTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
       {!picked && done.length > 0 && (
         <Section title={t('Done · {p0}', { p0: done.length })} folded>
           <Box class={s.card}>
-            <Box class={s.rows}>{done.map((r) => <TaskRow key={r.id} r={r} todo={todo} now={now} showList />)}</Box>
+            <Box class={s.rows}>{done.map((r, i) => <TaskRow key={r.id} first={i === 0} r={r} todo={todo} now={now} showList />)}</Box>
           </Box>
         </Section>
       )}
@@ -469,7 +469,7 @@ function TaskScreen() {
       </Row>
       <Box class={s.card}>
         {mine.map((x) => (
-          <Row key={x.id} gap={4} align="center">
+          <Row key={x.id} gap={1} align="center">
             <Checkbox checked={!!x.done} onChange={() => todo.edit('steps', x.id, { done: !x.done })} />
             <Text grow class={x.done ? s.done : s.title}>{x.title}</Text>
             {todo.canAdd && <IconButton icon="close" label={t('Delete')} onPress={() => todo.remove('steps', x.id)} />}
