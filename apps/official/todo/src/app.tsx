@@ -219,21 +219,24 @@ function ProjectsTab({ todo, project, setProject, newList }: {
         <Empty emoji="🗂️" words={t('No projects yet')} />
       ) : (
         <>
-          <Grid min={200} gap={16}>
+          {/* Tiles: as many to a row as fit, two on a phone. */}
+          <Grid min={150} gap={8}>
             {todo.lists.map((l) => {
               const rows = todo.all.filter((r) => r.list === l.id);
               const done = rows.filter((r) => r.done).length;
               const people = [...new Set(rows.map((r) => r.who).filter(Boolean))] as string[];
               return (
                 <Pressable key={l.id} class={l.id === shown.id ? [s.project, s.projectOn] : s.project} onPress={() => setProject(l.id)}>
-                  <Row align="start" justify="between">
+                  <Row gap={10} align="center">
                     <Box class={s.projectArt} style={{ background: `${hueOf(l.id)}2e` }}>
                       <Text class={s.projectLetter} style={{ color: hueOf(l.id) }}>{(l.name.trim()[0] ?? '·').toUpperCase()}</Text>
                     </Box>
-                    {people.length > 0 && todo.members.length > 1 ? <AvatarStack people={people} max={3} size={24} /> : null}
+                    <Stack grow>
+                      <Text class={s.projectName} lines={1}>{l.name}</Text>
+                      <Text class={s.meta} lines={1}>{rows.length === 0 ? t('Empty') : done === rows.length ? t('All done') : t('{p0} open', { p0: rows.length - done })}</Text>
+                    </Stack>
+                    {people.length > 0 && todo.members.length > 1 ? <AvatarStack people={people} max={2} size={20} /> : null}
                   </Row>
-                  <Text class={s.projectName} lines={1}>{l.name}</Text>
-                  <Text class={s.meta}>{rows.length === 0 ? t('Empty') : done === rows.length ? t('All done') : t('{p0} open', { p0: rows.length - done })}</Text>
                   <Progress value={rows.length ? done / rows.length : 0} />
                 </Pressable>
               );

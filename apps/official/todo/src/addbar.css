@@ -1,16 +1,15 @@
 /* The add bar (keep the copies in Shopping, Todo and Notes the same). */
 /* Class names are shared with the app's own CSS, so these all start with "ab". */
+/* One pill as the chat's message box: 48 tall with a 40 + on a phone, 40 with a 34 + on a computer. */
 .abWrap { place-items: center; }
-.abBar { width: 100%; max-width: 720px; background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 8px 12px 8px 16px; box-shadow: var(--shadow-2); }
-.abLine { min-height: 40px; }
-.abPlus { width: 26px; height: 26px; border-radius: 13px; background: var(--accent-soft); place-items: center; }
-.abAcc { border-top: 1px solid var(--outline); margin-top: 4px; padding-top: 6px; }
-.abToken { display: flex; gap: 6px; align-items: center; border-radius: 8px; padding: 4px 8px; max-width: 220px; }
+.abBar { width: 100%; max-width: 720px; }
+.abLine { height: 48px; padding: 0 4px 0 18px; }
+.abLineD { height: 40px; padding: 0 3px 0 14px; }
+.abMenus { max-width: 60%; }
+.abToken { display: flex; gap: 6px; align-items: center; border-radius: 999px; padding: 4px 10px; max-width: 200px; }
 .abToken:hover { background: var(--accent-soft); }
+.abIcon { width: 34px; height: 34px; padding: 0; place-items: center; }
+.abIconD { width: 30px; height: 30px; padding: 0; place-items: center; }
 .abOn { background: var(--accent-soft); }
-.abTokenText { font-size: 13px; color: var(--muted); }
 .abTokenOnText { font-size: 13px; color: var(--accent); font-weight: 600; }
-.abSend { width: 32px; height: 32px; border-radius: 16px; place-items: center; background: var(--accent-soft); transition: opacity 150ms; }
-.abHit { width: 32px; height: 32px; }
-.abOff { background: transparent; opacity: 0.5; }
 .abSheetTitle { font-size: 20px; font-weight: 800; }
