@@ -56,6 +56,9 @@
   "Pink": "Rosa",
   "Purple": "Lila",
   "Remove": "Entfernen",
+  "Remove photo": "Foto entfernen",
+  "Remove sketch": "Skizze entfernen",
+  "Remove voice": "Sprachnotiz entfernen",
   "Saturday": "Samstag",
   "Search": "Suchen",
   "Sep": "Sep",
@@ -75,8 +78,5 @@
   "Weekend": "Wochenende",
   "Yellow": "Gelb",
   "{p0} notes": "{p0} Notizen",
-  "{p0} tags": "{p0} Schlagwörter",
-  "Remove photo": "Foto entfernen",
-  "Remove voice": "Sprachnotiz entfernen",
-  "Remove sketch": "Skizze entfernen"
+  "{p0} tags": "{p0} Schlagwörter"
 }

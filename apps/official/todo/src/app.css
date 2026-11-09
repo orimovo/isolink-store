@@ -9,7 +9,7 @@
 
 .group { margin-bottom: 8px; }
 .h { font-size: 13px; font-weight: 700; color: var(--muted); padding: 0 4px 8px; }
-.card { background: var(--surface); border-radius: 16px; padding: 4px 16px; margin-bottom: 16px; }
+.card { background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 4px 16px; margin-bottom: 16px; }
 .rows { display: flex; flex-direction: column; }
 .task { display: flex; gap: 12px; align-items: center; min-height: 48px; padding: 8px 0; border-top: 1px solid var(--outline); }
 .rows .task:first-child { border-top: 0; }
@@ -20,19 +20,19 @@
 .tag { font-size: 12px; font-weight: 600; }
 .dot { width: 7px; height: 7px; border-radius: 4px; }
 
-.project { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border-radius: 16px; padding: 20px; border: 2px solid transparent; min-height: 156px; }
-.project:hover { border: 2px solid var(--outline); }
-.projectOn { border: 2px solid var(--accent); }
-.projectOn:hover { border: 2px solid var(--accent); }
+.project { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border-radius: 16px; padding: 20px; border: 1px solid var(--outline); min-height: 156px; }
+.project:hover { border: 1px solid var(--muted); }
+.projectOn { border: 1px solid var(--accent); background: var(--accent-soft); }
+.projectOn:hover { border: 1px solid var(--accent); }
 .projectArt { width: 40px; height: 40px; border-radius: 12px; place-items: center; margin-bottom: 12px; }
 .projectLetter { font-size: 18px; font-weight: 800; }
 .projectName { font-size: 15px; font-weight: 700; }
 .boardGap { height: 24px; }
 
-.day { display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--surface); border-radius: 12px; padding: 12px 0 10px; border: 2px solid transparent; }
-.day:hover { border: 2px solid var(--outline); }
-.dayOn { border: 2px solid var(--accent); }
-.dayOn:hover { border: 2px solid var(--accent); }
+.day { display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--surface); border-radius: 12px; padding: 12px 0 10px; border: 1px solid var(--outline); }
+.day:hover { border: 1px solid var(--muted); }
+.dayOn { border: 1px solid var(--accent); background: var(--accent-soft); }
+.dayOn:hover { border: 1px solid var(--accent); }
 .dayName { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
 .dayNumber { font-size: 20px; font-weight: 800; }
 .dots { min-height: 7px; margin-top: 4px; }
@@ -45,5 +45,5 @@
 /* One task */
 .addStep { padding: 4px 0 4px 10px; }
 .block { margin: 16px 0; }
-.focus { display: flex; flex-direction: column; align-items: center; gap: 8px; background: var(--surface); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+.focus { display: flex; flex-direction: column; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
 .when { font-size: 11px; color: var(--muted); }

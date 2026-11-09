@@ -57,7 +57,8 @@ const hueOf = (id?: string) => {
 /** When it's due, in a few words: the time today, else the day. */
 function when(ms: number, now: number) {
   const end = endOfToday(now);
-  if (ms < end && ms >= end - DAY) return timeOf(ms);
+  // Due today with no time of its own: nothing to say.
+  if (ms < end && ms >= end - DAY) return ms >= end - 60000 ? '' : timeOf(ms);
   if (ms >= end && ms < end + DAY) return t('Tomorrow');
   if (ms < end - DAY && ms >= end - 2 * DAY) return t('Yesterday');
   const d = new Date(ms);
@@ -100,7 +101,7 @@ function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof 
   const late = r.due !== undefined && !r.done && r.due < now;
   const mine = todo.steps.filter((x) => x.task === r.id);
   const stepsDone = mine.filter((x) => x.done).length;
-  const extra = !r.done && (r.due !== undefined || list || mine.length > 0 || (r.repeat && r.repeat !== 'never') || r.link);
+  const extra = !r.done && ((r.due !== undefined && (late || !!when(r.due, now))) || list || mine.length > 0 || (r.repeat && r.repeat !== 'never') || r.link);
   return (
     <Pressable class={s.task} onPress={() => nav.push('Task', { id: r.id })}>
       <Checkbox round checked={!!r.done} onChange={() => todo.toggle(r)} />
@@ -108,7 +109,7 @@ function TaskRow({ r, todo, now, showList }: { r: Task; todo: ReturnType<typeof 
         <Text class={r.done ? s.done : s.title}>{r.title}</Text>
         {extra ? (
           <Row gap={10} align="center" wrap>
-            {r.due !== undefined && (
+            {r.due !== undefined && (late || when(r.due, now)) && (
               <Row gap={4} align="center">
                 <Icon name={late ? 'alarm' : 'schedule'} size={14} tone={late ? 'danger' : 'muted'} />
                 <Text class={late ? s.late : s.meta}>{when(r.due, now)}</Text>
@@ -176,6 +177,8 @@ function TodayTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
   const late = open.filter((r) => r.due! < start).length;
   const total = open.length + doneToday.length;
   const hour = (r: Task) => new Date(r.due!).getHours();
+  // Due today at a time of its own.
+  const timed = open.filter((r) => r.due! >= start && r.due! < end - 60000);
   const d = new Date(now);
   return (
     <>
@@ -185,9 +188,10 @@ function TodayTab({ todo }: { todo: ReturnType<typeof useTodo> }) {
       </Hero>
       {total === 0 && <Empty emoji="☀️" words={t('All clear')} />}
       <Rows title={t('Late')} rows={open.filter((r) => r.due! < start)} todo={todo} now={now} />
-      <Rows title={t('Morning')} rows={open.filter((r) => r.due! >= start && hour(r) < 12)} todo={todo} now={now} />
-      <Rows title={t('Afternoon')} rows={open.filter((r) => r.due! >= start && hour(r) >= 12 && hour(r) < 17)} todo={todo} now={now} />
-      <Rows title={t('Evening')} rows={open.filter((r) => r.due! >= start && hour(r) >= 17)} todo={todo} now={now} />
+      <Rows title={t('Anytime')} rows={open.filter((r) => r.due! >= end - 60000)} todo={todo} now={now} />
+      <Rows title={t('Morning')} rows={timed.filter((r) => hour(r) < 12)} todo={todo} now={now} />
+      <Rows title={t('Afternoon')} rows={timed.filter((r) => hour(r) >= 12 && hour(r) < 17)} todo={todo} now={now} />
+      <Rows title={t('Evening')} rows={timed.filter((r) => hour(r) >= 17)} todo={todo} now={now} />
       <Rows title={t('Done today')} rows={doneToday} todo={todo} now={now} />
     </>
   );

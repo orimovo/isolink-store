@@ -56,6 +56,9 @@
   "Pink": "Rose",
   "Purple": "Violet",
   "Remove": "Retirer",
+  "Remove photo": "Retirer la photo",
+  "Remove sketch": "Retirer le croquis",
+  "Remove voice": "Retirer l’audio",
   "Saturday": "Samedi",
   "Search": "Rechercher",
   "Sep": "sept.",
@@ -75,8 +78,5 @@
   "Weekend": "Week-end",
   "Yellow": "Jaune",
   "{p0} notes": "{p0} notes",
-  "{p0} tags": "{p0} étiquettes",
-  "Remove photo": "Retirer la photo",
-  "Remove voice": "Retirer l’audio",
-  "Remove sketch": "Retirer le croquis"
+  "{p0} tags": "{p0} étiquettes"
 }
