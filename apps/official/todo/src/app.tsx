@@ -2,7 +2,7 @@ import {
   defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Button, Card, Grid,
   Icon, IconButton, Avatar, AvatarStack, Toggle, TimePicker, ProgressRing, Board,
   Upload, Timer, Section, Progress, Menu, Sheet, Calendar, Chip, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
-  useRef, useEffect, format, t,
+  useRef, useEffect, format, has, t,
 } from 'isolink';
 import { between, last } from './pos';
 import s from './app.css';
@@ -160,7 +160,7 @@ function Hero({ big, line, children }: { big: string; line?: string; children?: 
   return (
     <Row gap={16} align="center" class={s.hero}>
       <Stack grow gap={1}>
-        <Text class={s.big}>{big}</Text>
+        <Text class={has('screen.title') ? s.heading : s.big}>{big}</Text>
         {line ? <Text class={s.line}>{line}</Text> : null}
       </Stack>
       {children}
