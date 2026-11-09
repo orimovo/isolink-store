@@ -3,7 +3,7 @@
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
   Box, Row, Stack, Text, TextField, Icon, IconButton, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
-  Button, useLocal, useDialog, useNow, t,
+  Button, useLocal, useDialog, useNow, has, t,
 } from 'isolink';
 import a from './addbar.css';
 import { read, dayFrom, nextWeekday, dayWords, siteOf, Said } from './smart';
@@ -26,6 +26,9 @@ export type AddBarOptions = {
 
 const TIMES = ['09:00', '12:00', '17:30', '20:00'];
 const PHOTOS = 'jpg,jpeg,png,heic,webp,gif';
+
+/** At most [n] characters, for a token. */
+const short = (words: string, n = 24) => (words.length > n ? `${words.slice(0, n - 1).trimEnd()}…` : words);
 
 const nameOf = (file: unknown) => {
   const f = file as { name?: string } | null;
@@ -116,7 +119,7 @@ export function useAddBar(o: AddBarOptions) {
   const token = (on: boolean, icon: string, words: string) => (
     <Box class={on ? [a.token, a.on] : a.token}>
       <Icon name={icon} size={16} tone={on ? 'accent' : 'muted'} />
-      <Text class={on ? a.tokenOnText : a.tokenText} lines={1}>{words}</Text>
+      <Text class={on ? a.tokenOnText : a.tokenText} lines={1}>{short(words)}</Text>
     </Box>
   );
 
@@ -126,7 +129,8 @@ export function useAddBar(o: AddBarOptions) {
         <Row gap={12} align="center" class={a.line}>
           <Box class={a.plus}><Icon name="add" size={16} tone="accent" /></Box>
           <Stack grow>
-            <TextField plain value={draft} onChange={setDraft} placeholder={o.placeholder} onSubmit={submit} />
+            {/* Older Isolink makes a plain field multiline, so Enter wouldn't add. */}
+            <TextField plain={has('field.submit')} value={draft} onChange={setDraft} placeholder={o.placeholder} onSubmit={submit} />
           </Stack>
         </Row>
         <Row gap={8} align="center" class={a.acc}>

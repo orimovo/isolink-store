@@ -56,6 +56,9 @@
   "Pink": "وردي",
   "Purple": "بنفسجي",
   "Remove": "إزالة",
+  "Remove photo": "إزالة الصورة",
+  "Remove sketch": "إزالة الرسم",
+  "Remove voice": "إزالة الصوت",
   "Saturday": "السبت",
   "Search": "بحث",
   "Sep": "سبتمبر",
@@ -75,8 +78,5 @@
   "Weekend": "عطلة نهاية الأسبوع",
   "Yellow": "أصفر",
   "{p0} notes": "{p0} ملاحظات",
-  "{p0} tags": "{p0} وسوم",
-  "Remove photo": "إزالة الصورة",
-  "Remove voice": "إزالة الصوت",
-  "Remove sketch": "إزالة الرسم"
+  "{p0} tags": "{p0} وسوم"
 }

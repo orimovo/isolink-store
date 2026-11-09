@@ -13,7 +13,7 @@
 .chip:pressed { background: var(--accent-soft); }
 .chipText { font-size: 13px; }
 
-.card { background: var(--surface); border-radius: 16px; padding: 4px 16px; margin-bottom: 16px; }
+.card { background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 4px 16px; margin-bottom: 16px; }
 .chartCard { padding: 16px 20px; margin-top: 16px; margin-bottom: 24px; }
 .cardHead { padding: 12px 0 4px; }
 .badge { width: 28px; height: 28px; border-radius: 8px; place-items: center; background: var(--accent-soft); }
@@ -41,17 +41,17 @@
 .totalSub { font-size: 12px; color: var(--bg); opacity: 0.7; }
 .totalNumber { font-size: 22px; font-weight: 800; color: var(--bg); }
 
-.tile { display: flex; flex-direction: column; align-items: center; gap: 4px; background: var(--surface); border-radius: 16px; padding: 16px 8px 12px; border: 2px solid transparent; }
-.tile:hover { border: 2px solid var(--outline); }
-.tileOn { border: 2px solid var(--accent); }
-.tileOn:hover { border: 2px solid var(--accent); }
+.tile { display: flex; flex-direction: column; align-items: center; gap: 4px; background: var(--surface); border-radius: 16px; padding: 16px 8px 12px; border: 1px solid var(--outline); }
+.tile:hover { border: 1px solid var(--muted); }
+.tileOn { border: 1px solid var(--accent); background: var(--accent-soft); }
+.tileOn:hover { border: 1px solid var(--accent); }
 .tileArt { width: 56px; height: 56px; border-radius: 16px; place-items: center; margin-bottom: 4px; }
 .emoji { font-size: 30px; }
 .tileName { font-size: 13px; font-weight: 700; }
 .tileCount { font-size: 11.5px; color: var(--muted); }
 
-.stat { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border-radius: 16px; padding: 16px 20px; }
-.statHero { background: linear-gradient(135deg, #16a34a, #4ade80); }
+.stat { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--outline); border-radius: 16px; padding: 16px 20px; }
+.statHero { background: linear-gradient(135deg, #16a34a, #4ade80); border: 1px solid transparent; }
 .statKey { font-size: 12px; color: var(--muted); }
 .statValue { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; }
 .statSub { font-size: 12px; color: var(--muted); }
