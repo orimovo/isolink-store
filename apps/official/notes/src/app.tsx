@@ -388,7 +388,7 @@ function Home() {
           </Box>
         </Box>
       )}
-      {adder.sheet}
+      {tab === 'notes' && adder.sheet}
     </Screen>
   );
 }
