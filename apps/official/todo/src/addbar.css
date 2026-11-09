@@ -10,5 +10,6 @@
 .tokenText { font-size: 13px; color: var(--muted); }
 .tokenOnText { font-size: 13px; color: var(--accent); font-weight: 600; }
 .send { width: 32px; height: 32px; border-radius: 16px; place-items: center; background: var(--accent-soft); transition: opacity 150ms; }
+.hit { width: 32px; height: 32px; }
 .off { background: transparent; opacity: 0.5; }
 .sheetTitle { font-size: 20px; font-weight: 800; }

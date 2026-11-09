@@ -184,8 +184,10 @@ export function useAddBar(o: AddBarOptions) {
             {said.qty && token(true, 'tag', `× ${said.qty}`)}
             {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
           </Row>
-          <Pressable class={ready ? a.send : [a.send, a.off]} onPress={submit}>
-            <Icon name="arrow_upward" size={18} tone={ready ? 'accent' : 'muted'} />
+          <Pressable class={a.hit} onPress={submit}>
+            <Box class={ready ? a.send : [a.send, a.off]}>
+              <Icon name="arrow_upward" size={18} tone={ready ? 'accent' : 'muted'} />
+            </Box>
           </Pressable>
         </Row>
       </Box>
