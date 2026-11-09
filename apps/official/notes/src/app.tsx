@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
   StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
-  Grid, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t,
+  Grid, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
@@ -239,6 +239,8 @@ function Home() {
   const n = useNotes();
   const { all, folders, edit, nav, canEdit } = n;
   const [tab, setTab] = useStore<string>('tab', 'board');
+  // Isolink draws the database's name big, with the count under it.
+  const bigTitle = has('screen.title');
   const [folder, setFolder] = useLocal<string | null>(null);
   const [tag, setTag] = useLocal<string | null>(null);
   const [searching, setSearching] = useLocal<boolean>(false);
@@ -305,9 +307,12 @@ function Home() {
   const links: [string, string][] = [];
   for (const r of inFolder) for (const l of r.links ?? []) if (inFolder.some((o) => o.id === l)) links.push([r.id, l]);
 
+  const noteCount = inFolder.length === 1 ? t('1 note') : t('{p0} notes', { p0: inFolder.length });
+  const tagCount = tags.size === 0 ? undefined : tags.size === 1 ? t('1 tag') : t('{p0} tags', { p0: tags.size });
   return (
     <Screen
       title={t('Notes')}
+      subtitle={tab === 'notes' ? noteCount : tab === 'tags' ? tagCount : undefined}
       immersive={tab === 'board'}
       tabs={[
         { value: 'board', label: t('Board'), icon: 'space_dashboard' },
@@ -344,7 +349,7 @@ function Home() {
       {tab === 'notes' && (
         <Box class={s.center}>
           <Box class={s.column}>
-            <Hero big={t('Notes')} line={inFolder.length === 1 ? t('1 note') : t('{p0} notes', { p0: inFolder.length })} />
+            {!bigTitle && <Hero big={t('Notes')} line={noteCount} />}
             {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
             <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
             {tag && (
@@ -367,7 +372,7 @@ function Home() {
       {tab === 'tags' && (
         <Box class={s.center}>
           <Box class={s.column}>
-            <Hero big={t('Tags')} line={tags.size === 0 ? undefined : tags.size === 1 ? t('1 tag') : t('{p0} tags', { p0: tags.size })} />
+            {!bigTitle && <Hero big={t('Tags')} line={tagCount} />}
             {tags.size === 0 ? (
               <Empty emoji="🏷️" words={t('No tags yet')} />
             ) : (
