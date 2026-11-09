@@ -35,9 +35,9 @@ function useRecipes() {
 /** "45 min", "1 h 30". */
 const timeText = (m?: number) => (!m ? '' : m < 60 ? t('{p0} min', { p0: m }) : m % 60 ? t('{p0} h {p1}', { p0: Math.floor(m / 60), p1: m % 60 }) : t('{p0} h', { p0: m / 60 }));
 
-function Card({ r, onPress }: { r: Recipe; onPress: () => void }) {
+function Card({ r, onPress, onHold }: { r: Recipe; onPress: () => void; onHold?: () => void }) {
   return (
-    <Pressable class={s.card} onPress={onPress}>
+    <Pressable class={s.card} onPress={onPress} onLongPress={onHold}>
       {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.cardPhoto} /> : (
         <Box class={s.cardArt}><Text class={s.cardEmoji}>{emojiOf(r)}</Text></Box>
       )}
@@ -54,6 +54,23 @@ function Card({ r, onPress }: { r: Recipe; onPress: () => void }) {
 
 function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
   const nav = useNav();
+  const dialog = useDialog();
+  // Held on a phone, right-clicked on a computer.
+  const hold = async (r: Recipe) => {
+    const picked = await dialog.menu([
+      { id: 'fave', icon: 'favorite', label: r.fave ? t('Unfavourite') : t('Favourite') },
+      { id: 'edit', icon: 'edit', label: t('Edit') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'fave') rc.edit('recipes', r.id, { fave: !r.fave });
+    if (picked === 'edit') nav.push('Edit', { id: r.id });
+    if (picked === 'delete') {
+      if (!(await dialog.confirm({ title: t('Delete this recipe?'), ok: t('Delete'), danger: true }))) return;
+      for (const p of rc.plans.filter((p) => p.recipe === r.id)) rc.remove('plans', p.id);
+      rc.remove('recipes', r.id);
+    }
+  };
   const [q, setQ] = useLocal('');
   const [course, setCourse] = useStore<string>('course', '');
   const [quick, setQuick] = useLocal(false);
@@ -85,7 +102,7 @@ function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
         options={[{ value: '', label: t('All') }, ...COURSES.map(([value, label]) => ({ value, label: t(label) }))]} />
       {shown.length === 0 ? <Text tone="muted" align="center" class={s.empty}>{t('Nothing here')}</Text> : (
         <Grid min={150} gap={10}>
-          {shown.map((r) => <Card key={r.id} r={r} onPress={() => nav.push('Recipe', { id: r.id })} />)}
+          {shown.map((r) => <Card key={r.id} r={r} onPress={() => nav.push('Recipe', { id: r.id })} onHold={rc.canEdit ? () => hold(r) : undefined} />)}
         </Grid>
       )}
     </>

@@ -103,6 +103,28 @@ function useHabits() {
   return { habits: habits.filter(mine), all: habits, checkins, ...data, me, today, key, tick, canEdit: me.role !== 'view' };
 }
 
+/** A habit's menu: held on a phone, right-clicked on a computer. */
+function useHabitMenu(hb: ReturnType<typeof useHabits>) {
+  const nav = useNav();
+  const dialog = useDialog();
+  return async (h: Habit) => {
+    if (!hb.canEdit) return;
+    const picked = await dialog.menu([
+      { id: 'edit', icon: 'edit', label: t('Edit') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'edit') nav.push('Edit', { id: h.id });
+    if (picked === 'delete') {
+      const ok = await dialog.confirm({ title: t('Delete this habit?'), ok: t('Delete'), danger: true });
+      if (!ok) return;
+      for (const c of hb.checkins.filter((c) => c.habit === h.id)) hb.remove('checkins', c.id);
+      hb.remove('habits', h.id);
+      if (h.remind) remind.cancel(h.id);
+    }
+  };
+}
+
 function Ring({ h, n, size, onPress }: { h: Habit; n: number; size: number; onPress?: () => void }) {
   const goal = targetOf(h);
   const done = n >= goal;
@@ -117,6 +139,7 @@ function Ring({ h, n, size, onPress }: { h: Habit; n: number; size: number; onPr
 
 function TodayTab({ hb, celebrate }: { hb: ReturnType<typeof useHabits>; celebrate: (h: Habit) => void }) {
   const nav = useNav();
+  const menu = useHabitMenu(hb);
   const { habits, checkins, me, today } = hb;
   const [day, setDay] = useLocal<string>(hb.key);
   const week = weekOf(today);
@@ -170,7 +193,7 @@ function TodayTab({ hb, celebrate }: { hb: ReturnType<typeof useHabits>; celebra
                 const n = countOn(checkins, h, day, me.id);
                 const goal = targetOf(h);
                 return (
-                  <Pressable key={h.id} class={s.habit} onPress={() => nav.push('Habit', { id: h.id })}>
+                  <Pressable key={h.id} class={s.habit} onPress={() => nav.push('Habit', { id: h.id })} onLongPress={() => menu(h)}>
                     <Ring h={h} n={n} size={46} onPress={hb.canEdit ? () => { if (hb.tick(h, day)) celebrate(h); } : undefined} />
                     <Stack grow>
                       <Text bold>{h.name}</Text>
@@ -193,6 +216,7 @@ function TodayTab({ hb, celebrate }: { hb: ReturnType<typeof useHabits>; celebra
 
 function ProgressTab({ hb }: { hb: ReturnType<typeof useHabits> }) {
   const nav = useNav();
+  const menu = useHabitMenu(hb);
   const { habits, checkins, me, today } = hb;
   const [span, setSpan] = useStore<string>('span', 'month');
   const rate = (from: Date, days: number) => {
@@ -237,7 +261,7 @@ function ProgressTab({ hb }: { hb: ReturnType<typeof useHabits> }) {
         <Stack grow class={s.stat}><Stat label={t('Streak')} value={String(longest)} /></Stack>
       </Row>
       {habits.map((h) => (
-        <Pressable key={h.id} class={s.card} onPress={() => nav.push('Habit', { id: h.id })}>
+        <Pressable key={h.id} class={s.card} onPress={() => nav.push('Habit', { id: h.id })} onLongPress={() => menu(h)}>
           <Row align="center" class={s.cardHead}>
             <Text bold grow>{`${h.emoji ?? ''} ${h.name}`.trim()}</Text>
             <Text class={s.sub}>{t('Best {p0}', { p0: best(checkins, h, me.id) })}</Text>

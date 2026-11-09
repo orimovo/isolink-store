@@ -194,12 +194,31 @@ function useNotes() {
     return name ? add('folders', { name }) : null;
   };
 
-  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, newFolder };
+  // A folder's menu. Its notes stay, under All.
+  const holdFolder = async (id: string) => {
+    const f = folders.find((x) => x.id === id);
+    if (!f || !canEdit) return;
+    const picked = await dialog.menu([
+      { id: 'rename', icon: 'edit', label: t('Rename') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'rename') {
+      const name = ((await dialog.prompt({ title: t('Rename'), placeholder: t('Name'), value: f.name })) ?? '').trim();
+      if (name && name !== f.name) edit('folders', f.id, { name });
+    }
+    if (picked === 'delete') {
+      for (const r of all.filter((r) => r.folder === f.id)) edit('notes', r.id, { folder: null });
+      remove('folders', f.id);
+    }
+  };
+
+  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder };
 }
 
-function Folders({ folders, folder, setFolder, canEdit, newFolder }: {
+function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold }: {
   folders: Folder[]; folder: string | null; setFolder: (f: string | null) => void; canEdit: boolean;
-  newFolder: () => Promise<string | null>;
+  newFolder: () => Promise<string | null>; onHold?: (id: string) => void;
 }) {
   if (folders.length === 0 && !canEdit) return null;
   return (
@@ -209,6 +228,7 @@ function Folders({ folders, folder, setFolder, canEdit, newFolder }: {
       onChange={(v: string) => setFolder(v || null)}
       onAdd={canEdit ? async () => { const id = await newFolder(); if (id) setFolder(id); } : undefined}
       addLabel={t('Folder')}
+      onHold={canEdit && onHold ? (v: string) => v && onHold(v) : undefined}
     />
   );
 }
@@ -331,7 +351,7 @@ function Home() {
     >
       {tab === 'board' && (
         <>
-          <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
+          <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} />
           {/* Empty, it's still the board: the folders stay where they are. */}
           <Corkboard
             width={1000}
@@ -351,7 +371,7 @@ function Home() {
           <Box class={s.column}>
             {!bigTitle && <Hero big={t('Notes')} line={noteCount} />}
             {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
-            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} />
+            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} />
             {tag && (
               <Box class={s.chips}>
                 <Chip icon="close" selected onPress={() => setTag(null)}>{`# ${tag}`}</Chip>

@@ -95,15 +95,76 @@ function useTodo() {
   return { lists, all, steps, ...data, me, members, canAdd: me.role !== 'view', toggle };
 }
 
+/** What a task or a project's menu does: held on a phone, right-clicked on a computer. */
+function useMenus(todo: ReturnType<typeof useTodo>) {
+  const dialog = useDialog();
+  const nav = useNav();
+  const removeTask = (r: Task) => {
+    for (const x of todo.steps.filter((x) => x.task === r.id)) todo.remove('steps', x.id);
+    todo.remove('tasks', r.id);
+  };
+  const task = async (r: Task) => {
+    if (!todo.canAdd) return;
+    const picked = await dialog.menu([
+      { id: 'open', icon: 'open_in_new', label: t('Open') },
+      { id: 'done', icon: r.done ? 'radio_button_unchecked' : 'check_circle', label: r.done ? t('Mark not done') : t('Mark done') },
+      { id: 'flag', icon: 'flag', label: r.flag ? t('Unflag') : t('Flag') },
+      ...(todo.lists.length ? [{
+        id: 'move', icon: 'view_kanban', label: t('Move to'),
+        items: [
+          ...todo.lists.map((l) => ({ id: `to:${l.id}`, icon: 'circle', label: l.name, checked: l.id === r.list })),
+          { divider: true },
+          { id: 'to:', icon: 'block', label: t('No project'), checked: !r.list },
+        ],
+      }] : []),
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'open') nav.push('Task', { id: r.id });
+    if (picked === 'done') todo.toggle(r);
+    if (picked === 'flag') todo.edit('tasks', r.id, { flag: !r.flag });
+    if (typeof picked === 'string' && picked.startsWith('to:')) {
+      const to = picked.slice(3);
+      if (to === (r.list ?? '')) return;
+      todo.edit('tasks', r.id, to ? { list: to, status: r.done ? 'done' : 'todo' } : { list: null, status: null });
+    }
+    if (picked === 'delete') removeTask(r);
+  };
+  const project = async (l: List_) => {
+    if (!todo.canAdd) return;
+    const picked = await dialog.menu([
+      { id: 'rename', icon: 'edit', label: t('Rename') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'rename') {
+      const name = ((await dialog.prompt({ title: t('Rename'), placeholder: t('Name'), value: l.name })) ?? '').trim();
+      if (name && name !== l.name) todo.edit('lists', l.id, { name });
+    }
+    if (picked === 'delete') {
+      const rows = todo.all.filter((r) => r.list === l.id);
+      if (rows.length) {
+        const ok = await dialog.confirm({ title: t('Delete {p0} and its tasks?', { p0: l.name }), ok: t('Delete'), danger: true });
+        if (!ok) return;
+      }
+      for (const r of rows) removeTask(r);
+      todo.remove('lists', l.id);
+    }
+  };
+  return { task, project };
+}
+
 function TaskRow({ r, todo, now, showList, first }: { r: Task; todo: ReturnType<typeof useTodo>; now: number; showList: boolean; first?: boolean }) {
   const nav = useNav();
+  const menus = useMenus(todo);
   const list = showList ? todo.lists.find((l) => l.id === r.list) : undefined;
   const late = r.due !== undefined && !r.done && r.due < now;
   const mine = todo.steps.filter((x) => x.task === r.id);
   const stepsDone = mine.filter((x) => x.done).length;
   const extra = !r.done && ((r.due !== undefined && (late || !!when(r.due, now))) || list || mine.length > 0 || (r.repeat && r.repeat !== 'never') || r.link);
   return (
-    <Pressable class={first ? s.task : [s.task, s.split]} onPress={() => nav.push('Task', { id: r.id })}>
+    <Pressable class={first ? s.task : [s.task, s.split]} onPress={() => nav.push('Task', { id: r.id })}
+               onLongPress={todo.canAdd ? () => menus.task(r) : undefined}>
       <Checkbox round checked={!!r.done} onChange={() => todo.toggle(r)} />
       <Stack grow gap={1}>
         <Text class={r.done ? s.done : s.title}>{r.title}</Text>
@@ -201,6 +262,7 @@ function ProjectsTab({ todo, project, setProject, newList }: {
   todo: ReturnType<typeof useTodo>; project: string | null; setProject: (id: string) => void; newList: () => Promise<string | null>;
 }) {
   const nav = useNav();
+  const menus = useMenus(todo);
   const shown = todo.lists.find((l) => l.id === project) ?? todo.lists[0];
   const items = shown
     ? todo.all
@@ -226,7 +288,8 @@ function ProjectsTab({ todo, project, setProject, newList }: {
               const done = rows.filter((r) => r.done).length;
               const people = [...new Set(rows.map((r) => r.who).filter(Boolean))] as string[];
               return (
-                <Pressable key={l.id} class={l.id === shown.id ? [s.project, s.projectOn] : s.project} onPress={() => setProject(l.id)}>
+                <Pressable key={l.id} class={l.id === shown.id ? [s.project, s.projectOn] : s.project} onPress={() => setProject(l.id)}
+                           onLongPress={todo.canAdd ? () => menus.project(l) : undefined}>
                   <Row gap={10} align="center">
                     <Box class={s.projectArt} style={{ background: `${hueOf(l.id)}2e` }}>
                       <Text class={s.projectLetter} style={{ color: hueOf(l.id) }}>{(l.name.trim()[0] ?? '·').toUpperCase()}</Text>
@@ -253,6 +316,10 @@ function ProjectsTab({ todo, project, setProject, newList }: {
               if (!r) return;
               if (status === 'done' && !r.done) todo.toggle({ ...r, status });
               else todo.edit('tasks', id, { status, ...(status !== 'done' && r.done ? { done: false, doneAt: null } : {}) });
+            } : undefined}
+            onHold={todo.canAdd ? (id: string) => {
+              const r = todo.all.find((x) => x.id === id);
+              if (r) menus.task(r);
             } : undefined}
           >
             {items.map((r) => {

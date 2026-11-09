@@ -50,11 +50,50 @@ function useBooks() {
   return { books, sessions, quotes, goals, ...data, year, readTo, canEdit: me.role !== 'view' };
 }
 
+/** A book's menu: held on a phone, right-clicked on a computer. */
+function useBookMenu(bk: ReturnType<typeof useBooks>) {
+  const nav = useNav();
+  const dialog = useDialog();
+  return async (b: Book) => {
+    if (!bk.canEdit) return;
+    const pick = await dialog.menu([
+      { id: 'edit', label: t('Edit'), icon: 'edit' },
+      {
+        id: 'move', label: t('Move to'), icon: 'swap_horiz',
+        items: STATUSES.map(([st, label]) => ({ id: `to:${st}`, label: t(label), checked: (b.status ?? 'want') === st })),
+      },
+      { id: 'lend', label: b.lent ? t('Got it back') : t('Lend'), icon: 'handshake' },
+      { divider: true },
+      { id: 'delete', label: t('Delete'), icon: 'delete', danger: true },
+    ]);
+    if (pick === 'edit') nav.push('Edit', { id: b.id });
+    if (typeof pick === 'string' && pick.startsWith('to:')) {
+      const status = pick.slice(3);
+      if (status !== (b.status ?? 'want')) {
+        bk.edit('books', b.id, {
+          status,
+          ...(status === 'reading' && !b.started ? { started: iso(new Date()) } : {}),
+          ...(status === 'done' && b.status !== 'done' ? { finished: iso(new Date()) } : {}),
+        });
+      }
+    }
+    if (pick === 'lend') {
+      if (b.lent) bk.edit('books', b.id, { lent: null });
+      else nav.push('Lend', { id: b.id });
+    }
+    if (pick === 'delete' && (await dialog.confirm({ title: t('Delete this book?'), ok: t('Delete'), danger: true }))) {
+      for (const x of bk.sessions.filter((x) => x.book === b.id)) bk.remove('sessions', x.id);
+      for (const x of bk.quotes.filter((x) => x.book === b.id)) bk.remove('quotes', x.id);
+      bk.remove('books', b.id);
+    }
+  };
+}
+
 /** A book's cover, or a coloured one with its title on. */
-function Cover({ b, width, onPress }: { b: Book; width: number; onPress?: () => void }) {
+function Cover({ b, width, onPress, onHold }: { b: Book; width: number; onPress?: () => void; onHold?: () => void }) {
   const h = Math.round(width * 1.5);
   return (
-    <Pressable onPress={onPress} class={s.coverWrap}>
+    <Pressable onPress={onPress} onLongPress={onHold} class={s.coverWrap}>
       {b.cover ? <Image src={b.cover} alt={b.title} ratio={2 / 3} class={s.cover} style={{ width }} /> : (
         <Box class={s.cover} style={{ width, height: h, background: tintOf(b) }}>
           <Text class={s.coverTitle} lines={4}>{b.title}</Text>
@@ -67,6 +106,7 @@ function Cover({ b, width, onPress }: { b: Book; width: number; onPress?: () => 
 
 function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
   const nav = useNav();
+  const menu = useBookMenu(bk);
   const [q, setQ] = useLocal('');
   const want = q.trim().toLowerCase();
   const match = (b: Book) => !want || [b.title, b.author ?? '', ...(b.tags ?? [])].some((x) => x.toLowerCase().includes(want));
@@ -94,7 +134,7 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
         </Pressable>
       ) : null}
       {reading.map((b) => (
-        <Pressable key={b.id} class={s.now} onPress={() => nav.push('Book', { id: b.id })}>
+        <Pressable key={b.id} class={s.now} onPress={() => nav.push('Book', { id: b.id })} onLongPress={() => menu(b)}>
           <Cover b={b} width={62} />
           <Stack grow gap={4}>
             <Text bold lines={2}>{b.title}</Text>
@@ -117,7 +157,7 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
               <Row gap={12} class={s.shelf}>
                 {rows.map((b) => (
                   <Stack key={b.id} gap={4} class={s.shelfBook}>
-                    <Cover b={b} width={96} onPress={() => nav.push('Book', { id: b.id })} />
+                    <Cover b={b} width={96} onPress={() => nav.push('Book', { id: b.id })} onHold={() => menu(b)} />
                     {st === 'done' && b.rating ? <Text class={s.stars}>{'★'.repeat(b.rating)}</Text> : null}
                     {b.lent ? <Badge label={t('Lent')} tone="warning" /> : null}
                   </Stack>
