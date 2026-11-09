@@ -2,7 +2,7 @@
 // It reads when, how many, a #tag and a link out of what's typed, and offers a
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
-  Box, Row, Stack, Text, TextField, Icon, Pressable, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
+  Box, Row, Stack, Scroll, Text, TextField, Icon, Pressable, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
   Button, useLocal, useDialog, useNow, has, t,
 } from 'isolink';
 import a from './addbar.css';
@@ -117,75 +117,80 @@ export function useAddBar(o: AddBarOptions) {
   };
 
   const token = (on: boolean, icon: string, words: string) => (
-    <Box class={on ? [a.token, a.on] : a.token}>
+    <Box class={on ? [a.abToken, a.abOn] : a.abToken}>
       <Icon name={icon} size={16} tone={on ? 'accent' : 'muted'} />
-      <Text class={on ? a.tokenOnText : a.tokenText} lines={1}>{short(words)}</Text>
+      <Text class={on ? a.abTokenOnText : a.abTokenText} lines={1}>{short(words)}</Text>
     </Box>
   );
 
   const bar = (
-    <Box class={a.wrap}>
-      <Box class={a.bar}>
-        <Row gap={12} align="center" class={a.line}>
-          <Box class={a.plus}><Icon name="add" size={16} tone="accent" /></Box>
+    <Box class={a.abWrap}>
+      <Box class={a.abBar}>
+        <Row gap={12} align="center" class={a.abLine}>
+          <Box class={a.abPlus}><Icon name="add" size={16} tone="accent" /></Box>
           <Stack grow>
             {/* Older Isolink makes a plain field multiline, so Enter wouldn't add. */}
             <TextField plain={has('field.submit')} value={draft} onChange={setDraft} placeholder={o.placeholder} onSubmit={submit} />
           </Stack>
         </Row>
-        <Row gap={8} align="center" class={a.acc}>
-          <Row grow gap={1} align="center" wrap>
-            <Menu
-              items={[
-                { id: 'today', label: t('Today'), icon: 'event' },
-                { id: 'tomorrow', label: t('Tomorrow'), icon: 'wb_sunny' },
-                { id: 'weekend', label: t('Weekend'), icon: 'beach_access' },
-                { id: 'next', label: t('Next week'), icon: 'arrow_forward' },
-                { divider: true },
-                { id: 'pick', label: o.time ? t('Date and time') : t('Pick a date'), icon: 'calendar_month' },
-                ...(dated ? [{ id: 'clear', label: t('Clear'), icon: 'close' }] : []),
-              ]}
-              onPick={onDate}
-            >
-              {token(dated, 'event', dateWords)}
-            </Menu>
-            {o.pick && (
-              <Menu
-                items={[
-                  ...o.pick.options.map((x) => ({ id: x.id, label: x.label, icon: x.icon, checked: x.id === picked })),
-                  ...(o.pick.onNew ? [{ divider: true }, { id: '+new', label: t('New'), icon: 'add' }] : []),
-                  ...(picked ? [{ id: '', label: t('None'), icon: 'close' }] : []),
-                ]}
-                onPick={async (id: string) => {
-                  if (id === '+new') {
-                    const made = await o.pick!.onNew!();
-                    if (made) setPick(made);
-                    return;
-                  }
-                  setPick(id || null);
-                }}
-              >
-                {token(!!picked, o.pick.icon, pickLabel ?? o.pick.label)}
-              </Menu>
-            )}
-            {sources.length > 0 && (
-              <Menu
-                items={[
-                  ...(sources.includes('link') ? [{ id: 'link', label: t('Link'), icon: 'link' }] : []),
-                  ...(sources.includes('file') ? [{ id: 'file', label: t('File'), icon: 'attach_file' }] : []),
-                  ...(sources.includes('photo') ? [{ id: 'photo', label: t('Photo'), icon: 'image' }] : []),
-                  ...(sourced ? [{ divider: true }, { id: 'remove', label: t('Remove'), icon: 'close' }] : []),
-                ]}
-                onPick={onSource}
-              >
-                {token(!!sourced, linkNow ? 'link' : photo ? 'image' : 'attach_file', sourced ?? t('Source'))}
-              </Menu>
-            )}
-            {said.qty && token(true, 'tag', `× ${said.qty}`)}
-            {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
-          </Row>
-          <Pressable class={a.hit} onPress={submit}>
-            <Box class={ready ? a.send : [a.send, a.off]}>
+        <Row gap={8} align="center" class={a.abAcc}>
+          {/* One line: it scrolls only when it can't fit. */}
+          <Stack grow>
+            <Scroll direction="horizontal">
+              <Row gap={1} align="center">
+                <Menu
+                  items={[
+                    { id: 'today', label: t('Today'), icon: 'event' },
+                    { id: 'tomorrow', label: t('Tomorrow'), icon: 'wb_sunny' },
+                    { id: 'weekend', label: t('Weekend'), icon: 'beach_access' },
+                    { id: 'next', label: t('Next week'), icon: 'arrow_forward' },
+                    { divider: true },
+                    { id: 'pick', label: o.time ? t('Date and time') : t('Pick a date'), icon: 'calendar_month' },
+                    ...(dated ? [{ id: 'clear', label: t('Clear'), icon: 'close' }] : []),
+                  ]}
+                  onPick={onDate}
+                >
+                  {token(dated, 'event', dateWords)}
+                </Menu>
+                {o.pick && (
+                  <Menu
+                    items={[
+                      ...o.pick.options.map((x) => ({ id: x.id, label: x.label, icon: x.icon, checked: x.id === picked })),
+                      ...(o.pick.onNew ? [{ divider: true }, { id: '+new', label: t('New'), icon: 'add' }] : []),
+                      ...(picked ? [{ id: '', label: t('None'), icon: 'close' }] : []),
+                    ]}
+                    onPick={async (id: string) => {
+                      if (id === '+new') {
+                        const made = await o.pick!.onNew!();
+                        if (made) setPick(made);
+                        return;
+                      }
+                      setPick(id || null);
+                    }}
+                  >
+                    {token(!!picked, o.pick.icon, pickLabel ?? o.pick.label)}
+                  </Menu>
+                )}
+                {sources.length > 0 && (
+                  <Menu
+                    items={[
+                      ...(sources.includes('link') ? [{ id: 'link', label: t('Link'), icon: 'link' }] : []),
+                      ...(sources.includes('file') ? [{ id: 'file', label: t('File'), icon: 'attach_file' }] : []),
+                      ...(sources.includes('photo') ? [{ id: 'photo', label: t('Photo'), icon: 'image' }] : []),
+                      ...(sourced ? [{ divider: true }, { id: 'remove', label: t('Remove'), icon: 'close' }] : []),
+                    ]}
+                    onPick={onSource}
+                  >
+                    {token(!!sourced, linkNow ? 'link' : photo ? 'image' : 'attach_file', sourced ?? t('Source'))}
+                  </Menu>
+                )}
+                {said.qty && token(true, 'tag', `× ${said.qty}`)}
+                {said.tag && said.tag.toLowerCase() !== (pickLabel ?? '').toLowerCase() && token(true, 'sell', `# ${said.tag}`)}
+              </Row>
+            </Scroll>
+          </Stack>
+          <Pressable class={a.abHit} onPress={submit}>
+            <Box class={ready ? a.abSend : [a.abSend, a.abOff]}>
               <Icon name="arrow_upward" size={18} tone={ready ? 'accent' : 'muted'} />
             </Box>
           </Pressable>
@@ -198,7 +203,7 @@ export function useAddBar(o: AddBarOptions) {
     <Sheet open={!!sheet} onClose={() => setSheet(null)} detents={['medium', 'large']}>
       {sheet === 'date' && (
         <Stack gap={16}>
-          <Text class={a.sheetTitle}>{whenDay ? dayWords(whenDay, now) : t('Pick a date')}</Text>
+          <Text class={a.abSheetTitle}>{whenDay ? dayWords(whenDay, now) : t('Pick a date')}</Text>
           <Calendar month={whenDay ?? undefined} onPick={(d: string) => setDay(d)} />
           {o.time && (
             <Row gap={8} align="center" wrap>
@@ -214,7 +219,7 @@ export function useAddBar(o: AddBarOptions) {
       )}
       {(sheet === 'file' || sheet === 'photo') && (
         <Stack gap={16}>
-          <Text class={a.sheetTitle}>{sheet === 'photo' ? t('Photo') : t('File')}</Text>
+          <Text class={a.abSheetTitle}>{sheet === 'photo' ? t('Photo') : t('File')}</Text>
           <Upload label={sheet === 'photo' ? t('Add a photo') : t('Add a file')} accept={sheet === 'photo' ? PHOTOS : undefined}
                   onUpload={(f: unknown) => {
                     if (sheet === 'photo') { setPhoto(f); setFile(null); } else { setFile(f); setPhoto(null); }
