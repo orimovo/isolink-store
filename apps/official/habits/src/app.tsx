@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Select, Button, IconButton, Icon, Fab, Grid,
   ProgressRing, Heatmap, Chart, Segmented, Stat, Confetti, Sheet, Avatar, Checkbox, TimePicker, Stepper,
-  useQuery, useData, useLocal, useStore, useMe, useChat, useNav, useNow, useDialog, useShare, useHaptics, t,
+  useQuery, useData, useLocal, useStore, useMe, useChat, useNav, useNow, useDialog, useShare, useHaptics, usePlatform, t,
 } from 'isolink';
 import { remind } from 'isolink/system';
 import s from './app.css';
@@ -140,6 +140,8 @@ function Ring({ h, n, size, onPress }: { h: Habit; n: number; size: number; onPr
 function TodayTab({ hb, celebrate }: { hb: ReturnType<typeof useHabits>; celebrate: (h: Habit) => void }) {
   const nav = useNav();
   const menu = useHabitMenu(hb);
+  // macOS groups a list's rows on one card.
+  const joined = usePlatform().os === 'mac';
   const { habits, checkins, me, today } = hb;
   const [day, setDay] = useLocal<string>(hb.key);
   const week = weekOf(today);
@@ -188,12 +190,12 @@ function TodayTab({ hb, celebrate }: { hb: ReturnType<typeof useHabits>; celebra
         return (
           <Box key={part}>
             {PARTS.some(([p]) => p !== part && dueOn.some((h) => (h.part ?? 'any') === p)) && <Text class={s.h}>{t(label)}</Text>}
-            <Stack gap={8}>
-              {rows.map((h) => {
+            <Stack gap={joined ? 0 : 8} class={joined ? s.joined : undefined}>
+              {rows.map((h, i) => {
                 const n = countOn(checkins, h, day, me.id);
                 const goal = targetOf(h);
                 return (
-                  <Pressable key={h.id} class={s.habit} onPress={() => nav.push('Habit', { id: h.id })} onLongPress={() => menu(h)}>
+                  <Pressable key={h.id} class={joined ? [s.habit, i ? s.inRow : s.inFirst] : s.habit} onPress={() => nav.push('Habit', { id: h.id })} onLongPress={() => menu(h)}>
                     <Ring h={h} n={n} size={46} onPress={hb.canEdit ? () => { if (hb.tick(h, day)) celebrate(h); } : undefined} />
                     <Stack grow>
                       <Text bold>{h.name}</Text>

@@ -25,3 +25,8 @@
 .pick { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--surface); border: 2px solid transparent; }
 .picked { border: 2px solid var(--accent); background: var(--accent-soft); }
 .pickEmoji { font-size: 22px; }
+
+/* macOS: a list's rows share one card, a line between them. */
+.joined { background: var(--surface); border: 1px solid var(--outline); border-radius: 12px; overflow: hidden; }
+.inFirst { background: transparent; border-radius: 0; }
+.inRow { background: transparent; border-radius: 0; border-top: 1px solid var(--outline); }

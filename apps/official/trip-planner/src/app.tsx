@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Button, IconButton, Icon, Fab, Chip, Checkbox, ContextMenu,
   Composer, DatePicker, TimePicker, PlacePicker, Map, MoneyField, Segmented, Select, Stat, Avatar, Upload, Badge, Progress, Scroll,
-  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, fetch, format, has, t,
+  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, usePlatform, fetch, format, has, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -101,6 +101,8 @@ function Countdown({ c }: { c: Ctx }) {
 }
 
 function PlanTab({ c }: { c: Ctx }) {
+  // macOS groups a list's rows on one card.
+  const joined = usePlatform().os === 'mac';
   const nav = useNav();
   const dialog = useDialog();
   // Held on a phone, right-clicked on a computer.
@@ -122,8 +124,8 @@ function PlanTab({ c }: { c: Ctx }) {
   const days = daysOf(c);
   const undated = c.plans.filter((p) => !p.day);
   const pinned = c.plans.filter((p) => p.place);
-  const row = (p: Plan) => (
-    <Pressable key={p.id} class={s.plan} onPress={() => nav.push('Plan', { id: p.id })} onLongPress={c.canEdit ? () => hold(p) : undefined}>
+  const row = (p: Plan, i: number) => (
+    <Pressable key={p.id} class={joined ? [s.plan, i ? s.inRow : s.inFirst] : s.plan} onPress={() => nav.push('Plan', { id: p.id })} onLongPress={c.canEdit ? () => hold(p) : undefined}>
       <Box class={s.kind}><Icon name={iconOf(p.kind)} size={18} /></Box>
       <Stack grow>
         <Text bold>{p.what}</Text>
@@ -154,7 +156,7 @@ function PlanTab({ c }: { c: Ctx }) {
                   <Text class={d === c.today ? [s.h, s.on] : s.h} grow>{dayName(d)}</Text>
                   {c.canEdit && <IconButton icon="add" label={t('Add')} onPress={() => nav.push('Plan', { day: d })} />}
                 </Row>
-                <Stack gap={6}>{rows.map(row)}</Stack>
+                {rows.length > 0 && <Stack gap={joined ? 0 : 6} class={joined ? s.joined : undefined}>{rows.map(row)}</Stack>}
               </Box>
             );
           })}
@@ -172,6 +174,7 @@ function PlanTab({ c }: { c: Ctx }) {
 }
 
 function MoneyTab({ c }: { c: Ctx }) {
+  const joined = usePlatform().os === 'mac';
   const nav = useNav();
   const dialog = useDialog();
   const holdCost = async (x: Cost) => {
@@ -212,9 +215,9 @@ function MoneyTab({ c }: { c: Ctx }) {
           ))}
         </Box>
       )}
-      <Stack gap={6} class={s.list}>
-        {[...c.costs].sort((a, b) => (b.day ?? '').localeCompare(a.day ?? '')).map((x) => (
-          <Pressable key={x.id} class={s.plan} onPress={c.canEdit ? () => nav.push('Cost', { id: x.id }) : undefined}
+      <Stack gap={joined ? 0 : 6} class={joined && c.costs.length ? [s.list, s.joined] : s.list}>
+        {[...c.costs].sort((a, b) => (b.day ?? '').localeCompare(a.day ?? '')).map((x, i) => (
+          <Pressable key={x.id} class={joined ? [s.plan, i ? s.inRow : s.inFirst] : s.plan} onPress={c.canEdit ? () => nav.push('Cost', { id: x.id }) : undefined}
                      onLongPress={c.canEdit ? () => holdCost(x) : undefined}>
             <Avatar person={x.paid} size={30} />
             <Stack grow>

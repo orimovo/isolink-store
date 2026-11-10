@@ -29,3 +29,8 @@
 .swatch { width: 28px; height: 28px; border-radius: 14px; }
 .swatchOn { border: 3px solid var(--ink); }
 .label { font-size: 12px; font-weight: 700; color: var(--muted); padding-bottom: 4px; }
+
+/* macOS: a list's rows share one card, a line between them. */
+.joined { background: var(--surface); border: 1px solid var(--outline); border-radius: 12px; overflow: hidden; }
+.inFirst { background: transparent; border-radius: 0; }
+.inRow { background: transparent; border-radius: 0; border-top: 1px solid var(--outline); }
