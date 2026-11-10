@@ -1,13 +1,13 @@
 .empty { padding: 48px 0; }
 .bigEmoji { font-size: 40px; }
 .sub { font-size: 12px; color: var(--muted); }
-.h { font-size: 11px; font-weight: 800; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted); padding: 10px 4px 6px; }
+.h { font-size: 13px; font-weight: 700; color: var(--muted); padding: 10px 4px 6px; }
 .on { color: var(--accent); }
-.hero { display: flex; flex-direction: row; gap: 14px; align-items: center; border-radius: 22px; padding: 16px; margin-bottom: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-soft)); }
+.hero { display: flex; flex-direction: row; gap: 14px; align-items: center; border-radius: 22px; padding: 16px; margin-bottom: 12px; background: var(--accent); }
 .heroEmoji { font-size: 40px; }
-.heroName { font-size: 20px; font-weight: 800; color: #ffffff; }
-.heroSub { font-size: 12px; color: #ffffffd9; }
-.heroCount { font-size: 15px; font-weight: 800; color: #ffffff; }
+.heroName { font-size: 20px; font-weight: 800; color: var(--on-accent); }
+.heroSub { font-size: 12px; color: var(--on-accent); opacity: 0.85; }
+.heroCount { font-size: 15px; font-weight: 800; color: var(--on-accent); }
 .dayHead { padding-top: 4px; }
 .plan { display: flex; flex-direction: row; gap: 12px; align-items: center; background: var(--surface); border-radius: 16px; padding: 10px 14px 10px 10px; }
 .kind { width: 34px; height: 34px; border-radius: 17px; display: flex; align-items: center; justify-content: center; background: var(--accent-soft); }
@@ -25,3 +25,8 @@
 .pick { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--surface); border: 2px solid transparent; }
 .picked { border: 2px solid var(--accent); background: var(--accent-soft); }
 .pickEmoji { font-size: 22px; }
+
+/* macOS: a list's rows share one card, a line between them. */
+.joined { background: var(--surface); border: 1px solid var(--outline); border-radius: 12px; overflow: hidden; }
+.inFirst { background: transparent; border-radius: 0; }
+.inRow { background: transparent; border-radius: 0; border-top: 1px solid var(--outline); }

@@ -566,6 +566,9 @@ function NoteScreen() {
 
 export default defineApp({
   screens: { Home, Note: NoteScreen },
+  // On a computer a note opens beside the list (not the board, which keeps the
+  // window). A function, so Isolinks before 0.26.53 don't split at all.
+  split: () => ['Home'],
   actions: {
     add: {
       title: 'Add a note',
