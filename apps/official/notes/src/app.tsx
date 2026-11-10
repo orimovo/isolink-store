@@ -11,7 +11,7 @@ import { dayWords, isoDay, siteOf } from './smart';
 type Note = {
   id: string; title?: string; body?: string; pinned?: boolean; color?: string; pos?: string; folder?: string;
   tags?: string[]; x?: number; y?: number; tilt?: number; kind?: string; photo?: unknown; voice?: unknown;
-  sketch?: unknown; links?: string[]; due?: number; link?: string; _by?: string; _edited?: number;
+  sketch?: unknown; links?: string[]; due?: number; link?: string; w?: number; h?: number; _by?: string; _edited?: number;
 };
 type Folder = { id: string; name: string };
 
@@ -24,6 +24,8 @@ const NAMES: Record<string, string> = {
   purple: /*t*/'Purple',
 };
 const TILTS = [-1.2, 0.9, -0.5, 1.4, -0.8, 0.6];
+/** A note's paper, in points: the same shape on the board and opened. */
+const sizeOf = (r: Note): [number, number] => [r.w ?? 190, r.h ?? 160];
 const KINDS: [string, string, string][] = [
   ['note', /*t*/'Note', 'sticky_note_2'], ['list', /*t*/'List', 'checklist'], ['photo', /*t*/'Photo', 'photo_camera'],
   ['voice', /*t*/'Voice', 'mic'], ['sketch', /*t*/'Sketch', 'brush'],
@@ -104,7 +106,7 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
   const more = rest(r);
   return (
     <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} sketch={r.sketch}
-                onPress={onPress}>
+                size={sizeOf(r)} onPress={onPress}>
       <Text class={s.title}>{noteTitle(r)}</Text>
       {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
       {more ? (
@@ -330,9 +332,10 @@ function useNotes() {
   return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder };
 }
 
-function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold }: {
+function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold, onDrop }: {
   folders: Folder[]; folder: string | null; setFolder: (f: string | null) => void; canEdit: boolean;
   newFolder: () => Promise<string | null>; onHold?: (id: string) => void;
+  onDrop?: (folder: string, note: string) => void;
 }) {
   if (folders.length === 0 && !canEdit) return null;
   return (
@@ -343,6 +346,7 @@ function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold }: {
       onAdd={canEdit ? async () => { const id = await newFolder(); if (id) setFolder(id); } : undefined}
       addLabel={t('Folder')}
       onHold={canEdit && onHold ? (v: string) => v && onHold(v) : undefined}
+      onDrop={canEdit ? onDrop : undefined}
     />
   );
 }
@@ -426,7 +430,7 @@ function Home() {
   ) : undefined;
   const board = (r: Note) =>
     writing && r.id === writing.id ? (
-      <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch}
+      <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch} size={sizeOf(r)}
                   sketching={w.mode === 'sketch'}
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
         {(r.title ?? '').trim() ? <Text class={s.title}>{r.title}</Text> : null}
@@ -457,6 +461,28 @@ function Home() {
     const before = at > 0 ? keyed[at - 1] : '';
     const after = at < keyed.length ? keyed[at] : '';
     edit('notes', id, { pos: between(before, after), pinned: at < list.length ? !!list[at].pinned : moving.pinned });
+  };
+
+  // A tag's menu: rename it, or take it off every note.
+  // A note dropped on a folder's tab: into that folder ('' is All: out of any).
+  const into = (f: string, id: string) => edit('notes', id, { folder: f || null });
+  const holdTag = async (g: string) => {
+    const picked = await n.dialog.menu([
+      { id: 'rename', icon: 'edit', label: t('Rename') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    const tagged = all.filter((r) => (r.tags ?? []).includes(g));
+    if (picked === 'rename') {
+      const name = ((await n.dialog.prompt({ title: t('Rename'), placeholder: t('Name'), value: g })) ?? '').trim();
+      if (!name || name === g) return;
+      for (const r of tagged) edit('notes', r.id, { tags: [...new Set((r.tags ?? []).map((x) => (x === g ? name : x)))] });
+      if (tag === g) setTag(name);
+    }
+    if (picked === 'delete') {
+      for (const r of tagged) edit('notes', r.id, { tags: (r.tags ?? []).filter((x) => x !== g) });
+      if (tag === g) setTag(null);
+    }
   };
 
   const tags = new Map<string, number>();
@@ -518,7 +544,7 @@ function Home() {
     >
       {tab === 'board' && (
         <>
-          <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} />
+          <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} onDrop={into} />
           {/* Empty, it's still the board: the folders stay where they are. */}
           <Corkboard
             width={1000}
@@ -526,6 +552,7 @@ function Home() {
             links={links}
             onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
             onHold={n.hold}
+            onResize={canEdit ? (id: string, w: number, h: number) => edit('notes', id, { w, h }) : undefined}
             editing={writing ? writing.id : undefined}
             onDone={inPlace ? w.finish : undefined}
             tools={phone ? undefined : tools}
@@ -540,7 +567,7 @@ function Home() {
           <Box class={s.column}>
             {!bigTitle && <Hero big={t('Notes')} line={noteCount} />}
             {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
-            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} />
+            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} onDrop={into} />
             {tag && (
               <Box class={s.chips}>
                 <Chip icon="close" selected onPress={() => setTag(null)}>{`# ${tag}`}</Chip>
@@ -567,7 +594,8 @@ function Home() {
             ) : (
               <Grid min={200} gap={12}>
                 {[...tags.entries()].sort((a, b) => b[1] - a[1]).map(([g, count]) => (
-                  <Pressable key={g} class={s.tagCard} onPress={() => { setTag(g); setTab('notes'); }}>
+                  <Pressable key={g} class={s.tagCard} onPress={() => { setTag(g); setTab('notes'); }}
+                             onLongPress={canEdit ? () => holdTag(g) : undefined}>
                     <Box class={s.tagArt} style={{ background: `${hueOfTag(g)}2e` }}>
                       <Icon name="sell" size={18} />
                     </Box>
@@ -657,7 +685,7 @@ function NoteScreen() {
   const bar = canEdit ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} /> : undefined;
 
   const note = (
-    <StickyNote color={colorOf(row)} fold={36} sketch={row.sketch} sketching={mode === 'sketch'}
+    <StickyNote color={colorOf(row)} sketch={row.sketch} sketching={mode === 'sketch'} size={sizeOf(row)}
                 onSketch={(f: unknown) => { edit('notes', id, { sketch: f }); setMode(null); }}>
       {canEdit ? (
         <Editor id="note" rich plain value={body} onChange={type} autofocus={!!fresh && mode === null}

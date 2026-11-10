@@ -154,6 +154,18 @@
           "link": {
             "id": 17,
             "type": "link"
+          },
+          "w": {
+            "id": 18,
+            "type": "number",
+            "min": 0,
+            "max": 4000
+          },
+          "h": {
+            "id": 19,
+            "type": "number",
+            "min": 0,
+            "max": 4000
           }
         }
       }
