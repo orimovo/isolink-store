@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
   StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
-  Grid, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
+  Grid, Glass, Button, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
@@ -123,6 +123,120 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
       ) : null}
     </StickyNote>
   );
+}
+
+/** A note's format bar, with its photo, voice and sketch after the words' buttons. */
+function NoteTools({ row, editor, mode, setMode }: {
+  row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void;
+}) {
+  const { edit } = useData();
+  const id = row.id;
+  return (
+    <FormatBar for={editor}>
+      {row.photo ? (
+        <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => edit('notes', id, { photo: null })} />
+      ) : (
+        <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp"
+                onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
+      )}
+      {row.voice ? (
+        <IconButton icon="mic_off" label={t('Remove voice')} onPress={() => edit('notes', id, { voice: null })} />
+      ) : (
+        <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
+                    onPress={() => setMode(mode === 'voice' ? null : 'voice')} />
+      )}
+      <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
+                  onPress={() => setMode(mode === 'sketch' ? null : 'sketch')} />
+      {row.sketch && (
+        <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => edit('notes', id, { sketch: null })} />
+      )}
+    </FormatBar>
+  );
+}
+
+/** What's on a note under its words: its photo, voice clip, and the recorder while recording. */
+function NoteMedia({ row, mode, setMode }: { row: Note; mode: string | null; setMode: (m: string | null) => void }) {
+  const { edit } = useData();
+  return (
+    <>
+      {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
+      {row.voice ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
+      {mode === 'voice' && !row.voice ? (
+        <Box class={s.block}>
+          <Recorder onDone={(f: unknown) => { edit('notes', row.id, { voice: f }); setMode(null); }} />
+        </Box>
+      ) : null}
+    </>
+  );
+}
+
+const blankNote = (body: string, r?: Note | null) =>
+  !body.replace(/- \[ \]\s*/g, '').trim() && !r?.photo && !r?.voice && !r?.sketch;
+
+/** Writing on one note right there on the board: what's typed is saved as
+ *  it goes; put down empty, a new one goes. */
+function useInPlace(all: Note[]) {
+  const { add, edit, remove } = useData();
+  const [editing, setEditing] = useLocal<string | null>(null);
+  const [fresh, setFresh] = useLocal<string | null>(null);
+  const [draft, setDraft] = useLocal<string | null>(null);
+  const [mode, setMode] = useLocal<string | null>(null);
+  const saved = useRef({ id: '', text: '', turn: 0 });
+  const row = editing ? all.find((r) => r.id === editing) ?? null : null;
+  const body = draft ?? row?.body ?? '';
+  const latest = useRef({ editing, fresh, body, row });
+  latest.current = { editing, fresh, body, row };
+
+  const flush = (id: string, text: string) => {
+    if (saved.current.id === id && text === saved.current.text) return;
+    saved.current = { ...saved.current, id, text };
+    edit('notes', id, { body: text });
+  };
+  /** Puts the note down: kept, or gone if it was new and is still empty. */
+  const finish = () => {
+    const { editing: id, fresh: isNew, body: text, row: r } = latest.current;
+    if (!id) return;
+    if (id === isNew && blankNote(text, r)) remove('notes', id);
+    else if (r && text !== (r.body ?? '')) flush(id, text);
+    setEditing(null);
+    setFresh(null);
+    setDraft(null);
+    setMode(null);
+  };
+  // Leaving the app keeps what was typed; a new note still empty goes.
+  useEffect(() => () => {
+    const { editing: id, fresh: isNew, body: text, row: r } = latest.current;
+    if (!id) return;
+    if (id === isNew && blankNote(text, r)) remove('notes', id);
+    else if (r && text !== (r.body ?? '')) edit('notes', id, { body: text });
+  }, []);
+
+  const start = (id: string, isNew = false) => {
+    if (latest.current.editing === id) return;
+    finish();
+    saved.current = { id, text: all.find((r) => r.id === id)?.body ?? '', turn: 0 };
+    setEditing(id);
+    setFresh(isNew ? id : null);
+  };
+  const create = (folder: string | null) => {
+    const id = add('notes', {
+      body: '',
+      kind: 'note',
+      folder: folder ?? undefined,
+      color: COLORS[all.length % 6][0],
+    });
+    start(id, true);
+  };
+  const type = (text: string) => {
+    setDraft(text);
+    const id = latest.current.editing;
+    if (!id) return;
+    const turn = ++saved.current.turn;
+    delay(800).then(() => {
+      if (saved.current.turn === turn && latest.current.editing === id) flush(id, text);
+    });
+  };
+  return { editing, row, body, mode, setMode, start, finish, create, type, fresh };
 }
 
 function useNotes() {
@@ -273,6 +387,56 @@ function Home() {
       (!q || `${r.title ?? ''}\n${r.body ?? ''}\n${(r.tags ?? []).join(' ')}`.toLowerCase().includes(q)),
   );
   const open = (r: Note) => nav.push('Note', { id: r.id });
+  // On the board a note is written on where it is, on Isolinks that can.
+  const inPlace = has('corkboard.editing') && canEdit;
+  const w = useInPlace(all);
+  const phone = useLayout().width < 600;
+  const writing = inPlace && tab === 'board' && w.row ? w.row : null;
+  const tools = writing ? (
+    <Glass padding={1}>
+      <NoteTools row={writing} editor="board-note" mode={w.mode} setMode={w.setMode} />
+    </Glass>
+  ) : undefined;
+  const pickTag = async (r: Note) => {
+    const picked = await n.dialog.menu([
+      ...tagNames.map((g) => ({ id: g, icon: (r.tags ?? []).includes(g) ? 'check' : 'sell', label: g })),
+      ...(tagNames.length ? [{ divider: true }] : []),
+      { id: '+', icon: 'add', label: t('New tag') },
+    ]);
+    if (!picked) return;
+    const g = picked === '+'
+      ? ((await n.dialog.prompt({ title: t('New tag'), placeholder: t('Name') })) ?? '').trim()
+      : picked;
+    if (!g) return;
+    const now = r.tags ?? [];
+    edit('notes', r.id, { tags: now.includes(g) ? now.filter((x) => x !== g) : [...now, g] });
+  };
+  const under = writing ? (
+    <Glass padding={1}>
+      <Row gap={1} align="center">
+        {COLORS.map(([c, hex]) => (
+          <Pressable key={c} class={[s.dot, colorOf(writing) === c && s.on]} style={{ background: hex }}
+                     onPress={() => edit('notes', writing.id, { color: c })} />
+        ))}
+        <IconButton icon="sell" label={(writing.tags ?? []).length ? (writing.tags ?? []).join(', ') : t('Tags')}
+                    onPress={() => pickTag(writing)} />
+        <Button label={t('Done')} onPress={w.finish} />
+      </Row>
+    </Glass>
+  ) : undefined;
+  const board = (r: Note) =>
+    writing && r.id === writing.id ? (
+      <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch}
+                  sketching={w.mode === 'sketch'}
+                  onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
+        {(r.title ?? '').trim() ? <Text class={s.title}>{r.title}</Text> : null}
+        <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
+                placeholder={t('New note')} />
+        <NoteMedia row={r} mode={w.mode} setMode={w.setMode} />
+      </StickyNote>
+    ) : (
+      <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => (inPlace ? w.start(r.id) : open(r))} onTick={tick(r)} />
+    );
   const tick = (r: Note) => (canEdit ? (body: string) => edit('notes', r.id, { body }) : undefined);
 
   /** Dropped on another note in the grid: it takes that one's place. */
@@ -346,8 +510,11 @@ function Home() {
           <IconButton icon="search" label={t('Search')} onPress={() => { setSearching(!searching); setSearch(''); }} />
         ) : undefined
       }
-      fab={canEdit && tab === 'board' ? <Fab icon="add" onPress={() => n.create(folder)} /> : undefined}
-      footer={canEdit && tab === 'notes' ? adder.bar : undefined}
+      fab={canEdit && tab === 'board' && !writing
+        ? <Fab icon="add" onPress={() => (inPlace ? w.create(folder) : n.create(folder))} />
+        : undefined}
+      footer={canEdit && tab === 'notes' ? adder.bar : writing && phone ? tools : undefined}
+      onBack={writing && has('screen.onBack') ? w.finish : undefined}
     >
       {tab === 'board' && (
         <>
@@ -359,10 +526,12 @@ function Home() {
             links={links}
             onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
             onHold={n.hold}
+            editing={writing ? writing.id : undefined}
+            onDone={inPlace ? w.finish : undefined}
+            tools={phone ? undefined : tools}
+            under={under}
           >
-            {inFolder.map((r) => (
-              <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => open(r)} onTick={tick(r)} />
-            ))}
+            {inFolder.map(board)}
           </Corkboard>
         </>
       )}
@@ -450,8 +619,7 @@ function NoteScreen() {
   useEffect(() => () => {
     if (!canEdit) return;
     const r = latest.current.row;
-    const blank = !latest.current.body.replace(/- \[ \]\s*/g, '').trim() && !r?.photo && !r?.voice && !r?.sketch;
-    if (fresh && blank) remove('notes', id);
+    if (fresh && blankNote(latest.current.body, r)) remove('notes', id);
     else flush(latest.current.body);
   }, []);
 
@@ -486,27 +654,7 @@ function NoteScreen() {
   ) : undefined;
   const strung = all.filter((o) => (row.links ?? []).includes(o.id) || (o.links ?? []).includes(id));
 
-  const bar = canEdit ? (
-    <FormatBar for="note">
-      {row.photo ? (
-        <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => edit('notes', id, { photo: null })} />
-      ) : (
-        <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp"
-                onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
-      )}
-      {row.voice ? (
-        <IconButton icon="mic_off" label={t('Remove voice')} onPress={() => edit('notes', id, { voice: null })} />
-      ) : (
-        <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
-                    onPress={() => setMode(mode === 'voice' ? null : 'voice')} />
-      )}
-      <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
-                  onPress={() => setMode(mode === 'sketch' ? null : 'sketch')} />
-      {row.sketch && (
-        <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => edit('notes', id, { sketch: null })} />
-      )}
-    </FormatBar>
-  ) : undefined;
+  const bar = canEdit ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} /> : undefined;
 
   const note = (
     <StickyNote color={colorOf(row)} fold={36} sketch={row.sketch} sketching={mode === 'sketch'}
@@ -519,13 +667,7 @@ function NoteScreen() {
       ) : !row.photo && !row.voice && !row.sketch ? (
         <Text>{t('Empty note')}</Text>
       ) : null}
-      {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
-      {row.voice ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
-      {mode === 'voice' && !row.voice ? (
-        <Box class={s.block}>
-          <Recorder onDone={(f: unknown) => { edit('notes', id, { voice: f }); setMode(null); }} />
-        </Box>
-      ) : null}
+      <NoteMedia row={row} mode={mode} setMode={setMode} />
     </StickyNote>
   );
 
