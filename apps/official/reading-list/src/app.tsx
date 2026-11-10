@@ -254,7 +254,7 @@ function Home() {
     <Screen
       title={t('Reading list')}
       tabs={[
-        { value: 'shelf', label: t('Shelf'), icon: 'auto_stories' },
+        { value: 'shelf', label: t('Shelf'), icon: 'menu_book' },
         { value: 'stats', label: t('Stats'), icon: 'insights' },
         { value: 'quotes', label: t('Quotes'), icon: 'format_quote' },
       ]}
@@ -423,7 +423,7 @@ function AddScreen() {
       <Segmented value={status} onChange={setStatus} options={STATUSES.map(([value, label]) => ({ value, label: t(label) }))} />
       <Row gap={8} align="center" class={s.searchRow}>
         <Stack grow><SearchField value={q} placeholder={t('Title or author')} onChange={setQ} onSubmit={() => q.trim() && search({ text: q.trim() })} /></Stack>
-        <IconButton icon="barcode_scanner" label={t('Scan')} onPress={() => setScan(!scan)} />
+        <IconButton icon="qr_code_scanner" label={t('Scan')} onPress={() => setScan(!scan)} />
       </Row>
       {scan && (
         <Scanner height={220} formats={['ean13']} onScan={({ text }: { text: string }) => { setScan(false); search({ isbn: text }); }} />

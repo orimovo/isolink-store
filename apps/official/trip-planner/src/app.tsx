@@ -18,7 +18,7 @@ type Cost = { id: string; what: string; amount?: number; paid?: string; split?: 
 type Member = { id: string; name: string };
 
 const KINDS: [string, string, string][] = [
-  ['travel', /*t*/'Travel', 'flight'], ['stay', /*t*/'Stay', 'home'], ['eat', /*t*/'Eat', 'restaurant'], ['do', /*t*/'Do', 'local_activity'],
+  ['travel', /*t*/'Travel', 'flight'], ['stay', /*t*/'Stay', 'home'], ['eat', /*t*/'Eat', 'restaurant'], ['do', /*t*/'Do', 'confirmation_number'],
 ];
 const EMOJIS = ['✈️', '🏖️', '🏔️', '🏙️', '🚆', '🚗', '⛺', '🛳️', '🎿', '🌴'];
 const CURRENCIES = ['GBP', 'EUR', 'USD', 'AUD', 'CAD', 'JPY', 'INR', 'CNY', 'BRL', 'AED'];
@@ -93,7 +93,7 @@ function Countdown({ c }: { c: Ctx }) {
       <Stack grow gap={2}>
         <Text class={s.heroName}>{tr.name}</Text>
         <Text class={s.heroSub}>{[tr.place?.name, tr.start && tr.end ? `${dayName(tr.start)} – ${dayName(tr.end)}` : tr.start ? dayName(tr.start) : ''].filter(Boolean).join(' · ')}</Text>
-        {c.plans.length > 0 && <Progress value={booked / c.plans.length} label={t('{p0} of {p1} booked', { p0: booked, p1: c.plans.length })} />}
+        {c.plans.length > 0 && <Text class={s.heroSub}>{t('{p0} of {p1} booked', { p0: booked, p1: c.plans.length })}</Text>}
       </Stack>
       {line ? <Text class={s.heroCount}>{line}</Text> : null}
     </Pressable>
