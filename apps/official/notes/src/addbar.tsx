@@ -3,7 +3,7 @@
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
   Box, Row, Stack, Scroll, Text, TextField, Icon, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
-  Button, IconButton, Glass, useLocal, useDialog, useNow, usePlatform, has, t,
+  Button, IconButton, Glass, Composer, useLocal, useDialog, useNow, usePlatform, has, t,
 } from 'isolink';
 import a from './addbar.css';
 import { read, dayFrom, nextWeekday, dayWords, siteOf, Said } from './smart';
@@ -120,15 +120,18 @@ export function useAddBar(o: AddBarOptions) {
   };
 
   // Only an icon until it's set; then what it's set to, beside it.
+  // In the chat's message box (Isolink 0.26.52 on), the same size as its attach and camera.
+  const composer = has('composer');
+  const glyph = composer ? (desk ? 20 : 24) : desk ? 17 : 20;
   const token = (on: boolean, icon: string, words: string) => (
     <Box class={on ? [a.abToken, a.abOn] : [a.abToken, desk ? a.abIconD : a.abIcon]}>
-      <Icon name={icon} size={desk ? 17 : 20} tone={on ? 'accent' : 'muted'} />
+      <Icon name={icon} size={on ? (desk ? 17 : 20) : glyph} tone={on ? 'accent' : 'muted'} />
       {on && <Text class={a.abTokenOnText} lines={1}>{short(words)}</Text>}
     </Box>
   );
 
   const menus = (
-    <Row gap={1} align="center">
+    <Row gap={composer ? 0 : 1} align="center">
       <Menu
         items={[
           { id: 'today', label: t('Today'), icon: 'event' },
@@ -180,9 +183,15 @@ export function useAddBar(o: AddBarOptions) {
     </Row>
   );
 
-  // One pill, as the chat's message box: what's typed, then a date, the
-  // app's pick and a source, then + on a round of the accent to add it.
-  const bar = (
+  // The chat's own message box: what's typed, then a date, the app's pick
+  // and a source, then send on a round of the accent to add it.
+  const bar = composer ? (
+    <Composer value={draft} onChange={setDraft} onSubmit={submit} placeholder={o.placeholder} sendLabel={t('Add')} ready={ready}>
+      <Box class={desk ? a.abMenusD : a.abMenusC}>
+        <Scroll direction="horizontal">{menus}</Scroll>
+      </Box>
+    </Composer>
+  ) : (
     <Box class={a.abWrap}>
       <Box class={a.abBar}>
         <Glass radius={h / 2} padding={0}>

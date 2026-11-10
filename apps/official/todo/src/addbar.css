@@ -6,6 +6,9 @@
 .abLine { height: 48px; padding: 0 4px 0 18px; }
 .abLineD { height: 40px; padding: 0 3px 0 14px; }
 .abMenus { max-width: 60%; }
+/* In the chat's message box: as many as fit beside the text, the rest scroll. */
+.abMenusC { max-width: 160px; }
+.abMenusD { max-width: 240px; }
 .abToken { display: flex; gap: 6px; align-items: center; border-radius: 999px; padding: 4px 10px; max-width: 200px; }
 .abToken:hover { background: var(--accent-soft); }
 .abIcon { width: 34px; height: 34px; padding: 0; place-items: center; }
