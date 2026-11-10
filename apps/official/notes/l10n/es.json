@@ -79,5 +79,8 @@
   "Weekend": "Fin de semana",
   "Yellow": "Amarillo",
   "{p0} notes": "{p0} notas",
-  "{p0} tags": "{p0} etiquetas"
+  "{p0} tags": "{p0} etiquetas",
+  "Sticker": "Pegatina",
+  "Chat": "Chat",
+  "Contact": "Contacto"
 }
