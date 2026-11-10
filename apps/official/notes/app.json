@@ -125,6 +125,18 @@
               {
                 "id": "sketch",
                 "name": "Sketch"
+              },
+              {
+                "id": "sticker",
+                "name": "Sticker"
+              },
+              {
+                "id": "person",
+                "name": "Person"
+              },
+              {
+                "id": "chat",
+                "name": "Chat"
               }
             ]
           },
@@ -166,6 +178,52 @@
             "type": "number",
             "min": 0,
             "max": 4000
+          },
+          "pin": {
+            "id": 20,
+            "type": "choice",
+            "options": [
+              {
+                "id": "red",
+                "name": "Red"
+              },
+              {
+                "id": "blue",
+                "name": "Blue"
+              },
+              {
+                "id": "green",
+                "name": "Green"
+              },
+              {
+                "id": "yellow",
+                "name": "Yellow"
+              },
+              {
+                "id": "purple",
+                "name": "Purple"
+              },
+              {
+                "id": "black",
+                "name": "Black"
+              },
+              {
+                "id": "white",
+                "name": "White"
+              }
+            ]
+          },
+          "ref": {
+            "id": 21,
+            "type": "json"
+          },
+          "stickers": {
+            "id": 22,
+            "type": "json"
+          },
+          "refs": {
+            "id": 23,
+            "type": "json"
           }
         }
       }
