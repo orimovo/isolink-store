@@ -181,38 +181,52 @@ async function stickOn(r: Note, edit: (t: string, id: string, f: object) => void
 function NoteTools({ row, editor, mode, setMode }: {
   row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void;
 }) {
+  return (
+    <FormatBar for={editor}>
+      <NoteExtras row={row} mode={mode} setMode={setMode} />
+    </FormatBar>
+  );
+}
+
+/** What a note can have besides words: stickers and chats on a board with pins, a photo, a
+ *  voice clip and a sketch. [then], after one's picked. */
+function NoteExtras({ row, mode, setMode, then }: {
+  row: Note; mode: string | null; setMode: (m: string | null) => void; then?: () => void;
+}) {
   const { edit } = useData();
   const dialog = useDialog();
   const id = row.id;
+  const after = then ?? (() => {});
   return (
-    <FormatBar for={editor}>
+    <>
       {pins() ? (
         <>
-          <IconButton icon="add_reaction" label={t('Sticker')} onPress={() => stickOn(row, edit, dialog.sticker)} />
+          <IconButton icon="add_reaction" label={t('Sticker')} onPress={() => { after(); stickOn(row, edit, dialog.sticker); }} />
           <IconButton icon="forum" label={t('Chat')} onPress={async () => {
+            after();
             const ref = await dialog.chat();
             if (ref) edit('notes', id, { refs: [...(row.refs ?? []), ref] });
           }} />
         </>
       ) : null}
       {row.photo ? (
-        <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => edit('notes', id, { photo: null })} />
+        <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => { edit('notes', id, { photo: null }); after(); }} />
       ) : (
         <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp"
-                onUpload={(f: unknown) => edit('notes', id, { photo: f })} />
+                onUpload={(f: unknown) => { edit('notes', id, { photo: f }); after(); }} />
       )}
       {row.voice ? (
-        <IconButton icon="mic_off" label={t('Remove voice')} onPress={() => edit('notes', id, { voice: null })} />
+        <IconButton icon="mic_off" label={t('Remove voice')} onPress={() => { edit('notes', id, { voice: null }); after(); }} />
       ) : (
         <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
-                    onPress={() => setMode(mode === 'voice' ? null : 'voice')} />
+                    onPress={() => { setMode(mode === 'voice' ? null : 'voice'); after(); }} />
       )}
       <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
-                  onPress={() => setMode(mode === 'sketch' ? null : 'sketch')} />
+                  onPress={() => { setMode(mode === 'sketch' ? null : 'sketch'); after(); }} />
       {row.sketch && (
-        <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => edit('notes', id, { sketch: null })} />
+        <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => { edit('notes', id, { sketch: null }); after(); }} />
       )}
-    </FormatBar>
+    </>
   );
 }
 
@@ -523,9 +537,11 @@ function Home() {
   // On the board a note is written on where it is, on Isolinks that can.
   const inPlace = has('corkboard.editing') && canEdit;
   const w = useInPlace(all);
+  const [bar, setBar] = useLocal<string | null>(null);
   const phone = useLayout().width < 600;
   const writing = inPlace && tab === 'board' && w.row ? w.row : null;
-  const tools = writing ? (
+  // A phone's tools go on its keyboard, the colours under the note.
+  const phoneTools = writing ? (
     <Glass padding={1}>
       <NoteTools row={writing} editor="board-note" mode={w.mode} setMode={w.setMode} />
     </Glass>
@@ -544,19 +560,58 @@ function Home() {
     const now = r.tags ?? [];
     edit('notes', r.id, { tags: now.includes(g) ? now.filter((x) => x !== g) : [...now, g] });
   };
-  const under = writing ? (
+  const tagButton = (r: Note, then?: () => void) => (
+    <IconButton icon="sell" label={(r.tags ?? []).length ? (r.tags ?? []).join(', ') : t('Tags')}
+                onPress={() => { then?.(); pickTag(r); }} />
+  );
+  const doneButton = () => <IconButton icon="check" label={t('Done')} variant="filled" onPress={() => { setBar(null); w.finish(); }} />;
+  const colours = (r: Note, then?: () => void) => COLORS.map(([c, hex]) => (
+    <Pressable key={c} class={[s.dot, colorOf(r) === c && s.on]} style={{ background: hex }}
+               onPress={() => { edit('notes', r.id, { color: c }); then?.(); }} />
+  ));
+  // A phone's, under the note: its colours, tags and Done.
+  const phoneUnder = writing ? (
     <Glass padding={1}>
       <Row gap={1} align="center">
-        {COLORS.map(([c, hex]) => (
-          <Pressable key={c} class={[s.dot, colorOf(writing) === c && s.on]} style={{ background: hex }}
-                     onPress={() => edit('notes', writing.id, { color: c })} />
-        ))}
-        <IconButton icon="sell" label={(writing.tags ?? []).length ? (writing.tags ?? []).join(', ') : t('Tags')}
-                    onPress={() => pickTag(writing)} />
-        <Button label={t('Done')} onPress={w.finish} />
+        {colours(writing)}
+        {tagButton(writing)}
+        {doneButton()}
       </Row>
     </Glass>
   ) : undefined;
+  // A computer's: one bar over the note. Its words' buttons and its colour; the colour, or
+  // more, swaps them for the colours, or for photo, voice, sketch and the rest.
+  const shut = () => setBar(null);
+  const deskTools = writing ? (
+    <Glass padding={1}>
+      {bar === 'colors' ? (
+        <Row key="colors" gap={1} align="center">
+          <IconButton icon="chevron_left" label={t('Back')} onPress={shut} />
+          {colours(writing, shut)}
+          {doneButton()}
+        </Row>
+      ) : bar === 'more' ? (
+        <Row key="more" gap={0} align="center">
+          <IconButton icon="chevron_left" label={t('Back')} onPress={shut} />
+          <NoteExtras row={writing} mode={w.mode} setMode={w.setMode} then={shut} />
+          {tagButton(writing, shut)}
+          {doneButton()}
+        </Row>
+      ) : (
+        <Row key="main" gap={0} align="center">
+          <FormatBar for="board-note">
+            <Pressable class={s.dotButton} onPress={() => setBar('colors')}>
+              <Box class={s.dot} style={{ background: (COLORS.find(([c]) => c === colorOf(writing)) ?? COLORS[0])[1] }} />
+            </Pressable>
+            <IconButton icon="more_horiz" label={t('More')} onPress={() => setBar('more')} />
+            {doneButton()}
+          </FormatBar>
+        </Row>
+      )}
+    </Glass>
+  ) : undefined;
+  const tools = phone ? phoneTools : deskTools;
+  const under = phone ? phoneUnder : undefined;
   const board = (r: Note) =>
     writing && r.id === writing.id ? (
       <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch} size={sizeOf(r)}
