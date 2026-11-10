@@ -1,6 +1,6 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
-  StickyNote, Corkboard, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
+  StickyNote, Corkboard, Sticker, ChatCard, PersonCard, ChatChip, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
   Grid, Glass, Button, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
 } from 'isolink';
 import s from './app.css';
@@ -12,7 +12,14 @@ type Note = {
   id: string; title?: string; body?: string; pinned?: boolean; color?: string; pos?: string; folder?: string;
   tags?: string[]; x?: number; y?: number; tilt?: number; kind?: string; photo?: unknown; voice?: unknown;
   sketch?: unknown; links?: string[]; due?: number; link?: string; w?: number; h?: number; _by?: string; _edited?: number;
+  pin?: string; ref?: Ref; stickers?: Stuck[]; refs?: Ref[];
 };
+/** A chat, message or link picked with dialog.chat(), a person from
+ *  dialog.person(), or a sticker's emoji: what a board item is of. */
+type Ref = { kind?: string; chat?: string; message?: string; title?: string; text?: string; url?: string;
+  id?: string; name?: string; emoji?: string };
+/** A sticker stuck on a note, where on it. */
+type Stuck = { emoji: string; x: number; y: number };
 type Folder = { id: string; name: string };
 
 export const COLORS: [string, string][] = [
@@ -30,6 +37,12 @@ const KINDS: [string, string, string][] = [
   ['note', /*t*/'Note', 'sticky_note_2'], ['list', /*t*/'List', 'checklist'], ['photo', /*t*/'Photo', 'photo_camera'],
   ['voice', /*t*/'Voice', 'mic'], ['sketch', /*t*/'Sketch', 'brush'],
 ];
+
+/** Things on the board that aren't notes: a sticker, a person's card, a chat's. */
+const ITEMS = ['sticker', 'person', 'chat'];
+const isItem = (r: Note) => ITEMS.includes(r.kind ?? '');
+/** Strings, pin colours, stickers and cards: Isolinks that draw them. */
+const pins = () => has('corkboard.pins');
 
 /** A number the same for the same id: a note's colour or tilt before it has one. */
 function hash(id: string) {
@@ -53,6 +66,9 @@ const fence = (line: string) => /^\s*(`{3,}|~{3,})/.test(line);
 
 /** A note's title: its own, or its first line. */
 function noteTitle(r: Note) {
+  if (r.kind === 'sticker') return r.ref?.emoji ?? t('Sticker');
+  if (r.kind === 'person') return r.ref?.name ?? t('Contact');
+  if (r.kind === 'chat') return r.ref?.title || t('Chat');
   const own = (r.title ?? '').trim();
   if (own) return own;
   const line = (r.body ?? '').split('\n').find((l) => l.trim()) ?? '';
@@ -106,7 +122,7 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
   const more = rest(r);
   return (
     <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} sketch={r.sketch}
-                size={sizeOf(r)} onPress={onPress}>
+                size={sizeOf(r)} onPress={onPress} pin={r.pin} stickers={pins() ? r.stickers : undefined}>
       <Text class={s.title}>{noteTitle(r)}</Text>
       {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
       {more ? (
@@ -115,6 +131,7 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
       {r.voice ? (
         <Row gap={1} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
       ) : null}
+      {pins() && r.refs?.length ? <Chips refs={r.refs} /> : null}
       {typeof r.due === 'number' || r.link ? (
         <Row gap={10} align="center" wrap class={s.paperMeta}>
           {typeof r.due === 'number' ? (
@@ -127,14 +144,57 @@ function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: (
   );
 }
 
+/** Chats and messages put in a note, each a small pill; held, [onRemove]. */
+function Chips({ refs, onRemove }: { refs: Ref[]; onRemove?: (i: number) => void }) {
+  return (
+    <Row gap={1} wrap class={s.refs}>
+      {refs.map((ref, i) => (
+        <ChatChip key={`${ref.chat}/${ref.message ?? ''}/${i}`} ref={ref}
+                  onRemove={onRemove ? () => onRemove(i) : undefined} />
+      ))}
+    </Row>
+  );
+}
+
+/** A board item: a sticker, a person's card or a chat's. */
+function Item({ r, tilt }: { r: Note; tilt: number }) {
+  if (r.kind === 'sticker') {
+    return <Sticker key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt * 3} emoji={r.ref?.emoji ?? '⭐'} size={[84, 70]} />;
+  }
+  if (r.kind === 'person') {
+    return <PersonCard key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt} pin={r.pin} person={r.ref?.id} name={r.ref?.name}
+                       size={[210, 76]} />;
+  }
+  return <ChatCard key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt} pin={r.pin} ref={r.ref ?? {}} size={[220, 120]} />;
+}
+
+/** A sticker, picked, stuck on note [r] near its bottom corner. */
+async function stickOn(r: Note, edit: (t: string, id: string, f: object) => void, pick: () => Promise<string | null>) {
+  const emoji = await pick();
+  if (!emoji) return;
+  const [w, h] = sizeOf(r);
+  const n = (r.stickers ?? []).length;
+  edit('notes', r.id, { stickers: [...(r.stickers ?? []), { emoji, x: Math.max(4, w - 56 - n * 34), y: Math.max(24, h - 64) }] });
+}
+
 /** A note's format bar, with its photo, voice and sketch after the words' buttons. */
 function NoteTools({ row, editor, mode, setMode }: {
   row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void;
 }) {
   const { edit } = useData();
+  const dialog = useDialog();
   const id = row.id;
   return (
     <FormatBar for={editor}>
+      {pins() ? (
+        <>
+          <IconButton icon="add_reaction" label={t('Sticker')} onPress={() => stickOn(row, edit, dialog.sticker)} />
+          <IconButton icon="forum" label={t('Chat')} onPress={async () => {
+            const ref = await dialog.chat();
+            if (ref) edit('notes', id, { refs: [...(row.refs ?? []), ref] });
+          }} />
+        </>
+      ) : null}
       {row.photo ? (
         <IconButton icon="hide_image" label={t('Remove photo')} onPress={() => edit('notes', id, { photo: null })} />
       ) : (
@@ -161,6 +221,10 @@ function NoteMedia({ row, mode, setMode }: { row: Note; mode: string | null; set
   const { edit } = useData();
   return (
     <>
+      {pins() && row.refs?.length ? (
+        <Chips refs={row.refs}
+               onRemove={(i) => edit('notes', row.id, { refs: (row.refs ?? []).filter((_, j) => j !== i) })} />
+      ) : null}
       {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
       {row.voice ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
       {mode === 'voice' && !row.voice ? (
@@ -267,12 +331,17 @@ function useNotes() {
   const hold = async (id: string) => {
     const r = all.find((x) => x.id === id);
     if (!r || !canEdit) return;
-    const others = all.filter((x) => x.id !== id && (x.folder ?? '') === (r.folder ?? ''));
+    const others = all.filter((x) => x.id !== id && (x.folder ?? '') === (r.folder ?? '') && (pins() || !isItem(x))
+      && x.kind !== 'sticker');
+    const item = isItem(r);
+    const strung = r.links?.length || all.some((o) => (o.links ?? []).includes(id));
     const picked = await dialog.menu([
-      { id: 'pin', icon: 'push_pin', label: r.pinned ? t('Unpin') : t('Pin') },
-      { id: 'color', icon: 'palette', label: t('Colour') },
-      ...(others.length ? [{ id: 'link', icon: 'linear_scale', label: t('String to') }] : []),
-      ...(r.links?.length ? [{ id: 'unlink', icon: 'link_off', label: t('Cut string') }] : []),
+      ...(item ? [] : [
+        { id: 'pin', icon: 'push_pin', label: r.pinned ? t('Unpin') : t('Pin') },
+        { id: 'color', icon: 'palette', label: t('Colour') },
+      ]),
+      ...(others.length && r.kind !== 'sticker' ? [{ id: 'link', icon: 'linear_scale', label: t('String to') }] : []),
+      ...(strung ? [{ id: 'unlink', icon: 'link_off', label: t('Cut string') }] : []),
       ...(folders.length ? [{ id: 'move', icon: 'folder', label: t('Move to') }] : []),
       { divider: true },
       { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
@@ -286,7 +355,10 @@ function useNotes() {
       const to = await dialog.menu(others.slice(0, 20).map((o) => ({ id: o.id, icon: 'sticky_note_2', label: noteTitle(o) })));
       if (to) edit('notes', id, { links: [...new Set([...(r.links ?? []), to])] });
     }
-    if (picked === 'unlink') edit('notes', id, { links: [] });
+    if (picked === 'unlink') {
+      edit('notes', id, { links: [] });
+      for (const o of all) if ((o.links ?? []).includes(id)) edit('notes', o.id, { links: (o.links ?? []).filter((l) => l !== id) });
+    }
     if (picked === 'move') {
       const f = await dialog.menu([
         { id: '', icon: 'sticky_note_2', label: t('All') },
@@ -294,7 +366,8 @@ function useNotes() {
       ]);
       if (f !== null && f !== undefined) edit('notes', id, { folder: f || null });
     }
-    if (picked === 'delete') {
+    if (picked === 'delete' && item) remove('notes', id);
+    if (picked === 'delete' && !item) {
       const ok = await dialog.confirm({
         title: t('Delete this note?'),
         body: t('It goes for everyone in this database.'),
@@ -329,7 +402,32 @@ function useNotes() {
     }
   };
 
-  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder };
+  /** String from [a]'s pin to [b]'s. */
+  const tie = (a: string, b: string) => {
+    const r = all.find((x) => x.id === a);
+    const o = all.find((x) => x.id === b);
+    if (!r || !o || (r.links ?? []).includes(b) || (o.links ?? []).includes(a)) return;
+    edit('notes', a, { links: [...(r.links ?? []), b] });
+  };
+  /** The string between [a] and [b], whichever end it was tied from. */
+  const cut = (a: string, b: string) => {
+    for (const [x, y] of [[a, b], [b, a]]) {
+      const r = all.find((o) => o.id === x);
+      if (r && (r.links ?? []).includes(y)) edit('notes', x, { links: (r.links ?? []).filter((l) => l !== y) });
+    }
+  };
+  /** A sticker let go on a note: stuck on it there. */
+  const drop = (id: string, onto: string, x: number, y: number) => {
+    const r = all.find((o) => o.id === id);
+    const note = all.find((o) => o.id === onto);
+    if (!r || r.kind !== 'sticker' || !note || isItem(note)) return;
+    const [w, h] = sizeOf(note);
+    const at = { x: Math.max(0, Math.min(w - 40, x + 18)), y: Math.max(0, Math.min(h - 40, y + 14)) };
+    edit('notes', onto, { stickers: [...(note.stickers ?? []), { emoji: r.ref?.emoji ?? '⭐', ...at }] });
+    remove('notes', id);
+  };
+
+  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, drop };
 }
 
 function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold, onDrop }: {
@@ -384,7 +482,38 @@ function Home() {
   const [searching, setSearching] = useLocal<boolean>(false);
   const [search, setSearch] = useLocal<string>('');
   const q = search.trim().toLowerCase();
-  const inFolder = all.filter((r) => !folder || r.folder === folder);
+  const notes = all.filter((r) => !isItem(r));
+  const inFolder = notes.filter((r) => !folder || r.folder === folder);
+  // On the board, its stickers and cards too.
+  const onBoard = (pins() ? all : notes).filter((r) => !folder || r.folder === folder);
+  const [placing, setPlacing] = useLocal<string | null>(null);
+  /** Something new on the board: a note, a sticker, a person or a chat. */
+  const addTo = async () => {
+    if (!pins()) return inPlace ? w.create(folder) : n.create(folder);
+    const k = await n.dialog.menu([
+      { id: 'note', icon: 'sticky_note_2', label: t('Note') },
+      { id: 'sticker', icon: 'add_reaction', label: t('Sticker') },
+      { id: 'person', icon: 'contact_page', label: t('Contact') },
+      { id: 'chat', icon: 'forum', label: t('Chat') },
+    ]);
+    if (k === 'note') return inPlace ? w.create(folder) : n.create(folder);
+    let ref: Ref | null = null;
+    if (k === 'sticker') {
+      const emoji = await n.dialog.sticker();
+      ref = emoji ? { emoji } : null;
+    }
+    if (k === 'person') ref = await n.dialog.person();
+    if (k === 'chat') ref = await n.dialog.chat();
+    if (!k || !ref) return;
+    const id = n.add('notes', {
+      kind: k,
+      ref,
+      title: k === 'person' ? ref.name : k === 'chat' ? ref.title : undefined,
+      folder: folder ?? undefined,
+      tilt: Math.round((Math.random() * 6 - 3) * 10) / 10,
+    });
+    setPlacing(id);
+  };
   const shown = order(inFolder).filter(
     (r) =>
       (!tag || (r.tags ?? []).includes(tag)) &&
@@ -431,7 +560,7 @@ function Home() {
   const board = (r: Note) =>
     writing && r.id === writing.id ? (
       <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch} size={sizeOf(r)}
-                  sketching={w.mode === 'sketch'}
+                  pin={r.pin} stickers={pins() ? r.stickers : undefined} sketching={w.mode === 'sketch'}
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
         {(r.title ?? '').trim() ? <Text class={s.title}>{r.title}</Text> : null}
         <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
@@ -486,7 +615,7 @@ function Home() {
   };
 
   const tags = new Map<string, number>();
-  for (const r of all) for (const g of r.tags ?? []) tags.set(g, (tags.get(g) ?? 0) + 1);
+  for (const r of notes) for (const g of r.tags ?? []) tags.set(g, (tags.get(g) ?? 0) + 1);
   const tagNames = [...tags.keys()].sort((a, b) => a.localeCompare(b));
 
   const adder = useAddBar({
@@ -515,7 +644,7 @@ function Home() {
   });
 
   const links: [string, string][] = [];
-  for (const r of inFolder) for (const l of r.links ?? []) if (inFolder.some((o) => o.id === l)) links.push([r.id, l]);
+  for (const r of onBoard) for (const l of r.links ?? []) if (onBoard.some((o) => o.id === l)) links.push([r.id, l]);
 
   const noteCount = inFolder.length === 1 ? t('1 note') : t('{p0} notes', { p0: inFolder.length });
   const tagCount = tags.size === 0 ? undefined : tags.size === 1 ? t('1 tag') : t('{p0} tags', { p0: tags.size });
@@ -537,7 +666,7 @@ function Home() {
         ) : undefined
       }
       fab={canEdit && tab === 'board' && !writing
-        ? <Fab icon="add" onPress={() => (inPlace ? w.create(folder) : n.create(folder))} />
+        ? <Fab icon="add" onPress={addTo} />
         : undefined}
       footer={canEdit && tab === 'notes' ? adder.bar : writing && phone ? tools : undefined}
       onBack={writing && has('screen.onBack') ? w.finish : undefined}
@@ -554,11 +683,16 @@ function Home() {
             onHold={n.hold}
             onResize={canEdit ? (id: string, w: number, h: number) => edit('notes', id, { w, h }) : undefined}
             editing={writing ? writing.id : undefined}
+            placing={placing ?? undefined}
+            onPin={canEdit ? (id: string, pin: string) => edit('notes', id, { pin }) : undefined}
+            onTie={canEdit ? n.tie : undefined}
+            onCut={canEdit ? n.cut : undefined}
+            onDrop={canEdit ? n.drop : undefined}
             onDone={inPlace ? w.finish : undefined}
             tools={phone ? undefined : tools}
             under={under}
           >
-            {inFolder.map(board)}
+            {onBoard.map((r) => (isItem(r) ? <Item key={r.id} r={r} tilt={tiltOf(r)} /> : board(r)))}
           </Corkboard>
         </>
       )}
@@ -686,6 +820,7 @@ function NoteScreen() {
 
   const note = (
     <StickyNote color={colorOf(row)} sketch={row.sketch} sketching={mode === 'sketch'} size={sizeOf(row)}
+                stickers={pins() ? row.stickers : undefined}
                 onSketch={(f: unknown) => { edit('notes', id, { sketch: f }); setMode(null); }}>
       {canEdit ? (
         <Editor id="note" rich plain value={body} onChange={type} autofocus={!!fresh && mode === null}

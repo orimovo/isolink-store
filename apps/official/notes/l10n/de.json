@@ -79,5 +79,8 @@
   "Weekend": "Wochenende",
   "Yellow": "Gelb",
   "{p0} notes": "{p0} Notizen",
-  "{p0} tags": "{p0} Schlagwörter"
+  "{p0} tags": "{p0} Schlagwörter",
+  "Sticker": "Sticker",
+  "Chat": "Chat",
+  "Contact": "Kontakt"
 }

@@ -79,5 +79,8 @@
   "Weekend": "Week-end",
   "Yellow": "Jaune",
   "{p0} notes": "{p0} notes",
-  "{p0} tags": "{p0} étiquettes"
+  "{p0} tags": "{p0} étiquettes",
+  "Sticker": "Autocollant",
+  "Chat": "Discussion",
+  "Contact": "Contact"
 }
