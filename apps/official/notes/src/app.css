@@ -27,3 +27,5 @@
 .tagName { font-size: 15px; font-weight: 700; }
 .dot { width: 22px; height: 22px; border-radius: 11px; margin: 0 2px; }
 .refs { padding-top: 6px; }
+.dotButton { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+.dotButton:hover { background: rgba(127, 127, 127, 0.18); }
