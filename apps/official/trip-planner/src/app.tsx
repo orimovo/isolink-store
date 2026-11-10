@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Button, IconButton, Icon, Fab, Chip, Checkbox, ContextMenu,
-  DatePicker, TimePicker, PlacePicker, Map, MoneyField, Segmented, Select, Stat, Avatar, Upload, Badge, Progress, Scroll,
-  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, fetch, format, t,
+  Composer, DatePicker, TimePicker, PlacePicker, Map, MoneyField, Segmented, Select, Stat, Avatar, Upload, Badge, Progress, Scroll,
+  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, fetch, format, has, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -230,6 +230,12 @@ function MoneyTab({ c }: { c: Ctx }) {
   );
 }
 
+/** One more thing to pack, last on the list. */
+const pack = (c: Ctx, item: string) => {
+  if (!item.trim()) return;
+  c.add('packing', { item: item.trim().slice(0, 80), trip: c.trip?.id ?? null, pos: between(last(c.packing), '') });
+};
+
 function PackingTab({ c }: { c: Ctx }) {
   const [text, setText] = useLocal('');
   const [mineOnly, setMineOnly] = useLocal(false);
@@ -238,8 +244,7 @@ function PackingTab({ c }: { c: Ctx }) {
   const left = rows.filter((r) => !r.packed);
   const done = rows.filter((r) => r.packed);
   const add = (item: string) => {
-    if (!item.trim()) return;
-    c.add('packing', { item: item.trim().slice(0, 80), trip: tr?.id ?? null, pos: between(last(c.packing), '') });
+    pack(c, item);
     setText('');
   };
   // The forecast, once the trip is within the 16 days it covers.
@@ -273,7 +278,8 @@ function PackingTab({ c }: { c: Ctx }) {
         </Scroll>
       ) : null}
       {rows.length > 0 && <Progress value={done.length / rows.length} label={t('{p0} of {p1} packed', { p0: done.length, p1: rows.length })} />}
-      {c.canEdit && (
+      {/* Isolink 0.26.52 on adds from the chat's message box, along the bottom. */}
+      {c.canEdit && !has('composer') && (
         <Row gap={8} align="center" class={s.addRow}>
           <Stack grow><TextField value={text} placeholder={t('Add an item')} max={80} onChange={setText} onSubmit={add} /></Stack>
           <IconButton icon="add" label={t('Add')} onPress={() => add(text)} />
@@ -310,6 +316,7 @@ function Home() {
   const nav = useNav();
   const dialog = useDialog();
   const [tab, setTab] = useStore<string>('tab', 'plan');
+  const [packing, setPacking] = useLocal('');
   const pickTrip = async () => {
     const id = await dialog.menu([
       ...c.trips.map((x) => ({ id: x.id, label: `${x.emoji ?? '✈️'} ${x.name}`, icon: x.id === c.trip?.id ? 'check' : undefined })),
@@ -335,6 +342,10 @@ function Home() {
       onTab={setTab}
       actions={c.trips.length > 0 ? <IconButton icon="swap_horiz" label={t('Trips')} onPress={pickTrip} /> : undefined}
       fab={fab}
+      footer={tab === 'packing' && c.canEdit && c.trip && has('composer') ? (
+        <Composer value={packing} onChange={setPacking} placeholder={t('Add an item')} sendLabel={t('Add')} ready={!!packing.trim()}
+                  onSubmit={() => { pack(c, packing); setPacking(''); }} />
+      ) : undefined}
     >
       {!c.trip ? (
         <Stack align="center" gap={10} class={s.empty}>
