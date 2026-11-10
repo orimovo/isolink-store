@@ -1,5 +1,5 @@
 import {
-  defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Button, IconButton, Icon, Fab, Chip, Checkbox,
+  defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Button, IconButton, Icon, Fab, Chip, Checkbox, ContextMenu,
   DatePicker, TimePicker, PlacePicker, Map, MoneyField, Segmented, Select, Stat, Avatar, Upload, Badge, Progress, Scroll,
   useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, fetch, format, t,
 } from 'isolink';
@@ -102,12 +102,28 @@ function Countdown({ c }: { c: Ctx }) {
 
 function PlanTab({ c }: { c: Ctx }) {
   const nav = useNav();
+  const dialog = useDialog();
+  // Held on a phone, right-clicked on a computer.
+  const hold = async (p: Plan) => {
+    if (!c.canEdit) return;
+    const picked = await dialog.menu([
+      { id: 'edit', icon: 'edit', label: t('Edit') },
+      { id: 'booked', icon: 'check_circle', label: p.booked ? t('Not booked') : t('Booked') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'edit') nav.push('Plan', { id: p.id });
+    if (picked === 'booked') c.edit('plans', p.id, { booked: !p.booked });
+    if (picked === 'delete' && (await dialog.confirm({ title: t('Delete this plan?'), ok: t('Delete'), danger: true }))) {
+      c.remove('plans', p.id);
+    }
+  };
   const [view, setView] = useStore<string>('view', 'days');
   const days = daysOf(c);
   const undated = c.plans.filter((p) => !p.day);
   const pinned = c.plans.filter((p) => p.place);
   const row = (p: Plan) => (
-    <Pressable key={p.id} class={s.plan} onPress={() => nav.push('Plan', { id: p.id })}>
+    <Pressable key={p.id} class={s.plan} onPress={() => nav.push('Plan', { id: p.id })} onLongPress={c.canEdit ? () => hold(p) : undefined}>
       <Box class={s.kind}><Icon name={iconOf(p.kind)} size={18} /></Box>
       <Stack grow>
         <Text bold>{p.what}</Text>
@@ -157,6 +173,19 @@ function PlanTab({ c }: { c: Ctx }) {
 
 function MoneyTab({ c }: { c: Ctx }) {
   const nav = useNav();
+  const dialog = useDialog();
+  const holdCost = async (x: Cost) => {
+    if (!c.canEdit) return;
+    const picked = await dialog.menu([
+      { id: 'edit', icon: 'edit', label: t('Edit') },
+      { divider: true },
+      { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
+    ]);
+    if (picked === 'edit') nav.push('Cost', { id: x.id });
+    if (picked === 'delete' && (await dialog.confirm({ title: t('Delete this cost?'), ok: t('Delete'), danger: true }))) {
+      c.remove('costs', x.id);
+    }
+  };
   const cur = c.trip?.currency ?? 'GBP';
   const spent = c.costs.reduce((n, x) => n + (x.amount ?? 0), 0);
   const planned = c.plans.reduce((n, p) => n + (p.cost ?? 0), 0);
@@ -185,7 +214,8 @@ function MoneyTab({ c }: { c: Ctx }) {
       )}
       <Stack gap={6} class={s.list}>
         {[...c.costs].sort((a, b) => (b.day ?? '').localeCompare(a.day ?? '')).map((x) => (
-          <Pressable key={x.id} class={s.plan} onPress={c.canEdit ? () => nav.push('Cost', { id: x.id }) : undefined}>
+          <Pressable key={x.id} class={s.plan} onPress={c.canEdit ? () => nav.push('Cost', { id: x.id }) : undefined}
+                     onLongPress={c.canEdit ? () => holdCost(x) : undefined}>
             <Avatar person={x.paid} size={30} />
             <Stack grow>
               <Text bold>{x.what}</Text>
@@ -258,15 +288,18 @@ function PackingTab({ c }: { c: Ctx }) {
         <Chip label={t('Mine')} icon="person" selected={mineOnly} onPress={() => setMineOnly(!mineOnly)} />
       </Row>
       {[...left, ...done].map((r) => (
-        <Row key={r.id} gap={8} align="center" class={s.item}>
-          <Checkbox round checked={!!r.packed} label={r.item} onChange={c.canEdit ? (packed: boolean) => c.edit('packing', r.id, { packed }) : undefined} />
-          <Stack grow />
-          {r.who ? <Avatar person={r.who} size={24} /> : null}
-          {c.canEdit && (
-            <IconButton icon={r.who === c.me.id ? 'person' : 'person_add_alt'} label={t('Mine')}
-                        onPress={() => c.edit('packing', r.id, { who: r.who === c.me.id ? null : c.me.id })} />
-          )}
-        </Row>
+        <ContextMenu key={r.id} items={c.canEdit ? [{ id: 'delete', icon: 'delete', label: t('Delete'), danger: true }] : []}
+                     onPick={(id: string) => id === 'delete' && c.remove('packing', r.id)}>
+          <Row gap={8} align="center" class={s.item}>
+            <Checkbox round checked={!!r.packed} label={r.item} onChange={c.canEdit ? (packed: boolean) => c.edit('packing', r.id, { packed }) : undefined} />
+            <Stack grow />
+            {r.who ? <Avatar person={r.who} size={24} /> : null}
+            {c.canEdit && (
+              <IconButton icon={r.who === c.me.id ? 'person' : 'person_add_alt'} label={t('Mine')}
+                          onPress={() => c.edit('packing', r.id, { who: r.who === c.me.id ? null : c.me.id })} />
+            )}
+          </Row>
+        </ContextMenu>
       ))}
     </>
   );
