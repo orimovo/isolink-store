@@ -2,12 +2,12 @@ import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Button, IconButton, Icon, Fab, Grid,
   Chip, Image, Markdown, Editor, Rating, Slider, Stepper, Segmented, ProgressRing, Progress, Chart, Stat, Scanner,
   Scroll, Badge, Avatar, PersonPicker, Confetti,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, fetch, t,
+  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, fetch, t, has,
 } from 'isolink';
 import s from './app.css';
 
 type Book = {
-  id: string; title: string; author?: string; status?: string; rating?: number; lent?: string; notes?: string;
+  id: string; title: string; author?: string; status?: string; rating?: number; lent?: string; lentTo?: string; notes?: string;
   pages?: number; page?: number; cover?: string; isbn?: string; started?: string; finished?: string; tags?: string[];
   _edited?: number;
 };
@@ -54,6 +54,7 @@ function useBooks() {
 function useBookMenu(bk: ReturnType<typeof useBooks>) {
   const nav = useNav();
   const dialog = useDialog();
+  const lend = useLend(bk);
   return async (b: Book) => {
     if (!bk.canEdit) return;
     const pick = await dialog.menu([
@@ -77,10 +78,7 @@ function useBookMenu(bk: ReturnType<typeof useBooks>) {
         });
       }
     }
-    if (pick === 'lend') {
-      if (b.lent) bk.edit('books', b.id, { lent: null });
-      else nav.push('Lend', { id: b.id });
-    }
+    if (pick === 'lend') await lend(b);
     if (pick === 'delete' && (await dialog.confirm({ title: t('Delete this book?'), ok: t('Delete'), danger: true }))) {
       for (const x of bk.sessions.filter((x) => x.book === b.id)) bk.remove('sessions', x.id);
       for (const x of bk.quotes.filter((x) => x.book === b.id)) bk.remove('quotes', x.id);
@@ -273,6 +271,7 @@ function BookScreen() {
   const nav = useNav();
   const bk = useBooks();
   const dialog = useDialog();
+  const lend = useLend(bk);
   const { id } = nav.params as { id: string };
   const b = bk.books.find((x) => x.id === id);
   const [page, setPage] = useLocal<number | null>(null);
@@ -296,10 +295,7 @@ function BookScreen() {
             { id: 'delete', label: t('Delete'), icon: 'delete', danger: true },
           ]);
           if (pick === 'edit') nav.push('Edit', { id });
-          if (pick === 'lend') {
-            if (b.lent) bk.edit('books', id, { lent: null });
-            else nav.push('Lend', { id });
-          }
+          if (pick === 'lend') await lend(b);
           if (pick === 'delete' && (await dialog.confirm({ title: t('Delete this book?'), ok: t('Delete'), danger: true }))) {
             for (const x of bk.sessions.filter((x) => x.book === id)) bk.remove('sessions', x.id);
             for (const x of quotes) bk.remove('quotes', x.id);
@@ -317,7 +313,12 @@ function BookScreen() {
           {b.author ? <Text tone="muted">{b.author}</Text> : null}
           {b.pages ? <Text class={s.sub}>{t('{p0} pages', { p0: b.pages })}</Text> : null}
           {b.lent ? (
-            <Row gap={6} align="center"><Avatar person={b.lent} size={22} /><Text class={s.sub}>{t('Lent')}</Text></Row>
+            <Pressable class={s.lentPill} onPress={bk.canEdit ? async () => {
+              if (await dialog.menu([{ id: 'back', label: t('Got it back'), icon: 'undo' }]) === 'back') await lend(b);
+            } : undefined}>
+              <Avatar person={b.lent} size={22} />
+              <Text class={s.lentText}>{b.lentTo ? t('Lent to {p0}', { p0: b.lentTo }) : t('Lent')}</Text>
+            </Pressable>
           ) : null}
         </Stack>
       </Row>
@@ -359,6 +360,28 @@ function BookScreen() {
         : <Markdown>{b.notes ?? ''}</Markdown>}
     </Screen>
   );
+}
+
+/** Lends a book to one of the person's people, from Isolink's own picker; or
+ *  takes it back. On an Isolink without the picker, the old Lend page. */
+function useLend(bk: ReturnType<typeof useBooks>) {
+  const nav = useNav();
+  const dialog = useDialog();
+  return async (b: Book) => {
+    if (b.lent) {
+      bk.edit('books', b.id, { lent: null, lentTo: null });
+      return;
+    }
+    let p: { id: string; name: string } | null = null;
+    try {
+      if (!has('pick.person')) throw new Error('no picker');
+      p = await dialog.person();
+    } catch {
+      nav.push('Lend', { id: b.id });
+      return;
+    }
+    if (p) bk.edit('books', b.id, { lent: p.id, lentTo: p.name.slice(0, 80) });
+  };
 }
 
 function LendScreen() {
