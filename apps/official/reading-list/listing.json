@@ -1,10 +1,10 @@
 {
-  "version": 8,
+  "version": 9,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Books, a yearly goal, pages read and quotes",
   "tags": [
     "apps"
   ],
-  "minApp": "0.26.45"
+  "minApp": "0.26.53"
 }
