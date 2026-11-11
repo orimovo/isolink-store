@@ -590,7 +590,7 @@ function AddScreen() {
       {scan && (
         <Scanner height={220} formats={['ean13']} onScan={({ text }: { text: string }) => { setScan(false); search({ isbn: text }); }} />
       )}
-      {q.trim() && !busy && !desktop && <Button variant="tonal" onPress={() => search({ text: q.trim() })}>{t('Search')}</Button>}
+      {q.trim() && !busy && <Button variant="tonal" onPress={() => search({ text: q.trim() })}>{t('Search')}</Button>}
       {busy && <Text tone="muted" align="center">{t('Looking…')}</Text>}
       <Stack gap={desktop ? 3 : 8}>
         {(hits ?? []).map((h, i) => (
