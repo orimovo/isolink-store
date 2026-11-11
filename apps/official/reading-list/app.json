@@ -4,7 +4,7 @@
   "icon": "book",
   "accent": 4285684222,
   "main": "src/app.tsx",
-  "version": 2,
+  "version": 3,
   "needs": {
     "device": [
       "camera"
@@ -107,6 +107,11 @@
             "id": 13,
             "type": "tags",
             "max": 8
+          },
+          "lentTo": {
+            "id": 14,
+            "type": "text",
+            "max": 80
           }
         }
       },
