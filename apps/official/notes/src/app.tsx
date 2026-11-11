@@ -118,19 +118,22 @@ function dueWords(ms: number) {
 }
 
 /** A note as it is on the board and in the grid. */
-function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void }) {
+function Paper({ r, tilt, onPress, onTick, card }: {
+  r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void;
+  /** In a phone's two columns: as tall as what's on it, straight. */
+  card?: boolean;
+}) {
   const more = rest(r);
   return (
-    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} sketch={r.sketch}
-                size={sizeOf(r)} onPress={onPress} pin={r.pin} stickers={pins() ? r.stickers : undefined}>
+    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={card ? 0 : tilt} pinned={!!r.pinned} sketch={r.sketch}
+                size={card && !r.sketch ? undefined : sizeOf(r)} onPress={onPress} pin={r.pin}
+                stickers={pins() ? r.stickers : undefined}>
       <Text class={s.title}>{noteTitle(r)}</Text>
       {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
       {more ? (
-        <Markdown class={s.body} onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
+        <Markdown class={s.body} compact onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
       ) : null}
-      {r.voice ? (
-        <Row gap={1} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
-      ) : null}
+      {r.voice ? <Audio src={r.voice} /> : null}
       {pins() && r.refs?.length ? <Chips refs={r.refs} /> : null}
       {typeof r.due === 'number' || r.link ? (
         <Row gap={10} align="center" wrap class={s.paperMeta}>
@@ -778,9 +781,10 @@ function Home() {
             {shown.length === 0 ? (
               <Empty />
             ) : (
-              <Masonry min={200} gap={16} onReorder={canEdit ? move : undefined} onHold={n.hold}>
+              <Masonry min={200} columns={phone ? 2 : undefined} gap={phone ? 8 : 16}
+                       onReorder={canEdit ? move : undefined} onHold={n.hold}>
                 {shown.map((r, i) => (
-                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} onPress={() => open(r)} onTick={tick(r)} />
+                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} card={phone} onPress={() => open(r)} onTick={tick(r)} />
                 ))}
               </Masonry>
             )}
