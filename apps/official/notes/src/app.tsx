@@ -117,15 +117,29 @@ const clean = (line: string) =>
 /** A code block's opening line: not a title. */
 const fence = (line: string) => /^\s*(`{3,}|~{3,})/.test(line);
 
+/** A body's first line, as it reads: what a note's Title holds. */
+function lineTitle(body?: string) {
+  const line = (body ?? '').split('\n').find((l) => l.trim()) ?? '';
+  return fence(line) ? '' : clean(line).slice(0, 200);
+}
+
+/** Whether the note has a title apart from its first line, as a bot can give it. */
+const ownTitle = (r: Note) => !!(r.title ?? '').trim() && (r.title ?? '').trim() !== lineTitle(r.body);
+
+/** A change to a note's body, its Title kept to its first line so lists,
+ *  search and bots outside the app see the note's name. */
+function bodyEdit(r: Note | null | undefined, body: string) {
+  if (r && ownTitle(r)) return { body };
+  return { body, title: lineTitle(body) || null };
+}
+
 /** A note's title: its own, or its first line. */
 function noteTitle(r: Note) {
   if (r.kind === 'sticker') return r.ref?.emoji ?? t('Sticker');
   if (r.kind === 'person') return r.ref?.name ?? t('Contact');
   if (r.kind === 'chat') return r.ref?.title || t('Chat');
-  const own = (r.title ?? '').trim();
-  if (own) return own;
-  const line = (r.body ?? '').split('\n').find((l) => l.trim()) ?? '';
-  const first = fence(line) ? '' : clean(line);
+  if (ownTitle(r)) return (r.title ?? '').trim();
+  const first = lineTitle(r.body);
   if (first) return first;
   return t(KINDS.find(([k]) => k === r.kind)?.[1] ?? 'New note');
 }
@@ -133,7 +147,7 @@ function noteTitle(r: Note) {
 /** What's under the title, as it's written. */
 function rest(r: Note) {
   const lines = (r.body ?? '').split('\n');
-  if ((r.title ?? '').trim()) return lines.join('\n').trim();
+  if (ownTitle(r)) return lines.join('\n').trim();
   const i = lines.findIndex((l) => l.trim());
   const first = lines[i] ?? '';
   // A list's first line is one of its boxes: it stays.
@@ -378,7 +392,7 @@ function useInPlace(all: Note[]) {
   const flush = (id: string, text: string) => {
     if (saved.current.id === id && text === saved.current.text) return;
     saved.current = { ...saved.current, id, text };
-    edit('notes', id, { body: text });
+    edit('notes', id, bodyEdit(all.find((r) => r.id === id), text));
   };
   /** Puts the note down: kept, or gone if it was new and is still empty. */
   const finish = () => {
@@ -396,7 +410,7 @@ function useInPlace(all: Note[]) {
     const { editing: id, fresh: isNew, body: text, row: r } = latest.current;
     if (!id) return;
     if (id === isNew && blankNote(text, r)) remove('notes', id);
-    else if (r && text !== (r.body ?? '')) edit('notes', id, { body: text });
+    else if (r && text !== (r.body ?? '')) edit('notes', id, bodyEdit(r, text));
   }, []);
 
   const start = (id: string, isNew = false) => {
@@ -738,7 +752,7 @@ function Home() {
       <StickyNote key={r.id} id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={0} sketch={r.sketch} size={sizeOf(r)}
                   pin={r.pin} stickers={pins() ? r.stickers : undefined} sketching={w.mode === 'sketch'}
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
-        {(r.title ?? '').trim() ? <Text class={s.title}>{r.title}</Text> : null}
+        {ownTitle(r) ? <Text class={s.title}>{r.title}</Text> : null}
         <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
                 placeholder={t('New note')} embeds={embeds() ? embedsOf(r) : undefined} onCaret={w.onCaret} />
         <NoteMedia row={r} mode={w.mode} setMode={w.setMode} insert={w.insert} />
@@ -746,7 +760,7 @@ function Home() {
     ) : (
       <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => (inPlace ? w.start(r.id) : open(r))} onTick={tick(r)} />
     );
-  const tick = (r: Note) => (canEdit ? (body: string) => edit('notes', r.id, { body }) : undefined);
+  const tick = (r: Note) => (canEdit ? (body: string) => edit('notes', r.id, bodyEdit(r, body)) : undefined);
 
   /** Dropped on another note in the grid: it takes that one's place. */
   const move = (id: string, to: number) => {
@@ -808,6 +822,7 @@ function Home() {
       const noteTags = [...new Set([said.pick, said.tag].filter(Boolean) as string[])];
       n.add('notes', {
         body: said.text,
+        title: lineTitle(said.text) || undefined,
         kind: said.photo ? 'photo' : 'note',
         photo: said.photo,
         folder: folder ?? undefined,
@@ -951,7 +966,7 @@ function NoteScreen() {
   const flush = (text: string) => {
     if (text === saved.current.text) return;
     saved.current.text = text;
-    edit('notes', id, { body: text });
+    edit('notes', id, bodyEdit(latest.current.row, text));
   };
   // Leaving keeps what was typed; a new note left with nothing in it goes.
   const latest = useRef({ body, row });
@@ -1014,7 +1029,7 @@ function NoteScreen() {
   );
 
   return (
-    <Screen title={noteTitle({ ...row, body })} actions={actions} footer={wide ? undefined : bar}>
+    <Screen title={noteTitle({ ...row, body, title: ownTitle(row) ? row.title : undefined })} actions={actions} footer={wide ? undefined : bar}>
       {/* Wide: the note, and beside it its colour and tags. Narrow: one under the other. */}
       <Split first={0.62} gap={24}>
       <Box>
@@ -1053,6 +1068,11 @@ export default defineApp({
   // On a computer a note opens beside the list (not the board, which keeps the
   // window). A function, so Isolinks before 0.26.53 don't split at all.
   split: () => ['Home'],
+  // Older notes get their first line as their Title.
+  migrate: {
+    7: (row: any, table: string) =>
+      table === 'notes' && !(row.title ?? '').trim() && lineTitle(row.body) ? { ...row, title: lineTitle(row.body) } : row,
+  },
   actions: {
     add: {
       title: 'Add a note',
@@ -1063,7 +1083,7 @@ export default defineApp({
       },
       run: ({ text, title, color }: { text: string; title?: string; color?: string }, { data }: any) => {
         const id = data.add('notes', {
-          title: title || undefined,
+          title: title || lineTitle(String(text ?? '')) || undefined,
           body: String(text ?? ''),
           kind: /^\s*- \[[ xX]\]/m.test(String(text ?? '')) ? 'list' : 'note',
           color: color && COLORS.some(([c]) => c === color) ? color : undefined,
@@ -1086,7 +1106,7 @@ export default defineApp({
           return `${lead}[${box === ' ' ? 'x' : ' '}] ${words}`;
         });
         if (!found) throw new Error(`No ${item} on ${note}`);
-        data.edit('notes', r.id, { body });
+        data.edit('notes', r.id, bodyEdit(r, body));
         return { ok: true };
       },
     },
