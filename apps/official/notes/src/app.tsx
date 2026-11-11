@@ -430,6 +430,18 @@ function useNotes() {
       if (r && (r.links ?? []).includes(y)) edit('notes', x, { links: (r.links ?? []).filter((l) => l !== y) });
     }
   };
+  /** [id]'s pin let go on the string between [a] and [b]: it runs through it. */
+  const splice = (id: string, a: string, b: string) => {
+    const r = all.find((o) => o.id === id);
+    if (!r) return;
+    for (const [x, y] of [[a, b], [b, a]]) {
+      const o = all.find((n) => n.id === x);
+      if (o && (o.links ?? []).includes(y)) edit('notes', x, { links: (o.links ?? []).filter((l) => l !== y) });
+    }
+    // Tied from it to each end, unless that end already has a string to it.
+    const to = [a, b].filter((x) => !(r.links ?? []).includes(x) && !(all.find((o) => o.id === x)?.links ?? []).includes(id));
+    if (to.length) edit('notes', id, { links: [...(r.links ?? []), ...to] });
+  };
   /** A sticker let go on a note: stuck on it there. */
   const drop = (id: string, onto: string, x: number, y: number) => {
     const r = all.find((o) => o.id === id);
@@ -441,7 +453,7 @@ function useNotes() {
     remove('notes', id);
   };
 
-  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, drop };
+  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, splice, drop };
 }
 
 function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold, onDrop }: {
@@ -742,6 +754,7 @@ function Home() {
             onPin={canEdit ? (id: string, pin: string) => edit('notes', id, { pin }) : undefined}
             onTie={canEdit ? n.tie : undefined}
             onCut={canEdit ? n.cut : undefined}
+            onSplice={canEdit ? n.splice : undefined}
             onDrop={canEdit ? n.drop : undefined}
             onDone={inPlace ? w.finish : undefined}
             tools={phone ? undefined : tools}
