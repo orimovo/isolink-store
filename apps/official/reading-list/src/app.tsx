@@ -2,7 +2,7 @@ import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Button, IconButton, Icon, Fab, Grid,
   Chip, Image, Markdown, Editor, Rating, Slider, Stepper, Segmented, ProgressRing, Progress, Chart, Stat, Scanner,
   Scroll, Badge, Avatar, PersonPicker, Confetti,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, fetch, t, has,
+  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, usePlatform, fetch, t, has,
 } from 'isolink';
 import s from './app.css';
 
@@ -441,6 +441,8 @@ function AddScreen() {
     nav.pop();
     nav.push('Book', { id });
   };
+  // A computer's search box searches on Enter, so no button under it.
+  const desktop = usePlatform().desktop;
   return (
     <Screen title={t('Add a book')}>
       <Segmented value={status} onChange={setStatus} options={STATUSES.map(([value, label]) => ({ value, label: t(label) }))} />
@@ -453,7 +455,7 @@ function AddScreen() {
       )}
       {q.trim() && !busy && <Button variant="tonal" onPress={() => search({ text: q.trim() })}>{t('Search')}</Button>}
       {busy && <Text tone="muted" align="center">{t('Looking…')}</Text>}
-      <Stack gap={8}>
+      <Stack gap={desktop ? 3 : 8}>
         {(hits ?? []).map((h, i) => (
           <Pressable key={i} class={s.hit} onPress={() => keep(h)}>
             <Cover b={{ id: '', title: h.title, author: h.author, cover: h.cover }} width={46} />
