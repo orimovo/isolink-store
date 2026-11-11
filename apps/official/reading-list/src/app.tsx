@@ -2,7 +2,7 @@ import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Button, IconButton, Icon, Fab, Grid,
   Chip, Image, Markdown, Editor, Rating, Slider, Stepper, Segmented, ProgressRing, Progress, Chart, Stat, Scanner,
   Scroll, Badge, Avatar, PersonPicker, Confetti,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, usePlatform, fetch, t,
+  useQuery, useData, useLocal, useStore, useLayout, useMe, useNav, useNow, useDialog, useShare, useToast, usePlatform, fetch, t,
 } from 'isolink';
 import s from './app.css';
 
@@ -16,6 +16,8 @@ type Quote = { id: string; book: string; text: string; page?: number };
 type Goal = { id: string; year: number; books: number };
 
 const STATUSES: [string, string][] = [['reading', /*t*/'Reading'], ['want', /*t*/'Want to read'], ['done', /*t*/'Read']];
+/** The state picker on a book's page, in the order a book goes through them. */
+const PICK: [string, string][] = [['want', /*t*/'Want to read'], ['reading', /*t*/'Reading'], ['done', /*t*/'Read']];
 const TINTS = ['#7c3aed', '#0ea5e9', '#f97316', '#16a34a', '#e11d48', '#0f766e', '#a16207', '#475569'];
 const MONTHS = [/*t*/'Jan', /*t*/'Feb', /*t*/'Mar', /*t*/'Apr', /*t*/'May', /*t*/'Jun', /*t*/'Jul', /*t*/'Aug', /*t*/'Sep', /*t*/'Oct', /*t*/'Nov', /*t*/'Dec'];
 
@@ -104,6 +106,155 @@ function Cover({ b, width, onPress, onHold }: { b: Book; width: number; onPress?
   );
 }
 
+// ----- books drawn as books: closed (want to read), open on its face
+// (reading) and standing on a shelf (read) -----
+
+/** The cover picture filling its box, or a coloured cover with the title on. */
+function Face({ b, width = 96, back, bare }: { b: Book; width?: number; back?: boolean; bare?: boolean }) {
+  if (b.cover) return <Image src={b.cover} alt={b.title} class={back ? [s.fill, s.fillBack] : s.fill} />;
+  return (
+    <Box class={s.plain} style={{ background: tintOf(b) }}>
+      {bare || back ? null : (
+        <Text class={s.coverTitle} lines={width < 80 ? 3 : 4} style={{ fontSize: Math.max(8, Math.round(width * 0.13)) }}>{b.title}</Text>
+      )}
+      {bare || back || !b.author || width < 80 ? null : <Text class={s.coverAuthor} lines={1}>{b.author}</Text>}
+    </Box>
+  );
+}
+
+/** Want to read: a closed book. Under a mouse the cover opens a little. */
+function ClosedBook({ b, width, bare }: { b: Book; width: number; bare?: boolean }) {
+  const [over, setOver] = useLocal(false);
+  const h = Math.round(width * 1.5);
+  return (
+    <Box class={s.closed} style={{ width: width + 3, height: h + 2 }} onHover={bare ? undefined : setOver}>
+      <Box class={s.board} />
+      <Box class={s.leaves}>{bare ? null : [0, 1, 2, 3, 4, 5].map((i) => <Box key={i} class={s.line} />)}</Box>
+      <Box class={over ? [s.face, s.faceOpen] : s.face} style={{ width, height: h }}>
+        <Face b={b} width={width} bare={bare} />
+        <Box class={s.hinge} />
+      </Box>
+    </Box>
+  );
+}
+
+/** Reading: open on its face, back cover, spine and front. Under a mouse it closes a little. */
+function OpenBook({ b, width, bare }: { b: Book; width: number; bare?: boolean }) {
+  const [over, setOver] = useLocal(false);
+  const h = Math.round(width * 1.5);
+  const sp = Math.max(4, Math.round(width * 0.12));
+  return (
+    <Row class={s.open} style={{ height: h }} onHover={bare ? undefined : setOver}>
+      <Box class={over ? [s.back, s.backShut] : s.back} style={{ width, height: h }}>
+        <Face b={b} back />
+        <Box class={s.backShade} />
+        {bare ? null : (
+          <Box class={s.blurb}>
+            <Box class={s.blurbLine} style={{ width: Math.round(width * 0.6) }} />
+            <Box class={s.blurbLine} style={{ width: Math.round(width * 0.5) }} />
+            <Box class={s.blurbLine} style={{ width: Math.round(width * 0.56) }} />
+            <Box class={s.barcode} />
+          </Box>
+        )}
+      </Box>
+      <Box class={s.spineOpen} style={{ width: sp, height: h }}>
+        <Face b={b} bare />
+        <Box class={s.spineShade} />
+      </Box>
+      <Box class={over ? [s.front, s.frontShut] : s.front} style={{ width, height: h }}>
+        <Face b={b} width={width} bare={bare} />
+        <Box class={s.frontShade} />
+      </Box>
+    </Row>
+  );
+}
+
+const SPINE_HEIGHTS = [150, 138, 160, 146, 132, 156, 142];
+const spineWidth = (b: Book) => Math.max(20, Math.min(44, Math.round((b.pages ?? 300) / 13)));
+
+/** Read: the book's spine, a strip of its cover with the title down it. */
+function Spine({ b, height, onPress, onHold }: { b: Book; height: number; onPress?: () => void; onHold?: () => void }) {
+  return (
+    <Pressable class={s.spine} style={{ width: spineWidth(b), height }} onPress={onPress} onLongPress={onHold}>
+      <Face b={b} bare />
+      <Box class={s.spineDim} />
+      <Box class={s.spineBand} />
+      <Box class={s.spineTitle}><Text class={s.spineText} lines={1}>{b.title}</Text></Box>
+      {b.rating ? <Text class={s.spineRate}>{`${b.rating}★`}</Text> : null}
+    </Pressable>
+  );
+}
+
+/** A bookcase shelf: its books stand on it, a bookend after the last. */
+function Shelf({ children }: { children?: unknown }) {
+  return (
+    <Box class={s.case}>
+      <Box class={s.cubby}>
+        <Scroll direction="horizontal">
+          <Row align="end" gap={1} class={s.books}>
+            {children}
+            <Box class={s.bookend}><Box class={s.bookendFoot} /></Box>
+          </Row>
+        </Scroll>
+        <Box class={s.floor} />
+      </Box>
+      <Box class={s.lip} />
+    </Box>
+  );
+}
+
+/** Read books on as many shelves as they need. */
+function Bookcase({ books, onOpen, onHold }: { books: Book[]; onOpen: (b: Book) => void; onHold: (b: Book) => void }) {
+  const width = useLayout().width;
+  // Room on a shelf: the window less the side bar on a computer and the page's margins.
+  const room = Math.max(160, Math.min(width >= 900 ? width - 340 : width, 900) - 84);
+  const rows: Book[][] = [[]];
+  let used = 0;
+  for (const b of books) {
+    const w = spineWidth(b) + 1;
+    if (used + w > room && rows[rows.length - 1].length) {
+      rows.push([]);
+      used = 0;
+    }
+    rows[rows.length - 1].push(b);
+    used += w;
+  }
+  return (
+    <Stack gap={10}>
+      {rows.map((row, r) => (
+        <Shelf key={r}>
+          {row.map((b, i) => (
+            <Spine key={b.id} b={b} height={SPINE_HEIGHTS[(i + r * 3) % SPINE_HEIGHTS.length]}
+                   onPress={() => onOpen(b)} onHold={() => onHold(b)} />
+          ))}
+        </Shelf>
+      ))}
+    </Stack>
+  );
+}
+
+/** A book as its state draws it, for the top of its page and the state picker. */
+function BookAs({ b, status, width, bare }: { b: Book; status: string; width: number; bare?: boolean }) {
+  if (status === 'want') return <ClosedBook b={b} width={width} bare={bare} />;
+  if (status === 'reading') return <OpenBook b={b} width={Math.round(width * 0.85)} bare={bare} />;
+  if (bare) {
+    return (
+      <Row align="end" gap={1}>
+        {[[9, 38], [12, 44], [8, 34]].map(([w, h], i) => (
+          <Box key={i} class={s.mini} style={{ width: w, height: h, opacity: i === 1 ? 1 : 0.7 }}><Face b={b} bare /></Box>
+        ))}
+      </Row>
+    );
+  }
+  return (
+    <Shelf>
+      <Box class={s.leftover} style={{ width: 22, height: Math.round(width * 1.25) }} />
+      <Spine b={b} height={Math.round(width * 1.36)} />
+      <Box class={s.leftover} style={{ width: 26, height: Math.round(width * 1.2) }} />
+    </Shelf>
+  );
+}
+
 function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
   const nav = useNav();
   const menu = useBookMenu(bk);
@@ -111,6 +262,7 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
   const want = q.trim().toLowerCase();
   const match = (b: Book) => !want || [b.title, b.author ?? '', ...(b.tags ?? [])].some((x) => x.toLowerCase().includes(want));
   const reading = bk.books.filter((b) => b.status === 'reading' && match(b));
+  const wide = useLayout().width >= 600;
   const goal = bk.goals.find((g) => g.year === bk.year);
   const doneThisYear = bk.books.filter((b) => b.status === 'done' && (b.finished ?? '').startsWith(String(bk.year))).length;
   if (bk.books.length === 0) {
@@ -135,7 +287,7 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
       ) : null}
       {reading.map((b) => (
         <Pressable key={b.id} class={s.now} onPress={() => nav.push('Book', { id: b.id })} onLongPress={() => menu(b)}>
-          <Cover b={b} width={62} />
+          <OpenBook b={b} width={wide ? 70 : 58} />
           <Stack grow gap={4}>
             <Text bold lines={2}>{b.title}</Text>
             {b.author ? <Text class={s.sub}>{b.author}</Text> : null}
@@ -153,17 +305,22 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
               <Text class={s.h} grow>{t(label)}</Text>
               <Text class={s.sub}>{String(rows.length)}</Text>
             </Row>
-            <Scroll direction="horizontal">
-              <Row gap={12} class={s.shelf}>
-                {rows.map((b) => (
-                  <Stack key={b.id} gap={4} class={s.shelfBook}>
-                    <Cover b={b} width={96} onPress={() => nav.push('Book', { id: b.id })} onHold={() => menu(b)} />
-                    {st === 'done' && b.rating ? <Text class={s.stars}>{'★'.repeat(b.rating)}</Text> : null}
-                    {b.lent ? <Badge label={t('Lent')} tone="warning" /> : null}
-                  </Stack>
-                ))}
-              </Row>
-            </Scroll>
+            {st === 'done' ? (
+              <Bookcase books={rows} onOpen={(b) => nav.push('Book', { id: b.id })} onHold={menu} />
+            ) : (
+              <Scroll direction="horizontal">
+                <Row gap={14} align="start" class={s.shelf}>
+                  {rows.map((b) => (
+                    <Stack key={b.id} gap={4} class={s.shelfBook}>
+                      <Pressable onPress={() => nav.push('Book', { id: b.id })} onLongPress={() => menu(b)}>
+                        <ClosedBook b={b} width={96} />
+                      </Pressable>
+                      {b.lent ? <Badge label={t('Lent')} tone="warning" /> : null}
+                    </Stack>
+                  ))}
+                </Row>
+              </Scroll>
+            )}
           </Box>
         );
       })}
@@ -310,24 +467,34 @@ function BookScreen() {
       ) : undefined}
     >
       {party && <Confetti />}
-      <Row gap={14} class={s.bookHead}>
-        <Cover b={b} width={110} />
+      <Row gap={20} align="center" class={s.bookHead}>
+        <Box class={s.hero} style={b.status === 'done' ? { width: 180 } : undefined}><BookAs b={b} status={b.status ?? 'want'} width={110} /></Box>
         <Stack grow gap={6}>
           <Text variant="title">{b.title}</Text>
           {b.author ? <Text tone="muted">{b.author}</Text> : null}
           {b.pages ? <Text class={s.sub}>{t('{p0} pages', { p0: b.pages })}</Text> : null}
+          {b.status === 'done' ? (
+            <Rating value={b.rating ?? 0} onChange={bk.canEdit ? (rating: number) => bk.edit('books', id, { rating }) : undefined} />
+          ) : null}
           {b.lent ? (
             <Row gap={6} align="center"><Avatar person={b.lent} size={22} /><Text class={s.sub}>{t('Lent')}</Text></Row>
           ) : null}
         </Stack>
       </Row>
       {bk.canEdit && (
-        <Segmented value={b.status ?? 'want'} options={STATUSES.map(([value, label]) => ({ value, label: t(label) }))}
-                   onChange={(status: string) => bk.edit('books', id, {
-                     status,
-                     ...(status === 'reading' && !b.started ? { started: iso(new Date()) } : {}),
-                     ...(status === 'done' ? { finished: b.finished ?? iso(new Date()), page: b.pages ?? b.page ?? null } : {}),
-                   })} />
+        <Row gap={6}>
+          {PICK.map(([status, label]) => (
+            <Pressable key={status} class={(b.status ?? 'want') === status ? [s.tile, s.tileOn] : s.tile}
+                       onPress={() => bk.edit('books', id, {
+                         status,
+                         ...(status === 'reading' && !b.started ? { started: iso(new Date()) } : {}),
+                         ...(status === 'done' ? { finished: b.finished ?? iso(new Date()), page: b.pages ?? b.page ?? null } : {}),
+                       })}>
+              <Box class={s.glyph}><BookAs b={{ id: '', title: '' }} status={status} width={24} bare /></Box>
+              <Text class={s.tileText}>{t(label)}</Text>
+            </Pressable>
+          ))}
+        </Row>
       )}
       {b.status === 'reading' && b.pages && bk.canEdit ? (
         <Box class={s.panel}>
@@ -340,13 +507,6 @@ function BookScreen() {
             <Button onPress={() => { if (bk.readTo(b, page)) setParty(true); setPage(null); }}>{t('Save')}</Button>
           )}
         </Box>
-      ) : null}
-      {b.status === 'done' ? (
-        <Row align="center" class={s.rating}>
-          <Rating value={b.rating ?? 0} onChange={bk.canEdit ? (rating: number) => bk.edit('books', id, { rating }) : undefined} />
-          <Stack grow />
-          {b.finished ? <Text class={s.sub}>{b.finished}</Text> : null}
-        </Row>
       ) : null}
       <Row align="center" class={s.sectionHead}>
         <Text class={s.h} grow>{t('Quotes')}</Text>
