@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Select, Button, IconButton, Icon, Fab, Grid,
-  Chip, Filter, Image, Upload, Editor, Markdown, Checkbox, Stepper, TagInput, Timer, Segmented, Badge,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, useKeys, fetch, t,
+  Chip, Filter, FilterTabs, Image, Upload, Editor, Markdown, Checkbox, Stepper, TagInput, Timer, Segmented, Badge,
+  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, useKeys, fetch, has, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -14,7 +14,9 @@ type Recipe = {
 };
 type Plan = { id: string; day: string; recipe: string; pos?: string };
 
-const COURSES: [string, string][] = [['breakfast', /*t*/'Breakfast'], ['main', /*t*/'Main'], ['side', /*t*/'Side'], ['sweet', /*t*/'Sweet']];
+const COURSES: [string, string, string][] = [
+  ['breakfast', /*t*/'Breakfast', 'local_cafe'], ['main', /*t*/'Main', 'restaurant'], ['side', /*t*/'Side', 'eco'], ['sweet', /*t*/'Sweet', 'cake'],
+];
 const EMOJIS = ['🍝', '🍛', '🥘', '🍲', '🥗', '🍕', '🌮', '🍜', '🍳', '🥞', '🍰', '🍪', '🥧', '🍔', '🐟', '🍗', '🥦', '🍞'];
 const WEEKDAYS = [/*t*/'Sunday', /*t*/'Monday', /*t*/'Tuesday', /*t*/'Wednesday', /*t*/'Thursday', /*t*/'Friday', /*t*/'Saturday'];
 
@@ -98,8 +100,14 @@ function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
         <Chip label={t('Favourites')} icon="favorite" selected={faves} onPress={() => setFaves(!faves)} />
         <Chip label={t('Quick')} icon="bolt" selected={quick} onPress={() => setQuick(!quick)} />
       </Row>
-      <Filter value={course} onChange={setCourse}
-        options={[{ value: '', label: t('All') }, ...COURSES.map(([value, label]) => ({ value, label: t(label) }))]} />
+      {/* Isolink 0.26.53 on: icon tabs, the picked one named. */}
+      {has('filterTabs') ? (
+        <FilterTabs value={course} onChange={setCourse}
+          options={[{ value: '', label: t('All'), icon: 'menu_book' }, ...COURSES.map(([value, label, icon]) => ({ value, label: t(label), icon }))]} />
+      ) : (
+        <Filter value={course} onChange={setCourse}
+          options={[{ value: '', label: t('All') }, ...COURSES.map(([value, label]) => ({ value, label: t(label) }))]} />
+      )}
       {shown.length === 0 ? <Text tone="muted" align="center" class={s.empty}>{t('Nothing here')}</Text> : (
         <Grid min={150} gap={10}>
           {shown.map((r) => <Card key={r.id} r={r} onPress={() => nav.push('Recipe', { id: r.id })} onHold={rc.canEdit ? () => hold(r) : undefined} />)}
