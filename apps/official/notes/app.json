@@ -55,29 +55,36 @@
             "options": [
               {
                 "id": "yellow",
-                "name": "Yellow"
+                "name": "Yellow",
+                "color": "#FDE68A"
               },
               {
                 "id": "pink",
-                "name": "Pink"
+                "name": "Pink",
+                "color": "#FBCFE8"
               },
               {
                 "id": "blue",
-                "name": "Blue"
+                "name": "Blue",
+                "color": "#BFDBFE"
               },
               {
                 "id": "green",
-                "name": "Green"
+                "name": "Green",
+                "color": "#BBF7D0"
               },
               {
                 "id": "orange",
-                "name": "Orange"
+                "name": "Orange",
+                "color": "#FED7AA"
               },
               {
                 "id": "purple",
-                "name": "Purple"
+                "name": "Purple",
+                "color": "#DDD6FE"
               }
-            ]
+            ],
+            "name": "Colour"
           },
           "pos": {
             "id": 7,
@@ -87,20 +94,23 @@
             "id": 8,
             "type": "number",
             "min": 0,
-            "max": 4000
+            "max": 4000,
+            "hidden": true
           },
           "y": {
             "id": 9,
             "type": "number",
             "min": 0,
-            "max": 4000
+            "max": 4000,
+            "hidden": true
           },
           "tilt": {
             "id": 10,
             "type": "number",
             "min": -4,
             "max": 4,
-            "decimals": 1
+            "decimals": 1,
+            "hidden": true
           },
           "kind": {
             "id": 11,
@@ -138,25 +148,30 @@
                 "id": "chat",
                 "name": "Chat"
               }
-            ]
+            ],
+            "hidden": true
           },
           "photo": {
             "id": 12,
-            "type": "file"
+            "type": "file",
+            "hidden": true
           },
           "voice": {
             "id": 13,
-            "type": "file"
+            "type": "file",
+            "hidden": true
           },
           "sketch": {
             "id": 14,
-            "type": "file"
+            "type": "file",
+            "hidden": true
           },
           "links": {
             "id": 15,
             "type": "ref",
             "table": "notes",
-            "many": true
+            "many": true,
+            "hidden": true
           },
           "due": {
             "id": 16,
@@ -171,13 +186,15 @@
             "id": 18,
             "type": "number",
             "min": 0,
-            "max": 4000
+            "max": 4000,
+            "hidden": true
           },
           "h": {
             "id": 19,
             "type": "number",
             "min": 0,
-            "max": 4000
+            "max": 4000,
+            "hidden": true
           },
           "pin": {
             "id": 20,
@@ -211,25 +228,29 @@
                 "id": "white",
                 "name": "White"
               }
-            ]
+            ],
+            "hidden": true
           },
           "ref": {
             "id": 21,
-            "type": "json"
+            "type": "json",
+            "hidden": true
           },
           "stickers": {
             "id": 22,
-            "type": "json"
+            "type": "json",
+            "hidden": true
           },
           "refs": {
             "id": 23,
-            "type": "json"
+            "type": "json",
+            "hidden": true
           }
         }
       }
     }
   },
-  "version": 5,
+  "version": 6,
   "summary": {
     "table": "notes",
     "none": "No notes yet",
