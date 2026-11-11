@@ -123,10 +123,11 @@ export function useAddBar(o: AddBarOptions) {
   // In the chat's message box (Isolink 0.26.52 on), the same size as its attach and camera.
   const composer = has('composer');
   const glyph = composer ? (desk ? 20 : 24) : desk ? 17 : 20;
+  // On a phone, set is only the icon on the accent: its words would push the rest off the bar.
   const token = (on: boolean, icon: string, words: string) => (
-    <Box class={on ? [a.abToken, a.abOn] : [a.abToken, desk ? a.abIconD : a.abIcon]}>
-      <Icon name={icon} size={on ? (desk ? 17 : 20) : glyph} tone={on ? 'accent' : 'muted'} />
-      {on && <Text class={a.abTokenOnText} lines={1}>{short(words)}</Text>}
+    <Box class={on && desk ? [a.abToken, a.abOn] : on ? [a.abToken, a.abIcon, a.abOn] : [a.abToken, desk ? a.abIconD : a.abIcon]}>
+      <Icon name={icon} size={on && desk ? 17 : glyph} tone={on ? 'accent' : 'muted'} />
+      {on && desk && <Text class={a.abTokenOnText} lines={1}>{short(words)}</Text>}
     </Box>
   );
 
