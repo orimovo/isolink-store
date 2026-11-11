@@ -11,12 +11,12 @@ import { dayWords, isoDay, siteOf } from './smart';
 type Note = {
   id: string; title?: string; body?: string; pinned?: boolean; color?: string; pos?: string; folder?: string;
   tags?: string[]; x?: number; y?: number; tilt?: number; kind?: string; photo?: unknown; voice?: unknown;
-  sketch?: unknown; links?: string[]; due?: number; link?: string; w?: number; h?: number; _by?: string; _edited?: number;
+  sketch?: unknown; files?: NoteFile[]; links?: string[]; due?: number; link?: string; w?: number; h?: number; _by?: string; _edited?: number;
   pin?: string; ref?: Ref; stickers?: Stuck[]; refs?: Ref[];
 };
 /** A chat, message or link picked with dialog.chat(), a person from
  *  dialog.person(), or a sticker's emoji: what a board item is of. */
-type Ref = { kind?: string; chat?: string; message?: string; title?: string; text?: string; url?: string;
+type Ref = { kind?: string; at?: string; chat?: string; message?: string; title?: string; text?: string; url?: string;
   id?: string; name?: string; emoji?: string };
 /** A sticker stuck on a note, where on it. */
 type Stuck = { emoji: string; x: number; y: number };
@@ -41,6 +41,59 @@ const KINDS: [string, string, string][] = [
 /** Things on the board that aren't notes: a sticker, a person's card, a chat's. */
 const ITEMS = ['sticker', 'person', 'chat'];
 const isItem = (r: Note) => ITEMS.includes(r.kind ?? '');
+/** A file in a note's words: the file, and the key `![words](isolink:key)` names it by. */
+type NoteFile = { id: string; hash: string; size: number; type?: string; name?: string; key?: string };
+
+/** Photos, voice clips, files and chats drawn where they sit in a note's words: Isolinks that can. */
+const embeds = () => has('markdown.embeds');
+
+/** What a note's `![words](isolink:key)` stand for. */
+function embedsOf(r: Note) {
+  const out: Record<string, unknown> = {};
+  if (r.photo) out.photo = { src: r.photo };
+  if (r.voice) out.voice = { src: r.voice };
+  for (const f of r.files ?? []) {
+    const type = f.type ?? '';
+    out[f.id] = { src: f, name: f.name, kind: type.startsWith('image/') ? 'image' : type.startsWith('audio/') ? 'audio' : 'file' };
+  }
+  (r.refs ?? []).forEach((ref, i) => { out[ref.at ?? `r${i}`] = { ref }; });
+  return out;
+}
+
+/** A note's chats and people not shown in its words. */
+const loose = (r: Note) => (r.refs ?? []).filter((x, i) => !inWords(r, x.at ?? `r${i}`));
+
+/** Whether a note's words show [key] themselves. */
+const inWords = (r: Note, key: string) => (r.body ?? '').includes(`(isolink:${key})`);
+
+/** `![words](isolink:key)`, with no brackets in the words to break it. */
+const embedText = (words: string, key: string) => `![${words.replace(/[[\]()\n]/g, ' ').trim()}](isolink:${key})`;
+
+/** A key not yet used on [r], starting with [p]. */
+function freshKey(r: Note, p: string) {
+  const used = new Set([...(r.files ?? []).map((f) => f.id), ...(r.refs ?? []).map((x) => x.at ?? '')]);
+  let n = 1;
+  while (used.has(`${p}${n}`)) n++;
+  return `${p}${n}`;
+}
+
+/** Where the caret is in a note being written, and something put in there on a line of its own. */
+function useInsert(body: () => string, type: (text: string) => void) {
+  const caret = useRef(-1);
+  return {
+    onCaret: (at: number) => { caret.current = at; },
+    insert: (text: string) => {
+      const b = body();
+      const at = caret.current < 0 || caret.current > b.length ? b.length : caret.current;
+      const before = b.slice(0, at);
+      const after = b.slice(at);
+      const piece = `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
+      type(before + piece + after);
+      caret.current = at + piece.length;
+    },
+  };
+}
+
 /** Strings, pin colours, stickers and cards: Isolinks that draw them. */
 const pins = () => has('corkboard.pins');
 
@@ -132,20 +185,23 @@ function dueWords(ms: number) {
 }
 
 /** A note as it is on the board and in the grid. */
-function Paper({ r, tilt, onPress, onTick }: { r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void }) {
+function Paper({ r, tilt, onPress, onTick, card }: {
+  r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void;
+  /** In a phone's two columns: as tall as what's on it, straight. */
+  card?: boolean;
+}) {
   const more = rest(r);
   return (
-    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={tilt} pinned={!!r.pinned} sketch={r.sketch}
-                size={sizeOf(r)} onPress={onPress} pin={r.pin} stickers={pins() ? r.stickers : undefined}>
+    <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={card ? 0 : tilt} pinned={!!r.pinned} sketch={r.sketch}
+                size={card && !r.sketch ? undefined : sizeOf(r)} onPress={onPress} pin={r.pin}
+                stickers={pins() ? r.stickers : undefined}>
       <Text class={s.title}>{noteTitle(r)}</Text>
-      {r.photo ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
+      {r.photo && !inWords(r, 'photo') ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
       {more ? (
-        <Markdown class={s.body} onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
+        <Markdown class={s.body} compact embeds={embeds() ? embedsOf(r) : undefined} onChange={onTick ? (text: string) => onTick(changedBody(r, more, text)) : undefined}>{more}</Markdown>
       ) : null}
-      {r.voice ? (
-        <Row gap={1} align="center"><Icon name="mic" size={16} /><Text class={s.small}>{t('Voice')}</Text></Row>
-      ) : null}
-      {pins() && r.refs?.length ? <Chips refs={r.refs} /> : null}
+      {r.voice && !inWords(r, 'voice') ? <Audio src={r.voice} /> : null}
+      {pins() && loose(r).length ? <Chips refs={loose(r)} /> : null}
       {typeof r.due === 'number' || r.link ? (
         <Row gap={10} align="center" wrap class={s.paperMeta}>
           {typeof r.due === 'number' ? (
@@ -192,25 +248,64 @@ async function stickOn(r: Note, edit: (t: string, id: string, f: object) => void
 }
 
 /** A note's format bar, with its photo, voice and sketch after the words' buttons. */
-function NoteTools({ row, editor, mode, setMode }: {
-  row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void;
+function NoteTools({ row, editor, mode, setMode, insert }: {
+  row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string) => void;
 }) {
   return (
     <FormatBar for={editor}>
-      <NoteExtras row={row} mode={mode} setMode={setMode} />
+      <NoteExtras row={row} mode={mode} setMode={setMode} insert={insert} />
     </FormatBar>
   );
 }
 
 /** What a note can have besides words: stickers and chats on a board with pins, a photo, a
  *  voice clip and a sketch. [then], after one's picked. */
-function NoteExtras({ row, mode, setMode, then }: {
+function NoteExtras({ row, mode, setMode, then, insert }: {
   row: Note; mode: string | null; setMode: (m: string | null) => void; then?: () => void;
+  /** Puts something in the words where the caret is (Isolinks with embeds). */
+  insert?: (text: string) => void;
 }) {
   const { edit } = useData();
   const dialog = useDialog();
   const id = row.id;
   const after = then ?? (() => {});
+  const put = insert && embeds() ? insert : undefined;
+  if (put) {
+    // Any number of photos, files and chats, each where it was put in.
+    const file = (f: NoteFile, words: string) => {
+      const key = freshKey(row, 'f');
+      edit('notes', id, { files: [...(row.files ?? []), { ...f, id: key }] });
+      put(embedText(words, key));
+      after();
+    };
+    return (
+      <>
+        <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp,gif"
+                onUpload={(f: NoteFile) => file(f, t('Photo'))} />
+        <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
+                    onPress={() => { setMode(mode === 'voice' ? null : 'voice'); after(); }} />
+        <Upload variant="icon" icon="attach_file" label={t('File')} onUpload={(f: NoteFile) => file(f, f.name ?? t('File'))} />
+        <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
+                    onPress={() => { setMode(mode === 'sketch' ? null : 'sketch'); after(); }} />
+        {row.sketch && (
+          <IconButton icon="layers_clear" label={t('Remove sketch')} onPress={() => { edit('notes', id, { sketch: null }); after(); }} />
+        )}
+        {pins() ? (
+          <>
+            <IconButton icon="forum" label={t('Chat')} onPress={async () => {
+              after();
+              const ref = await dialog.chat();
+              if (!ref) return;
+              const key = freshKey(row, 'r');
+              edit('notes', id, { refs: [...(row.refs ?? []), { ...ref, at: key }] });
+              put(embedText(ref.title ?? t('Chat'), key));
+            }} />
+            <IconButton icon="add_reaction" label={t('Sticker')} onPress={() => { after(); stickOn(row, edit, dialog.sticker); }} />
+          </>
+        ) : null}
+      </>
+    );
+  }
   return (
     <>
       {pins() ? (
@@ -245,19 +340,32 @@ function NoteExtras({ row, mode, setMode, then }: {
 }
 
 /** What's on a note under its words: its photo, voice clip, and the recorder while recording. */
-function NoteMedia({ row, mode, setMode }: { row: Note; mode: string | null; setMode: (m: string | null) => void }) {
+function NoteMedia({ row, mode, setMode, insert }: {
+  row: Note; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string) => void;
+}) {
   const { edit } = useData();
+  const put = insert && embeds() ? insert : undefined;
+  const chips = loose(row);
   return (
     <>
-      {pins() && row.refs?.length ? (
-        <Chips refs={row.refs}
-               onRemove={(i) => edit('notes', row.id, { refs: (row.refs ?? []).filter((_, j) => j !== i) })} />
+      {pins() && chips.length ? (
+        <Chips refs={chips}
+               onRemove={(i) => edit('notes', row.id, { refs: (row.refs ?? []).filter((x) => x !== chips[i]) })} />
       ) : null}
-      {row.photo ? <Image src={row.photo} class={s.photo} /> : null}
-      {row.voice ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
-      {mode === 'voice' && !row.voice ? (
+      {row.photo && !inWords(row, 'photo') ? <Image src={row.photo} class={s.photo} /> : null}
+      {row.voice && !inWords(row, 'voice') ? <Box class={s.block}><Audio src={row.voice} /></Box> : null}
+      {mode === 'voice' && (put || !row.voice) ? (
         <Box class={s.block}>
-          <Recorder onDone={(f: unknown) => { edit('notes', row.id, { voice: f }); setMode(null); }} />
+          <Recorder onDone={(f: NoteFile) => {
+            if (put) {
+              const key = freshKey(row, 'f');
+              edit('notes', row.id, { files: [...(row.files ?? []), { ...f, id: key }] });
+              put(embedText(t('Voice'), key));
+            } else {
+              edit('notes', row.id, { voice: f });
+            }
+            setMode(null);
+          }} />
         </Box>
       ) : null}
     </>
@@ -330,7 +438,8 @@ function useInPlace(all: Note[]) {
       if (saved.current.turn === turn && latest.current.editing === id) flush(id, text);
     });
   };
-  return { editing, row, body, mode, setMode, start, finish, create, type, fresh };
+  const { onCaret, insert } = useInsert(() => latest.current.body, type);
+  return { editing, row, body, mode, setMode, start, finish, create, type, fresh, onCaret, insert };
 }
 
 function useNotes() {
@@ -444,6 +553,18 @@ function useNotes() {
       if (r && (r.links ?? []).includes(y)) edit('notes', x, { links: (r.links ?? []).filter((l) => l !== y) });
     }
   };
+  /** [id]'s pin let go on the string between [a] and [b]: it runs through it. */
+  const splice = (id: string, a: string, b: string) => {
+    const r = all.find((o) => o.id === id);
+    if (!r) return;
+    for (const [x, y] of [[a, b], [b, a]]) {
+      const o = all.find((n) => n.id === x);
+      if (o && (o.links ?? []).includes(y)) edit('notes', x, { links: (o.links ?? []).filter((l) => l !== y) });
+    }
+    // Tied from it to each end, unless that end already has a string to it.
+    const to = [a, b].filter((x) => !(r.links ?? []).includes(x) && !(all.find((o) => o.id === x)?.links ?? []).includes(id));
+    if (to.length) edit('notes', id, { links: [...(r.links ?? []), ...to] });
+  };
   /** A sticker let go on a note: stuck on it there. */
   const drop = (id: string, onto: string, x: number, y: number) => {
     const r = all.find((o) => o.id === id);
@@ -455,7 +576,7 @@ function useNotes() {
     remove('notes', id);
   };
 
-  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, drop };
+  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, splice, drop };
 }
 
 function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold, onDrop }: {
@@ -557,7 +678,7 @@ function Home() {
   // A phone's tools go on its keyboard, the colours under the note.
   const phoneTools = writing ? (
     <Glass padding={1}>
-      <NoteTools row={writing} editor="board-note" mode={w.mode} setMode={w.setMode} />
+      <NoteTools row={writing} editor="board-note" mode={w.mode} setMode={w.setMode} insert={w.insert} />
     </Glass>
   ) : undefined;
   const pickTag = async (r: Note) => {
@@ -607,7 +728,7 @@ function Home() {
       ) : bar === 'more' ? (
         <Row key="more" gap={0} align="center">
           <IconButton icon="chevron_left" label={t('Back')} onPress={shut} />
-          <NoteExtras row={writing} mode={w.mode} setMode={w.setMode} then={shut} />
+          <NoteExtras row={writing} mode={w.mode} setMode={w.setMode} then={shut} insert={w.insert} />
           {tagButton(writing, shut)}
           {doneButton()}
         </Row>
@@ -633,8 +754,8 @@ function Home() {
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
         {ownTitle(r) ? <Text class={s.title}>{r.title}</Text> : null}
         <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
-                placeholder={t('New note')} />
-        <NoteMedia row={r} mode={w.mode} setMode={w.setMode} />
+                placeholder={t('New note')} embeds={embeds() ? embedsOf(r) : undefined} onCaret={w.onCaret} />
+        <NoteMedia row={r} mode={w.mode} setMode={w.setMode} insert={w.insert} />
       </StickyNote>
     ) : (
       <Paper key={r.id} r={r} tilt={tiltOf(r)} onPress={() => (inPlace ? w.start(r.id) : open(r))} onTick={tick(r)} />
@@ -757,6 +878,7 @@ function Home() {
             onPin={canEdit ? (id: string, pin: string) => edit('notes', id, { pin }) : undefined}
             onTie={canEdit ? n.tie : undefined}
             onCut={canEdit ? n.cut : undefined}
+            onSplice={canEdit ? n.splice : undefined}
             onDrop={canEdit ? n.drop : undefined}
             onDone={inPlace ? w.finish : undefined}
             tools={phone ? undefined : tools}
@@ -780,9 +902,10 @@ function Home() {
             {shown.length === 0 ? (
               <Empty />
             ) : (
-              <Masonry min={200} gap={16} onReorder={canEdit ? move : undefined} onHold={n.hold}>
+              <Masonry min={200} columns={phone ? 2 : undefined} gap={phone ? 8 : 16}
+                       onReorder={canEdit ? move : undefined} onHold={n.hold}>
                 {shown.map((r, i) => (
-                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} onPress={() => open(r)} onTick={tick(r)} />
+                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} card={phone} onPress={() => open(r)} onTick={tick(r)} />
                 ))}
               </Masonry>
             )}
@@ -862,6 +985,7 @@ function NoteScreen() {
       if (saved.current.turn === turn) flush(text);
     });
   };
+  const { onCaret, insert } = useInsert(() => latest.current.body, type);
 
   if (!row) return <Screen title={t('Notes')} />;
 
@@ -886,7 +1010,7 @@ function NoteScreen() {
   ) : undefined;
   const strung = all.filter((o) => (row.links ?? []).includes(o.id) || (o.links ?? []).includes(id));
 
-  const bar = canEdit ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} /> : undefined;
+  const bar = canEdit ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} insert={insert} /> : undefined;
 
   const note = (
     <StickyNote color={colorOf(row)} sketch={row.sketch} sketching={mode === 'sketch'} size={sizeOf(row)}
@@ -894,13 +1018,13 @@ function NoteScreen() {
                 onSketch={(f: unknown) => { edit('notes', id, { sketch: f }); setMode(null); }}>
       {canEdit ? (
         <Editor id="note" rich plain value={body} onChange={type} autofocus={!!fresh && mode === null}
-                placeholder={t('New note')} />
+                placeholder={t('New note')} embeds={embeds() ? embedsOf(row) : undefined} onCaret={onCaret} />
       ) : body.trim() ? (
-        <Markdown>{body}</Markdown>
+        <Markdown embeds={embeds() ? embedsOf(row) : undefined}>{body}</Markdown>
       ) : !row.photo && !row.voice && !row.sketch ? (
         <Text>{t('Empty note')}</Text>
       ) : null}
-      <NoteMedia row={row} mode={mode} setMode={setMode} />
+      <NoteMedia row={row} mode={mode} setMode={setMode} insert={insert} />
     </StickyNote>
   );
 
@@ -946,7 +1070,7 @@ export default defineApp({
   split: () => ['Home'],
   // Older notes get their first line as their Title.
   migrate: {
-    6: (row: any, table: string) =>
+    7: (row: any, table: string) =>
       table === 'notes' && !(row.title ?? '').trim() && lineTitle(row.body) ? { ...row, title: lineTitle(row.body) } : row,
   },
   actions: {

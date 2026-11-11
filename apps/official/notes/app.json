@@ -245,12 +245,17 @@
             "id": 23,
             "type": "json",
             "hidden": true
+          },
+          "files": {
+            "id": 24,
+            "type": "json",
+            "hidden": true
           }
         }
       }
     }
   },
-  "version": 6,
+  "version": 7,
   "summary": {
     "table": "notes",
     "none": "No notes yet",
