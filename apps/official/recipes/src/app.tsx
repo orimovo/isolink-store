@@ -96,7 +96,7 @@ function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
   return (
     <>
       <SearchField value={q} placeholder={t('Search')} onChange={setQ} />
-      <Row gap={6} class={s.chips} wrap>
+      <Row gap={2} class={s.chips} wrap>
         <Chip label={t('Favourites')} icon="favorite" selected={faves} onPress={() => setFaves(!faves)} />
         <Chip label={t('Quick')} icon="bolt" selected={quick} onPress={() => setQuick(!quick)} />
       </Row>
@@ -109,7 +109,7 @@ function RecipesTab({ rc }: { rc: ReturnType<typeof useRecipes> }) {
           options={[{ value: '', label: t('All') }, ...COURSES.map(([value, label]) => ({ value, label: t(label) }))]} />
       )}
       {shown.length === 0 ? <Text tone="muted" align="center" class={s.empty}>{t('Nothing here')}</Text> : (
-        <Grid min={150} gap={10}>
+        <Grid min={150} gap={10} class={s.grid}>
           {shown.map((r) => <Card key={r.id} r={r} onPress={() => nav.push('Recipe', { id: r.id })} onHold={rc.canEdit ? () => hold(r) : undefined} />)}
         </Grid>
       )}
