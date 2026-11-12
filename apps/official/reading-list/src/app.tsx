@@ -1,5 +1,5 @@
 import {
-  defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Button, IconButton, Icon, Fab, Grid,
+  defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Button, IconButton, Icon, Fab,
   Chip, Image, Markdown, Editor, Rating, Slider, Stepper, Segmented, ProgressRing, Progress, Chart, Stat, Scanner,
   Scroll, Badge, Avatar, PersonPicker, Confetti,
   useQuery, useData, useLocal, useStore, useLayout, useMe, useNav, useNow, useDialog, useShare, useToast, usePlatform, fetch, t, has,
@@ -108,8 +108,8 @@ function Cover({ b, width, onPress, onHold }: { b: Book; width: number; onPress?
 // (reading) and standing on a shelf (read) -----
 
 /** The cover picture filling its box, or a coloured cover with the title on. */
-function Face({ b, width = 96, back, bare }: { b: Book; width?: number; back?: boolean; bare?: boolean }) {
-  if (b.cover) return <Image src={b.cover} alt={b.title} class={back ? [s.fill, s.fillBack] : s.fill} />;
+function Face({ b, width = 96, back, bare, spine }: { b: Book; width?: number; back?: boolean; bare?: boolean; spine?: boolean }) {
+  if (b.cover) return <Image src={b.cover} alt={b.title} class={back ? [s.fill, s.fillBack] : spine ? [s.fill, s.fillSpine] : s.fill} />;
   return (
     <Box class={s.plain} style={{ background: tintOf(b) }}>
       {bare || back ? null : (
@@ -174,7 +174,7 @@ const spineWidth = (b: Book) => Math.max(20, Math.min(44, Math.round((b.pages ??
 function Spine({ b, height, onPress, onHold }: { b: Book; height: number; onPress?: () => void; onHold?: () => void }) {
   return (
     <Pressable class={s.spine} style={{ width: spineWidth(b), height }} onPress={onPress} onLongPress={onHold}>
-      <Face b={b} bare />
+      <Face b={b} bare spine />
       <Box class={s.spineDim} />
       <Box class={s.spineBand} />
       <Box class={s.spineTitle}><Text class={s.spineText} lines={1}>{b.title}</Text></Box>
@@ -328,6 +328,7 @@ function ShelfTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
 
 function StatsTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
   const nav = useNav();
+  const menu = useBookMenu(bk);
   const finished = bk.books.filter((b) => b.status === 'done' && (b.finished ?? '').startsWith(String(bk.year)));
   const pages = bk.sessions.filter((x) => x.day.startsWith(String(bk.year))).reduce((n, x) => n + x.pages, 0);
   const rated = finished.filter((b) => b.rating);
@@ -363,9 +364,7 @@ function StatsTab({ bk }: { bk: ReturnType<typeof useBooks> }) {
       {finished.length > 0 && (
         <>
           <Text class={s.h}>{t('Read this year')}</Text>
-          <Grid min={90} gap={10}>
-            {finished.map((b) => <Cover key={b.id} b={b} width={90} onPress={() => nav.push('Book', { id: b.id })} />)}
-          </Grid>
+          <Bookcase books={finished} onOpen={(b) => nav.push('Book', { id: b.id })} onHold={menu} />
         </>
       )}
     </>
