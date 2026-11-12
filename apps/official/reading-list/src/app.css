@@ -61,27 +61,65 @@
 .spineTitle { position: absolute; top: 20px; bottom: 22px; left: 0; right: 0; place-items: center; writing-mode: vertical-rl; }
 .spineText { color: #ffffff; font-size: 11px; font-weight: 700; font-family: var(--font-display); }
 .spineRate { position: absolute; bottom: 5px; left: 0; right: 0; text-align: center; color: #ffffff; font-size: 9px; }
-
-.case { padding: 8px 8px 0 8px; border-radius: 6px 6px 0 0; background: linear-gradient(90deg, #ae8f6c 0%, #d6bb98 3%, #d6bb98 97%, #ae8f6c 100%); }
-.cubby { padding: 18px 0 0 0; border-radius: 2px; overflow: hidden; background: linear-gradient(180deg, #d9c7af 0%, #efe3d2 30%, #ebdcc7 100%); }
-.books { padding: 0 16px; }
-.floor { height: 7px; background: linear-gradient(180deg, #b39672 0%, #d6bb98 100%); }
-.lip { height: 12px; border-radius: 0 0 4px 4px; background: linear-gradient(180deg, #d6bb98 0%, #ae8f6c 100%); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12); }
-.bookend { width: 6px; height: 70px; margin-left: 3px; border-radius: 2px 2px 0 0; background: linear-gradient(90deg, #9ea2a8 0%, #777b80 100%); }
-.bookendFoot { position: absolute; left: 0; bottom: 0; width: 26px; height: 4px; border-radius: 0 2px 0 0; background: #777b80; }
 .leftover { border-radius: 2px 2px 1px 1px; background: linear-gradient(90deg, #4b4f58 0%, #6b707b 50%, #4b4f58 100%); }
 .mini { border-radius: 1px; overflow: hidden; }
 .hero { padding: 4px 0 4px 6px; }
 
 @media (prefers-color-scheme: dark) {
-  .case { background: linear-gradient(90deg, #3f3026 0%, #6a5240 3%, #6a5240 97%, #3f3026 100%); }
-  .cubby { background: linear-gradient(180deg, #1c1612 0%, #2e251f 35%, #231c17 100%); }
-  .floor { background: linear-gradient(180deg, #2a201a 0%, #6a5240 100%); }
-  .lip { background: linear-gradient(180deg, #6a5240 0%, #3f3026 100%); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4); }
-  .bookend { background: linear-gradient(90deg, #8e9196 0%, #5c5f64 100%); }
 }
 
 .tile { flex: 1; align-items: center; gap: 6px; padding: 10px 6px; border-radius: var(--radius-md); background: var(--surface); border: 2px solid transparent; }
 .tileOn { border: 2px solid var(--accent); background: var(--accent-soft); }
 .glyph { height: 46px; place-items: center; }
 .tileText { font-size: 13px; text-align: center; }
+
+/* The shelves: plain lines under each row, Reading open on the page */
+.shelfHead { padding: 14px 4px 6px; }
+.shelfTitle { font-size: 15px; font-weight: 700; }
+.lineShelf { margin-bottom: 14px; }
+.pageRow { margin-bottom: 10px; }
+.lineBooks { padding: 0 6px; }
+.shelfLine { height: 5px; border-radius: 3px; background: linear-gradient(180deg, #c9c6cf 0%, #a8a4b0 100%); box-shadow: 0 6px 8px rgba(0, 0, 0, 0.18); }
+.gap { height: 10px; transition: 180ms; }
+.readingBook { margin-right: 14px; }
+.orn { padding: 0 6px; }
+.flat { border-radius: 3px; overflow: hidden; transform: rotate(-6deg) scale(1.04, 0.8); box-shadow: 0 14px 22px rgba(0, 0, 0, 0.35); }
+
+.stop { width: 24px; height: 64px; margin: 0 3px 0 6px; border-radius: 3px 3px 0 0; padding-top: 7px; align-items: center; background: linear-gradient(90deg, #9a9da3 0%, #d9dbe0 40%, #8a8d93 100%); box-shadow: 1px 0 2px rgba(0, 0, 0, 0.35); }
+.stopPhone { width: 19px; height: 52px; margin: 0 2px 0 4px; }
+.stopLetter { text-align: center; font-size: 15px; font-weight: 700; color: #2b2d31; font-family: var(--font-serif); }
+.stopFoot { position: absolute; left: 0; bottom: 0; width: 36px; height: 4px; border-radius: 0 2px 0 0; background: #8a8d93; }
+
+.ph { border: 2px dashed rgba(128, 128, 128, 0.35); border-radius: 3px 6px 6px 3px; background: rgba(128, 128, 128, 0.06); }
+.phOpen { border-radius: 6px; }
+.phSpine { border-radius: 3px 3px 1px 1px; }
+
+.az { width: 20px; padding: 4px 0; align-items: center; }
+.azLetter { width: 18px; padding: 0; border-radius: 4px; align-items: center; }
+.azLetter:hover { background: var(--accent-soft); }
+.azOff { opacity: 0.35; }
+.azText { font-size: 10px; font-weight: 700; color: var(--accent); line-height: 1.35; }
+
+.flyout { padding: 2px; }
+.flyItem { width: 62px; height: 72px; place-items: center; border-radius: 8px; }
+.flyItem:hover { background: rgba(128, 128, 128, 0.15); }
+.remove { padding: 12px; border-radius: 999px; background: var(--danger); color: #ffffff; }
+
+/* A book opened: two pages of print between its covers */
+.spread { padding: 6px; border-radius: 5px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3); }
+.pg { padding: 18px 14px 0 14px; background: #f3eee3; }
+.pgL { border-radius: 2px 0 0 2px; background: linear-gradient(90deg, #f3eee3 78%, #ddd5c4 100%); }
+.pgR { border-radius: 0 2px 2px 0; background: linear-gradient(90deg, #ddd5c4 0%, #f3eee3 22%); }
+.print { height: 2px; border-radius: 1px; background: rgba(154, 145, 127, 0.5); }
+.chapter { font-family: var(--font-serif); font-weight: 700; font-size: 14px; color: #3b352b; }
+.marked { padding: 4px 6px 6px 6px; }
+.hand { font-family: var(--font-hand); font-size: 15px; line-height: 1.2; color: #2c3f8f; transform: rotate(-2.5deg); }
+.ring { position: absolute; top: -4px; left: -6px; right: -6px; bottom: -4px; border: 2px solid rgba(192, 57, 43, 0.85); border-radius: 999px; transform: rotate(-2deg); }
+.pageNo { font-size: 10px; color: #6d6455; font-family: var(--font-serif); }
+.pageFoot { padding-bottom: 8px; }
+.ribbon { position: absolute; top: 0; bottom: -14px; width: 10px; background: var(--accent); border-radius: 0 0 2px 2px; }
+.popHero { padding: 8px 0 4px; }
+
+@media (prefers-color-scheme: dark) {
+  .shelfLine { background: linear-gradient(180deg, #5a5560 0%, #3a3640 100%); box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5); }
+}

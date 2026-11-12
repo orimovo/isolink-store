@@ -56,5 +56,10 @@
   "p. {p0}": "p. {p0}",
   "{p0} books": "{p0} livres",
   "{p0} of {p1} books": "{p0} livres sur {p1}",
-  "{p0} pages": "{p0} pages"
+  "{p0} pages": "{p0} pages",
+  "Back": "Retour",
+  "Chapter {p0}": "Chapitre {p0}",
+  "Next": "Suivant",
+  "Ornaments": "Objets",
+  "Remove": "Retirer"
 }

@@ -56,5 +56,10 @@
   "p. {p0}": "第 {p0} 页",
   "{p0} books": "{p0} 本书",
   "{p0} of {p1} books": "{p0} / {p1} 本书",
-  "{p0} pages": "{p0} 页"
+  "{p0} pages": "{p0} 页",
+  "Back": "返回",
+  "Chapter {p0}": "第 {p0} 章",
+  "Next": "下一页",
+  "Ornaments": "摆件",
+  "Remove": "移除"
 }
