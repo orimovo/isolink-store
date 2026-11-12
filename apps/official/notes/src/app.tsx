@@ -33,6 +33,8 @@ const NAMES: Record<string, string> = {
 const TILTS = [-1.2, 0.9, -0.5, 1.4, -0.8, 0.6];
 /** A note's paper, in points: the same shape on the board and opened. */
 const sizeOf = (r: Note): [number, number] => [r.w ?? 190, r.h ?? 160];
+/** The tallest a note is drawn in the Notes list, in its points; open it for the rest. */
+const LISTED = 320;
 const KINDS: [string, string, string][] = [
   ['note', /*t*/'Note', 'sticky_note_2'], ['list', /*t*/'List', 'checklist'], ['photo', /*t*/'Photo', 'photo_camera'],
   ['voice', /*t*/'Voice', 'mic'], ['sketch', /*t*/'Sketch', 'brush'],
@@ -185,15 +187,17 @@ function dueWords(ms: number) {
 }
 
 /** A note as it is on the board and in the grid. */
-function Paper({ r, tilt, onPress, onTick, card }: {
+function Paper({ r, tilt, onPress, onTick, card, listed }: {
   r: Note; tilt: number; onPress: () => void; onTick?: (body: string) => void;
   /** In a phone's two columns: as tall as what's on it, straight. */
   card?: boolean;
+  /** In the Notes list: a long note cut short, fading out, so it fits. */
+  listed?: boolean;
 }) {
   const more = rest(r);
   return (
     <StickyNote id={r.id} x={r.x} y={r.y} color={colorOf(r)} tilt={card ? 0 : tilt} pinned={!!r.pinned} sketch={r.sketch}
-                size={card && !r.sketch ? undefined : sizeOf(r)} onPress={onPress} pin={r.pin}
+                size={card && !r.sketch ? undefined : sizeOf(r)} most={listed ? LISTED : undefined} onPress={onPress} pin={r.pin}
                 stickers={pins() ? r.stickers : undefined}>
       <Text class={s.title}>{noteTitle(r)}</Text>
       {r.photo && !inWords(r, 'photo') ? <Image src={r.photo} ratio={4 / 3} class={s.thumb} /> : null}
@@ -905,7 +909,7 @@ function Home() {
               <Masonry min={200} columns={phone ? 2 : undefined} gap={phone ? 8 : 16}
                        onReorder={canEdit ? move : undefined} onHold={n.hold}>
                 {shown.map((r, i) => (
-                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} card={phone} onPress={() => open(r)} onTick={tick(r)} />
+                  <Paper key={r.id} r={r} tilt={TILTS[i % TILTS.length]} card={phone} listed onPress={() => open(r)} onTick={tick(r)} />
                 ))}
               </Masonry>
             )}
