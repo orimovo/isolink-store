@@ -3,12 +3,12 @@
 // date, the app's own pick (an aisle, a project, a tag) and a source.
 import {
   Box, Row, Stack, Scroll, Text, TextField, Icon, Menu, Sheet, Calendar, Chip, TimePicker, Upload,
-  Button, IconButton, Glass, Composer, useLocal, useDialog, useNow, usePlatform, has, t,
+  Button, IconButton, Glass, Composer, Divider, useLocal, useDialog, useNow, usePlatform, has, t,
 } from 'isolink';
 import a from './addbar.css';
 import { read, dayFrom, nextWeekday, dayWords, siteOf, Said } from './smart';
 
-export type Added = Said & { file?: unknown; photo?: unknown; pick?: string };
+export type Added = Said & { file?: unknown; photo?: unknown; pick?: string; title?: string };
 type Option = { id: string; label: string; icon?: string };
 type Source = 'link' | 'file' | 'photo';
 
@@ -22,6 +22,8 @@ export type AddBarOptions = {
   /** The app's own pick, such as an aisle: what it's called, and what's picked when nothing is. */
   pick?: { icon: string; label: string; options: Option[]; guess?: (said: Said) => string | undefined; onNew?: () => Promise<string | null> };
   sources?: Source[];
+  /** A title over what's typed, once the bar's clicked; + adds even with nothing typed (a note). */
+  titled?: boolean;
 };
 
 const TIMES = ['09:00', '12:00', '17:30', '20:00'];
@@ -52,6 +54,10 @@ export function useAddBar(o: AddBarOptions) {
   const [sheet, setSheet] = useLocal<'date' | 'file' | 'photo' | null>(null);
   // Cleared: what was typed for a date stays as words.
   const [plain, setPlain] = useLocal<boolean>(false);
+  const [title, setTitle] = useLocal<string>('');
+  const [open, setOpen] = useLocal<boolean>(false);
+  // A title over the words, on Isolinks whose message box can have one.
+  const titled = !!o.titled && has('composer.top');
 
   const said = read(draft, now, !!o.qty, !!o.time, !plain);
   const whenDay = day ?? said.day ?? null;
@@ -59,7 +65,7 @@ export function useAddBar(o: AddBarOptions) {
   const picked = pick ?? (said.tag && o.pick?.options.find((x) => x.label.toLowerCase() === said.tag!.toLowerCase())?.id) ?? (said.text ? o.pick?.guess?.(said) : undefined) ?? null;
   const pickLabel = picked ? o.pick?.options.find((x) => x.id === picked)?.label ?? picked : undefined;
   const linkNow = link ?? said.link ?? null;
-  const ready = !!said.text;
+  const ready = titled || !!said.text;
 
   const reset = () => {
     setDraft('');
@@ -70,6 +76,8 @@ export function useAddBar(o: AddBarOptions) {
     setFile(null);
     setPhoto(null);
     setPlain(false);
+    setTitle('');
+    setOpen(false);
   };
   const submit = () => {
     if (!ready) return;
@@ -83,6 +91,7 @@ export function useAddBar(o: AddBarOptions) {
       pick: picked ?? undefined,
       file: file ?? undefined,
       photo: photo ?? undefined,
+      title: title.trim() || undefined,
     });
     reset();
   };
@@ -186,7 +195,23 @@ export function useAddBar(o: AddBarOptions) {
 
   // The chat's own message box: what's typed, then a date, the app's pick
   // and a source, then send on a round of the accent to add it.
-  const bar = composer ? (
+  const bar = titled ? (
+    // Clicked, it opens: Title, with the cursor in it, a line, then the words.
+    <Composer value={draft} onChange={setDraft} onSubmit={submit} placeholder={open ? t('Body') : o.placeholder}
+              sendLabel={t('Add')} sendIcon="add" ready multiline={open}
+              onFocus={() => setOpen(true)}
+              onBlur={() => { if (!draft.trim() && !title.trim()) setOpen(false); }}
+              top={open ? (
+                <Stack gap={6} class={a.abTop}>
+                  <TextField plain autofocus value={title} onChange={setTitle} placeholder={t('Title')} class={a.abTitle} />
+                  <Divider />
+                </Stack>
+              ) : undefined}>
+      <Box class={desk ? a.abMenusD : a.abMenusC}>
+        <Scroll direction="horizontal">{menus}</Scroll>
+      </Box>
+    </Composer>
+  ) : composer ? (
     <Composer value={draft} onChange={setDraft} onSubmit={submit} placeholder={o.placeholder} sendLabel={t('Add')} ready={ready}>
       <Box class={desk ? a.abMenusD : a.abMenusC}>
         <Scroll direction="horizontal">{menus}</Scroll>

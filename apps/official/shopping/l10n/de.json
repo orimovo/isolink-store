@@ -84,5 +84,7 @@
   "{p0} shops": "{p0} Einkäufe",
   "{p0} things": "{p0} Sachen",
   "{p0} to add": "{p0} hinzufügen",
-  "{p0} to get": "{p0} zu holen"
+  "{p0} to get": "{p0} zu holen",
+  "Title": "Titel",
+  "Body": "Text"
 }

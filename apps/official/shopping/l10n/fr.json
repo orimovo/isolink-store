@@ -84,5 +84,7 @@
   "{p0} shops": "{p0} courses",
   "{p0} things": "{p0} articles",
   "{p0} to add": "{p0} à ajouter",
-  "{p0} to get": "{p0} à acheter"
+  "{p0} to get": "{p0} à acheter",
+  "Title": "Titre",
+  "Body": "Texte"
 }
