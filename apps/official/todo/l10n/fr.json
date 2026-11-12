@@ -107,5 +107,7 @@
   "{p0} projects": "{p0} projets",
   "{p0} to go": "Encore {p0}",
   "{p0} to go · {p1} late": "Encore {p0} · {p1} en retard",
-  "{p0} today": "{p0} aujourd'hui"
+  "{p0} today": "{p0} aujourd'hui",
+  "Title": "Titre",
+  "Body": "Texte"
 }

@@ -814,6 +814,7 @@ function Home() {
 
   const adder = useAddBar({
     placeholder: t('New note'),
+    titled: true,
     time: true,
     pick: {
       icon: 'sell',
@@ -826,7 +827,7 @@ function Home() {
       const noteTags = [...new Set([said.pick, said.tag].filter(Boolean) as string[])];
       n.add('notes', {
         body: said.text,
-        title: lineTitle(said.text) || undefined,
+        title: said.title || lineTitle(said.text) || undefined,
         kind: said.photo ? 'photo' : 'note',
         photo: said.photo,
         folder: folder ?? undefined,
@@ -840,6 +841,9 @@ function Home() {
 
   const links: [string, string][] = [];
   for (const r of onBoard) for (const l of r.links ?? []) if (onBoard.some((o) => o.id === l)) links.push([r.id, l]);
+
+  const foldersUp = has('screen.bar') && !phone;
+  const folderRow = <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} onDrop={into} />;
 
   const noteCount = inFolder.length === 1 ? t('1 note') : t('{p0} notes', { p0: inFolder.length });
   const tagCount = tags.size === 0 ? undefined : tags.size === 1 ? t('1 tag') : t('{p0} tags', { p0: tags.size });
@@ -855,6 +859,8 @@ function Home() {
       ]}
       tab={tab}
       onTab={setTab}
+      // On a computer the folders sit up in the bar, beside Notes.
+      bar={tab === 'notes' && foldersUp ? folderRow : undefined}
       actions={
         tab === 'notes' ? (
           <IconButton icon="search" label={t('Search')} onPress={() => { setSearching(!searching); setSearch(''); }} />
@@ -897,7 +903,7 @@ function Home() {
           <Box class={s.column}>
             {!bigTitle && <Hero big={t('Notes')} line={noteCount} />}
             {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
-            <Folders folders={folders} folder={folder} setFolder={setFolder} canEdit={canEdit} newFolder={n.newFolder} onHold={n.holdFolder} onDrop={into} />
+            {!foldersUp && folderRow}
             {tag && (
               <Box class={s.chips}>
                 <Chip icon="close" selected onPress={() => setTag(null)}>{`# ${tag}`}</Chip>
@@ -962,6 +968,8 @@ function NoteScreen() {
   // Drawing on the note, or recording onto it.
   const [mode, setMode] = useLocal<string | null>(fresh && (kind === 'sketch' || kind === 'voice') ? kind : null);
   const [draft, setDraft] = useLocal<string | null>(null);
+  // The caret's button opened out to what can go in the note.
+  const [adding, setAdding] = useLocal<boolean>(false);
   const saved = useRef({ text: row?.body ?? '', turn: 0 });
 
   const body = draft ?? row?.body ?? '';
@@ -1014,7 +1022,13 @@ function NoteScreen() {
   ) : undefined;
   const strung = all.filter((o) => (row.links ?? []).includes(o.id) || (o.links ?? []).includes(id));
 
-  const bar = canEdit ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} insert={insert} /> : undefined;
+  // Over the words where they're picked, and a button past the caret's
+  // line to put a photo, a voice clip or anything else in there, on
+  // Isolinks that float them; else a bar of its own.
+  const floats = has('editor.float');
+  const bar = canEdit && !floats ? <NoteTools row={row} editor="note" mode={mode} setMode={setMode} insert={insert} /> : undefined;
+  const extras = <NoteExtras row={row} mode={mode} setMode={setMode} insert={insert} then={() => setAdding(false)} />;
+  const attach = <IconButton icon="attach_file" label={t('Add')} onPress={() => setAdding(true)} />;
 
   const note = (
     <StickyNote color={colorOf(row)} sketch={row.sketch} sketching={mode === 'sketch'} size={sizeOf(row)}
@@ -1022,7 +1036,10 @@ function NoteScreen() {
                 onSketch={(f: unknown) => { edit('notes', id, { sketch: f }); setMode(null); }}>
       {canEdit ? (
         <Editor id="note" rich plain value={body} onChange={type} autofocus={!!fresh && mode === null}
-                placeholder={t('New note')} embeds={embeds() ? embedsOf(row) : undefined} onCaret={onCaret} />
+                placeholder={t('New note')} embeds={embeds() ? embedsOf(row) : undefined}
+                onCaret={(at: number) => { onCaret(at); if (adding) setAdding(false); }}
+                bar={floats ? <FormatBar for="note">{adding ? extras : attach}</FormatBar> : undefined}
+                caret={floats ? <Row>{adding ? extras : attach}</Row> : undefined} />
       ) : body.trim() ? (
         <Markdown embeds={embeds() ? embedsOf(row) : undefined}>{body}</Markdown>
       ) : !row.photo && !row.voice && !row.sketch ? (
