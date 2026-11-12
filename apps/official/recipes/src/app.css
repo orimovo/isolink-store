@@ -1,6 +1,7 @@
 .empty { padding: 64px 0; }
 .bigEmoji { font-size: 40px; }
 .chips { padding: 10px 0 12px; }
+.grid { padding: 12px 0 0; }
 .card { background: var(--surface); border-radius: 18px; overflow: hidden; }
 .cardPhoto { border-radius: 0; }
 .cardArt { height: 110px; display: flex; align-items: center; justify-content: center; background: var(--accent-soft); }
