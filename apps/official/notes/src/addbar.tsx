@@ -41,7 +41,8 @@ const nameOf = (file: unknown) => {
 export function useAddBar(o: AddBarOptions) {
   const now = useNow(60000);
   // As the chat's message box: thumb-sized on a phone, a size smaller with a mouse.
-  const desk = !!usePlatform().desktop;
+  const platform = usePlatform();
+  const desk = !!platform.desktop;
   const h = desk ? 40 : 48;
   const dialog = useDialog();
   const [draft, setDraft] = useLocal<string>('');
@@ -202,7 +203,9 @@ export function useAddBar(o: AddBarOptions) {
               onFocus={() => setOpen(true)}
               onBlur={() => { if (!draft.trim() && !title.trim()) setOpen(false); }}
               top={open ? (
-                <Stack gap={6} class={a.abTop}>
+                // The title's line as tall as the words' line under it, and
+                // its words starting where theirs do.
+                <Stack gap={2} class={platform.os === 'mac' ? a.abTopM : desk ? a.abTopD : a.abTop}>
                   <Box class={a.abTitle}><TextField plain autofocus value={title} onChange={setTitle} placeholder={t('Title')} /></Box>
                   <Divider />
                 </Stack>
