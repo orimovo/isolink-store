@@ -16,5 +16,7 @@
 .abOn { background: var(--accent-soft); }
 .abTokenOnText { font-size: 13px; color: var(--accent); font-weight: 600; }
 .abSheetTitle { font-size: 20px; font-weight: 800; }
-.abTop { padding: 4px 6px 6px; }
+.abTop { padding: 9px 8px 0; }
+.abTopD { padding: 7px 8px 0; }
+.abTopM { padding: 7px 9px 0; }
 .abTitle { font-weight: 700; }
