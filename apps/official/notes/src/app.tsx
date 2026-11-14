@@ -757,7 +757,7 @@ function Home() {
                   pin={r.pin} stickers={pins() ? r.stickers : undefined} sketching={w.mode === 'sketch'}
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
         {ownTitle(r) ? <Text class={s.title}>{r.title}</Text> : null}
-        <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
+        <Editor id="board-note" rich plain titled={!ownTitle(r)} value={w.body} onChange={w.type} autofocus={w.mode === null}
                 placeholder={t('New note')} embeds={embeds() ? embedsOf(r) : undefined} onCaret={w.onCaret} />
         <NoteMedia row={r} mode={w.mode} setMode={w.setMode} insert={w.insert} />
       </StickyNote>
