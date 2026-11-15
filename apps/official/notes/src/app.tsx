@@ -613,16 +613,25 @@ function useNotes() {
     }
     edit('notes', from, { stickers: left });
     add('notes', {
-      kind: 'sticker', ref: { emoji: st.emoji }, x: Math.max(0, x), y: Math.max(0, y), folder: r.folder ?? undefined,
+      kind: 'sticker', ref: { emoji: st.emoji }, x, y, folder: r.folder ?? undefined,
       tilt: Math.round((Math.random() * 6 - 3) * 10) / 10,
     });
   };
-  /** A sticker let go on the bin: one on the board ([i] undefined), or [i] on note [id]. */
-  const bin = (id: string, i?: number) => {
+  /** Let go on the bin: a note, card or sticker on the board ([i]
+   *  undefined), or sticker [i] on note [id]. A note asks first, as its
+   *  menu's Delete does: it goes for everyone. */
+  const bin = async (id: string, i?: number) => {
     const r = all.find((o) => o.id === id);
     if (!r) return;
     if (typeof i !== 'number') {
-      if (r.kind === 'sticker') remove('notes', id);
+      if (r.kind === 'sticker' || isItem(r)) return remove('notes', id);
+      const ok = await dialog.confirm({
+        title: t('Delete this note?'),
+        body: t('It goes for everyone in this database.'),
+        ok: t('Delete'),
+        danger: true,
+      });
+      if (ok) remove('notes', id);
       return;
     }
     edit('notes', id, { stickers: (r.stickers ?? []).filter((_, k) => k !== i) });

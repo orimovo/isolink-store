@@ -93,22 +93,22 @@
           "x": {
             "id": 8,
             "type": "number",
-            "min": 0,
-            "max": 4000,
+            "min": -40000,
+            "max": 40000,
             "hidden": true
           },
           "y": {
             "id": 9,
             "type": "number",
-            "min": 0,
-            "max": 4000,
+            "min": -40000,
+            "max": 40000,
             "hidden": true
           },
           "tilt": {
             "id": 10,
             "type": "number",
-            "min": -4,
-            "max": 4,
+            "min": -180,
+            "max": 180,
             "decimals": 1,
             "hidden": true
           },
