@@ -936,6 +936,7 @@ function Home() {
           <Corkboard
             width={1000}
             item={190}
+            grows
             links={links}
             onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
             onHold={n.hold}
