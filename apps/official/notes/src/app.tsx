@@ -98,6 +98,8 @@ function useInsert(body: () => string, type: (text: string) => void) {
 
 /** Strings, pin colours, stickers and cards: Isolinks that draw them. */
 const pins = () => has('corkboard.pins');
+/** Stickers peeled off notes and cards, moved, stuck again and binned: Isolinks that can. */
+const peel = () => has('corkboard.stickers');
 
 /** A number the same for the same id: a note's colour or tilt before it has one. */
 function hash(id: string) {
@@ -237,9 +239,17 @@ function Item({ r, tilt }: { r: Note; tilt: number }) {
   }
   if (r.kind === 'person') {
     return <PersonCard key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt} pin={r.pin} person={r.ref?.id} name={r.ref?.name}
-                       size={[210, 76]} />;
+                       size={[210, 76]} stickers={peel() ? r.stickers : undefined} />;
   }
-  return <ChatCard key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt} pin={r.pin} ref={r.ref ?? {}} size={[220, 120]} />;
+  return <ChatCard key={r.id} id={r.id} x={r.x} y={r.y} tilt={tilt} pin={r.pin} ref={r.ref ?? {}} size={[220, 120]}
+                   stickers={peel() ? r.stickers : undefined} />;
+}
+
+/** How big a note or card is on the board. */
+function boundsOf(r: Note): [number, number] {
+  if (r.kind === 'person') return [210, 76];
+  if (r.kind === 'chat') return [220, 120];
+  return sizeOf(r);
 }
 
 /** A sticker, picked, stuck on note [r] near its bottom corner. */
@@ -576,14 +586,49 @@ function useNotes() {
   const drop = (id: string, onto: string, x: number, y: number) => {
     const r = all.find((o) => o.id === id);
     const note = all.find((o) => o.id === onto);
-    if (!r || r.kind !== 'sticker' || !note || isItem(note)) return;
-    const [w, h] = sizeOf(note);
+    // On a note, or (where stickers peel) a contact's or chat's card.
+    if (!r || r.kind !== 'sticker' || !note || note.kind === 'sticker' || (isItem(note) && !peel())) return;
+    const [w, h] = boundsOf(note);
     const at = { x: Math.max(0, Math.min(w - 40, x + 18)), y: Math.max(0, Math.min(h - 40, y + 14)) };
     edit('notes', onto, { stickers: [...(note.stickers ?? []), { emoji: r.ref?.emoji ?? '⭐', ...at }] });
     remove('notes', id);
   };
 
-  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, splice, drop };
+  /** Sticker [i] on [from] peeled off and let go: on [onto] (it or another
+   *  note or card) at [x], [y] there, on top of the others; on bare cork
+   *  (null), a sticker of its own there. */
+  const restick = (from: string, i: number, onto: string | null, x: number, y: number) => {
+    const r = all.find((o) => o.id === from);
+    const st = r?.stickers?.[i];
+    if (!r || !st) return;
+    const left = (r.stickers ?? []).filter((_, k) => k !== i);
+    const target = onto ? all.find((o) => o.id === onto) : undefined;
+    if (onto && target && target.kind !== 'sticker') {
+      const [w, h] = boundsOf(target);
+      const at = { x: Math.round(Math.max(-12, Math.min(w - 22, x))), y: Math.round(Math.max(-12, Math.min(h - 22, y))) };
+      const others = onto === from ? left : (target.stickers ?? []);
+      if (onto !== from) edit('notes', from, { stickers: left });
+      edit('notes', onto, { stickers: [...others, { emoji: st.emoji, ...at }] });
+      return;
+    }
+    edit('notes', from, { stickers: left });
+    add('notes', {
+      kind: 'sticker', ref: { emoji: st.emoji }, x: Math.max(0, x), y: Math.max(0, y), folder: r.folder ?? undefined,
+      tilt: Math.round((Math.random() * 6 - 3) * 10) / 10,
+    });
+  };
+  /** A sticker let go on the bin: one on the board ([i] undefined), or [i] on note [id]. */
+  const bin = (id: string, i?: number) => {
+    const r = all.find((o) => o.id === id);
+    if (!r) return;
+    if (typeof i !== 'number') {
+      if (r.kind === 'sticker') remove('notes', id);
+      return;
+    }
+    edit('notes', id, { stickers: (r.stickers ?? []).filter((_, k) => k !== i) });
+  };
+
+  return { all, folders, add, edit, remove, nav, dialog, canEdit, create, hold, holdFolder, newFolder, tie, cut, splice, drop, restick, bin };
 }
 
 function Folders({ folders, folder, setFolder, canEdit, newFolder, onHold, onDrop }: {
@@ -899,6 +944,8 @@ function Home() {
             onCut={canEdit ? n.cut : undefined}
             onSplice={canEdit ? n.splice : undefined}
             onDrop={canEdit ? n.drop : undefined}
+            onStick={canEdit && peel() ? n.restick : undefined}
+            onBin={canEdit && peel() ? n.bin : undefined}
             onDone={inPlace ? w.finish : undefined}
             tools={phone ? undefined : tools}
             under={under}
