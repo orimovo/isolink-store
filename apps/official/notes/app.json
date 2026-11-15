@@ -107,8 +107,8 @@
           "tilt": {
             "id": 10,
             "type": "number",
-            "min": -180,
-            "max": 180,
+            "min": -3600,
+            "max": 3600,
             "decimals": 1,
             "hidden": true
           },
