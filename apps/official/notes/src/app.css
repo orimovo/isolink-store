@@ -13,6 +13,7 @@
 .on { border: 3px solid var(--ink); }
 .center { place-items: center; }
 .column { width: 100%; max-width: 1040px; padding: 0 0 24px; }
+.search { padding-bottom: 12px; }
 .hero { padding: 0 4px 24px; }
 .big { font-size: 30px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.1; }
 .line { color: var(--muted); font-size: 14px; }

@@ -967,7 +967,7 @@ function Home() {
         <Box class={s.center}>
           <Box class={s.column}>
             {!bigTitle && <Hero big={t('Notes')} line={noteCount} />}
-            {searching && <SearchField value={search} onChange={setSearch} placeholder={t('Search')} />}
+            {searching && <Box class={s.search}><SearchField value={search} onChange={setSearch} placeholder={t('Search')} /></Box>}
             {!foldersUp && folderRow}
             {tag && (
               <Box class={s.chips}>
