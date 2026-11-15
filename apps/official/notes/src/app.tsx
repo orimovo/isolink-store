@@ -424,12 +424,15 @@ function useInPlace(all: Note[]) {
     setEditing(id);
     setFresh(isNew ? id : null);
   };
-  const create = (folder: string | null) => {
+  /** A new note to write on: where it was asked for on the board, or in the middle. */
+  const create = (folder: string | null, x?: number, y?: number) => {
     const id = add('notes', {
       body: '',
       kind: 'note',
       folder: folder ?? undefined,
       color: COLORS[all.length % 6][0],
+      x,
+      y,
     });
     start(id, true);
   };
@@ -757,7 +760,7 @@ function Home() {
                   pin={r.pin} stickers={pins() ? r.stickers : undefined} sketching={w.mode === 'sketch'}
                   onSketch={(f: unknown) => { edit('notes', r.id, { sketch: f }); w.setMode(null); }}>
         {ownTitle(r) ? <Text class={s.title}>{r.title}</Text> : null}
-        <Editor id="board-note" rich plain value={w.body} onChange={w.type} autofocus={w.mode === null}
+        <Editor id="board-note" rich plain titled={!ownTitle(r)} value={w.body} onChange={w.type} autofocus={w.mode === null}
                 placeholder={t('New note')} embeds={embeds() ? embedsOf(r) : undefined} onCaret={w.onCaret} />
         <NoteMedia row={r} mode={w.mode} setMode={w.setMode} insert={w.insert} />
       </StickyNote>
@@ -883,6 +886,12 @@ function Home() {
             onMove={canEdit ? (id: string, x: number, y: number) => edit('notes', id, { x, y }) : undefined}
             onHold={n.hold}
             onResize={canEdit ? (id: string, w: number, h: number) => edit('notes', id, { w, h }) : undefined}
+            onAdd={inPlace ? (x: number, y: number) => w.create(folder, x, y) : undefined}
+            onTilt={canEdit ? (id: string, tilt: number, x: number, y: number) => {
+              // A sticker is drawn three times as tilted as it's saved.
+              const r = all.find((o) => o.id === id);
+              edit('notes', id, { tilt: r?.kind === 'sticker' ? tilt / 3 : tilt, x, y });
+            } : undefined}
             editing={writing ? writing.id : undefined}
             placing={placing ?? undefined}
             onPin={canEdit ? (id: string, pin: string) => edit('notes', id, { pin }) : undefined}
