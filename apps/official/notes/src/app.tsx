@@ -96,9 +96,9 @@ function useInsert(body: () => string, type: (text: string) => void, save: (text
       const piece = inline
         ? `${before && !/\s$/.test(before) ? ' ' : ''}${text}${/^[^\S\n]/.test(after) ? '' : ' '}`
         : `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
-      const text = before + piece + after;
-      type(text);
-      save(text);
+      const next = before + piece + after;
+      type(next);
+      save(next);
       caret.current = at + piece.length;
     },
   };
