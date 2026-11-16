@@ -507,7 +507,8 @@ function useNotes() {
   const me = useMe();
   const nav = useNav();
   const dialog = useDialog();
-  const send = useSend();
+  // Isolinks before sending have no useSend: the menu's Send isn't offered there either.
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   const canEdit = me.role !== 'view';
 
   const create = async (folder: string | null, kind?: string) => {
