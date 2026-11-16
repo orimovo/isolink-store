@@ -93,9 +93,9 @@ function useInsert(body: () => string, type: (text: string) => void, save: (text
       const before = b.slice(0, at);
       const after = b.slice(at);
       const piece = `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
-      const text = before + piece + after;
-      type(text);
-      save(text);
+      const next = before + piece + after;
+      type(next);
+      save(next);
       caret.current = at + piece.length;
     },
   };
