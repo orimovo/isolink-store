@@ -306,6 +306,21 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
       put(embedText(words, key));
       after();
     };
+    // Pictures and files sent in chats, picked in Isolink's own sheet: all kept, then put in together.
+    const fromChats = async () => {
+      const picked = await dialog.file({ many: true, max: { items: 10 } });
+      if (!picked) return;
+      const files = [...(row.files ?? [])];
+      const words: string[] = [];
+      for (const f of picked) {
+        const key = freshKey({ ...row, files }, 'f');
+        files.push({ ...(await f.keep()), id: key });
+        words.push(embedText(f.kind === 'image' ? t('Photo') : f.name, key));
+      }
+      edit('notes', id, { files });
+      put(words.join('\n'));
+      after();
+    };
     return (
       <>
         <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp,gif"
@@ -313,6 +328,7 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
         <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
                     onPress={() => { setMode(mode === 'voice' ? null : 'voice'); after(); }} />
         <Upload variant="icon" icon="attach_file" label={t('File')} onUpload={(f: NoteFile) => file(f, f.name ?? t('File'))} />
+        {has('pick.file') && <IconButton icon="forum" label={t('From chats')} onPress={fromChats} />}
         <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
                     onPress={() => { setMode(mode === 'sketch' ? null : 'sketch'); after(); }} />
         {row.sketch && (
