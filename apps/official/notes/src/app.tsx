@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
   StickyNote, Corkboard, Sticker, ChatCard, PersonCard, ChatChip, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
-  Grid, Glass, Button, TextField, Select, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect,
+  Grid, Glass, Button, TextField, Select, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useSend, useRef, useEffect,
   useHandoff, useSheet, delay, t, has,
 } from 'isolink';
 import s from './app.css';
@@ -70,6 +70,14 @@ const loose = (r: Note) => (r.refs ?? []).filter((x, i) => !inWords(r, x.at ?? `
 
 /** Whether a note's words show [key] themselves. */
 const inWords = (r: Note, key: string) => (r.body ?? '').includes(`(isolink:${key})`);
+
+/** A note as it's sent into a chat: its title and words. Photos and files stay in Notes. */
+function sendable(r: Note) {
+  const title = ownTitle(r) ? (r.title ?? '').trim() : '';
+  const words = (r.body ?? '').replace(/!\[[^\]]*\]\(isolink:[^)]*\)\n?/g, '').trim();
+  const body = words.length > 6000 ? `${words.slice(0, 6000)}…` : words;
+  return { card: 'note', data: { title, body }, text: [title, body].filter(Boolean).join('\n\n') };
+}
 
 /** `![words](isolink:key)`, with no brackets in the words to break it. */
 const embedText = (words: string, key: string) => `![${words.replace(/[[\]()\n]/g, ' ').trim()}](isolink:${key})`;
@@ -499,6 +507,7 @@ function useNotes() {
   const me = useMe();
   const nav = useNav();
   const dialog = useDialog();
+  const send = useSend();
   const canEdit = me.role !== 'view';
 
   const create = async (folder: string | null, kind?: string) => {
@@ -530,9 +539,11 @@ function useNotes() {
       ...(others.length && r.kind !== 'sticker' ? [{ id: 'link', icon: 'linear_scale', label: t('String to') }] : []),
       ...(strung ? [{ id: 'unlink', icon: 'link_off', label: t('Cut string') }] : []),
       ...(folders.length ? [{ id: 'move', icon: 'folder', label: t('Move to') }] : []),
+      ...(!item && has('chat.send') ? [{ id: 'send', icon: 'send', label: t('Send') }] : []),
       { divider: true },
       { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
     ]);
+    if (picked === 'send') send(sendable(r));
     if (picked === 'pin') edit('notes', id, { pinned: !r.pinned });
     if (picked === 'color') {
       const c = await dialog.menu(COLORS.map(([c, hex]) => ({ id: c, icon: 'circle', color: hex, label: t(NAMES[c]) })));
@@ -1251,6 +1262,15 @@ function Save() {
 export default defineApp({
   screens: { Home, Note: NoteScreen },
   sheets: { Save },
+  chat: {
+    receive: {
+      // A note someone sent: kept as one of this person's own.
+      note: (sent: { title?: string; body?: string }, { data }: { data: { add: (t: string, f: object) => string } }) => {
+        const id = data.add('notes', { title: (sent.title ?? '').slice(0, 200), body: sent.body ?? '', color: COLORS[0][0] });
+        return { toast: t('Saved'), open: { screen: 'Note', params: { id } } };
+      },
+    },
+  },
   // On a computer a note opens beside the list (not the board, which keeps the
   // window). A function, so Isolinks before 0.26.53 don't split at all.
   split: () => ['Home'],

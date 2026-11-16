@@ -267,7 +267,8 @@
       "microphone"
     ],
     "chat": [
-      "take"
+      "take",
+      "send"
     ]
   },
   "chat": {
@@ -286,6 +287,17 @@
         ],
         "many": true,
         "sheet": "Save"
+      }
+    ],
+    "cards": [
+      {
+        "id": "note",
+        "src": "src/cards/note.tsx",
+        "data": {
+          "title": "text",
+          "body": "text"
+        },
+        "receive": "note"
       }
     ]
   }
