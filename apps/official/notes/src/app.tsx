@@ -81,18 +81,21 @@ function freshKey(r: Note, p: string) {
   return `${p}${n}`;
 }
 
-/** Where the caret is in a note being written, and something put in there on a line of its own,
+/** Where the caret is in a note being written, and something put in there on a line of its own
+ *  (or `inline`, in the words, a chat on Isolinks whose caret steps over it),
  *  saved at once so what it names isn't also drawn under the words while the typing waits to save. */
 function useInsert(body: () => string, type: (text: string) => void, save: (text: string) => void) {
   const caret = useRef(-1);
   return {
     onCaret: (at: number) => { caret.current = at; },
-    insert: (text: string) => {
+    insert: (text: string, inline?: boolean) => {
       const b = body();
       const at = caret.current < 0 || caret.current > b.length ? b.length : caret.current;
       const before = b.slice(0, at);
       const after = b.slice(at);
-      const piece = `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
+      const piece = inline
+        ? `${before && !/\s$/.test(before) ? ' ' : ''}${text}${/^[^\S\n]/.test(after) ? '' : ' '}`
+        : `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
       const next = before + piece + after;
       type(next);
       save(next);
@@ -273,7 +276,7 @@ async function stickOn(r: Note, edit: (t: string, id: string, f: object) => void
 
 /** A note's format bar, with its photo, voice and sketch after the words' buttons. */
 function NoteTools({ row, editor, mode, setMode, insert }: {
-  row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string) => void;
+  row: Note; editor: string; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string, inline?: boolean) => void;
 }) {
   return (
     <FormatBar for={editor}>
@@ -287,7 +290,7 @@ function NoteTools({ row, editor, mode, setMode, insert }: {
 function NoteExtras({ row, mode, setMode, then, insert }: {
   row: Note; mode: string | null; setMode: (m: string | null) => void; then?: () => void;
   /** Puts something in the words where the caret is (Isolinks with embeds). */
-  insert?: (text: string) => void;
+  insert?: (text: string, inline?: boolean) => void;
 }) {
   const { edit } = useData();
   const dialog = useDialog();
@@ -322,7 +325,7 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
               if (!ref) return;
               const key = freshKey(row, 'r');
               edit('notes', id, { refs: [...(row.refs ?? []), { ...ref, at: key }] });
-              put(embedText(ref.title ?? t('Chat'), key));
+              put(embedText(ref.title ?? t('Chat'), key), has('editor.inlineEmbeds'));
             }} />
             <IconButton icon="add_reaction" label={t('Sticker')} onPress={() => { after(); stickOn(row, edit, dialog.sticker); }} />
           </>
@@ -365,7 +368,7 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
 
 /** What's on a note under its words: its photo, voice clip, and the recorder while recording. */
 function NoteMedia({ row, mode, setMode, insert }: {
-  row: Note; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string) => void;
+  row: Note; mode: string | null; setMode: (m: string | null) => void; insert?: (text: string, inline?: boolean) => void;
 }) {
   const { edit } = useData();
   const put = insert && embeds() ? insert : undefined;
@@ -515,7 +518,7 @@ function useNotes() {
     ]);
     if (picked === 'pin') edit('notes', id, { pinned: !r.pinned });
     if (picked === 'color') {
-      const c = await dialog.menu(COLORS.map(([c]) => ({ id: c, icon: 'circle', label: t(NAMES[c]) })));
+      const c = await dialog.menu(COLORS.map(([c, hex]) => ({ id: c, icon: 'circle', color: hex, label: t(NAMES[c]) })));
       if (c) edit('notes', id, { color: c });
     }
     if (picked === 'link') {
