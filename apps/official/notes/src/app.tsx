@@ -1,7 +1,8 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
   StickyNote, Corkboard, Sticker, ChatCard, PersonCard, ChatChip, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
-  Grid, Glass, Button, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
+  Grid, Glass, Button, TextField, Select, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect,
+  useHandoff, useSheet, delay, t, has,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
@@ -1166,8 +1167,74 @@ function NoteScreen() {
   );
 }
 
+/** What a message's file is called in a note's words. */
+const fileWords = (f: { name: string; kind: string }) =>
+  f.kind === 'image' ? t('Photo') : f.kind === 'voice' ? t('Voice') : f.name || t('File');
+
+/** Save to Notes, from a message's menu (Apps): the messages picked become
+ *  one note, their words together and their photos and files in it. */
+function Save() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const folders = useQuery('folders', { limit: 100 }) as Folder[];
+  const count = (useQuery('notes', { limit: 500 }) as Note[]).length;
+  const items = handoff?.items ?? [];
+  const words = items.map((i: any) => String(i.text ?? '').trim()).filter(Boolean).join('\n\n');
+  const files = items.flatMap((i: any) => i.files ?? []);
+  const [title, setTitle] = useLocal<string>(lineTitle(words));
+  const [folder, setFolder] = useLocal<string>('');
+  const [busy, setBusy] = useLocal<boolean>(false);
+
+  const save = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const kept: NoteFile[] = [];
+      for (const f of files) kept.push({ ...(await f.keep()), id: `f${kept.length + 1}` });
+      const inWords = embeds();
+      // Each photo and file where the words end; Isolinks without embeds keep the first photo as the note's own.
+      const body = [words, ...(inWords ? kept.map((f, i) => embedText(fileWords(files[i]), f.id)) : [])]
+        .filter(Boolean).join('\n\n');
+      const photo = inWords ? undefined : kept.find((f) => (f.type ?? '').startsWith('image/'));
+      const id = data.add('notes', {
+        title: title.trim() || lineTitle(words) || undefined,
+        body,
+        kind: photo ? 'photo' : 'note',
+        photo,
+        files: inWords && kept.length ? kept : undefined,
+        folder: folder || undefined,
+        color: COLORS[count % 6][0],
+      });
+      sheet.close({ toast: t('Saved'), open: { screen: 'Note', params: { id } } });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const pictures = files.filter((f: any) => f.kind === 'image');
+  const others = files.length - pictures.length;
+  return (
+    <Stack gap={3}>
+      <TextField value={title} onChange={setTitle} placeholder={t('Title')} onSubmit={save} autofocus />
+      {folders.length ? (
+        <Select value={folder} onChange={setFolder} placeholder={t('Folder')}
+                options={folders.map((f) => ({ value: f.id, label: f.name }))} />
+      ) : null}
+      {files.length ? (
+        <Row gap={2} align="center">
+          {pictures.slice(0, 4).map((f: any) => <Image key={f.handoff} src={f} width={56} height={56} fit="cover" style={{ borderRadius: 10 }} />)}
+          {others || pictures.length > 4 ? <Text tone="muted">+{others + Math.max(0, pictures.length - 4)}</Text> : null}
+        </Row>
+      ) : null}
+      <Button expand disabled={busy} onPress={save}>{t('Save')}</Button>
+    </Stack>
+  );
+}
+
 export default defineApp({
   screens: { Home, Note: NoteScreen },
+  sheets: { Save },
   // On a computer a note opens beside the list (not the board, which keeps the
   // window). A function, so Isolinks before 0.26.53 don't split at all.
   split: () => ['Home'],

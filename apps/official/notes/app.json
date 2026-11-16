@@ -265,6 +265,28 @@
   "needs": {
     "device": [
       "microphone"
+    ],
+    "chat": [
+      "take"
+    ]
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "save",
+        "title": "Save to Notes",
+        "icon": "note_add",
+        "takes": [
+          "text",
+          "link",
+          "image",
+          "video",
+          "voice",
+          "file"
+        ],
+        "many": true,
+        "sheet": "Save"
+      }
     ]
   }
 }
