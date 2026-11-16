@@ -81,8 +81,9 @@ function freshKey(r: Note, p: string) {
   return `${p}${n}`;
 }
 
-/** Where the caret is in a note being written, and something put in there on a line of its own. */
-function useInsert(body: () => string, type: (text: string) => void) {
+/** Where the caret is in a note being written, and something put in there on a line of its own,
+ *  saved at once so what it names isn't also drawn under the words while the typing waits to save. */
+function useInsert(body: () => string, type: (text: string) => void, save: (text: string) => void) {
   const caret = useRef(-1);
   return {
     onCaret: (at: number) => { caret.current = at; },
@@ -92,7 +93,9 @@ function useInsert(body: () => string, type: (text: string) => void) {
       const before = b.slice(0, at);
       const after = b.slice(at);
       const piece = `${before && !before.endsWith('\n') ? '\n' : ''}${text}${after.startsWith('\n') ? '' : '\n'}`;
-      type(before + piece + after);
+      const text = before + piece + after;
+      type(text);
+      save(text);
       caret.current = at + piece.length;
     },
   };
@@ -462,7 +465,10 @@ function useInPlace(all: Note[]) {
       if (saved.current.turn === turn && latest.current.editing === id) flush(id, text);
     });
   };
-  const { onCaret, insert } = useInsert(() => latest.current.body, type);
+  const { onCaret, insert } = useInsert(() => latest.current.body, type, (text) => {
+    const id = latest.current.editing;
+    if (id) flush(id, text);
+  });
   return { editing, row, body, mode, setMode, start, finish, create, type, fresh, onCaret, insert };
 }
 
@@ -1070,7 +1076,7 @@ function NoteScreen() {
       if (saved.current.turn === turn) flush(text);
     });
   };
-  const { onCaret, insert } = useInsert(() => latest.current.body, type);
+  const { onCaret, insert } = useInsert(() => latest.current.body, type, flush);
 
   if (!row) return <Screen title={t('Notes')} />;
 
