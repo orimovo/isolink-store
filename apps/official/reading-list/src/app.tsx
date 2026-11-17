@@ -568,6 +568,18 @@ function ShelfTab({ bk, onOpen, drag, setDrag }: {
       <Text class={s.sub}>{String(n)}</Text>
     </Row>
   );
+  // A whole shelf takes a drop, its title, placeholder and empty space too: what lands
+  // off a book goes at the end (Read files it A to Z).
+  const section = (key: string, label: string, n: number, items: Item[]) => (
+    <DropZone key={key} kind={key} tint={false}
+              onEnter={() => enter(key, '')} onLeave={() => leave(key, '')}
+              onDrop={(d: any) => drop(key, '', d)}>
+      <Stack gap={2}>
+        {head(label, n)}
+        {shelf(key, items, !n)}
+      </Stack>
+    </DropZone>
+  );
   return (
     <Row align="start" gap={6}>
       <Stack grow gap={2} onWidth={setWidth}>
@@ -581,12 +593,9 @@ function ShelfTab({ bk, onOpen, drag, setDrag }: {
             </Stack>
           </Pressable>
         ) : null}
-        {head('Reading', reading.length)}
-        {shelf('reading', reading.map((b) => ({ t: 'book', b }) as Item), !reading.length)}
-        {head('Want to read', wantBooks.length)}
-        {shelf('want', itemsOf('want', wantBooks), !wantBooks.length)}
-        {head('Read', readBooks.length)}
-        {shelf('done', itemsOf('done', readBooks), !readBooks.length)}
+        {section('reading', 'Reading', reading.length, reading.map((b) => ({ t: 'book', b }) as Item))}
+        {section('want', 'Want to read', wantBooks.length, itemsOf('want', wantBooks))}
+        {section('done', 'Read', readBooks.length, itemsOf('done', readBooks))}
       </Stack>
       {readBooks.length > 8 ? (
         <Stack class={s.az}>
