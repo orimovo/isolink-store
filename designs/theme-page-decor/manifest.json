@@ -1,0 +1,960 @@
+{
+  "sourceRepository": "https://github.com/orimovo/isolink-store",
+  "sourceRevision": "e466773760e07d6cb77ce4e099cd4600dc950e25",
+  "generation": "Built-in ImageGen with official character references",
+  "export": {
+    "strip": [
+      2048,
+      160
+    ],
+    "peek": [
+      600,
+      400
+    ],
+    "maxBytes": 400000,
+    "stripArtBounds": "Top 50 px transparent; details at most 110 px high; continuous terrain scale limited to 70 px.",
+    "stripSeams": "Left and right boundary columns match exactly.",
+    "bottom": "Strip bottom rows are fully opaque.",
+    "stripScaling": "Uniform aspect-preserving resize from original artwork, then mirrored horizontal repetition; no independent vertical compression."
+  },
+  "references": [
+    {
+      "theme": "little-dragon",
+      "pack": "themes/official/little-dragon/pack.json",
+      "lightReference": "themes/official/little-dragon/assets/a6e1f4c366320c06531c3.png",
+      "darkReference": "themes/official/little-dragon/assets/afd9365e55c00088b27e8.png"
+    },
+    {
+      "theme": "axolotl",
+      "pack": "themes/official/axolotl/pack.json",
+      "lightReference": "themes/official/axolotl/assets/a70fa91381565e6bf230f.png",
+      "darkReference": "themes/official/axolotl/assets/a1dffb826b19058143829.png"
+    },
+    {
+      "theme": "cloud-nap",
+      "pack": "themes/official/cloud-nap/pack.json",
+      "lightReference": "themes/official/cloud-nap/assets/a2fd972eafefffc42ffdc.png",
+      "darkReference": "themes/official/cloud-nap/assets/a2adc3de28d4249d8e454.png"
+    },
+    {
+      "theme": "cozy-shroom",
+      "pack": "themes/official/cozy-shroom/pack.json",
+      "lightReference": "themes/official/cozy-shroom/assets/aa7b89f99d23e551b95fb.png",
+      "darkReference": "themes/official/cozy-shroom/assets/a2ed99519532b4b502f18.png"
+    },
+    {
+      "theme": "froggy-pond",
+      "pack": "themes/official/froggy-pond/pack.json",
+      "lightReference": "themes/official/froggy-pond/assets/ac2e49474af8548ddfdbd.png",
+      "darkReference": "themes/official/froggy-pond/assets/a5277865f826793a3324c.png"
+    },
+    {
+      "theme": "honey-bear",
+      "pack": "themes/official/honey-bear/pack.json",
+      "lightReference": "themes/official/honey-bear/assets/aab3a2c3e6f6195256e12.png",
+      "darkReference": "themes/official/honey-bear/assets/aadc48c6bba876a639130.png"
+    },
+    {
+      "theme": "moon-bunny",
+      "pack": "themes/official/moon-bunny/pack.json",
+      "lightReference": "themes/official/moon-bunny/assets/aa5b1df793855936dba5e.png",
+      "darkReference": "themes/official/moon-bunny/assets/a79f95bbeb7efca5b42f8.png"
+    },
+    {
+      "theme": "peach-mochi",
+      "pack": "themes/official/peach-mochi/pack.json",
+      "lightReference": "themes/official/peach-mochi/assets/a4c2cc5bcce7ee3f766f4.png",
+      "darkReference": "themes/official/peach-mochi/assets/a4c3c5b6af760f00d97e3.png"
+    },
+    {
+      "theme": "penguin-puddle",
+      "pack": "themes/official/penguin-puddle/pack.json",
+      "lightReference": "themes/official/penguin-puddle/assets/a61256634260abca44c83.png",
+      "darkReference": "themes/official/penguin-puddle/assets/a10066fa65ecedb57a785.png"
+    },
+    {
+      "theme": "pocket-pals",
+      "pack": "themes/official/pocket-pals/pack.json",
+      "lightReference": "themes/official/pocket-pals/assets/a523bb816b778fb705d07.png",
+      "darkReference": "themes/official/pocket-pals/assets/a851a34e30a981d35f2e5.png"
+    },
+    {
+      "theme": "red-panda",
+      "pack": "themes/official/red-panda/pack.json",
+      "lightReference": "themes/official/red-panda/assets/a918b744542fc077a0ada.png",
+      "darkReference": "themes/official/red-panda/assets/ae28409da5517b87d3ccb.png"
+    },
+    {
+      "theme": "sleepy-sloth",
+      "pack": "themes/official/sleepy-sloth/pack.json",
+      "lightReference": "themes/official/sleepy-sloth/assets/a3220d0bf2e2156ca2953.png",
+      "darkReference": "themes/official/sleepy-sloth/assets/a97598fd511ac60292e7f.png"
+    },
+    {
+      "theme": "space-cat",
+      "pack": "themes/official/space-cat/pack.json",
+      "lightReference": "themes/official/space-cat/assets/ab7bb4185e902513d8ff6.png",
+      "darkReference": "themes/official/space-cat/assets/aca6507014dbb6807adfc.png"
+    },
+    {
+      "theme": "starry-jelly",
+      "pack": "themes/official/starry-jelly/pack.json",
+      "lightReference": "themes/official/starry-jelly/assets/a83a10f5c8c2a49023e32.png",
+      "darkReference": "themes/official/starry-jelly/assets/a70ba1c3d9a67af7f2c29.png"
+    },
+    {
+      "theme": "tiny-whale",
+      "pack": "themes/official/tiny-whale/pack.json",
+      "lightReference": "themes/official/tiny-whale/assets/a25c14f959d2dc6298126.png",
+      "darkReference": "themes/official/tiny-whale/assets/af0d69d4971f38e023988.png"
+    }
+  ],
+  "validation": {
+    "expected": 60,
+    "present": 60,
+    "passed": 60,
+    "minimumBottomAlpha": 255
+  },
+  "files": [
+    {
+      "path": "assets/little-dragon/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 224224,
+      "sha256": "a8b7979b9389420dbe1767fb53042df75d3532b84a13eb4bf847969c3a2f8d77",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1417,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
+    },
+    {
+      "path": "assets/little-dragon/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 211808,
+      "sha256": "9885a51bcd76140ffc981d9be110c31708ddb108ad7087f2d91f73d5ca44a5bd",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
+    },
+    {
+      "path": "assets/little-dragon/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 57198,
+      "sha256": "7489128a3474c739a79adcc516692057a1ae015697cc9bc1d3bc30be73819444",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/little-dragon/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 58983,
+      "sha256": "4afbdd02eeff72f74724f1163dbd579216080160913e5f06e222eac6828f32e1",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/axolotl/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 207115,
+      "sha256": "5ce45c7c3943518b3a04f1c0fbec534a63525a8ba2df958d51a1740a8adf1660",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          76
+        ]
+      }
+    },
+    {
+      "path": "assets/axolotl/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 219391,
+      "sha256": "4f818c080c137d7f57f523d79b59fcfd200b1297e7b70b560d7f5990241a6f98",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          109
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
+    },
+    {
+      "path": "assets/axolotl/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 57757,
+      "sha256": "71599be38ad5d753eda2c042371e6c6c2e3c3c79f0f6865b1b22de173e113e04",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/axolotl/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 66466,
+      "sha256": "ccb9545935e2ee5556390295a1c0c8f019eb79c08966ecfd4711af8f0fe86c12",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/cloud-nap/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 175379,
+      "sha256": "2111aeabdcd84c286b818cc88940d99452b57d89486661f0af6f0ae90c012484",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          120
+        ],
+        "resizedArtwork": [
+          1024,
+          87
+        ]
+      }
+    },
+    {
+      "path": "assets/cloud-nap/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 163714,
+      "sha256": "3ae96670ae88f10cc9b6571b2377f506d4e9fb9626aa586f7020cb343a832991",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          120
+        ],
+        "resizedArtwork": [
+          1024,
+          87
+        ]
+      }
+    },
+    {
+      "path": "assets/cloud-nap/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 66008,
+      "sha256": "97ee8fe661d4df66310c4ef9730c30e25ac96a5ffd7e2c33d5deb3ca6e599dce",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/cloud-nap/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 73554,
+      "sha256": "5d6a3e31357909426d600f7f11720769a08891df0b7725595797c6458f124fef",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/cozy-shroom/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 276166,
+      "sha256": "4268cd85c2b6662fbf8c4b087892512b19d2509ec165cc32ca75fe4a60e7da90",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          134
+        ],
+        "resizedArtwork": [
+          982,
+          93
+        ]
+      }
+    },
+    {
+      "path": "assets/cozy-shroom/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 260367,
+      "sha256": "927f9b805b892c76104247ba8a16bb6d9a00be920112a877c3513e3068dac02d",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          136
+        ],
+        "resizedArtwork": [
+          973,
+          93
+        ]
+      }
+    },
+    {
+      "path": "assets/cozy-shroom/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 61454,
+      "sha256": "0580a1d11af30aa934d3aaa79e6d6ad886c6d1c583b01997bf2e4d7db53ebd48",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/cozy-shroom/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 59063,
+      "sha256": "c9b9046807130a91fb4ca785c238ca873fbf930b900ca7ced4f5399ec9989e95",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/froggy-pond/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 275914,
+      "sha256": "3b792e7208bd78d0d3bc9ec4ef3aa75f3a00af2e5a8ef7bd20a25a712c69014b",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          162
+        ],
+        "resizedArtwork": [
+          962,
+          110
+        ]
+      }
+    },
+    {
+      "path": "assets/froggy-pond/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 255495,
+      "sha256": "4fcf3c23185efb4723d2f11b6d8d0685b540a35ecd6ea8a3552c37016330bd00",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          162
+        ],
+        "resizedArtwork": [
+          962,
+          110
+        ]
+      }
+    },
+    {
+      "path": "assets/froggy-pond/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 72667,
+      "sha256": "0ee9070c49712f7242a3f1db4c9576bda2cb5eeb14858a47f3363bfe70e7dca9",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/froggy-pond/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 74199,
+      "sha256": "345f69bfeacf460386ae5f4cbf46a47e91da8ac4f47eb390d09984a6ad4dc363",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/honey-bear/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 205155,
+      "sha256": "3488648d5d87151fc234da6fdb9118c3d56f84b018650b13ceeb4ad6b14076c8",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1433,
+          104
+        ],
+        "resizedArtwork": [
+          1023,
+          74
+        ]
+      }
+    },
+    {
+      "path": "assets/honey-bear/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 173726,
+      "sha256": "6e15f9941f965c70a1df5851737f360dfa7230dc44997dec60446afd3b6605c3",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1433,
+          102
+        ],
+        "resizedArtwork": [
+          1023,
+          73
+        ]
+      }
+    },
+    {
+      "path": "assets/honey-bear/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 59654,
+      "sha256": "9d9a30fd8332d7ab0d062a5d761ee5e4c77e8df2aa180483e6e441c5a77675e9",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/honey-bear/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 65382,
+      "sha256": "ca9676b66221742840483408e1fe8bf87ce2af882b0e43d87a7ac2ac608f91de",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/moon-bunny/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 155220,
+      "sha256": "a2b45c7b51c4a98d015c329ba5d780172b892d8300da82edf1d4828347a159c4",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          83
+        ],
+        "resizedArtwork": [
+          1024,
+          60
+        ]
+      }
+    },
+    {
+      "path": "assets/moon-bunny/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 153828,
+      "sha256": "3cba5cebaccfc6b800733053f953fe7df0eaeb88d14890762cdd32b44185803a",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          84
+        ],
+        "resizedArtwork": [
+          1024,
+          61
+        ]
+      }
+    },
+    {
+      "path": "assets/moon-bunny/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 50516,
+      "sha256": "fb873077fdb49a5d03a84481303b0a0b22d930135dce844967be31a5530a1fc6",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/moon-bunny/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 52394,
+      "sha256": "ee53f501cb237620444e99347c9dac715a19ef17a2fcace61cdce794823cbc87",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/peach-mochi/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 238338,
+      "sha256": "8541a88c975f653a034df0fcc7bf68420d3bddcdf48b8359ab571e5a6e6e2efc",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1261,
+          104
+        ],
+        "resizedArtwork": [
+          959,
+          79
+        ]
+      }
+    },
+    {
+      "path": "assets/peach-mochi/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 232046,
+      "sha256": "a024900ae845a8262293fb5238855fc78802de78ba1d9135a1864b5312c8a477",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1261,
+          105
+        ],
+        "resizedArtwork": [
+          949,
+          79
+        ]
+      }
+    },
+    {
+      "path": "assets/peach-mochi/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 61816,
+      "sha256": "82762c9d652e41841dd6d2925762178b3ab3668475e783fe004a8d4d95b4ef93",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/peach-mochi/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 64287,
+      "sha256": "c03ede940a4ac4c14b3185fed83c12a6746705920fc1134821cb385235fb4202",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/penguin-puddle/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 193795,
+      "sha256": "1d39120dd5bd33c3bf04fc5f7d60bd2905a675e7bbd1ffad9d53756f0ea155e9",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          104
+        ],
+        "resizedArtwork": [
+          1024,
+          75
+        ]
+      }
+    },
+    {
+      "path": "assets/penguin-puddle/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 188394,
+      "sha256": "717b64174f2a6465434ecb1b29cd5c4ce39a4bd0c449690a567c5cd7b4f33e24",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
+    },
+    {
+      "path": "assets/penguin-puddle/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 55724,
+      "sha256": "97ea56d8bae6515d13695a2215f1f856cc8076c3ff25806915988ae2b5197c58",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/penguin-puddle/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 58075,
+      "sha256": "8c9090a3e041b6d319f52e2f1376e15ae051e71b33ca37fdd50969f4ea7c10e9",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/pocket-pals/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 289731,
+      "sha256": "b4ef19cab1abdd2408ad3278133f582d386d77cebf88d2dfd8ab7010f15cc695",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1417,
+          163
+        ],
+        "resizedArtwork": [
+          953,
+          110
+        ]
+      }
+    },
+    {
+      "path": "assets/pocket-pals/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 285439,
+      "sha256": "c4a722b74febc285c01ef814862a10d87ed227197312a43d1b074a7a0aaa51c1",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          164
+        ],
+        "resizedArtwork": [
+          944,
+          109
+        ]
+      }
+    },
+    {
+      "path": "assets/pocket-pals/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 68446,
+      "sha256": "b05b65a870d18b0ecc4c941db275e4fe7f0b91a26e40d8a734b76ffe91d61068",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/pocket-pals/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 78820,
+      "sha256": "40e446bdc16b47e2f928f4a2c39f3f35a90aaaa9f6af2913d6857c3b48b47721",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/red-panda/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 251268,
+      "sha256": "c06f15bb3ea7e675ae11342b4249712d86e30853093c299bfa75fd0a8c5ea44f",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1374,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
+    },
+    {
+      "path": "assets/red-panda/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 226765,
+      "sha256": "f7d8016a1c48c613621e782697551588dbc70055bd4f2e10c1b819a607815d17",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1374,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
+    },
+    {
+      "path": "assets/red-panda/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 71371,
+      "sha256": "7ce07651149e4a9ed611234e69040e54f0859521953054537797d7836de92469",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/red-panda/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 73334,
+      "sha256": "6134f2b2c54b5486fec54d34c4783b606a53d640a72fbcd0357f3d907558630e",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/sleepy-sloth/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 250489,
+      "sha256": "f044064eae837dd9b10aced790edae5d899c86bc8567d097b558faf727c9bf82",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
+    },
+    {
+      "path": "assets/sleepy-sloth/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 240731,
+      "sha256": "55719fec4075f8bc32802ae12198871a35d04d6dcb75f82312e73971ffdb04d7",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
+    },
+    {
+      "path": "assets/sleepy-sloth/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 71989,
+      "sha256": "982720b420219d67be8fff92d92b49f8dc5f1aff97ecbdddd09587a03d8d83a5",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/sleepy-sloth/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 70412,
+      "sha256": "e7293fc1df6c257646dccf61aab3871eb5774babeab998580e6316fbca423417",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/space-cat/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 281325,
+      "sha256": "96021c73c8bc2308d6a00dce00bec67c8d8fbab7d47e3ca8cd454f95587fb55d",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1423,
+          174
+        ],
+        "resizedArtwork": [
+          816,
+          100
+        ]
+      }
+    },
+    {
+      "path": "assets/space-cat/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 271822,
+      "sha256": "79264995b14ee0410ff2a82a157fa3d8218587bb7c38d858a280a41f8504758a",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1423,
+          174
+        ],
+        "resizedArtwork": [
+          816,
+          100
+        ]
+      }
+    },
+    {
+      "path": "assets/space-cat/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 59382,
+      "sha256": "2e87afe558c24056d738edece78debf6f217d81efc64dd4cb309265a14d8c959",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/space-cat/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 61642,
+      "sha256": "b96efb49d9973dc33c6089f2aa8f870222c9af6f7a2f3115090e65503fc7e2c8",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/starry-jelly/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 184313,
+      "sha256": "7681506d8330386c5b5760ba9bf8d476cf2bc8cc308c1b3c0a6d9fa60175fd1f",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          2172,
+          145
+        ],
+        "resizedArtwork": [
+          1024,
+          68
+        ]
+      }
+    },
+    {
+      "path": "assets/starry-jelly/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 180661,
+      "sha256": "74f6499aae7298795265099c731b70db53cb9738777270c0270ae932ed002982",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          2172,
+          145
+        ],
+        "resizedArtwork": [
+          1024,
+          68
+        ]
+      }
+    },
+    {
+      "path": "assets/starry-jelly/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 43864,
+      "sha256": "b64e594775af6f28e3e10a794df8d8c1e769ea847c8c45781527dc3be5f9ac8c",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/starry-jelly/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 47728,
+      "sha256": "caf180741cbb6138fd2ee69b3f944c392239bb8c98abb2dad70ae59961af6190",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/tiny-whale/strip-light.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 168598,
+      "sha256": "a4eb61c9216abddd8bfaf8656920038c7ca99b9a8f50f9ae5d0e64f397f7434c",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          102
+        ],
+        "resizedArtwork": [
+          1024,
+          74
+        ]
+      }
+    },
+    {
+      "path": "assets/tiny-whale/strip-dark.png",
+      "width": 2048,
+      "height": 160,
+      "bytes": 166608,
+      "sha256": "82482d30e524b9220c9b16d17f47f2c38a51aafdfee496fd95747dd56721029c",
+      "alpha": true,
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          103
+        ],
+        "resizedArtwork": [
+          1024,
+          74
+        ]
+      }
+    },
+    {
+      "path": "assets/tiny-whale/peek-light.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 54564,
+      "sha256": "7bc6246bce5023a58e4644ef07f0c52c07a49c06a7cfefc55c38ce3b0fdaee75",
+      "alpha": true,
+      "verified": true
+    },
+    {
+      "path": "assets/tiny-whale/peek-dark.png",
+      "width": 600,
+      "height": 400,
+      "bytes": 59006,
+      "sha256": "cbbc277f9e8fba8b7faa8a8d79aef7780d9af9b8bb928658427ec6fcfcb40233",
+      "alpha": true,
+      "verified": true
+    }
+  ]
+}

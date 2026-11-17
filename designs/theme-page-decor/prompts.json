@@ -1,0 +1,337 @@
+{
+  "mode": "built-in ImageGen",
+  "identityInstruction": "Preserve the actual existing theme character. Official source appearance takes precedence over generic descriptive shorthand.",
+  "sharedStyle": "Cute flat kawaii storybook stickers, rounded shapes, deep theme-coloured outlines never pure black, flat fills with one soft cel-shade, no gradients, drop shadows, text, logos or frame. Transparent PNG alpha.",
+  "themes": [
+    {
+      "theme": "little-dragon",
+      "reference": "themes/official/little-dragon/assets/a6e1f4c366320c06531c3.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Edit target: this existing Little Dragon cutout. Change ONLY rendering cleanliness: completely remove all outer green glow, aura, haze and bottom blurred strip. Background pixels must have alpha ZERO directly outside the clean solid dark green character outline. No luminous pixels anywhere, no shadow, no backdrop, no gradients or airbrush. Replace the faint soft mottled fill with perfectly flat mint fill plus one discrete flat cel shade. Preserve exactly the same mascot design, face, heart horns, wings, paw positions and pose. Actual transparent PNG cutout, not black background. Keep character body cut across straight at bottom. Production sticker, no effects."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. Edit this EXACT existing dragon drawing into dark-page palette. Keep its identical pose, character identity, contours, outline colours, facial details, geometry and transparent alpha background. Only change flat fill colours to slightly deeper, more muted mint/cream/pink, less bright so it sits on #262826 without glowing, face light enough to read. Do not add background. No gradients, glow, shadows, text, props. ONE PNG cutout. Same drawing."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. One production asset little-dragon strip-light.png. Input image STYLE/PALETTE REFERENCE ONLY. Do not draw any dragon or character. Cute flat kawaii soft storybook ground strip of green meadow grass, few small white daisies and small mossy grey stones, matching clean dark-green outlines and mint/grass pastel colours of original reference. Wide low strip, canvas2048x160 transparent above. Solid ground from full-width gently uneven top line (no more70px from bottom) all the way to bottom edge, details no higher110px from bottom, top50px completely transparent. Spread small details evenly, no focal point, seamless left-right identical edges. If render canvas larger, keep a very wide shallow horizontal band at extreme bottom with rest canvas transparent; no mountains or horizon scene. Chunky rounded shapes, deep theme-coloured3px outlines, flat fills+one cel-shade tone; NO gradients, drop shadows, glow, texture, text, logos, frame. Real alpha PNG."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit this exact green meadow ground strip to dark version. Keep EXACT same drawing, daisies, grass tufts, mossy grey stones, every contour and original dark green outlines. Change ONLY flat fills slightly deeper/less bright/muted to sit on #262826. Keep pale daisy faces readable. Transparent alpha background above, fullwidth solid ground to bottom. No glow/gradients/shadows/text/new objects. Same dimensions/composition."
+        }
+      ]
+    },
+    {
+      "theme": "axolotl",
+      "reference": "themes/official/axolotl/assets/a70fa91381565e6bf230f.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. ONE PNG production peek-light mascot for Isolink axolotl theme. Authoritative input reference: use the EXACT original pink axolotl character on LEFT, preserving its round light-pink face, small burgundy dot eyes, simple u smile, round rosy cheeks, three rounded long pink frilly gill lobes each side with light-pink centres, plump pink body and tiny rounded paws. No new species/design. Repose this same character chest up centred, looking slightly left, one paw waving. Remove all phones, rocks, scenery, bubbles and other creatures. Transparent canvas600x400; character340px tall; generous transparent side/top margins; body cut straight at bottom. Cute flat kawaii soft storybook sticker, chunky rounded shapes, deep muted rose outline3px, pastel pink fills with only one flat cel shade, no gradients/textures/glow/shadow/text/logo/frame. Real transparent alpha. Clear at120px wide."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Dark palette edit of this EXACT established pink axolotl drawing. Preserve identical character, face/eyes/smile, pose, all contours and deep rose outline colours, transparent alpha background. Only fills become slightly deeper, less bright, muted pinks for dark page #262826; face remains readable soft light pink. Flat fills plus one discrete cel shade, no glow/gradients/shadows/text/new objects. Same drawing and framing."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "One production Isolink axolotl ground-strip PNG, light version. Input is original theme STYLE and colour reference only; draw NO mascot, phones or scene. Wide low flat kawaii pond-bottom bank, smooth mauve/grey/pink pebbles, short pink and teal water plants, few tiny outlined bubbles. Rounded chunky shapes and clean deep muted mauve/teal outlines3px, pastel flat fills plus one flat cel-shade tone, NO gradients/shadows/textures/glow/text/logo/frame. Canvas2048x160 transparent above. Continuous fullwidth ground solid to very bottom, gentle top line no higher70px from bottom; small details up to110px. Top50px blank transparent; seamless matching left and right edges; details evenly distributed no focal point. If larger canvas place VERY SHALLOW ground band at extreme bottom, rest transparent. Real PNG alpha."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit exact pond-bottom strip to dark-page version. Preserve IDENTICAL same pink and teal water plants, mauve pebbles, tiny bubbles, water contours, all geometry/outlines/composition, transparent background. Change ONLY fills slightly deeper/more muted less bright pink, teal, grey to sit on #262826, keeping same original outline colours. Flat fills, one cel shade, no gradient/glow/shadow/text/new content. Same drawing."
+        }
+      ]
+    },
+    {
+      "theme": "cloud-nap",
+      "reference": "themes/official/cloud-nap/assets/a2fd972eafefffc42ffdc.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Edit ONLY removal of the three little navy motion strokes floating outside waving left hand. Make those three strokes fully transparent. Preserve EXACT cloud character, nightcap, pose, proportions, facial lines, colours, outlines and all remaining pixels unchanged. Nothing but this one character in transparent cutout, no motion marks, no effects, no props. Same drawing."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Edit this exact cloud-nap mascot drawing to dark-page palette. Preserve every contour, pose, face, nightcap, outlines and transparent alpha background identically. Change only fills to slightly deeper less-bright muted blue, pale blue-grey cloud face still light/readable on #262826, rosy cheeks slightly muted. Same dark blue outlines. NO effects, gradients/glow/shadow/text or other objects. Same drawing."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "One Isolink cloud-nap light ground-strip PNG. Input reference for blue-white cloud shapes/style only; NO mascots/phones/raindrops. Soft bank of small fluffy blue-white clouds across FULL WIDTH, few tiny pastel yellow stars evenly distributed immediately above cloudbank. Cute flat kawaii chunky rounded shapes, clean deep blue3px outlines, flat pastel white/pale blue fills one cel-shade tone, NO gradient/glow/shadow/texture/text/logo/frame. Canvas2048x160 real alpha, top50px completely transparent. Cloud ground fills fullwidth solid to very bottom. Its gentle lumpy top edge no higher70px from bottom; little stars/details no higher110px. Seamless matching left/right edges, no focal point. If larger canvas, ultra shallow horizontal band at extreme bottom, rest transparent. No separate background."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Exact same cloud ground strip dark-palette edit: keep IDENTICAL cloudbank contours, tiny stars, all geometry, same dark-blue outlines, same transparency. Change ONLY fills: white cloud to muted pale blue-grey, blue shade slightly deeper and less bright, yellow stars softly muted, suitable for #262826 no glow. Flat fills, no gradients/shadows/text/new objects. Same composition, fullwidth solidbottom, transparent above."
+        }
+      ]
+    },
+    {
+      "theme": "cozy-shroom",
+      "reference": "themes/official/cozy-shroom/assets/aa7b89f99d23e551b95fb.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Single targeted correction: add a clean thin deep warm-brown outline around the OUTER CORAL CAP SILHOUETTE, matching the brown outline thickness of the body and cap underside. Preserve EXACT same drawing, spots, pose, shape, proportions, light pastel colours, alpha background. Only outer cap border currently missing. No other edits, no glow/gradient/shadow/text."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Dark-palette edit of this EXACT mushroom mascot drawing. Preserve identical cap, spots, face, hand pose, contours and original deep warm brown outline colours and transparency. Change only flat fills slightly deeper muted coral cap, warm beige stem, peach cheeks, less bright suitableon #262826. Face still readable pale. No gradients/glow/shadows/text/objects. Same drawing, no redesign."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "One Isolink cozy-shroom light ground-strip PNG. Input is STYLE reference only; NO characters, phones, hills or scene. Ground: mossy forest floor of short soft olive/mint moss, tiny red-capped cream-spotted mushrooms, few small autumn orange/russet leaves. Evenly distributed little details no focal point. Cute flat kawaii storybook sticker, chunky rounded shapes clean deep warm olive/brown outlines3px neverblack, flat pastel fills plus one flat celshade tone, no gradient/glow/shadow/texture/text/logo/frame. Canvas2048x160 with real transparent alpha above. Fullwidth ground solidto bottom; gentle uneven topline≤70px frombottom, details≤110px, top50px empty. Left/right edges perfectly aligned to tile seamlessly. If larger canvas, ultra-shallow band at extreme bottom, rest transparent."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Dark-palette edit of exact mossy mushroom forest strip. Preserve every mushroom, autumn leaf, moss shape, contour, placement and original brown/olive outline colours, alpha background. Change ONLY flat fills slightly deeper muted olive moss, mutedcoral mushroom caps, deeper rust and ochre leaves for #262826. Same drawing no new shapes, no gradient/glow/shadow/text/scene. Fullwidth solidbottom and transparent above unchanged."
+        }
+      ]
+    },
+    {
+      "theme": "froggy-pond",
+      "reference": "themes/official/froggy-pond/assets/ac2e49474af8548ddfdbd.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case identity-preserve. ONE froggy-pond peek-light PNG. AUTHORITATIVE original Isolink frog LEFT in input: keep EXACT plump light yellow-green body, pale creamy yellow-green large belly, round protruding eyes with white rims and deep green pupils with tiny light highlights, rosy peach round cheeks, tiny dark green u smile, rounded fingers. Repose SAME character chest-up from bottom, centred, friendly facing slightly left, one little hand waving. No leaf hat. Remove phones, second frog, pond, plants, sky, chains and all scene objects/motion marks. Canvas600x400 transparent, characterabout340px tall, empty top/sides, body straight cropped at bottom. Cute flat kawaii storybook sticker with clean deep muted forest-green3px outlines neverblack, chunky rounded shapes, lightpastel flat fills plus one discrete celshade. NO gradients/glow/shadow/texture/text/logo/frame. Clearat120px. Realalpha PNG."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Dark-palette edit of this EXACT frog drawing. Preserve every contour/pose/face/eyes/pupils/highlight/cheek shape, all original deep green outlines and transparentalpha. Only change fills slightly deeper muted less-bright yellow-green and cream, cheek peach slightlymuted, face light/readable on #262826. Same drawing, no new shapes or objects. Flatfills one celshade, no gradient/glow/shadows/text."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "One Isolink froggy-pond light ground-strip PNG. Input STYLE/PALETTE reference only. No frogs, characters, phones or distant scene. Shallow pond edge: pale green pond water bank, little lily pads, short rounded reeds, one small soft pink water lily distributed with low green tufts. Chunky rounded kawaii storybook shapes, clean deep forestgreen3px outlines neverblack, flat pastel fills plus one flat celshade, no gradients/glows/shadows/textures/text/logo/frame. Canvas2048x160 transparent above; fullwidth ground solid to bottom; gentle uneven topline≤70px frombottom, details≤110px; top50px empty. Matching left/right edge for seamless tiling, evenly distributed no focal point. If render largercanvas keep only very shallowband at extremebottom, resttransparent. Real PNGalpha."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Dark-palette edit exact froggy-pond ground strip. Preserve identical lily pads/reeds/small pink lily/pond-water/grass, every contour/position/outline colour, alpha background. Change ONLY flat fills slightly deeper less-bright muted pondgreens, cream ripples and blush pink flower to suit #262826. Same drawing. No gradient/glow/shadow/text/newcontent. Solidfullwidth groundto bottom and transparentabove unchanged."
+        }
+      ]
+    },
+    {
+      "theme": "honey-bear",
+      "reference": "themes/official/honey-bear/assets/aab3a2c3e6f6195256e12.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. Asset honey-bear/peek-light.png. Input image is the official honey-bear theme character identity reference. Repose THE SAME HONEY-BROWN BEAR CUB from the LEFT of reference, preserving its rounded ears with cream inner ears, short round muzzle with cream oval patch, tiny dark brown dot eyes and little brown nose, curved W mouth, rosy oval cheeks, warm honey fur and dark golden-brown outline. Do not invent a different bear. Only one bear, seen chest up peeking from behind an imaginary ground strip, facing slightly left, friendly smile, one paw waving with small honey drip on paw. Remove phones, landscape and all other objects. Cute flat kawaii messaging-theme storybook sticker, chunky rounded shapes, clean 3px deep theme-colour outlines never pure black, flat fills with one soft cel-shade. Soft pastel light-page colours. No gradients, glow, drop shadows, text, logos or frame. FULLY TRANSPARENT PNG with alpha, no background colour whatsoever. Canvas600x400, character about340px tall centred with margins top and sides, bottom torso cut straight across flush at canvas bottom, nothing else. Clearly readable at120px width."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. Input is the EDIT TARGET honey-bear light peeking character. Make dark-page version of EXACT SAME DRAWING. Preserve pose, silhouette, features, anatomy, all line locations and SAME dark brown outlines exactly. ONLY adjust the fill colours to slightly deeper less bright honey-brown and muted cream for placement on #262826; keep face readable. Flat fills with just one cel-shade, no gradient, no glow, no lighting effects, no drop shadows. Do NOT add background: fully TRANSPARENT PNG alpha. No text logos frame objects. Keep full same canvas framing and straight torso lower edge."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. honey-bear/strip-light.png. Official input illustration is STYLE/COLOUR reference only; do not include ANY bear, character, phone, cliff, sunset or central landscape. Make a low horizontal seamless clover-meadow ground strip along the bottom edge of a messaging app page. Cute flat kawaii soft storybook sticker, chunky rounded shapes, crisp deep golden-olive dark outlines about3px never black, flat pastel green clover turf, few little yellow flowers, tufts and tiny honey pot repeated sparse evenly. No focal point. Transparent PNG alpha above ground, no gradient or glow/shadow/text/logo/frame. Target2048x160: ground fullwidth solid to very bottom, gently uneven top≤70px from bottom, details≤110px from bottom, top50px fully empty. Image artwork itself VERY WIDE AND LOW, 13:1 aspect ratio. If canvas is taller than target put all artwork in the bottom110px and leave rest fully transparent. Horizontal left and right borders same ground height and matching colours for seamless repeat; no border outline at left/right/bottom."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Use case: lighting-weather. Input image is EDIT TARGET honey-bear clover meadow light ground strip. Produce dark variant by ONLY changing fill colours to deeper muted olive greens, subdued yellow flowers and honey pots, appropriate against #262826. Preserve EXACT drawing, placement, shapes, lines and SAME deep golden-olive outlines. Keep all empty area fully transparent alpha and solid ground to bottom edge. Flat fills with one cel-shade only, no gradients/shadow/glow, no text/logo/frame. No added characters or items. Same dimensions and framing as input."
+        }
+      ]
+    },
+    {
+      "theme": "moon-bunny",
+      "reference": "themes/official/moon-bunny/assets/aa5b1df793855936dba5e.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. moon-bunny/peek-light.png. Input image official theme reference, preserve the identity of its WHITE BUNNY from LEFT: same round head, long upright ears with pale lavender inner ears, tiny purple dot eyes and little W mouth, peach cheeks, dark muted purple outlines, SMALL YELLOW STAR HAIR CLIP by left ear (keep actual reference clip). One same bunny only chest up peeking behind imaginary grass, friendly looking slightly left, one tiny paw waving. Remove phones, scene, hills, moon balloon and other bunny. Messaging app kawaii flat storybook sticker; chunky round shapes, clean3px deep purple outlines never pure black. Flat pastel fills with one cel-shade, no gradients/shadows/glow/text/logo/frame. Fully transparent PNG alpha. Target600x400 centred body340px high, margins above and at sides, torso cut straight flush at very bottom. Clear at120px."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET official moon-bunny isolated peeking bunny light version. EXACT SAME DRAWING, SAME silhouette, face, star clip, ear shape, waving paw, outline colour and all line positions. ONLY make fills slightly deeper, less bright: white fur becomes muted pale lavender-grey but face stays readable on #262826, pink cheeks more muted, yellow star softly subdued. Fully transparent background with alpha, nothing else added. Flat single cel-shade, no gradients glow shadow text logo frame. Same canvas."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. moon-bunny/strip-light.png. Official input image reference for style and palette ONLY; NO BUNNY OR CHARACTER OR PHONE OR CENTRAL SCENE. Wide low night-meadow ground strip of SHORT LAVENDER GRASS with tiny pale moon flowers and little yellow stars along the grass. Cute flat kawaii soft storybook sticker; chunky round shapes, crisp3px deep muted purple outlines never black, pastel lavender and cream fills with one cel-shade. Moon flowers are pale filled shapes WITHOUT glow. No gradients shadows text logos frame. Fully transparent PNG alpha above ground. Target2048x160, solid fullwidth ground to bottom edge, gentle uneven top at most70px from bottom, grass/flowers/stars at most110px from bottom, top50px empty. Artwork itself13:1 ratio very low band. If tall canvas, put all ground artwork within bottom110px, remainder fully transparent. Even sparse details, no focal point. Left/right edges same height and colours to tile seamlessly. No border outline at left/right/bottom."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET moon-bunny light lavender meadow ground strip. Make DARK version ONLY by deepening/muting fills to medium lavender/slate grass with subdued cream moonflowers and stars, suited for #262826 page. Keep EXACT SAME drawing and SAME purple outlines and detail positions. Fully transparent PNG alpha above ground, ground solid fullwidth to bottom. No glow gradients shadows text logo frame, no objects added, no characters. Same dimensions and framing."
+        }
+      ]
+    },
+    {
+      "theme": "peach-mochi",
+      "reference": "themes/official/peach-mochi/assets/a4c2cc5bcce7ee3f766f4.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. peach-mochi/peek-light.png. Official input image mascot identity reference. Use SAME PEACH MOCHI from LEFT: peach cream soft round ball body, two tiny simple arms, single green leaf with brown vein on top, tiny deep terracotta dot eyes and U smile, rosy circular cheeks and small pale highlight. Keep silhouette, face proportions, leaf design and warm terracotta outlines from official illustration. One mascot alone, chest-up bottom-cropped, friendly looking slightly left with one little hand waving. No phones, second mascot, blossom hairclip, hills, grass, props or motion marks. Fully transparent PNGalpha. Kawaii flat storybook sticker style, chunky shapes,3px deep terracotta outlines never black, soft pastel fills one cel-shade. No gradients glow shadows text logos frame.600x400 canvas, body340px tall centred, empty top/sidemargins, lower body cut straight at verybottom. Clear at120px wide."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET peach-mochi light peeking mascot. Produce DARK version of EXACT SAME DRAWING. Keep all silhouette, leaf shape, face, proportions, waving pose and SAME terracotta outlines and line positions unchanged. ONLY mute/deepen fills slightly for #262826 dark page: peach cream to muted warm peach, green leaf deeper sage, cheeks subdued. Face remains readable. Fully TRANSPARENT PNGalpha, no background. Flat fills with one cel-shade. No glow gradients shadows text logos frame, no new props. Same framing."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. peach-mochi/strip-light.png. Official input style/palette reference only, do not include ANY mascot/face/phone. A wide very low ground band: softly rolling pink hills with fallen peach blossom petals scattered evenly. Flat kawaii soft storybook sticker, chunky rounded forms, crisp3px deep terracotta outlines never black. Soft pastel blush, pale peach and coral fills with one cel-shade, NO gradients glow shadows text logos frame. Fully transparent PNGalpha above strip. Target2048x160, ground fullwidth solid through bottom, gently uneven top≤70px above bottom, fallen petals/details≤110px above bottom, top50empty. Artwork verywide13:1. On a taller canvas art only in bottom110px, rest empty. Even details no focalpoint. Exact matching left/right ground heights/colours for seamless horizontal tiling, no side/bottom outline."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET peach-mochi light strip. ONLY deepen/mute fills for DARK #262826 page, soft peach and coral hills become slightly deeper dusty peach/rose, blossom petals softly subdued. Preserve EXACT SAME hills, flowers, petals, all lines and SAME terracotta outlines. Fully transparent PNGalpha above ground, solid fullwidth to bottom. Flat one cel-shade, no gradients glow shadows text logos frame or added characters/objects. Same canvas/framing."
+        }
+      ]
+    },
+    {
+      "theme": "penguin-puddle",
+      "reference": "themes/official/penguin-puddle/assets/a61256634260abca44c83.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. penguin-puddle/peek-light.png. Official input reference: preserve SAME NAVY-BLUE PENGUIN from LEFT, round head with tiny top feather tuft, big cream double-lobed face and cream chest, tiny joyful closed curved eyes, peach pink cheeks, small oval goldenyellow beak with small orange line. Same proportions and deep navy outlines. One penguin only chestup isolated peeking pose, angled slightly left, one small blue flipper waving, SHORT SOFT BLUE SCARF. Remove phones, ice, landscape, other penguin, feet, motionmarks. Transparent PNGalpha background. Cute kawaii flat storybook sticker, chunky shapes, clean3px deep blue outlines never black. Light pastel fills with single cel-shade, no gradients glow shadows text logos frame.600x400 canvas, mascot340px high centred, margins top/sides, straight cropped torso bottom flush at canvas bottom. Clear at120px."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET penguin-puddle light peeking penguin. Exact SAME DRAWING: preserve silhouette, face, beak, closed smiling eyes, scarf, waving flipper, all lines and same navy outlines. ONLY change fills to slightly deeper less bright colours for #262826 page, muted navy and slateblue scarf, cream face light enough to read. Fully transparent PNGalpha with no background. Flat fills one cel-shade only, no gradients glow shadows text logo frame, no new props. Same canvas."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. penguin-puddle/strip-light.png. Official image is STYLE/PALETTE reference only, do not include any penguin/phone/face/scene. Very wide low snow-and-ice ground band with small blue puddles and round snow lumps spread evenly. Cute flat kawaii storybook sticker, chunky rounded shapes,3px deep blue outlines neverblack, soft pastel icyblue and bluewhite fills with onecelshade. No gradients glow shadows text logos frame. FULLY TRANSPARENT PNGalpha above the ground. Target2048x160, ground fullwidth and solid to bottomedge, gentle uneven top≤70px frombottom, snowlumpdetails≤110px, top50empty. Artwork13:1 verylow band; on taller canvas art only bottom110px, rest transparent. No focalpoint. Left/right edges same height/colour for seamless tiling, no vertical/bottom borderoutlines."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET penguin-puddle light snowice strip. DARK version by ONLY muting and deepening fill colours to subdued icyblue/slateblue for #262826 page. Preserve EXACT SAME drawing, every snowlump and puddle placement, shape and SAME deepblue outlines. Fully TRANSPARENT PNGalpha aboveground, solid fullwidth ground bottom. Flat onecelshade, no gradients glow shadows text logos frame. No characters or added objects. Same canvas framing."
+        }
+      ]
+    },
+    {
+      "theme": "pocket-pals",
+      "reference": "themes/official/pocket-pals/assets/a523bb816b778fb705d07.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. pocket-pals/peek-light.png. Official input character reference: USE THE EXACT SAME BROWN POCKET-PALS MASCOT from LEFT. Preserve its round brown head, two small round darker ears, tiny darkbrown dot eyes, broad CREAM WHITE LOWER FACE/CHEEK PATCH, small brown nose and curved W mouth, peach rosy cheekdots, warm tanbrown fur, deep brown outlines. Do not invent a new hamster design. One mascot only chestup, fullchubby cheeks, friendly looking slightly left, one small tanbrown paw waving. Remove leather pouch/bag, phone, landscape, all other objects, other mascot, motionmarks. Fully TRANSPARENT PNGalpha. Cute flat kawaii softstorybooksticker, chunky round shapes crisp3px deep brown outlines neverblack, pastel fills singlecelshade. No gradients glow shadow text logos frame.600x400 canvas, character340px high centred, emptytop/sidemargins, lower torso cutstraight atverybottom. Readable120px."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET pocket-pals light peeking mascot. Produce DARK variant of exact SAME DRAWING. Keep all face/silhouette/ear/cheek/pose and all lines including SAME deep brown outlines unchanged. ONLY deepen/mute fills a little for #262826 page: slightly deeper tanbrown and subdued cream lowerface kept readable, muted cheeks. Fully transparent PNGalpha, no background or objects. Flat fills singlecelshade, no gradients glow shadow text logos frame. Same framing."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. pocket-pals/strip-light.png. Official illustration is STYLE/PALETTE reference only. Do not include animals, faces, phones, leatherbags or landscape. Wide low hamster-bedding ground strip: soft warm tan wood shavings, little sunflower seeds, a tiny cropped wood wheel edge. Details sparse evenly distributed no focalpoint. Cute flat kawaii softstorybook sticker, chunky round forms, crisp3px deep warmbrown outlines neverblack, pastel tan/cream/ochre fills singlecelshade. No gradients glow shadows text logos frame. Fullytransparent PNGalpha above ground. Target2048x160, ground fullwidth solid tobottom, gentle uneven top≤70px frombottom, details≤110px, top50empty. Verywide low13:1 art band; if taller canvas all art only bottom110px, remainder transparent. Left/right edges sameheight/colour for seamless tiling. No side/bottomborder."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Use case: lighting-weather. EDIT TARGET pocket-pals light woodshaving bedding strip. ONLY deepen/mute fillcolours a little for DARK #262826 page: warmtan becomes deeper dusty ochre, creamshavings subdued. Preserve EXACT SAME drawing, all seeds, shaving shapes, wheel edge and SAME brown outlines. Fullytransparent PNGalpha aboveground, solidfullwidth groundtobottom. Flatfills onecelshade, no gradients glow shadow text logos frame, no addedcharacters/objects. Samecanvas."
+        }
+      ]
+    },
+    {
+      "theme": "red-panda",
+      "reference": "themes/official/red-panda/assets/a918b744542fc077a0ada.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "EDIT this mascot illustration only: REMOVE ALL glow, halo, blur and shadows around character. Replace every pixel outside the actual thick brown character outline with full alpha0. Hard clean sticker silhouette, no translucent haze anywhere. Flatten the interior into solid palette colours with one crisp cel-shade region; remove gradients. Preserve EXACT red panda identity, all face markings, shape, pose, tail and proportions. Do not add anything. Required fully transparent PNG alpha background. Keep centred chest-up waving character bottom cut perfectly straight. No frame,text,logo,scene. The character should have a clear dark warm-brown outline all around the exterior, including cheek and ear edges. Small600x400 export use."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Use case: lighting-weather. Edit target is the provided peeking red panda. Change ONLY fill colours to a dark-page version: slightly deeper, less bright muted orange/cream/brown fills, same exact dark warm brown outlines and identical drawing, pose, facial markings, tail, dimensions, composition and alpha silhouette. Face stays light enough to read against #262826 behind it, but DO NOT draw #262826 background. Transparent PNG. Flat fills with single soft cel shade. No glow/gradients/shadows/text/logo/frame. Preserve every shape and outline exactly."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Use case: illustration-story. Reference image supplies ONLY red-panda theme style and warm colours, not its scene layout or characters. Create ONE ground strip, no character: bamboo forest floor, short bamboo shoots and maple leaves. Cute flat kawaii storybook sticker, chunky rounded shapes, clean dark warm brown outlines3px neverblack, flat pastel orange/green/brown fills with one cel shade. No gradients/glow/drop shadow/text/logos/frame. Fully transparent PNG above ground. Intended canvas2048x160, ultra-wide LOW horizontal band along bottom edge, fills fullwidth and solid alltheway to bottomedge. Gentle uneven groundtop rises at most70pxfrombottom; little shoots/leaves at most110px. Top50px completely emptyalpha. Details evenlyspread, small, nofocalpoint. Left andrightedge terrain match perfectly for seamless horizontaltiling. No tall plants, no scene, no sun,mountains,phones,envelopes or mascot. Ground strip only."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit this exact red-panda theme ground strip: change ONLY fill colours to slightly deeper muted less bright greens, burnt oranges and browns for display on dark #262826 page. Preserve SAME DRAWING, all shapes, outlines, alpha silhouette, dimensions, layout, maple leaves, bamboo shoots and pebbles exactly. Deep brown outlines unchanged. Full transparent background above ground, no scene/background added. Flat fills one cel shade, no gradients/glow/shadow/text/logo/frame."
+        }
+      ]
+    },
+    {
+      "theme": "sleepy-sloth",
+      "reference": "themes/official/sleepy-sloth/assets/a3220d0bf2e2156ca2953.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. Reference is the authoritative EXISTING sleepy-sloth theme character. Repose precisely THAT SAME sloth, preserving its beige tan rounded furry body, cream face mask, warm brown eye patches with sleepy halfclosed eyes, tiny dark brown nose, gentle smile, rosy cheeks, small headtuft and dark olivebrown outlines. Do not invent a new sloth. ONE transparent PNG character only chestup peeking from behind imaginaryground, centred, looking slightlyleft, onearmup waving. Bottom of torso cut straight at verybottom. Canvas600x400, body340px tall, empty sides and above, fit entire raised hand. Remove phones, branches, trees, landscape and props. Cute flat kawaii storybook sticker, chunky roundedshapes3pxclean dark theme outlines neverpureblack, soft pastel fills one celshade, no gradients/glow/shadows/text/logos/frame. Light page version, simple enough to read120pxwide."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Edit exact provided sleepy sloth peeking character. Change ONLY fill palette: deeper slightly less bright tan/cream/brown, rosycheeks muted, face light enough on dark page#262826. Keep identical drawing, silhouette, sleepyeyes, smile, pose and warm olivebrown outlines. No background added, transparent PNG alpha. No gradients/glow/drop shadows/text/logo/frame. Same shape and composition."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Reference supplies existing sleepy-sloth theme soft olivegreen/tan colours and storybook style only. Create ONE transparent ground strip: jungle leaves and vines along the ground, a few small flowers. No character/phones/trees/landscape. Ultra-wide LOW bottom band for2048x160 canvas. Fullwidth solid ground toverybottom, gentle uneven groundline nohigher70pxfrombottom, small leaves/vines/flowers atmost110px, top50px fullyemptyalpha. Leftandright terrainedges matchperfectly for horizontaltiling; detailsevenlyspread nofocalpoint. Chunky rounded kawaii shapes clean darkolivebrown outlines3pxneverblack, flatsoftpastelfills onecelshade. Nogradient/glow/shadow/text/logo/frame. Groundstriponly, fullytransparent aboveground."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit exact provided jungle leaves ground strip. Change ONLY fillpalette for darkpage#262826: slightly deeper muted olivegreens/tans and lessbrightflowers. Preserve identical drawing, contours,outlines,all positions, leaves/vines/flowers, fullwidth solidbottomandtransparentabove. Transparent PNG alpha, nobackground, no glows/gradients/shadow/text/logo/frame."
+        }
+      ]
+    },
+    {
+      "theme": "space-cat",
+      "reference": "themes/official/space-cat/assets/ab7bb4185e902513d8ff6.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Usecase identity-preserve. Reference is authoritative existing space-cat theme mascot. Create ONE transparent peeking character with precisely SAME kitten from LEFT side ofreference, creamwhiteface with lavenderpatch overleft forehead/ear, lavenderpurple outlined spacesuitandpaws, tiny darkpurple doteyes, W-shapedmouth, three simple whiskers, pinkcheeks, round transparent bubble helmet. Keep exact original face design, proportions, markings, coloursandoutlinedstorybookstyle. Repose chestup slightlylookingleft,onepawwaving, bottom cutstraight at verybottom. Remove phone,backpack,moonlandscape,stars,allprops. Only ONE catcentred,body340px tall on600x400transparentcanvas;fit helmetandwavingpawcompletely. Cute flatkawaii chunkroundedshapes,clean deep purple3pxoutlinesneverpureblack,flatsoftpastelfillsonecelshade. Nogradients,glow,shadows,text,logo,frame. Lightversion,readable120px."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Edit exact provided peeking space-cat. ChangeONLYfillcolours to slightly deeper muted lavender/cream/pink dark-page palette, face light enough toread on#262826. Preserve IDENTICALdrawing, facepatch, helmet, silhouette, pose, all shapesanddeep purpleoutlines unchanged. Transparent PNG, do not add pagebackground. Flatfillsonecelshade,no glows/gradients/shadows/text/logos/frame."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Reference supplies existing space-cat theme pastel lavenderpurple/cream moon palette and roundedstorybookstyle only. CreateONE groundstrip: moon surface with small craters, rocks and tiny distant planets. No cats,people,spaceships,phones. Intended2048x160 ultrawide LOWbottom band, fullwidth solidbottomterrain;gentle uneven groundtopatmost70pxfrombottom;smallrocks and tinyplanetdecorationsatmost110px,top50px fullyemptytransparent. No skybackground,fullytransparent aboveground. Leftandrightterrainedgesalignexactly for seamlesshorizontaltiling. Details evenlyspread,nofocalpoint. Chunkykawaii roundedshapes,clean deep purple3pxoutlinesneverpureblack,flatsoftpastelfillsonecelshade. Nogradients,glow,shadows,text,logo,frame."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit exact provided lunar groundstrip. ChangeONLYfillcolours to slightlydeeper lessbright muted lavender/purple/cream darkpage palette for#262826. Preserve identicaldrawing,mooncraters,rocks,planets,allpositions,shapes,outlinesandsilhouette. TransparentPNGaboveground,nobackgroundadded. Flatfillonecelshade,nogradient,glow,shadow,text,logo,frame."
+        }
+      ]
+    },
+    {
+      "theme": "starry-jelly",
+      "reference": "themes/official/starry-jelly/assets/a83a10f5c8c2a49023e32.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Usecase identity-preserve. Reference is authoritative EXISTING starry-jelly theme mascot. Repose preciselyTHATSAME friendly lavender jellyfish: smooth rounddomedbell, tinydeepvioletdoteyes, tinycurvedsmile, rosycheeks and softlavendertentacles. Preserve original silhouette/proportions/faceanddeepvioletoutlines. ONEjellyfishonly, floatingcentred slightlylookingleft,one tentacle raised to wave,remainingtentacles endingatverybottomofcanvas. No phones, waves, sunset, starschain, propsorbackground. Canvas600x400transparentPNG, mascotabout340pxtallwithgeneroustransparentsidesandabove. Cute flatkawaiistorybooksticker, chunkyroundedshapes clean3pxdeepvioletoutlinesneverblack,flatsoftpastelfillsonecelshade. Lightversionnoglow(notranslucenthalo),nogradients,shadow,text,logo,frame. Identitymustmatchreference,notnewcharacter;clearat120pxwide."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Edit exact provided peeking jellyfish. Change ONLY fill colours to slightly deeper muted lavender and violet with less bright highlights and cheeks for dark page #262826. Keep face readable. Preserve IDENTICAL drawing, bell shape, eye and mouth positions, tentacles, wave pose, outlines, dimensions and alpha silhouette. No background added, transparent PNG. Flat fills one cel shade. No gradients,glow,shadows,text,logos,frame."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Reference supplies existing starry-jelly theme lavenderpastelsandstorybookstyleonly. ONEwideLOWgroundstrip: sandy seabed with tiny coral,starfishandlittle shells. Small rounded lavenderpinkcoral,creamandlavendershells,pastelpeachstarfish. No jellyfish,phones,sun,landscape. Intended2048x160,fullwidthsolidgroundtoverybottom;gentleunevensandtopatmost70pxfrombottom;smalldetailsatmost110px;top50pxfullyemptyalpha.TransparentPNGaboveground.Leftandrightedgegroundmatchperfectlyforseamlesstiling,detailsevenlyspreadnofocalpoint. Chunkyroundedkawaiishapes,clean3pxdeepvioletoutlinesneverblack,flatsoftpastelfillsonecelshade.Nogradients,glow,drop shadows,text,logo,frame."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit exact provided seabed ground strip. Change ONLY fill palette to slightly deeper muted cream sand, lavender/pink coral and peach starfish for dark page #262826. Preserve identical drawing, objects, positions, outlines and alpha silhouette, full width bottom solid. Transparent PNG above ground, no background added. Flat fills one cel shade. No gradients,glow,shadows,text,logos,frame."
+        }
+      ]
+    },
+    {
+      "theme": "tiny-whale",
+      "reference": "themes/official/tiny-whale/assets/a25c14f959d2dc6298126.png",
+      "assets": [
+        {
+          "filename": "peek-light.png",
+          "prompt": "Use case: identity-preserve. Reference is authoritative EXISTING tiny-whale theme character. Repose precisely THAT SAME small sky-blue whale, preserving its smooth round body, dark deep blue outline, tiny dark dot eyes, tiny curved smile, rosy cheeks, cream white underside, little fin and simple three-lobed water spout. One whale only rising from imaginary waves, looking slightly left, one fin waving, small spout on top. Show upper body, bottom of body cut straight at canvas very bottom to hide behind separate ground strip. Canvas600x400 transparent PNG, body about340px tall, centred with generous empty margins, spout and waving fin fit entirely. Remove phone, landscape, sunset, islands, connecting bubbles, waves and all scenery. SAME mascot identity, not an invented whale. Cute flat kawaii storybook sticker, chunky rounded shapes, clean3px deep blue outlines neverblack, flat soft pastel fills with one cel shade. No gradients,glow,shadows,text,logos,frame. Clear at120px wide."
+        },
+        {
+          "filename": "peek-dark.png",
+          "prompt": "Edit the EXACT provided peeking tiny whale. Change ONLY fill palette to slightly deeper less bright muted skyblue, cream white underside and spout, softer rosy cheeks suitable for dark page #262826. Face stays readable. Preserve identical drawing, pose, spout, face, outline colours and every contour and alpha silhouette exactly. Transparent PNG, do not add background. Flat fills one celshade, no gradients,glow,shadows,text,logos,frame."
+        },
+        {
+          "filename": "strip-light.png",
+          "prompt": "Reference supplies EXISTING tiny-whale theme sky-blue/cream ocean palette and storybook style only. ONE ground strip: gentle rolling ocean waves with foam and a few bubbles. No whale,animals,phones,sunset,islands,mountains or sky. Intended2048x160 ultra wide LOW bottom band, full width solid water down to very bottom; gentle uneven wave top no higher70px frombottom, small foam/bubbles atmost110px. Top50px completely empty alpha, transparent PNG above waves. Left and right edges line up exactly for seamless horizontal tiling. Details evenly spread, no focal point. Chunky rounded kawaii shapes, clean3px deepblue outlines neverblack, flat soft pastel blue fills with one celshade, cream foam. No gradients,glow,shadows,text,logos,frame."
+        },
+        {
+          "filename": "strip-dark.png",
+          "prompt": "Edit the EXACT provided ocean wave groundstrip. Change ONLY fill palette to slightly deeper muted blues and less bright cream foam and bubbles suitable for dark page #262826. Preserve identical drawing, waves,bubbles,foam,positions,contours,deepblue outlines and alpha silhouette exactly. Fullwidthsolidbottom,transparent PNG above waves, do not add background. Flat fills one celshade, no gradients,glow,shadows,text,logos,frame."
+        }
+      ]
+    }
+  ]
+}
