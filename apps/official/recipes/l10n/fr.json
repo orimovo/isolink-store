@@ -55,5 +55,13 @@
   "{p0} h": "{p0} h",
   "{p0} h {p1}": "{p0} h {p1}",
   "{p0} min": "{p0} min",
-  "{p0} recipes": "{p0} recettes"
+  "{p0} recipes": "{p0} recettes",
+  "1 ingredient": "1 ingrédient",
+  "{p0} ingredients": "{p0} ingrédients",
+  "All": "Toutes",
+  "Recipe": "Recette",
+  "Save recipe": "Enregistrer la recette",
+  "Saved": "Enregistrée",
+  "Send": "Envoyer",
+  "Serves {p0}": "Pour {p0}"
 }

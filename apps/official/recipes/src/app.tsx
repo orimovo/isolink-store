@@ -1,7 +1,8 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, SearchField, Select, Button, IconButton, Icon, Fab, Grid,
   Chip, Filter, FilterTabs, Image, Upload, Editor, Markdown, Checkbox, Stepper, TagInput, Timer, Segmented, Badge,
-  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, useKeys, fetch, has, t,
+  useQuery, useData, useLocal, useStore, useMe, useNav, useNow, useDialog, useShare, useToast, useKeys, useEffect,
+  useHandoff, useSheet, useSend, fetch, has, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -25,6 +26,28 @@ const iso = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.ge
 const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 const weekOf = (d: Date) => addDays(d, -((d.getDay() + 6) % 7));
 const emojiOf = (r: Recipe) => r.emoji || EMOJIS[(r.name.length + (r.course ?? '').length) % EMOJIS.length];
+
+/** A recipe as it's sent into a chat: all of it that fits in a card. */
+function sendable(r: Recipe) {
+  let room = 7000 - r.name.length;
+  const fit = (lines: string[]) => lines.filter((l) => (room -= l.length + 4) > 0);
+  const ingredients = fit(linesOf(r.ingredients).slice(0, 60));
+  const method = fit(linesOf(r.method).slice(0, 40));
+  return {
+    card: 'recipe',
+    data: { name: r.name, minutes: r.minutes ?? 0, serves: r.serves ?? 0, ingredients, method },
+    text: [r.name, ...ingredients.map((l) => `• ${l}`)].join('\n'),
+  };
+}
+
+/** A link's page, read for its recipe; a plain https link on a supported site. */
+async function recipeAt(link: string) {
+  let u = link.trim();
+  if (!/^https?:\/\//.test(u)) u = `https://${u}`;
+  u = u.replace(/^http:/, 'https:').replace(/^https:\/\/(?!www\.|cooking\.)([^/]+\.(?:com|co\.uk))\//, 'https://www.$1/');
+  const res = await fetch(u, { headers: { accept: 'text/html' } });
+  return res.ok ? readRecipe(await res.text(), u) : null;
+}
 
 function useRecipes() {
   const recipes = (useQuery('recipes', { limit: 500 }) as Recipe[]).sort((a, b) => a.name.localeCompare(b.name));
@@ -219,6 +242,7 @@ function RecipeScreen() {
   const nav = useNav();
   const rc = useRecipes();
   const share = useShare();
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   const toast = useToast();
   const { id } = nav.params as { id: string };
   const r = rc.recipes.find((x) => x.id === id);
@@ -237,6 +261,7 @@ function RecipeScreen() {
         <>
           <IconButton icon={r.fave ? 'favorite' : 'favorite_border'} label={t('Favourite')}
                       onPress={rc.canEdit ? () => rc.edit('recipes', r.id, { fave: !r.fave }) : undefined} />
+          {has('chat.send') && <IconButton icon="send" label={t('Send')} onPress={() => send(sendable(r))} />}
           {rc.canEdit && <IconButton icon="edit" label={t('Edit')} onPress={() => nav.push('Edit', { id })} />}
         </>
       }
@@ -345,8 +370,7 @@ function ImportScreen() {
     setBusy(true);
     setError('');
     try {
-      const res = await fetch(u, { headers: { accept: 'text/html' } });
-      const found = res.ok ? readRecipe(await res.text(), u) : null;
+      const found = await recipeAt(u);
       if (!found) throw new Error('none');
       const id = rc.add('recipes', { ...found, course: 'main' });
       nav.pop();
@@ -446,6 +470,56 @@ function EditScreen() {
   );
 }
 
+/** Save recipe, over a chat: a link read as Import reads it; a photo or words make one to fill in. */
+function Save() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const items = handoff?.items ?? [];
+  const words = items.map((i: any) => String(i.text ?? '').trim()).filter(Boolean).join('\n\n');
+  const link = items.flatMap((i: any) => i.links ?? [])[0] as string | undefined;
+  const photo = items.flatMap((i: any) => i.files ?? []).find((f: any) => f.kind === 'image');
+  const [found, setFound] = useLocal<{ name: string; minutes?: number; serves?: number; ingredients: string; method: string; link?: string } | null>(null);
+  const [reading, setReading] = useLocal<boolean>(!!link);
+  const [name, setName] = useLocal<string>('');
+  const [busy, setBusy] = useLocal<boolean>(false);
+  useEffect(() => {
+    if (!link) return;
+    recipeAt(link).then((f) => { if (f) { setFound(f); setName(f.name); } }).catch(() => {}).finally(() => setReading(false));
+  }, []);
+  // With no recipe found: the first line is its name and the rest its method.
+  const [head, ...rest] = words.replace(/https?:\/\/\S+/g, '').trim().split('\n');
+  const title = name || (found ? '' : (head ?? '').trim().slice(0, 120));
+  const save = async () => {
+    if (busy || !title.trim()) return;
+    setBusy(true);
+    try {
+      const kept = photo ? await photo.keep() : undefined;
+      const id = data.add('recipes', found
+        ? { ...found, name: title.trim().slice(0, 120), course: 'main', photo: kept }
+        : { name: title.trim().slice(0, 120), course: 'main', method: rest.join('\n').trim().slice(0, 32000), link, photo: kept });
+      sheet.close({ toast: t('Saved'), open: { screen: 'Recipe', params: { id } } });
+    } finally {
+      setBusy(false);
+    }
+  };
+  const lines = found ? linesOf(found.ingredients).length : 0;
+  return (
+    <Stack gap={12}>
+      {photo ? <Image src={photo} ratio="16:9" fit="cover" style={{ borderRadius: 12 }} /> : null}
+      <TextField value={title} onChange={setName} placeholder={reading ? t('Reading…') : t('Name')} max={120} onSubmit={save} />
+      {found && (found.minutes || found.serves || lines) ? (
+        <Row gap={8} wrap>
+          {found.minutes ? <Badge label={timeText(found.minutes)} /> : null}
+          {found.serves ? <Badge label={t('Serves {p0}', { p0: found.serves })} /> : null}
+          {lines ? <Badge label={lines === 1 ? t('1 ingredient') : t('{p0} ingredients', { p0: lines })} /> : null}
+        </Row>
+      ) : null}
+      <Button expand disabled={busy || reading || !title.trim()} onPress={save}>{t('Save recipe')}</Button>
+    </Stack>
+  );
+}
+
 const named = (rows: Recipe[], name: string) => {
   const want = String(name).toLowerCase();
   return rows.find((r) => r.name.toLowerCase() === want) ?? rows.find((r) => r.name.toLowerCase().includes(want));
@@ -453,6 +527,23 @@ const named = (rows: Recipe[], name: string) => {
 
 export default defineApp({
   screens: { Home, Recipe: RecipeScreen, Cook: CookScreen, Import: ImportScreen, Edit: EditScreen },
+  sheets: { Save },
+  chat: {
+    receive: {
+      // A recipe someone sent: one of this person's own.
+      recipe: (sent: { name?: string; minutes?: number; serves?: number; ingredients?: string[]; method?: string[] }, { data }: any) => {
+        const id = data.add('recipes', {
+          name: String(sent.name ?? '').slice(0, 120) || t('Recipe'),
+          course: 'main',
+          minutes: sent.minutes ? Math.max(0, Math.min(1440, Math.round(sent.minutes))) : null,
+          serves: sent.serves ? Math.max(1, Math.min(50, Math.round(sent.serves))) : null,
+          ingredients: (sent.ingredients ?? []).join('\n').slice(0, 8000),
+          method: (sent.method ?? []).map((l, i) => `${i + 1}. ${l}`).join('\n').slice(0, 32000),
+        });
+        return { toast: t('Saved'), open: { screen: 'Recipe', params: { id } } };
+      },
+    },
+  },
   // A recipe opens beside the list on a wide window.
   split: ['Home'],
   actions: {
