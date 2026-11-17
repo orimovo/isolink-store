@@ -1,7 +1,8 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Text, TextField, Button, IconButton, Icon, Fab, Chip, Checkbox, ContextMenu,
   Composer, DatePicker, TimePicker, PlacePicker, Map, MoneyField, Segmented, Select, Stat, Avatar, Upload, Badge, Progress, Scroll,
-  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, usePlatform, fetch, format, has, t,
+  useQuery, useData, useLocal, useAsync, useStore, useMe, useChat, useNav, useNow, useDialog, useToast, usePlatform,
+  useHandoff, useSheet, useSend, fetch, format, has, t,
 } from 'isolink';
 import s from './app.css';
 import { between, last } from './pos';
@@ -35,6 +36,26 @@ const dayAt = (k: string) => {
 const daysBetween = (a: string, b: string) => Math.round((dayAt(b).getTime() - dayAt(a).getTime()) / 864e5);
 const dayName = (k: string) => `${t(WEEKDAYS[dayAt(k).getDay()])} ${dayAt(k).getDate()}/${dayAt(k).getMonth() + 1}`;
 const iconOf = (kind?: string) => KINDS.find(([k]) => k === kind)?.[2] ?? 'event';
+
+/** One day of a trip as it's sent into a chat: its plans in order. */
+function sendable(trip: Trip | null, day: string, rows: Plan[]) {
+  const plans = rows.slice(0, 30);
+  return {
+    card: 'day',
+    data: {
+      trip: trip?.name ?? '', day,
+      whats: plans.map((p) => p.what), times: plans.map((p) => p.time ?? ''), kinds: plans.map((p) => p.kind ?? 'do'),
+    },
+    text: [`${dayName(day)}${trip ? ` · ${trip.name}` : ''}`, ...plans.map((p) => [p.time, p.what].filter(Boolean).join(' '))].join('\n'),
+  };
+}
+
+/** The trip that's on or coming next, else the last one. */
+function tripNow(trips: Trip[]) {
+  const sorted = [...trips].sort((a, b) => (a.start ?? '9').localeCompare(b.start ?? '9'));
+  const today = iso(new Date());
+  return sorted.find((x) => (x.end ?? x.start ?? '9') >= today) ?? sorted[sorted.length - 1];
+}
 
 function useTrips() {
   const trips = (useQuery('trips', { limit: 100 }) as Trip[]).sort((a, b) => (a.start ?? '9').localeCompare(b.start ?? '9'));
@@ -105,6 +126,7 @@ function PlanTab({ c }: { c: Ctx }) {
   const joined = usePlatform().os === 'mac';
   const nav = useNav();
   const dialog = useDialog();
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   // Held on a phone, right-clicked on a computer.
   const hold = async (p: Plan) => {
     if (!c.canEdit) return;
@@ -154,6 +176,9 @@ function PlanTab({ c }: { c: Ctx }) {
               <Box key={d}>
                 <Row align="center" class={s.dayHead}>
                   <Text class={d === c.today ? [s.h, s.on] : s.h} grow>{dayName(d)}</Text>
+                  {rows.length > 0 && has('chat.send') && (
+                    <IconButton icon="send" label={t('Send')} onPress={() => send(sendable(c.trip, d, rows))} />
+                  )}
                   {c.canEdit && <IconButton icon="add" label={t('Add')} onPress={() => nav.push('Plan', { day: d })} />}
                 </Row>
                 {rows.length > 0 && <Stack gap={joined ? 0 : 6} class={joined ? s.joined : undefined}>{rows.map(row)}</Stack>}
@@ -483,6 +508,15 @@ function PlanScreen() {
         <TextField type="url" label={t('Link')} value={f.link ?? ''} onChange={(link: string) => set({ link })} />
         <Upload accept="pdf,png,jpg,jpeg" label={t('Add a ticket')} value={f.ticket ? [f.ticket] : []}
                 onUpload={(ticket: unknown) => set({ ticket })} onRemove={() => set({ ticket: null })} />
+        {!f.ticket && has('pick.file') && (
+          <Row justify="start">
+            <Button variant="plain" icon="forum" onPress={async () => {
+              const picked = await dialog.file({ kinds: ['image', 'file'] });
+              const one = Array.isArray(picked) ? picked[0] : picked;
+              if (one) set({ ticket: await one.keep(), booked: true });
+            }}>{t('From chats')}</Button>
+          </Row>
+        )}
       </Stack>
     </Screen>
   );
@@ -547,8 +581,83 @@ function CostScreen() {
   );
 }
 
+/** Add to trip, over a chat: a booking, its file kept as the ticket. */
+function AddPlan() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const trips = (useQuery('trips', { limit: 100 }) as Trip[]).sort((a, b) => (a.start ?? '9').localeCompare(b.start ?? '9'));
+  const plans = useQuery('plans', { limit: 500 }) as Plan[];
+  const item = handoff?.items?.[0];
+  const file = (item?.files ?? [])[0];
+  const link = (item?.links ?? [])[0] as string | undefined;
+  const words = String(item?.text ?? '').replace(/https?:\/\/\S+/g, '').trim().split('\n')[0] ?? '';
+  const named = (words || (file ? String(file.name).replace(/\.\w+$/, '').replace(/[-_]+/g, ' ') : '')).slice(0, 120);
+  const time = /\b([01]\d|2[0-3]):([0-5]\d)\b/.exec(String(item?.text ?? ''))?.[0];
+  const [what, setWhat] = useLocal<string>(named);
+  const [trip, setTrip] = useLocal<string>(tripNow(trips)?.id ?? '');
+  const [kind, setKind] = useLocal<string>(file ? 'travel' : 'do');
+  const [day, setDay] = useLocal<string | undefined>(undefined);
+  const [at, setAt] = useLocal<string | undefined>(time);
+  const [busy, setBusy] = useLocal<boolean>(false);
+  const tr = trips.find((x) => x.id === trip);
+  const save = async () => {
+    if (busy || !what.trim()) return;
+    setBusy(true);
+    try {
+      const ticket = file ? await file.keep() : undefined;
+      const mine = plans.filter((p) => p.trip === (tr?.id ?? undefined));
+      data.add('plans', {
+        what: what.trim(), kind, day: day ?? null, time: at ?? null, link: link ?? null, ticket: ticket ?? null,
+        booked: !!ticket, trip: tr?.id ?? null, pos: between(last(mine), ''),
+      });
+      sheet.close({ toast: t('Added') });
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Stack gap={12}>
+      <TextField value={what} onChange={setWhat} placeholder={t('What')} max={120} autofocus onSubmit={save} />
+      {trips.length > 1 ? (
+        <Select value={trip} onChange={setTrip} options={trips.map((x) => ({ value: x.id, label: `${x.emoji || '✈️'}  ${x.name}` }))} />
+      ) : null}
+      <Segmented value={kind} onChange={setKind} options={KINDS.map(([value, label, icon]) => ({ value, label: t(label), icon }))} />
+      <Row gap={8} align="center">
+        <DatePicker value={day} min={tr?.start} max={tr?.end} placeholder={t('Any day')} onChange={setDay} />
+        <TimePicker value={at} placeholder={t('Time')} onChange={setAt} />
+      </Row>
+      <Button expand disabled={busy || !what.trim()} onPress={save}>{t('Add to trip')}</Button>
+    </Stack>
+  );
+}
+
 export default defineApp({
   screens: { Home, Trip: TripScreen, Plan: PlanScreen, Cost: CostScreen },
+  sheets: { AddPlan },
+  chat: {
+    receive: {
+      // A day someone sent: its plans on this person's trip that's on or coming.
+      day: (sent: { day?: string; whats?: string[]; times?: string[]; kinds?: string[] }, { data }: any) => {
+        const trip = tripNow(data.query('trips', { limit: 100 }) as Trip[]);
+        const day = /^\d{4}-\d{2}-\d{2}$/.test(String(sent.day ?? '')) ? sent.day : null;
+        let pos = last((data.query('plans', { limit: 500 }) as Plan[]).filter((p) => p.trip === trip?.id));
+        (sent.whats ?? []).slice(0, 30).forEach((what, i) => {
+          if (!String(what).trim()) return;
+          pos = between(pos, '');
+          const time = String(sent.times?.[i] ?? '');
+          const kind = String(sent.kinds?.[i] ?? '');
+          data.add('plans', {
+            what: String(what).slice(0, 120), day,
+            time: /^\d{2}:\d{2}$/.test(time) ? time : null,
+            kind: KINDS.some(([k]) => k === kind) ? kind : 'do',
+            trip: trip?.id ?? null, pos,
+          });
+        });
+        return { toast: t('Added') };
+      },
+    },
+  },
   // What you open from the list sits beside it on a wide window.
   split: ['Home'],
   actions: {
