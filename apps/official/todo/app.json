@@ -208,5 +208,44 @@
     "none": "All clear",
     "one": "1 today",
     "many": "{p0} today"
+  },
+  "needs": {
+    "chat": [
+      "take",
+      "send"
+    ]
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "add",
+        "title": "Add task",
+        "icon": "add_task",
+        "takes": [
+          "text",
+          "link",
+          "image",
+          "video",
+          "voice",
+          "file"
+        ],
+        "many": true,
+        "sheet": "Add"
+      }
+    ],
+    "cards": [
+      {
+        "id": "task",
+        "src": "src/cards/task.tsx",
+        "data": {
+          "title": "text",
+          "due": "number",
+          "list": "text",
+          "steps": "list"
+        },
+        "receive": "task",
+        "button": "Add"
+      }
+    ]
   }
 }

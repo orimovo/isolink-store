@@ -1,10 +1,10 @@
 {
-  "version": 13,
+  "version": 14,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Isolink's own Todo app",
   "tags": [
     "apps"
   ],
-  "minApp": "0.26.45"
+  "minApp": "0.26.55"
 }

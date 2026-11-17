@@ -1,13 +1,13 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Checkbox, Text, TextField, Editor, Button, Card, Grid,
   Icon, IconButton, Avatar, AvatarStack, Toggle, TimePicker, ProgressRing, Board,
-  Upload, Timer, Section, Progress, Menu, Sheet, Calendar, Chip, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
-  useRef, useEffect, format, has, t,
+  Upload, Timer, Section, Progress, Menu, Sheet, Calendar, Chip, Select, Image, useQuery, useData, useLocal, useStore, useMe, useChat, useDialog, useNow, useNav,
+  useRef, useEffect, useHandoff, useSheet, useSend, format, has, t,
 } from 'isolink';
 import { between, last } from './pos';
 import s from './app.css';
 import { useAddBar } from './addbar';
-import { siteOf, dayWords, dayFrom, nextWeekday } from './smart';
+import { siteOf, dayWords, dayFrom, nextWeekday, read } from './smart';
 
 type Task = {
   id: string; title: string; done?: boolean; due?: number; list?: string; who?: string; flag?: boolean;
@@ -77,6 +77,24 @@ function next(ms: number, repeat: string) {
   return d.getTime();
 }
 
+/** A task as it's sent into a chat: its title, due time, project and steps. */
+function sendable(r: Task, steps: Step[], lists: List_[]) {
+  const mine = steps.filter((x) => x.task === r.id).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
+  return {
+    card: 'task',
+    data: {
+      title: r.title,
+      due: typeof r.due === 'number' ? r.due : 0,
+      list: lists.find((l) => l.id === r.list)?.name ?? '',
+      steps: mine.slice(0, 30).map((x) => x.title),
+    },
+    text: r.title,
+  };
+}
+
+/** Isolink's share view for a card, on Isolinks that have one. */
+const useSender = () => (typeof useSend === 'function' ? useSend() : () => null);
+
 function useTodo() {
   const lists = (useQuery('lists', { limit: 500 }) as List_[]).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
   const all = useQuery('tasks', { limit: 500 }) as Task[];
@@ -99,6 +117,7 @@ function useTodo() {
 function useMenus(todo: ReturnType<typeof useTodo>) {
   const dialog = useDialog();
   const nav = useNav();
+  const send = useSender();
   const removeTask = (r: Task) => {
     for (const x of todo.steps.filter((x) => x.task === r.id)) todo.remove('steps', x.id);
     todo.remove('tasks', r.id);
@@ -117,9 +136,11 @@ function useMenus(todo: ReturnType<typeof useTodo>) {
           { id: 'to:', icon: 'block', label: t('No project'), checked: !r.list },
         ],
       }] : []),
+      ...(has('chat.send') ? [{ id: 'send', icon: 'send', label: t('Send') }] : []),
       { divider: true },
       { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
     ]);
+    if (picked === 'send') send(sendable(r, todo.steps, todo.lists));
     if (picked === 'open') nav.push('Task', { id: r.id });
     if (picked === 'done') todo.toggle(r);
     if (picked === 'flag') todo.edit('tasks', r.id, { flag: !r.flag });
@@ -483,6 +504,7 @@ function TaskScreen() {
   const comments = (useQuery('comments', { limit: 500 }) as Comment[]).filter((c) => c.task === id).sort((a, b) => (a._at ?? 0) - (b._at ?? 0));
   const files = (useQuery('attachments', { limit: 200 }) as Attachment[]).filter((f) => f.task === id);
   const dialog = useDialog();
+  const send = useSender();
   const [title, setTitle] = useLocal<string>(task?.title ?? '');
   const [notes, setNotes] = useLocal<string>(task?.notes ?? '');
   const [step, setStep] = useLocal<string>('');
@@ -548,6 +570,7 @@ function TaskScreen() {
       actions={
         <Row gap={1} align="center">
           <IconButton icon="timer" label={t('Focus')} onPress={() => setFocus(!focus)} />
+          {has('chat.send') && <IconButton icon="send" label={t('Send')} onPress={() => send(sendable(task, todo.steps, todo.lists))} />}
           {can && (
             <IconButton icon="delete" label={t('Delete')} onPress={async () => {
               const ok = await dialog.confirm({ title: t('Delete this task?'), ok: t('Delete'), danger: true });
@@ -675,6 +698,14 @@ function TaskScreen() {
                     const f = files.find((x) => (x.file as any)?.id === file?.id || x.file === file);
                     if (f) todo.remove('attachments', f.id);
                   } : undefined} />
+          {can && has('pick.file') && (
+            <Row justify="start">
+              <Button variant="plain" icon="forum" onPress={async () => {
+                const picked = await dialog.file({ many: true, max: { items: 10 } });
+                for (const f of picked ?? []) todo.add('attachments', { task: id, file: await f.keep() });
+              }}>{t('From chats')}</Button>
+            </Row>
+          )}
         </Box>
 
         {(comments.length > 0 || todo.members.length > 1) && (
@@ -722,6 +753,73 @@ function TaskScreen() {
   );
 }
 
+/** Add task, over a chat: what was picked made a task, its words read for a due day, its files attached. */
+function Add() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const lists = (useQuery('lists', { limit: 500 }) as List_[]).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''));
+  const now = useNow(60000);
+  const items = handoff?.items ?? [];
+  const words = items.map((i: any) => String(i.text ?? '').trim()).filter(Boolean).join('\n\n');
+  const links = items.flatMap((i: any) => i.links ?? []) as string[];
+  const files = items.flatMap((i: any) => i.files ?? []);
+  const [first, ...more] = words.split('\n');
+  const said = read(first ?? '', now, false, true, true);
+  const [title, setTitle] = useLocal<string>((said.text || first || files[0]?.name || '').slice(0, 200));
+  const [list, setList] = useLocal<string>('');
+  const [day, setDay] = useLocal<string>(said.day ?? '');
+  const [busy, setBusy] = useLocal<boolean>(false);
+
+  const days: [string, string][] = [
+    ['', t('No date')], [dayFrom(now, 0), t('Today')], [dayFrom(now, 1), t('Tomorrow')], [nextWeekday(now, 1), t('Next week')],
+  ];
+  if (day && !days.some(([d]) => d === day)) days.push([day, dayWords(day, now)]);
+
+  const save = async () => {
+    if (busy || !title.trim()) return;
+    setBusy(true);
+    try {
+      const notes = more.join('\n').trim();
+      const id = data.add('tasks', {
+        title: title.trim().slice(0, 200),
+        due: day ? at(day, said.time ?? '09:00') : undefined,
+        list: list || undefined,
+        status: list ? 'todo' : undefined,
+        link: said.link ?? links[0],
+        notes: notes || undefined,
+      });
+      for (const f of files) data.add('attachments', { task: id, file: await f.keep() });
+      sheet.close({ toast: t('Added'), open: { screen: 'Task', params: { id } } });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const pictures = files.filter((f: any) => f.kind === 'image');
+  const others = files.length - pictures.length;
+  return (
+    <Stack gap={12}>
+      <TextField value={title} onChange={setTitle} placeholder={t('Task')} max={200} onSubmit={save} autofocus />
+      <Row gap={8} align="center" wrap>
+        {lists.length ? (
+          <Select variant="chip" value={list} onChange={setList} placeholder={t('Project')}
+                  options={[{ value: '', label: t('No project') }, ...lists.map((l) => ({ value: l.id, label: l.name }))]} />
+        ) : null}
+        <Select variant="chip" value={day} onChange={setDay} placeholder={t('Date')}
+                options={days.map(([value, label]) => ({ value, label, icon: 'event' }))} />
+      </Row>
+      {files.length ? (
+        <Row gap={8} align="center">
+          {pictures.slice(0, 4).map((f: any) => <Image key={f.handoff} src={f} width={56} height={56} fit="cover" style={{ borderRadius: 10 }} />)}
+          {others || pictures.length > 4 ? <Text tone="muted">{`+${others + Math.max(0, pictures.length - 4)}`}</Text> : null}
+        </Row>
+      ) : null}
+      <Button expand disabled={busy || !title.trim()} onPress={save}>{t('Add task')}</Button>
+    </Stack>
+  );
+}
+
 const findTask = (rows: Task[], title: string) => {
   const want = String(title).toLowerCase();
   return rows.find((r) => !r.done && r.title.toLowerCase() === want) ?? rows.find((r) => !r.done && r.title.toLowerCase().includes(want));
@@ -729,6 +827,24 @@ const findTask = (rows: Task[], title: string) => {
 
 export default defineApp({
   screens: { Home, Task: TaskScreen },
+  sheets: { Add },
+  chat: {
+    receive: {
+      // A task someone sent: one of this person's own, with its steps.
+      task: (sent: { title?: string; due?: number; steps?: string[] }, { data }: any) => {
+        const id = data.add('tasks', {
+          title: String(sent.title ?? '').slice(0, 200) || t('Task'),
+          due: typeof sent.due === 'number' && sent.due > 0 ? sent.due : undefined,
+        });
+        let pos = '';
+        for (const x of (sent.steps ?? []).slice(0, 30)) {
+          pos = between(pos, '');
+          data.add('steps', { task: id, title: String(x).slice(0, 200), pos });
+        }
+        return { toast: t('Added'), open: { screen: 'Task', params: { id } } };
+      },
+    },
+  },
   // A task opens beside the list on a wide window.
   split: ['Home'],
   actions: {

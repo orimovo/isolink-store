@@ -109,5 +109,11 @@
   "{p0} to go · {p1} late": "还有 {p0} 项 · {p1} 项逾期",
   "{p0} today": "今天 {p0} 项",
   "Title": "标题",
-  "Body": "正文"
+  "Body": "正文",
+  "Add task": "添加任务",
+  "Added": "已添加",
+  "Due {p0}": "{p0} 到期",
+  "From chats": "来自聊天",
+  "No date": "无日期",
+  "Task": "任务"
 }
