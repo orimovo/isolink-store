@@ -86,5 +86,12 @@
   "{p0} to add": "{p0} para adicionar",
   "{p0} to get": "{p0} para comprar",
   "Title": "Título",
-  "Body": "Texto"
+  "Body": "Texto",
+  "1 added": "1 adicionado",
+  "{p0} added": "{p0} adicionados",
+  "Add 1": "Adicionar 1",
+  "Add {p0}": "Adicionar {p0}",
+  "Add to Shopping": "Adicionar às compras",
+  "Nothing to add": "Nada para adicionar",
+  "Send": "Enviar"
 }

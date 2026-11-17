@@ -86,5 +86,12 @@
   "{p0} to add": "{p0} 项待添加",
   "{p0} to get": "还要买 {p0} 样",
   "Title": "标题",
-  "Body": "正文"
+  "Body": "正文",
+  "1 added": "已添加 1 项",
+  "{p0} added": "已添加 {p0} 项",
+  "Add 1": "添加 1 项",
+  "Add {p0}": "添加 {p0} 项",
+  "Add to Shopping": "添加到购物",
+  "Nothing to add": "没有可添加的内容",
+  "Send": "发送"
 }
