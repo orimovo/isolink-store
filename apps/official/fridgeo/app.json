@@ -1,7 +1,7 @@
 {
   "id": "fridgeo",
   "name": "Fridgeo",
-  "icon": "restaurant",
+  "icon": "kitchen",
   "accent": 4280459371,
   "main": "src/app.tsx",
   "version": 1,

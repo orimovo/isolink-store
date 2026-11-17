@@ -1,7 +1,7 @@
 {
   "id": "recipes",
   "name": "Recipes",
-  "icon": "note",
+  "icon": "restaurant_menu",
   "accent": 4294940184,
   "main": "src/app.tsx",
   "version": 2,
