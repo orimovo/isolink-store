@@ -1,7 +1,7 @@
 import {
   defineApp, Screen, Stack, Row, Box, Pressable, Section, Checkbox, Text, TextField, Select, Button, IconButton,
   Icon, Sheet, Banner, Chart, Scanner, Avatar, Grid, MoneyField, DatePicker, Upload, useQuery, useData, useLocal,
-  useStore, useLayout, useMe, useChat, useNow, useNav, useToast, useHaptics, fetch, format, t,
+  useStore, useLayout, useMe, useChat, useNow, useNav, useToast, useHaptics, useHandoff, useSheet, useSend, fetch, format, has, t,
 } from 'isolink';
 import { useShared } from 'isolink/system';
 import s from './app.css';
@@ -39,6 +39,17 @@ const EMOJI: [RegExp, string][] = [
   [/chocolate/i, '🍫'], [/biscuit|cookie/i, '🍪'], [/soap|wash/i, '🧼'], [/loo|toilet|tissue/i, '🧻'],
   [/tin|can\b|beans/i, '🥫'], [/pizza/i, '🍕'], [/ice cream/i, '🍨'], [/avocado/i, '🥑'], [/pepper/i, '🫑'],
 ];
+/** The aisle a thing is usually in, from a word in its name, when it's never been on the list. */
+const AISLE_WORDS: [RegExp, string][] = [
+  [/milk|cheese|butter|yog|cream|egg/i, 'dairy'], [/bread|loaf|roll|bagel|croissant|wrap|cake/i, 'bakery'],
+  [/banana|apple|orange|lemon|lime|grape|berr|tomato|potato|onion|garlic|carrot|pepper|lettuce|salad|spinach|avocado|mushroom|cucumber|broccoli|veg|fruit/i, 'fruit'],
+  [/chicken|beef|pork|mince|bacon|sausage|ham|fish|salmon|tuna|prawn/i, 'meat'],
+  [/frozen|ice cream|peas|chips/i, 'frozen'], [/juice|water|beer|wine|coke|cola|squash|coffee|tea\b/i, 'drinks'],
+  [/soap|wash|loo|toilet|tissue|bin bag|foil|clean|shampoo|toothpaste/i, 'home'],
+  [/pasta|rice|flour|sugar|tin|beans|cereal|oats|sauce|oil|salt|stock|biscuit|crisps|chocolate|jam|honey/i, 'cupboard'],
+];
+const aisleGuess = (name: string) => AISLE_WORDS.find(([re]) => re.test(name))?.[1];
+
 const emojiFor = (u: { name: string; emoji?: string }) => u.emoji || EMOJI.find(([re]) => re.test(u.name))?.[1] || '🛒';
 const CURRENCIES = ['GBP', 'EUR', 'USD', 'AUD', 'CAD', 'JPY', 'INR', 'CNY', 'BRL', 'AED'];
 const HOURS_OUT = 3 * 3600000;
@@ -62,6 +73,18 @@ function linesOf(text: string) {
     .map((l) => l.replace(/^\s*(?:[-*•]|\d+[.)])\s*(?:\[[ xX]\]\s*)?/, '').trim())
     .filter((l) => l && !/:$/.test(l))
     .slice(0, 60);
+}
+
+/** The list as it's sent into a chat: what's still to get, one line each. */
+function sendable(items: Item[]) {
+  const names = [...items].filter((r) => !r.got).sort((a, b) => (a.pos ?? '').localeCompare(b.pos ?? ''))
+    .slice(0, 60).map((r) => (r.qty ? `${r.name} ×${r.qty}` : r.name));
+  return { card: 'list', data: { items: names }, text: names.join('\n') };
+}
+
+/** What a message says to buy: one per line or comma, "and" between the last two. */
+function wanted(text: string) {
+  return linesOf(text.replace(/,\s*|\s+and\s+/gi, '\n')).map((l) => parse(l)).filter((x) => x.name && x.name.length <= 80);
 }
 
 function useShop() {
@@ -445,6 +468,7 @@ function SpendTab({ currency, setCurrency }: { currency: string; setCurrency: (c
 
 function Home() {
   const shop = useShop();
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   const [tab, setTab] = useStore<string>('tab', 'list');
   const [currency, setCurrency] = useStore<string>('currency', 'GBP');
   const out = (useQuery('out', { limit: 20 }) as Out[]);
@@ -476,6 +500,9 @@ function Home() {
       tab={tab}
       onTab={setTab}
       footer={shop.canAdd && tab === 'list' && !shopping ? adder.bar : undefined}
+      actions={tab === 'list' && has('chat.send') && shop.items.some((r) => !r.got)
+        ? <IconButton icon="send" label={t('Send')} onPress={() => send(sendable(shop.items))} />
+        : undefined}
     >
       <Box class={s.center}>
         <Box class={s.column}>
@@ -486,6 +513,42 @@ function Home() {
       </Box>
       {adder.sheet}
     </Screen>
+  );
+}
+
+/** Add to Shopping, over a chat: each thing the message names, its aisle guessed, all ticked to add. */
+function Add() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const shop = useShop();
+  const words = (handoff?.items ?? []).map((i: any) => String(i.text ?? '')).join('\n');
+  const found = wanted(words);
+  const [off, setOff] = useLocal<number[]>([]);
+  const picked = found.filter((_, i) => !off.includes(i));
+  const add = () => {
+    for (const x of picked) shop.put(x.qty ? `${x.qty} ${x.name}` : x.name, { aisle: shop.aisleFor(x.name) ?? aisleGuess(x.name) });
+    sheet.close({ toast: picked.length === 1 ? t('1 added') : t('{p0} added', { p0: picked.length }) });
+  };
+  if (!found.length) return <Text tone="muted">{t('Nothing to add')}</Text>;
+  return (
+    <Stack gap={12}>
+      <Section>
+        {found.map((x, i) => {
+          const aisle = AISLES.find(([id]) => id === (shop.aisleFor(x.name) ?? aisleGuess(x.name) ?? 'other'));
+          return (
+            <Row key={String(i)} gap={10} align="center">
+              <Checkbox round checked={!off.includes(i)}
+                        onChange={() => setOff(off.includes(i) ? off.filter((k) => k !== i) : [...off, i])} />
+              <Text grow>{x.qty ? `${x.name} ×${x.qty}` : x.name}</Text>
+              {aisle ? <Text tone="muted">{t(aisle[1])}</Text> : null}
+            </Row>
+          );
+        })}
+      </Section>
+      <Button expand disabled={!picked.length} onPress={add}>
+        {picked.length === 1 ? t('Add 1') : t('Add {p0}', { p0: picked.length })}
+      </Button>
+    </Stack>
   );
 }
 
@@ -552,6 +615,27 @@ function Scan() {
 
 export default defineApp({
   screens: { Home, Scan },
+  sheets: { Add },
+  chat: {
+    receive: {
+      // A list someone sent: what's on it goes on this person's own.
+      list: (sent: { items?: string[] }, { data }: any) => {
+        const rows = data.query('items', { limit: 500 }) as Item[];
+        const usuals = data.query('usuals', { limit: 500 }) as Usual[];
+        let pos = last(rows);
+        let n = 0;
+        for (const line of (sent.items ?? []).slice(0, 60)) {
+          const { name, qty } = parse(String(line).replace(/\s*×(\d+)$/, ' x$1').trim());
+          if (!name || rows.some((r) => !r.got && r.name.toLowerCase() === name.toLowerCase())) continue;
+          const u = usuals.find((x) => x.name.toLowerCase() === name.toLowerCase());
+          pos = between(pos, '');
+          data.add('items', { name: name.slice(0, 80), qty, aisle: u?.aisle ?? aisleGuess(name), price: u?.price, pos });
+          n += 1;
+        }
+        return { toast: n === 1 ? t('1 added') : t('{p0} added', { p0: n }) };
+      },
+    },
+  },
   actions: {
     add: {
       title: 'Add to the shopping list',

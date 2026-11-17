@@ -77,5 +77,21 @@
   "{p0} of {p1} booked": "{p0} de {p1} reservados",
   "{p0} of {p1} packed": "{p0} de {p1} na mala",
   "{p0} pays {p1}": "{p0} paga a {p1}",
-  "{p0} trips": "{p0} viagens"
+  "{p0} trips": "{p0} viagens",
+  "Jan": "jan",
+  "Feb": "fev",
+  "Mar": "mar",
+  "Apr": "abr",
+  "May": "mai",
+  "Jun": "jun",
+  "Jul": "jul",
+  "Aug": "ago",
+  "Sep": "set",
+  "Oct": "out",
+  "Nov": "nov",
+  "Dec": "dez",
+  "Add to trip": "Adicionar à viagem",
+  "Added": "Adicionado",
+  "From chats": "Das conversas",
+  "Send": "Enviar"
 }

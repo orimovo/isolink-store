@@ -8,6 +8,10 @@
   "needs": {
     "web": [
       "api.open-meteo.com"
+    ],
+    "chat": [
+      "take",
+      "send"
     ]
   },
   "summary": {
@@ -212,6 +216,41 @@
       },
       {
         "item": "Toothbrush"
+      }
+    ]
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "add",
+        "title": "Add to trip",
+        "icon": "luggage",
+        "takes": [
+          "text",
+          "link",
+          "image",
+          "file"
+        ],
+        "types": [
+          "pdf",
+          "image/"
+        ],
+        "sheet": "AddPlan"
+      }
+    ],
+    "cards": [
+      {
+        "id": "day",
+        "src": "src/cards/day.tsx",
+        "data": {
+          "trip": "text",
+          "day": "text",
+          "whats": "list",
+          "times": "list",
+          "kinds": "list"
+        },
+        "receive": "day",
+        "button": "Save"
       }
     ]
   }

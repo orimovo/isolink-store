@@ -23,6 +23,10 @@
       "www.kitchensanctuary.com",
       "www.loveandlemons.com",
       "www.delish.com"
+    ],
+    "chat": [
+      "take",
+      "send"
     ]
   },
   "summary": {
@@ -172,6 +176,36 @@
         "emoji": "🥞",
         "ingredients": "100g plain flour\n2 eggs\n300ml milk\n1 tbsp butter",
         "method": "1. Whisk the flour, eggs and milk until smooth, then rest for 5 minutes.\n2. Melt a little butter in a pan and cook each pancake for 1 minute a side."
+      }
+    ]
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "save",
+        "title": "Save recipe",
+        "icon": "menu_book",
+        "takes": [
+          "text",
+          "link",
+          "image"
+        ],
+        "sheet": "Save"
+      }
+    ],
+    "cards": [
+      {
+        "id": "recipe",
+        "src": "src/cards/recipe.tsx",
+        "data": {
+          "name": "text",
+          "minutes": "number",
+          "serves": "number",
+          "ingredients": "list",
+          "method": "list"
+        },
+        "receive": "recipe",
+        "button": "Save"
       }
     ]
   }

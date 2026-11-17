@@ -18,7 +18,8 @@
       "{p0} won": "{p0} ganó",
       "It's a draw": "Empate",
       "the other player": "la otra persona",
-      "New game": "Nueva partida"
+      "New game": "Nueva partida",
+      "Waiting for {p0} to pick": "Esperando a que {p0} elija"
     }
   },
   "fr": {
@@ -40,7 +41,8 @@
       "{p0} won": "{p0} a gagné",
       "It's a draw": "Match nul",
       "the other player": "l'autre personne",
-      "New game": "Nouvelle partie"
+      "New game": "Nouvelle partie",
+      "Waiting for {p0} to pick": "En attente du choix de {p0}"
     }
   },
   "de": {
@@ -62,7 +64,8 @@
       "{p0} won": "{p0} hat gewonnen",
       "It's a draw": "Unentschieden",
       "the other player": "die andere Person",
-      "New game": "Neues Spiel"
+      "New game": "Neues Spiel",
+      "Waiting for {p0} to pick": "Warten, bis {p0} wählt"
     }
   },
   "pt": {
@@ -84,7 +87,8 @@
       "{p0} won": "{p0} ganhou",
       "It's a draw": "Empate",
       "the other player": "a outra pessoa",
-      "New game": "Novo jogo"
+      "New game": "Novo jogo",
+      "Waiting for {p0} to pick": "À espera que {p0} escolha"
     }
   },
   "zh": {
@@ -106,7 +110,8 @@
       "{p0} won": "{p0} 赢了",
       "It's a draw": "平局",
       "the other player": "对方",
-      "New game": "新游戏"
+      "New game": "新游戏",
+      "Waiting for {p0} to pick": "等待 {p0} 出拳"
     }
   },
   "ar": {
@@ -128,7 +133,8 @@
       "{p0} won": "فاز {p0}",
       "It's a draw": "تعادل",
       "the other player": "الطرف الآخر",
-      "New game": "لعبة جديدة"
+      "New game": "لعبة جديدة",
+      "Waiting for {p0} to pick": "بانتظار أن يختار {p0}"
     }
   }
 }

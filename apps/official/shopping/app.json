@@ -202,6 +202,10 @@
         "name": "share",
         "optional": true
       }
+    ],
+    "chat": [
+      "take",
+      "send"
     ]
   },
   "summary": {
@@ -216,5 +220,30 @@
     "none": "Nothing to get",
     "one": "1 to get",
     "many": "{p0} to get"
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "add",
+        "title": "Add to Shopping",
+        "icon": "add_shopping_cart",
+        "takes": [
+          "text"
+        ],
+        "many": true,
+        "sheet": "Add"
+      }
+    ],
+    "cards": [
+      {
+        "id": "list",
+        "src": "src/cards/list.tsx",
+        "data": {
+          "items": "list"
+        },
+        "receive": "list",
+        "button": "Add"
+      }
+    ]
   }
 }

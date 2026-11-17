@@ -109,5 +109,11 @@
   "{p0} to go · {p1} late": "Noch {p0} · {p1} überfällig",
   "{p0} today": "{p0} heute",
   "Title": "Titel",
-  "Body": "Text"
+  "Body": "Text",
+  "Add task": "Aufgabe hinzufügen",
+  "Added": "Hinzugefügt",
+  "Due {p0}": "Fällig {p0}",
+  "From chats": "Aus Chats",
+  "No date": "Kein Datum",
+  "Task": "Aufgabe"
 }

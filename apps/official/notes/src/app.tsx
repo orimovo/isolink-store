@@ -1,7 +1,8 @@
 import {
   defineApp, Screen, Stack, Box, Text, SearchField, Editor, Markdown, Icon, IconButton, Fab, Chip, Masonry,
   StickyNote, Corkboard, Sticker, ChatCard, PersonCard, ChatChip, Filter, Pressable, Split, Row, TagInput, Image, Audio, Recorder, Upload, ListItem, FormatBar,
-  Grid, Glass, Button, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useRef, useEffect, delay, t, has,
+  Grid, Glass, Button, TextField, Select, useLayout, useQuery, useRecord, useData, useLocal, useStore, useMe, useNav, useDialog, useSend, useRef, useEffect,
+  useHandoff, useSheet, delay, t, has,
 } from 'isolink';
 import s from './app.css';
 import { between } from './pos';
@@ -69,6 +70,14 @@ const loose = (r: Note) => (r.refs ?? []).filter((x, i) => !inWords(r, x.at ?? `
 
 /** Whether a note's words show [key] themselves. */
 const inWords = (r: Note, key: string) => (r.body ?? '').includes(`(isolink:${key})`);
+
+/** A note as it's sent into a chat: its title and words. Photos and files stay in Notes. */
+function sendable(r: Note) {
+  const title = ownTitle(r) ? (r.title ?? '').trim() : '';
+  const words = (r.body ?? '').replace(/!\[[^\]]*\]\(isolink:[^)]*\)\n?/g, '').trim();
+  const body = words.length > 6000 ? `${words.slice(0, 6000)}…` : words;
+  return { card: 'note', data: { title, body }, text: [title, body].filter(Boolean).join('\n\n') };
+}
 
 /** `![words](isolink:key)`, with no brackets in the words to break it. */
 const embedText = (words: string, key: string) => `![${words.replace(/[[\]()\n]/g, ' ').trim()}](isolink:${key})`;
@@ -305,6 +314,21 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
       put(embedText(words, key));
       after();
     };
+    // Pictures and files sent in chats, picked in Isolink's own sheet: all kept, then put in together.
+    const fromChats = async () => {
+      const picked = await dialog.file({ many: true, max: { items: 10 } });
+      if (!picked) return;
+      const files = [...(row.files ?? [])];
+      const words: string[] = [];
+      for (const f of picked) {
+        const key = freshKey({ ...row, files }, 'f');
+        files.push({ ...(await f.keep()), id: key });
+        words.push(embedText(f.kind === 'image' ? t('Photo') : f.name, key));
+      }
+      edit('notes', id, { files });
+      put(words.join('\n'));
+      after();
+    };
     return (
       <>
         <Upload variant="icon" icon="photo_camera" label={t('Photo')} accept="png,jpg,jpeg,heic,webp,gif"
@@ -312,6 +336,7 @@ function NoteExtras({ row, mode, setMode, then, insert }: {
         <IconButton icon="mic" label={t('Voice')} variant={mode === 'voice' ? 'filled' : undefined}
                     onPress={() => { setMode(mode === 'voice' ? null : 'voice'); after(); }} />
         <Upload variant="icon" icon="attach_file" label={t('File')} onUpload={(f: NoteFile) => file(f, f.name ?? t('File'))} />
+        {has('pick.file') && <IconButton icon="forum" label={t('From chats')} onPress={fromChats} />}
         <IconButton icon="brush" label={t('Sketch')} variant={mode === 'sketch' ? 'filled' : undefined}
                     onPress={() => { setMode(mode === 'sketch' ? null : 'sketch'); after(); }} />
         {row.sketch && (
@@ -482,6 +507,8 @@ function useNotes() {
   const me = useMe();
   const nav = useNav();
   const dialog = useDialog();
+  // Isolinks before sending have no useSend: the menu's Send isn't offered there either.
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   const canEdit = me.role !== 'view';
 
   const create = async (folder: string | null, kind?: string) => {
@@ -513,9 +540,11 @@ function useNotes() {
       ...(others.length && r.kind !== 'sticker' ? [{ id: 'link', icon: 'linear_scale', label: t('String to') }] : []),
       ...(strung ? [{ id: 'unlink', icon: 'link_off', label: t('Cut string') }] : []),
       ...(folders.length ? [{ id: 'move', icon: 'folder', label: t('Move to') }] : []),
+      ...(!item && has('chat.send') ? [{ id: 'send', icon: 'send', label: t('Send') }] : []),
       { divider: true },
       { id: 'delete', icon: 'delete', label: t('Delete'), danger: true },
     ]);
+    if (picked === 'send') send(sendable(r));
     if (picked === 'pin') edit('notes', id, { pinned: !r.pinned });
     if (picked === 'color') {
       const c = await dialog.menu(COLORS.map(([c, hex]) => ({ id: c, icon: 'circle', color: hex, label: t(NAMES[c]) })));
@@ -1166,8 +1195,83 @@ function NoteScreen() {
   );
 }
 
+/** What a message's file is called in a note's words. */
+const fileWords = (f: { name: string; kind: string }) =>
+  f.kind === 'image' ? t('Photo') : f.kind === 'voice' ? t('Voice') : f.name || t('File');
+
+/** Save to Notes, from a message's menu (Apps): the messages picked become
+ *  one note, their words together and their photos and files in it. */
+function Save() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const folders = useQuery('folders', { limit: 100 }) as Folder[];
+  const count = (useQuery('notes', { limit: 500 }) as Note[]).length;
+  const items = handoff?.items ?? [];
+  const words = items.map((i: any) => String(i.text ?? '').trim()).filter(Boolean).join('\n\n');
+  const files = items.flatMap((i: any) => i.files ?? []);
+  const [title, setTitle] = useLocal<string>(lineTitle(words));
+  const [folder, setFolder] = useLocal<string>('');
+  const [busy, setBusy] = useLocal<boolean>(false);
+
+  const save = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const kept: NoteFile[] = [];
+      for (const f of files) kept.push({ ...(await f.keep()), id: `f${kept.length + 1}` });
+      const inWords = embeds();
+      // Each photo and file where the words end; Isolinks without embeds keep the first photo as the note's own.
+      const body = [words, ...(inWords ? kept.map((f, i) => embedText(fileWords(files[i]), f.id)) : [])]
+        .filter(Boolean).join('\n\n');
+      const photo = inWords ? undefined : kept.find((f) => (f.type ?? '').startsWith('image/'));
+      const id = data.add('notes', {
+        title: title.trim() || lineTitle(words) || undefined,
+        body,
+        kind: photo ? 'photo' : 'note',
+        photo,
+        files: inWords && kept.length ? kept : undefined,
+        folder: folder || undefined,
+        color: COLORS[count % 6][0],
+      });
+      sheet.close({ toast: t('Saved'), open: { screen: 'Note', params: { id } } });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const pictures = files.filter((f: any) => f.kind === 'image');
+  const others = files.length - pictures.length;
+  return (
+    <Stack gap={3}>
+      <TextField value={title} onChange={setTitle} placeholder={t('Title')} onSubmit={save} autofocus />
+      {folders.length ? (
+        <Select value={folder} onChange={setFolder} placeholder={t('Folder')}
+                options={folders.map((f) => ({ value: f.id, label: f.name }))} />
+      ) : null}
+      {files.length ? (
+        <Row gap={2} align="center">
+          {pictures.slice(0, 4).map((f: any) => <Image key={f.handoff} src={f} width={56} height={56} fit="cover" style={{ borderRadius: 10 }} />)}
+          {others || pictures.length > 4 ? <Text tone="muted">+{others + Math.max(0, pictures.length - 4)}</Text> : null}
+        </Row>
+      ) : null}
+      <Button expand disabled={busy} onPress={save}>{t('Save')}</Button>
+    </Stack>
+  );
+}
+
 export default defineApp({
   screens: { Home, Note: NoteScreen },
+  sheets: { Save },
+  chat: {
+    receive: {
+      // A note someone sent: kept as one of this person's own.
+      note: (sent: { title?: string; body?: string }, { data }: { data: { add: (t: string, f: object) => string } }) => {
+        const id = data.add('notes', { title: (sent.title ?? '').slice(0, 200), body: sent.body ?? '', color: COLORS[0][0] });
+        return { toast: t('Saved'), open: { screen: 'Note', params: { id } } };
+      },
+    },
+  },
   // On a computer a note opens beside the list (not the board, which keeps the
   // window). A function, so Isolinks before 0.26.53 don't split at all.
   split: () => ['Home'],

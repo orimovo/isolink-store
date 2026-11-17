@@ -61,5 +61,11 @@
   "Chapter {p0}": "Capítulo {p0}",
   "Next": "Seguinte",
   "Ornaments": "Enfeites",
-  "Remove": "Remover"
+  "Remove": "Remover",
+  "Add book": "Adicionar livro",
+  "Book": "Livro",
+  "Just the book": "Só o livro",
+  "No book found": "Nenhum livro encontrado",
+  "Not this one": "Não é este",
+  "Send": "Enviar"
 }

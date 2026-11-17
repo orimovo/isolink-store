@@ -3,7 +3,7 @@ import {
   Chip, Image, Markdown, Editor, Rating, Slider, Stepper, Segmented, ProgressRing, Progress, Chart, Stat, Scanner,
   Scroll, Badge, Avatar, PersonPicker, Confetti, Draggable, DropZone, Svg, Popover, Dialog, Sheet,
   useQuery, useData, useLocal, useStore, useLayout, useMe, useNav, useNow, useDialog, useShare, useToast, usePlatform, useRef,
-  useScroll, fetch, t, has,
+  useScroll, useHandoff, useSheet, useSend, useEffect, fetch, t, has,
 } from 'isolink';
 import s from './app.css';
 import { ORNAMENTS, ORNAMENT_KINDS } from './ornaments';
@@ -860,10 +860,18 @@ function Home() {
   );
 }
 
+/** A book as it's sent into a chat, with one of its quotes when one's picked. */
+const sendable = (b: Book, quote = '') => ({
+  card: 'book',
+  data: { title: b.title, author: b.author ?? '', pages: b.pages ?? 0, rating: b.status === 'done' ? b.rating ?? 0 : 0, quote },
+  text: [b.title, b.author].filter(Boolean).join(' · '),
+});
+
 function BookScreen() {
   const nav = useNav();
   const bk = useBooks();
   const dialog = useDialog();
+  const send = typeof useSend === 'function' ? useSend() : () => null;
   const lend = useLend(bk);
   const { id } = nav.params as { id: string };
   const b = bk.books.find((x) => x.id === id);
@@ -876,27 +884,42 @@ function BookScreen() {
     const text = await dialog.prompt({ title: t('Quote'), value: '' });
     if (text && text.trim()) bk.add('quotes', { book: id, text: text.trim().slice(0, 2000), page: b.page || null });
   };
+  const share = async () => {
+    // With quotes, one can go with it.
+    const pick = quotes.length
+      ? await dialog.menu([
+        { id: '', label: t('Just the book'), icon: 'menu_book' },
+        { divider: true },
+        ...quotes.slice(0, 8).map((q) => ({ id: q.id, label: q.text.slice(0, 60), icon: 'format_quote' })),
+      ])
+      : '';
+    if (pick === null || pick === undefined) return;
+    send(sendable(b, quotes.find((q) => q.id === pick)?.text ?? ''));
+  };
   return (
     <Screen
       title={b.title}
       actions={bk.canEdit ? (
-        <IconButton icon="more_vert" label={t('More')} onPress={async () => {
-          const pick = await dialog.menu([
-            { id: 'edit', label: t('Edit'), icon: 'edit' },
-            { id: 'lend', label: b.lent ? t('Got it back') : t('Lend'), icon: 'handshake' },
-            { divider: true },
-            { id: 'delete', label: t('Delete'), icon: 'delete', danger: true },
-          ]);
-          if (pick === 'edit') nav.push('Edit', { id });
-          if (pick === 'lend') await lend(b);
-          if (pick === 'delete' && (await dialog.confirm({ title: t('Delete this book?'), ok: t('Delete'), danger: true }))) {
-            for (const x of bk.sessions.filter((x) => x.book === id)) bk.remove('sessions', x.id);
-            for (const x of quotes) bk.remove('quotes', x.id);
-            bk.remove('books', id);
-            nav.pop();
-          }
-        }} />
-      ) : undefined}
+        <Row gap={1} align="center">
+          {has('chat.send') && <IconButton icon="send" label={t('Send')} onPress={share} />}
+          <IconButton icon="more_vert" label={t('More')} onPress={async () => {
+            const pick = await dialog.menu([
+              { id: 'edit', label: t('Edit'), icon: 'edit' },
+              { id: 'lend', label: b.lent ? t('Got it back') : t('Lend'), icon: 'handshake' },
+              { divider: true },
+              { id: 'delete', label: t('Delete'), icon: 'delete', danger: true },
+            ]);
+            if (pick === 'edit') nav.push('Edit', { id });
+            if (pick === 'lend') await lend(b);
+            if (pick === 'delete' && (await dialog.confirm({ title: t('Delete this book?'), ok: t('Delete'), danger: true }))) {
+              for (const x of bk.sessions.filter((x) => x.book === id)) bk.remove('sessions', x.id);
+              for (const x of quotes) bk.remove('quotes', x.id);
+              bk.remove('books', id);
+              nav.pop();
+            }
+          }} />
+        </Row>
+      ) : has('chat.send') ? <IconButton icon="send" label={t('Send')} onPress={share} /> : undefined}
     >
       {party && <Confetti />}
       <Row gap={20} align="center" class={s.bookHead}>
@@ -1126,6 +1149,54 @@ function GoalScreen() {
   );
 }
 
+/** Add book, over a chat: the book the message names, found on Open Library. */
+function AddBook() {
+  const handoff = useHandoff();
+  const sheet = useSheet();
+  const data = useData();
+  const item = handoff?.items?.[0];
+  // A link's last part ("project-hail-mary") or the words, as the search.
+  const link = (item?.links ?? [])[0] as string | undefined;
+  const words = String(item?.text ?? '').replace(/https?:\/\/\S+/g, '').trim();
+  const fromLink = link ? decodeURIComponent(link.replace(/[?#].*$/, '').split('/').filter(Boolean).pop() ?? '').replace(/[-_+]+/g, ' ').replace(/\.\w+$/, '') : '';
+  const isbn = /\b(97[89]\d{10})\b/.exec(`${words} ${link ?? ''}`)?.[1];
+  const ask = words.length > 2 && words.length < 120 ? words : fromLink;
+  const [hits, setHits] = useLocal<Hit[] | null>(null);
+  const [at, setAt] = useLocal<number>(0);
+  const [status, setStatus] = useStore<string>('addAs', 'want');
+  useEffect(() => {
+    lookUp(isbn ? { isbn } : { text: ask }).then(setHits).catch(() => setHits([]));
+  }, []);
+  const h = hits?.[at];
+  const add = () => {
+    const b = h ?? { title: ask.slice(0, 200) };
+    const id = data.add('books', {
+      title: b.title, author: h?.author ?? null, pages: h?.pages ?? null, cover: h?.cover ?? null, isbn: h?.isbn ?? null, status,
+      ...(status === 'reading' ? { started: iso(new Date()), page: 0 } : {}),
+      ...(status === 'done' ? { finished: iso(new Date()) } : {}),
+    });
+    sheet.close({ toast: t('Added {p0}', { p0: b.title }), open: { screen: 'Book', params: { id } } });
+  };
+  if (!hits) return <Text tone="muted" align="center">{t('Looking…')}</Text>;
+  if (!h && !ask) return <Text tone="muted" align="center">{t('No book found')}</Text>;
+  return (
+    <Stack gap={12}>
+      <Row gap={12} align="start">
+        <Cover b={{ id: '', title: h?.title ?? ask, author: h?.author, cover: h?.cover }} width={58} />
+        <Stack grow gap={3}>
+          <Text bold lines={3}>{h?.title ?? ask}</Text>
+          {h ? <Text class={s.sub}>{[h.author, h.pages ? t('{p0} pages', { p0: h.pages }) : ''].filter(Boolean).join(' · ')}</Text> : null}
+          {hits.length > 1 ? (
+            <Button variant="plain" onPress={() => setAt((at + 1) % hits.length)}>{t('Not this one')}</Button>
+          ) : null}
+        </Stack>
+      </Row>
+      <Segmented value={status} onChange={setStatus} options={PICK.map(([value, label]) => ({ value, label: t(label) }))} />
+      <Button expand onPress={add}>{t('Add book')}</Button>
+    </Stack>
+  );
+}
+
 const named = (rows: Book[], title: string) => {
   const want = String(title).toLowerCase();
   return rows.find((b) => b.title.toLowerCase() === want) ?? rows.find((b) => b.title.toLowerCase().includes(want));
@@ -1133,6 +1204,22 @@ const named = (rows: Book[], title: string) => {
 
 export default defineApp({
   screens: { Home, Book: BookScreen, Add: AddScreen, Edit: EditScreen, Goal: GoalScreen, Lend: LendScreen },
+  sheets: { AddBook },
+  chat: {
+    receive: {
+      // A book someone sent: on this person's list to read.
+      book: (sent: { title?: string; author?: string; pages?: number }, { data }: any) => {
+        const title = String(sent.title ?? '').slice(0, 200);
+        const id = data.add('books', {
+          title: title || t('Book'),
+          author: sent.author ? String(sent.author).slice(0, 120) : null,
+          pages: sent.pages ? Math.max(1, Math.min(20000, Math.round(sent.pages))) : null,
+          status: 'want',
+        });
+        return { toast: t('Added {p0}', { p0: title }), open: { screen: 'Book', params: { id } } };
+      },
+    },
+  },
   // What you open from the list sits beside it on a wide window.
   split: ['Home'],
   actions: {
