@@ -61,5 +61,11 @@
   "Chapter {p0}": "第 {p0} 章",
   "Next": "下一页",
   "Ornaments": "摆件",
-  "Remove": "移除"
+  "Remove": "移除",
+  "Add book": "添加书",
+  "Book": "书",
+  "Just the book": "只发这本书",
+  "No book found": "未找到书",
+  "Not this one": "不是这本",
+  "Send": "发送"
 }

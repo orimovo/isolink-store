@@ -61,5 +61,11 @@
   "Chapter {p0}": "الفصل {p0}",
   "Next": "التالي",
   "Ornaments": "زينة",
-  "Remove": "إزالة"
+  "Remove": "إزالة",
+  "Add book": "إضافة كتاب",
+  "Book": "كتاب",
+  "Just the book": "الكتاب فقط",
+  "No book found": "لم يُعثر على كتاب",
+  "Not this one": "ليس هذا",
+  "Send": "إرسال"
 }
