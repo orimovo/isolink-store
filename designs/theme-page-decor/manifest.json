@@ -12,9 +12,10 @@
       400
     ],
     "maxBytes": 400000,
-    "stripArtBounds": "All artwork is conservatively within the bottom 70 px; top 90 px transparent.",
+    "stripArtBounds": "Top 50 px transparent; details at most 110 px high; continuous terrain scale limited to 70 px.",
     "stripSeams": "Left and right boundary columns match exactly.",
-    "bottom": "Strip bottom rows are fully opaque."
+    "bottom": "Strip bottom rows are fully opaque.",
+    "stripScaling": "Uniform aspect-preserving resize from original artwork, then mirrored horizontal repetition; no independent vertical compression."
   },
   "references": [
     {
@@ -119,19 +120,39 @@
       "path": "assets/little-dragon/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 159859,
-      "sha256": "cafba1aaae9ae7f1496922cd14cebfb2315e98192e8461bff016a44311ec93b2",
+      "bytes": 224224,
+      "sha256": "a8b7979b9389420dbe1767fb53042df75d3532b84a13eb4bf847969c3a2f8d77",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1417,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
     },
     {
       "path": "assets/little-dragon/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 151063,
-      "sha256": "57133fca65033646f1f9697895481784e43521b65fb6b93f66fed0a6b20d93f7",
+      "bytes": 211808,
+      "sha256": "9885a51bcd76140ffc981d9be110c31708ddb108ad7087f2d91f73d5ca44a5bd",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
     },
     {
       "path": "assets/little-dragon/peek-light.png",
@@ -155,19 +176,39 @@
       "path": "assets/axolotl/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 141533,
-      "sha256": "7a73582d5371463091c5e0e373a123e4cb0f154eb3532a3d442313469315a6ab",
+      "bytes": 207115,
+      "sha256": "5ce45c7c3943518b3a04f1c0fbec534a63525a8ba2df958d51a1740a8adf1660",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          76
+        ]
+      }
     },
     {
       "path": "assets/axolotl/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 152244,
-      "sha256": "317b1e715e15c578184843c2048a789915ba78e4cedc89af4fdf75fe20febc18",
+      "bytes": 219391,
+      "sha256": "4f818c080c137d7f57f523d79b59fcfd200b1297e7b70b560d7f5990241a6f98",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          109
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
     },
     {
       "path": "assets/axolotl/peek-light.png",
@@ -191,19 +232,39 @@
       "path": "assets/cloud-nap/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 115826,
-      "sha256": "f1ac4893d94b848f6603185115575cda2e3c11283fd0d332c35e2fbf2f7141ec",
+      "bytes": 175379,
+      "sha256": "2111aeabdcd84c286b818cc88940d99452b57d89486661f0af6f0ae90c012484",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          120
+        ],
+        "resizedArtwork": [
+          1024,
+          87
+        ]
+      }
     },
     {
       "path": "assets/cloud-nap/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 109408,
-      "sha256": "74e7f462c0e8ef989626b207a00124cfc512a8512e3f712007fce09b3c33615e",
+      "bytes": 163714,
+      "sha256": "3ae96670ae88f10cc9b6571b2377f506d4e9fb9626aa586f7020cb343a832991",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          120
+        ],
+        "resizedArtwork": [
+          1024,
+          87
+        ]
+      }
     },
     {
       "path": "assets/cloud-nap/peek-light.png",
@@ -227,19 +288,39 @@
       "path": "assets/cozy-shroom/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 165477,
-      "sha256": "0213de9f06c1a590bf306c3f09597cf2b3f605a4fdedb9b412bc16bd3862f4f8",
+      "bytes": 276166,
+      "sha256": "4268cd85c2b6662fbf8c4b087892512b19d2509ec165cc32ca75fe4a60e7da90",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          134
+        ],
+        "resizedArtwork": [
+          982,
+          93
+        ]
+      }
     },
     {
       "path": "assets/cozy-shroom/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 158280,
-      "sha256": "1bde9c3cd26ff465e95ea5ddcb4066f698ced3b9ac66fee11293d9ab6a56bd47",
+      "bytes": 260367,
+      "sha256": "927f9b805b892c76104247ba8a16bb6d9a00be920112a877c3513e3068dac02d",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          136
+        ],
+        "resizedArtwork": [
+          973,
+          93
+        ]
+      }
     },
     {
       "path": "assets/cozy-shroom/peek-light.png",
@@ -263,19 +344,39 @@
       "path": "assets/froggy-pond/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 132942,
-      "sha256": "54c953878ef8324d9edb885f21ad19a3a52aab0f502ab87c35b9a7e07b574c53",
+      "bytes": 275914,
+      "sha256": "3b792e7208bd78d0d3bc9ec4ef3aa75f3a00af2e5a8ef7bd20a25a712c69014b",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          162
+        ],
+        "resizedArtwork": [
+          962,
+          110
+        ]
+      }
     },
     {
       "path": "assets/froggy-pond/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 126532,
-      "sha256": "31d7976ab84604fc9ad189894a69c8e02a8bf427ffdf7a697717c155d2d08290",
+      "bytes": 255495,
+      "sha256": "4fcf3c23185efb4723d2f11b6d8d0685b540a35ecd6ea8a3552c37016330bd00",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          162
+        ],
+        "resizedArtwork": [
+          962,
+          110
+        ]
+      }
     },
     {
       "path": "assets/froggy-pond/peek-light.png",
@@ -299,19 +400,39 @@
       "path": "assets/honey-bear/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 161505,
-      "sha256": "80d30fea9722cb3a5ea253aa6da4b1bdab047f9c1053781295faa3019ddb7e46",
+      "bytes": 205155,
+      "sha256": "3488648d5d87151fc234da6fdb9118c3d56f84b018650b13ceeb4ad6b14076c8",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1433,
+          104
+        ],
+        "resizedArtwork": [
+          1023,
+          74
+        ]
+      }
     },
     {
       "path": "assets/honey-bear/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 139319,
-      "sha256": "298875bdc8848cf21ad55038c751a9155364d84c75294cf87a2dc3945e129c95",
+      "bytes": 173726,
+      "sha256": "6e15f9941f965c70a1df5851737f360dfa7230dc44997dec60446afd3b6605c3",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1433,
+          102
+        ],
+        "resizedArtwork": [
+          1023,
+          73
+        ]
+      }
     },
     {
       "path": "assets/honey-bear/peek-light.png",
@@ -335,19 +456,39 @@
       "path": "assets/moon-bunny/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 144534,
-      "sha256": "020734600fc6e2ce15f4eab19da89cb3e501d3db6a00f78c1b5f22b803244672",
+      "bytes": 155220,
+      "sha256": "a2b45c7b51c4a98d015c329ba5d780172b892d8300da82edf1d4828347a159c4",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          83
+        ],
+        "resizedArtwork": [
+          1024,
+          60
+        ]
+      }
     },
     {
       "path": "assets/moon-bunny/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 143743,
-      "sha256": "e5cc128775a19d4f8f2ede973059f205bbd37e53a3be873870f2b7992c63cc42",
+      "bytes": 153828,
+      "sha256": "3cba5cebaccfc6b800733053f953fe7df0eaeb88d14890762cdd32b44185803a",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1418,
+          84
+        ],
+        "resizedArtwork": [
+          1024,
+          61
+        ]
+      }
     },
     {
       "path": "assets/moon-bunny/peek-light.png",
@@ -371,19 +512,39 @@
       "path": "assets/peach-mochi/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 163788,
-      "sha256": "0dcff636b420f7b6a18cd01cce0bbc65bed438cc5c0e2bf11d9707fbd07f3007",
+      "bytes": 238338,
+      "sha256": "8541a88c975f653a034df0fcc7bf68420d3bddcdf48b8359ab571e5a6e6e2efc",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1261,
+          104
+        ],
+        "resizedArtwork": [
+          959,
+          79
+        ]
+      }
     },
     {
       "path": "assets/peach-mochi/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 156056,
-      "sha256": "69d945e14f78437b23a00989b7059565aef1d3029c10fc19db564dd7e88689b2",
+      "bytes": 232046,
+      "sha256": "a024900ae845a8262293fb5238855fc78802de78ba1d9135a1864b5312c8a477",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1261,
+          105
+        ],
+        "resizedArtwork": [
+          949,
+          79
+        ]
+      }
     },
     {
       "path": "assets/peach-mochi/peek-light.png",
@@ -407,19 +568,39 @@
       "path": "assets/penguin-puddle/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 147130,
-      "sha256": "25b4031075010f09c358716f4dd0d208bcf1eebdb4f8ddce4303e8f3af410b62",
+      "bytes": 193795,
+      "sha256": "1d39120dd5bd33c3bf04fc5f7d60bd2905a675e7bbd1ffad9d53756f0ea155e9",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          104
+        ],
+        "resizedArtwork": [
+          1024,
+          75
+        ]
+      }
     },
     {
       "path": "assets/penguin-puddle/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 141992,
-      "sha256": "e7b61c745e47ad56eccaf2f1626134573a91b52e0bbe1ea039e89b0ce150d768",
+      "bytes": 188394,
+      "sha256": "717b64174f2a6465434ecb1b29cd5c4ce39a4bd0c449690a567c5cd7b4f33e24",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1415,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
     },
     {
       "path": "assets/penguin-puddle/peek-light.png",
@@ -443,19 +624,39 @@
       "path": "assets/pocket-pals/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 157991,
-      "sha256": "766d1cb9dcc435cba988e0cb5f7e37b4e3504659f0b00de9ade3aca8f11a8fa7",
+      "bytes": 289731,
+      "sha256": "b4ef19cab1abdd2408ad3278133f582d386d77cebf88d2dfd8ab7010f15cc695",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1417,
+          163
+        ],
+        "resizedArtwork": [
+          953,
+          110
+        ]
+      }
     },
     {
       "path": "assets/pocket-pals/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 154732,
-      "sha256": "69932828f7a078b2c949beebea88cb40f0679fc6e6fc958df22a1fc5495fd522",
+      "bytes": 285439,
+      "sha256": "c4a722b74febc285c01ef814862a10d87ed227197312a43d1b074a7a0aaa51c1",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1416,
+          164
+        ],
+        "resizedArtwork": [
+          944,
+          109
+        ]
+      }
     },
     {
       "path": "assets/pocket-pals/peek-light.png",
@@ -479,19 +680,39 @@
       "path": "assets/red-panda/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 165880,
-      "sha256": "74c40844e5080791e8b55071fc5d4b861bfa77881cc7fd043b3df76318716be2",
+      "bytes": 251268,
+      "sha256": "c06f15bb3ea7e675ae11342b4249712d86e30853093c299bfa75fd0a8c5ea44f",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1374,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
     },
     {
       "path": "assets/red-panda/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 154223,
-      "sha256": "40f82057db51d1a69a8ce7873d20b27d9e920eeba98dbb4be97d46b6342456ed",
+      "bytes": 226765,
+      "sha256": "f7d8016a1c48c613621e782697551588dbc70055bd4f2e10c1b819a607815d17",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1374,
+          106
+        ],
+        "resizedArtwork": [
+          1024,
+          79
+        ]
+      }
     },
     {
       "path": "assets/red-panda/peek-light.png",
@@ -515,19 +736,39 @@
       "path": "assets/sleepy-sloth/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 173331,
-      "sha256": "8d472f3434593320cbc8d33f074fb5ecd133f91269fee61ecbfe46c714eb30aa",
+      "bytes": 250489,
+      "sha256": "f044064eae837dd9b10aced790edae5d899c86bc8567d097b558faf727c9bf82",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
     },
     {
       "path": "assets/sleepy-sloth/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 169884,
-      "sha256": "01a9ede953de9ef839fcbceeb766c3458a4e89686a074a9017070d6d1487c21e",
+      "bytes": 240731,
+      "sha256": "55719fec4075f8bc32802ae12198871a35d04d6dcb75f82312e73971ffdb04d7",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          107
+        ],
+        "resizedArtwork": [
+          1024,
+          77
+        ]
+      }
     },
     {
       "path": "assets/sleepy-sloth/peek-light.png",
@@ -551,19 +792,39 @@
       "path": "assets/space-cat/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 141440,
-      "sha256": "8d400c372523a28716cdf81c818e32ff9b6ac3260d6ea4d5d9df4afd3898d1f2",
+      "bytes": 281325,
+      "sha256": "96021c73c8bc2308d6a00dce00bec67c8d8fbab7d47e3ca8cd454f95587fb55d",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1423,
+          174
+        ],
+        "resizedArtwork": [
+          816,
+          100
+        ]
+      }
     },
     {
       "path": "assets/space-cat/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 141872,
-      "sha256": "fda54cdb7d0a27efd089b1d3c012be255e2e0c53054b2b77fd7fafb7d6ef602c",
+      "bytes": 271822,
+      "sha256": "79264995b14ee0410ff2a82a157fa3d8218587bb7c38d858a280a41f8504758a",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1423,
+          174
+        ],
+        "resizedArtwork": [
+          816,
+          100
+        ]
+      }
     },
     {
       "path": "assets/space-cat/peek-light.png",
@@ -587,19 +848,39 @@
       "path": "assets/starry-jelly/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 165081,
-      "sha256": "be156c4aa1049ad6fe69eb97617ed33105e9d5a0a5f6e2c4e3c979a6b3eb237b",
+      "bytes": 184313,
+      "sha256": "7681506d8330386c5b5760ba9bf8d476cf2bc8cc308c1b3c0a6d9fa60175fd1f",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          2172,
+          145
+        ],
+        "resizedArtwork": [
+          1024,
+          68
+        ]
+      }
     },
     {
       "path": "assets/starry-jelly/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 160983,
-      "sha256": "ef1ea9a717188677c4cc14e41cd7ccad21d7602d3ae0fa1af42e1547ed2e7df3",
+      "bytes": 180661,
+      "sha256": "74f6499aae7298795265099c731b70db53cb9738777270c0270ae932ed002982",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          2172,
+          145
+        ],
+        "resizedArtwork": [
+          1024,
+          68
+        ]
+      }
     },
     {
       "path": "assets/starry-jelly/peek-light.png",
@@ -623,19 +904,39 @@
       "path": "assets/tiny-whale/strip-light.png",
       "width": 2048,
       "height": 160,
-      "bytes": 134814,
-      "sha256": "b79acdab1d879fcbea42cc293eb49f8c81351b0c4bc458399dda0d325c33e9f4",
+      "bytes": 168598,
+      "sha256": "a4eb61c9216abddd8bfaf8656920038c7ca99b9a8f50f9ae5d0e64f397f7434c",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          102
+        ],
+        "resizedArtwork": [
+          1024,
+          74
+        ]
+      }
     },
     {
       "path": "assets/tiny-whale/strip-dark.png",
       "width": 2048,
       "height": 160,
-      "bytes": 129868,
-      "sha256": "4376f733f2711591b6d247e26abdfdfc37fac7ca41f93f5eefc0e4083c407f7a",
+      "bytes": 166608,
+      "sha256": "82482d30e524b9220c9b16d17f47f2c38a51aafdfee496fd95747dd56721029c",
       "alpha": true,
-      "verified": true
+      "verified": true,
+      "proportionalExport": {
+        "sourceCrop": [
+          1419,
+          103
+        ],
+        "resizedArtwork": [
+          1024,
+          74
+        ]
+      }
     },
     {
       "path": "assets/tiny-whale/peek-light.png",
