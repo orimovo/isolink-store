@@ -1,0 +1,60 @@
+/* Watchlist: posters on a wall, and the films you've seen kept as cinema tickets. */
+
+.sub { font-size: 12px; color: var(--muted); }
+
+/* A poster: the picture, or a night sky drawn from the title. */
+.poster { border-radius: 6px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); transition: 220ms; }
+.lit { transform: scale(1.07); box-shadow: 0 0 26px 4px var(--accent); }
+.drawn { aspect-ratio: 0.6667; }
+.drawnIn { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 9px 12px; }
+.drawnInSmall { padding: 4px; }
+.drawnYear { color: rgba(255, 255, 255, 0.7); font-size: 9px; font-weight: 600; letter-spacing: 2px; }
+.moon { width: 44px; height: 44px; border-radius: 999px; opacity: 0.9; box-shadow: 0 0 24px rgba(255, 255, 255, 0.25); }
+.moonSmall { width: 14px; height: 14px; box-shadow: none; }
+.hills { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%); }
+.drawnTitle { color: #ffffff; font-family: var(--font-serif); font-weight: 700; font-size: 15px; line-height: 1.1; }
+.sheen { position: absolute; inset: 0; background: linear-gradient(155deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 38%); }
+
+/* The wall */
+.tile { padding-bottom: 6px; transition: 200ms; }
+.tile:hover { transform: translate(0, -4px); }
+.tileTitle { font-size: 13.5px; font-weight: 600; padding-top: 6px; }
+.tileSub { font-size: 12px; color: var(--muted); }
+.slot { aspect-ratio: 0.6667; border-radius: 6px; border: 2px dashed var(--outline); display: flex; place-items: center; }
+.slotIcon { color: var(--muted); }
+
+/* Tickets: cream card, red stub, a torn line between. */
+.ticket { height: 104px; display: flex; flex-direction: row; align-items: stretch; background: #f4ead5; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22); transition: 200ms; }
+.ticket:hover { transform: translate(0, -2px); }
+.stub { width: 64px; background: linear-gradient(180deg, #d93a42 0%, #b4252d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; }
+.stubDay { color: #ffffff; font-family: var(--font-display); font-size: 26px; font-weight: 800; line-height: 1; }
+.stubMonth { color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding-top: 2px; }
+.stubYear { color: rgba(255, 255, 255, 0.7); font-size: 10px; letter-spacing: 1px; }
+.stubIcon { color: #ffffff; }
+.ticketBody { flex: 1; padding: 12px 14px; border-left: 2px dashed rgba(70, 45, 25, 0.35); }
+.ticketTitle { color: #2b211b; font-family: var(--font-serif); font-size: 16px; font-weight: 700; line-height: 1.15; }
+.ticketMeta { color: #6b5a4a; font-size: 12px; }
+.ticketFoot { padding-top: 4px; }
+.stars { color: #c47a12; font-size: 13px; letter-spacing: 1px; }
+.starsOff { color: rgba(90, 60, 30, 0.22); font-size: 13px; letter-spacing: 1px; }
+.blankTicket { height: 96px; max-width: 360px; border-radius: 10px; border: 2px dashed var(--outline); display: flex; place-items: center; }
+
+/* A film opened: its poster in front of its own blurred light. */
+.hero { height: 232px; border-radius: var(--radius-lg); overflow: hidden; background: #0b0b0d; }
+.heroBack { position: absolute; top: -30px; left: -30px; right: -30px; bottom: -30px; filter: blur(22px); opacity: 0.85; }
+.heroShade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 8, 10, 0.1) 0%, rgba(8, 8, 10, 0.55) 55%, rgba(8, 8, 10, 0.88) 100%); }
+.heroRow { position: absolute; left: 20px; right: 20px; bottom: 20px; }
+.heroTitle { color: #ffffff; font-family: var(--font-display); font-size: 26px; font-weight: 800; line-height: 1.1; }
+.heroMeta { color: rgba(255, 255, 255, 0.75); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.heroDirector { color: rgba(255, 255, 255, 0.88); font-size: 13px; }
+.about { font-size: 14px; line-height: 1.45; color: var(--ink); }
+@media (max-width: 599px) {
+  .hero { height: 172px; }
+  .heroRow { left: 14px; right: 14px; bottom: 14px; }
+  .heroTitle { font-size: 21px; }
+}
+
+/* Add */
+.searchRow { padding: 4px 0 12px; }
+.hit { display: flex; flex-direction: row; gap: 12px; align-items: center; background: var(--surface); border-radius: 12px; padding: 8px 14px 8px 8px; }
+.hit:hover { background: var(--accent-soft); }

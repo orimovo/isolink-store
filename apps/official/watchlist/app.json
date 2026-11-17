@@ -1,0 +1,178 @@
+{
+  "id": "watchlist",
+  "name": "Watchlist",
+  "icon": "movie",
+  "accent": 4293216333,
+  "main": "src/app.tsx",
+  "version": 1,
+  "needs": {
+    "web": [
+      "query.wikidata.org",
+      "en.wikipedia.org",
+      "upload.wikimedia.org"
+    ],
+    "chat": [
+      "take",
+      "send"
+    ]
+  },
+  "summary": {
+    "table": "films",
+    "where": [
+      [
+        "status",
+        "=",
+        "want"
+      ]
+    ],
+    "none": "Nothing to watch",
+    "one": "1 to watch",
+    "many": "{p0} to watch"
+  },
+  "schema": {
+    "tables": {
+      "films": {
+        "name": "Films",
+        "title": "title",
+        "fields": {
+          "title": {
+            "id": 1,
+            "type": "text",
+            "max": 200,
+            "required": true,
+            "search": true
+          },
+          "year": {
+            "id": 2,
+            "type": "number",
+            "min": 1880,
+            "max": 2200
+          },
+          "kind": {
+            "id": 3,
+            "type": "choice",
+            "options": [
+              {
+                "id": "film",
+                "name": "Film"
+              },
+              {
+                "id": "show",
+                "name": "Show"
+              }
+            ],
+            "default": "film"
+          },
+          "runtime": {
+            "id": 4,
+            "type": "number",
+            "min": 0,
+            "max": 6000
+          },
+          "seasons": {
+            "id": 5,
+            "type": "number",
+            "min": 0,
+            "max": 200
+          },
+          "genre": {
+            "id": 6,
+            "type": "text",
+            "max": 80
+          },
+          "director": {
+            "id": 7,
+            "type": "text",
+            "max": 120,
+            "search": true
+          },
+          "about": {
+            "id": 8,
+            "type": "text",
+            "max": 600
+          },
+          "poster": {
+            "id": 9,
+            "type": "text",
+            "max": 400
+          },
+          "wiki": {
+            "id": 10,
+            "type": "text",
+            "max": 20
+          },
+          "status": {
+            "id": 11,
+            "type": "choice",
+            "options": [
+              {
+                "id": "want",
+                "name": "To watch"
+              },
+              {
+                "id": "seen",
+                "name": "Watched"
+              }
+            ],
+            "default": "want"
+          },
+          "rating": {
+            "id": 12,
+            "type": "number",
+            "min": 1,
+            "max": 5
+          },
+          "with": {
+            "id": 13,
+            "type": "tags",
+            "max": 8
+          },
+          "seen": {
+            "id": 14,
+            "type": "date"
+          },
+          "order": {
+            "id": 15,
+            "type": "number"
+          },
+          "notes": {
+            "id": 16,
+            "type": "markdown",
+            "max": 4000
+          }
+        }
+      }
+    }
+  },
+  "chat": {
+    "actions": [
+      {
+        "id": "add",
+        "title": "Add to Watchlist",
+        "icon": "movie",
+        "takes": [
+          "text",
+          "link"
+        ],
+        "sheet": "AddFilm"
+      }
+    ],
+    "cards": [
+      {
+        "id": "film",
+        "src": "src/cards/film.tsx",
+        "data": {
+          "title": "text",
+          "year": "number",
+          "kind": "text",
+          "length": "text",
+          "genre": "text",
+          "director": "text",
+          "rating": "number"
+        },
+        "receive": "film",
+        "button": "Add"
+      }
+    ]
+  }
+}

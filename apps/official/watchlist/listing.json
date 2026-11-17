@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "LicenseRef-Isolink",
+  "desc": "Films and shows to watch, a pick for tonight, and the ones you've seen",
+  "tags": [
+    "apps"
+  ],
+  "minApp": "0.26.55"
+}
