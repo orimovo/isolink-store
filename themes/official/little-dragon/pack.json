@@ -689,35 +689,35 @@
     "a4afbdd02eeff72f74724": {
       "file": "assets/a4afbdd02eeff72f74724.png"
     },
-    "a488f2c7827dd684353ae": {
-      "file": "assets/a488f2c7827dd684353ae.png"
+    "a5664260398ae0faf998a": {
+      "file": "assets/a5664260398ae0faf998a.png"
     },
-    "a1aca558c0495e9e40368": {
-      "file": "assets/a1aca558c0495e9e40368.png"
+    "a64f516cbd1f03cb1b76c": {
+      "file": "assets/a64f516cbd1f03cb1b76c.png"
     },
-    "afd27aea6758aa4d6e024": {
-      "file": "assets/afd27aea6758aa4d6e024.png"
+    "a4ab93116ef79efb256f8": {
+      "file": "assets/a4ab93116ef79efb256f8.png"
     },
-    "a022908604918a52358ea": {
-      "file": "assets/a022908604918a52358ea.png"
+    "adb235e77191b6caad965": {
+      "file": "assets/adb235e77191b6caad965.png"
     },
-    "aea36c6210484dcdd9e2a": {
-      "file": "assets/aea36c6210484dcdd9e2a.png"
+    "abf0194fd2d48b2322eea": {
+      "file": "assets/abf0194fd2d48b2322eea.png"
     },
-    "a64ebbafe8e74574f4dfe": {
-      "file": "assets/a64ebbafe8e74574f4dfe.png"
+    "a27c039d5109cf7896d95": {
+      "file": "assets/a27c039d5109cf7896d95.png"
     },
-    "a7c104581bfdd6172bc50": {
-      "file": "assets/a7c104581bfdd6172bc50.png"
+    "a8c4fcfaf4c69ae9aacee": {
+      "file": "assets/a8c4fcfaf4c69ae9aacee.png"
     },
-    "ab21f68ef188a325673ef": {
-      "file": "assets/ab21f68ef188a325673ef.png"
+    "afdf2f047abfb709dd86c": {
+      "file": "assets/afdf2f047abfb709dd86c.png"
     },
-    "a193be5b34a876531ec4f": {
-      "file": "assets/a193be5b34a876531ec4f.png"
+    "a5c9a9f970950754e996f": {
+      "file": "assets/a5c9a9f970950754e996f.png"
     },
-    "abbee222f376ce99b8370": {
-      "file": "assets/abbee222f376ce99b8370.png"
+    "a68cc66808e913c66d2e9": {
+      "file": "assets/a68cc66808e913c66d2e9.png"
     }
   },
   "art": {
@@ -1129,37 +1129,37 @@
     },
     "pane.popup": {
       "tint": false,
-      "img": "a488f2c7827dd684353ae",
+      "img": "a5664260398ae0faf998a",
       "dark": {
-        "img": "a1aca558c0495e9e40368"
+        "img": "a64f516cbd1f03cb1b76c"
       }
     },
     "problems.none": {
       "tint": false,
-      "img": "afd27aea6758aa4d6e024",
+      "img": "a4ab93116ef79efb256f8",
       "dark": {
-        "img": "a022908604918a52358ea"
+        "img": "adb235e77191b6caad965"
       }
     },
     "store.none_yet": {
       "tint": false,
-      "img": "aea36c6210484dcdd9e2a",
+      "img": "abf0194fd2d48b2322eea",
       "dark": {
-        "img": "a64ebbafe8e74574f4dfe"
+        "img": "a27c039d5109cf7896d95"
       }
     },
     "store.up_to_date": {
       "tint": false,
-      "img": "a7c104581bfdd6172bc50",
+      "img": "a8c4fcfaf4c69ae9aacee",
       "dark": {
-        "img": "ab21f68ef188a325673ef"
+        "img": "afdf2f047abfb709dd86c"
       }
     },
     "studio.drop": {
       "tint": false,
-      "img": "a193be5b34a876531ec4f",
+      "img": "a5c9a9f970950754e996f",
       "dark": {
-        "img": "abbee222f376ce99b8370"
+        "img": "a68cc66808e913c66d2e9"
       }
     }
   }
