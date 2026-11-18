@@ -689,35 +689,35 @@
     "a345f69bfeacf460386ae": {
       "file": "assets/a345f69bfeacf460386ae.png"
     },
-    "a823ed82ea2016262194a": {
-      "file": "assets/a823ed82ea2016262194a.png"
+    "a037c98b8440335dc09aa": {
+      "file": "assets/a037c98b8440335dc09aa.png"
     },
-    "a3b54d419ac9eaddfacaf": {
-      "file": "assets/a3b54d419ac9eaddfacaf.png"
+    "aa14032d7eaf36eecbe46": {
+      "file": "assets/aa14032d7eaf36eecbe46.png"
     },
-    "ac93c830236b85c4062a5": {
-      "file": "assets/ac93c830236b85c4062a5.png"
+    "a4418573c8ffb53700b9a": {
+      "file": "assets/a4418573c8ffb53700b9a.png"
     },
-    "a65b4a3f8718007ab8cc5": {
-      "file": "assets/a65b4a3f8718007ab8cc5.png"
+    "af8175fe5d50194c89d7c": {
+      "file": "assets/af8175fe5d50194c89d7c.png"
     },
-    "a52bc9e6babcec28a0288": {
-      "file": "assets/a52bc9e6babcec28a0288.png"
+    "ad982e502e3153afd2ed5": {
+      "file": "assets/ad982e502e3153afd2ed5.png"
     },
-    "a2991946868034f7311f2": {
-      "file": "assets/a2991946868034f7311f2.png"
+    "a9a5bf990cddc3e98322f": {
+      "file": "assets/a9a5bf990cddc3e98322f.png"
     },
-    "a1c40f36bc995d8b9f4ff": {
-      "file": "assets/a1c40f36bc995d8b9f4ff.png"
+    "aa44495287554ab85fc33": {
+      "file": "assets/aa44495287554ab85fc33.png"
     },
-    "ab2d7efb2a33f80701b94": {
-      "file": "assets/ab2d7efb2a33f80701b94.png"
+    "abf5dcb9877488e9869f4": {
+      "file": "assets/abf5dcb9877488e9869f4.png"
     },
-    "a767ea4168e145caa0c0f": {
-      "file": "assets/a767ea4168e145caa0c0f.png"
+    "af8bed9fe40bce439637d": {
+      "file": "assets/af8bed9fe40bce439637d.png"
     },
-    "ad7b3ce161d33f909699c": {
-      "file": "assets/ad7b3ce161d33f909699c.png"
+    "ad003100e5c4c96d7dfd8": {
+      "file": "assets/ad003100e5c4c96d7dfd8.png"
     }
   },
   "art": {
@@ -1129,37 +1129,37 @@
     },
     "pane.popup": {
       "tint": false,
-      "img": "a823ed82ea2016262194a",
+      "img": "a037c98b8440335dc09aa",
       "dark": {
-        "img": "a3b54d419ac9eaddfacaf"
+        "img": "aa14032d7eaf36eecbe46"
       }
     },
     "problems.none": {
       "tint": false,
-      "img": "ac93c830236b85c4062a5",
+      "img": "a4418573c8ffb53700b9a",
       "dark": {
-        "img": "a65b4a3f8718007ab8cc5"
+        "img": "af8175fe5d50194c89d7c"
       }
     },
     "store.none_yet": {
       "tint": false,
-      "img": "a52bc9e6babcec28a0288",
+      "img": "ad982e502e3153afd2ed5",
       "dark": {
-        "img": "a2991946868034f7311f2"
+        "img": "a9a5bf990cddc3e98322f"
       }
     },
     "store.up_to_date": {
       "tint": false,
-      "img": "a1c40f36bc995d8b9f4ff",
+      "img": "aa44495287554ab85fc33",
       "dark": {
-        "img": "ab2d7efb2a33f80701b94"
+        "img": "abf5dcb9877488e9869f4"
       }
     },
     "studio.drop": {
       "tint": false,
-      "img": "a767ea4168e145caa0c0f",
+      "img": "af8bed9fe40bce439637d",
       "dark": {
-        "img": "ad7b3ce161d33f909699c"
+        "img": "ad003100e5c4c96d7dfd8"
       }
     }
   }
