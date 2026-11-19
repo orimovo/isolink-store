@@ -38,7 +38,7 @@
       "tintStrength": 0.16,
       "roundness": "soft",
       "mode": "system",
-      "iconPack": "rounded",
+      "iconPack": "remix",
       "chrome": {
         "files": {
           "line": {
