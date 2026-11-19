@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 10,
   "by": "Isolink",
   "licence": "LicenseRef-Isolink",
   "desc": "Little Dragon bubbles and illustrations in light and dark, with a matching wallpaper.",
@@ -7,5 +7,5 @@
     "character",
     "cute"
   ],
-  "minApp": "0.26.55"
+  "minApp": "0.26.57"
 }

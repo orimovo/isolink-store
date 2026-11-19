@@ -38,7 +38,27 @@
       "tintStrength": 0.16,
       "roundness": "soft",
       "mode": "system",
-      "iconPack": "rounded"
+      "iconPack": "rounded",
+      "chrome": {
+        "files": {
+          "line": {
+            "light": 2361937208,
+            "dark": 3016248632
+          },
+          "border": {
+            "light": 1304972600,
+            "dark": 1724403000
+          },
+          "badge": {
+            "light": 700992824,
+            "dark": 1204309304
+          },
+          "badgeIcon": {
+            "light": 4284367153,
+            "dark": 4294767579
+          }
+        }
+      }
     }
   },
   "bubbles": {
