@@ -20,6 +20,9 @@
       }
     },
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 16px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 22px 22px 0 0; border: 1px solid var(--accent-soft); }\nGroup, Composer::bar { border-radius: 16px; }\nSearchField, TextField, Composer::field { border-radius: 14px; }\nFab, IconTile { border-radius: 10px; }"
+      },
       "id": "red-panda_app",
       "name": "Red Panda",
       "accent": 4290796076,

@@ -4,6 +4,9 @@
   "name": "Phosphor Black",
   "parts": {
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 0px; border: 1px solid var(--accent); }\nSheet { border-radius: 0px 0px 0 0; border: 1px solid var(--accent); }\nGroup, Composer::bar { border-radius: 0px; }\nSearchField, TextField, Composer::field { border-radius: 0px; }\nFab, IconTile { border-radius: 0px; }\nDialog::title, MenuItem::label, Composer::field { font-family: var(--font-mono); }\nNavBar, FilterTabs, Pill { border-radius: 0; }"
+      },
       "id": "phosphor-black-app",
       "name": "Phosphor Black",
       "accent": 4290756543,

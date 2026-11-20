@@ -19,6 +19,9 @@
       }
     },
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 6px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 10px 10px 0 0; border: 1px solid var(--accent-soft); }\nGroup, Composer::bar { border-radius: 6px; }\nSearchField, TextField, Composer::field { border-radius: 6px; }\nFab, IconTile { border-radius: 4px; }\nDialog::title { font-family: var(--font-mono); }"
+      },
       "id": "trace-lab_app",
       "name": "Trace Lab",
       "accent": 4280841324,

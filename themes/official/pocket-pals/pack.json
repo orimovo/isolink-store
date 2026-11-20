@@ -20,6 +20,9 @@
       }
     },
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 18px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 24px 24px 0 0; border: 1px solid var(--accent-soft); }\nGroup, Composer::bar { border-radius: 18px; }\nSearchField, TextField, Composer::field { border-radius: 16px; }\nFab, IconTile { border-radius: 12px; }"
+      },
       "id": "pocket-pals_app",
       "name": "Pocket Pals",
       "accent": 4290344748,

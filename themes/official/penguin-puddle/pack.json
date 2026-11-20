@@ -20,6 +20,9 @@
       }
     },
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 20px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 26px 26px 0 0; border: 1px solid var(--accent-soft); }\nGroup, Composer::bar { border-radius: 20px; }\nSearchField, TextField, Composer::field { border-radius: 18px; }\nFab, IconTile { border-radius: 13px; }"
+      },
       "id": "penguin-puddle_app",
       "name": "Penguin Puddle",
       "accent": 4281101478,
