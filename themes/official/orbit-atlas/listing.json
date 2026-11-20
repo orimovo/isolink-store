@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "by": "Kyle Pantall",
   "licence": "CC0-1.0",
   "desc": "Ringed planets, distant galaxies, and muted lavender drawn from a vintage astronomy atlas.",
@@ -10,5 +10,5 @@
     "galaxy",
     "lavender"
   ],
-  "minApp": "0.26.57"
+  "minApp": "0.26.60"
 }

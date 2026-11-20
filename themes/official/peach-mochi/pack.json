@@ -20,6 +20,9 @@
       }
     },
     "app": {
+      "overrides": {
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 22px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 28px 28px 0 0; border: 1px solid var(--accent-soft); }\nSearchField#chats, SearchField#icons, TextField, Composer::field { border-radius: 20px; }\nFab { border-radius: 14px; }\nIconTile[icon=\"theme\"], IconTile[icon=\"storefront\"] { border-radius: 14px; background: var(--accent-soft); color: var(--ink); }"
+      },
       "id": "peach-mochi_app",
       "name": "Peach Mochi",
       "accent": 4292636501,
