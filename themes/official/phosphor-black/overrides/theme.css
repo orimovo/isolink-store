@@ -52,9 +52,15 @@ Composer::add:selected {
   color: var(--accent);
 }
 
-Page Group {
+Page Group,
+Page Card {
   border-radius: 0px;
   box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+NavBar,
+FloatingButton {
+  border-radius: 0px;
 }
 
 Group Row,
