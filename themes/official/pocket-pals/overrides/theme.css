@@ -1,5 +1,100 @@
 Menu, Dropdown, Popup, Dialog { border-radius: 18px; border: 1px solid var(--accent-soft); }
 Sheet { border-radius: 24px 24px 0 0; border: 1px solid var(--accent-soft); }
-SearchField#chats, SearchField#icons, TextField, Composer::field { border-radius: 16px; }
-Fab { border-radius: 12px; }
-IconTile[icon="theme"], IconTile[icon="storefront"] { border-radius: 12px; background: var(--accent-soft); color: var(--ink); }
+
+Fab {
+  border-radius: 12px;
+}
+
+Button[os="android"],
+Button[os="oneui"],
+Button[os="ios"] {
+  border-radius: 12px;
+  height: 44px;
+  opacity: 1;
+}
+
+Button[os="android"]:pressed,
+Button[os="oneui"]:pressed,
+Button[os="ios"]:pressed {
+  opacity: 0.82;
+}
+
+IconButton[icon="add"],
+IconButton[icon="addBox"],
+IconButton[icon="edit"] {
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+SearchField#chats,
+SearchField#icons,
+TextField {
+  border-radius: 16px;
+}
+
+Composer::field {
+  background: var(--accent-soft);
+  color: var(--ink);
+  border-radius: 16px;
+  caret-color: var(--ink);
+}
+
+Composer[os="mac"]::field {
+  background: var(--surface);
+}
+
+Composer::field:focus {
+  box-shadow: 0 0 0 1px var(--outline);
+}
+
+Composer::add {
+  color: var(--ink);
+}
+
+Composer::add:selected {
+  color: var(--accent);
+}
+
+Page Group {
+  border-radius: 18px;
+  box-shadow: 0 0 0 1px var(--accent-soft);
+}
+
+Group Row,
+Page#settings Row,
+Page#you Row,
+Page#theme Row,
+Page#store Row {
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+Group Row:selected,
+Page#settings Row:selected,
+Page#you Row:selected,
+Page#theme Row:selected,
+Page#store Row:selected {
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--outline);
+}
+
+Group IconTile,
+Page#settings IconTile,
+Page#you IconTile,
+Page#theme IconTile,
+Page#store IconTile,
+IconTile[icon="theme"],
+IconTile[icon="storefront"] {
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+Page#settings Group > Icon:unthemed {
+  color: var(--accent);
+}
+
+Page#settings Group > Icon[icon="chevronRight"] {
+  color: var(--muted);
+}

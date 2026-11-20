@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "by": "Isolink",
   "licence": "CC0-1.0",
   "desc": "An ASCII terminal with phosphor-green graphics, square chat bubbles and soft beeps.",

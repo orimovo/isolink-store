@@ -634,6 +634,370 @@
       "dark": {
         "img": "decor-peek-dark"
       }
+    },
+    "forum.no_posts": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "cards.empty": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "themes.mine": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "verify.added": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "verify.done": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "error.load": {
+      "img": "empty-no_matches-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-no_matches-dark"
+      }
+    },
+    "setup.switches": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "setup.reach": {
+      "img": "community-offer-light",
+      "tint": false,
+      "dark": {
+        "img": "community-offer-dark"
+      }
+    },
+    "setup.move": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "link.device": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "empty.forums": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "pane.people": {
+      "img": "empty-people-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-people-dark"
+      }
+    },
+    "empty.search": {
+      "img": "empty-no_matches-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-no_matches-dark"
+      }
+    },
+    "empty.starred": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "empty.archived": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "empty.reminders": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "empty.carried": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "offgrid.find_signal": {
+      "img": "empty-nearby-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-nearby-dark"
+      }
+    },
+    "offgrid.stay_together": {
+      "img": "community-offer-light",
+      "tint": false,
+      "dark": {
+        "img": "community-offer-dark"
+      }
+    },
+    "offgrid.sos_ended": {
+      "img": "empty-people-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-people-dark"
+      }
+    },
+    "community.joined": {
+      "img": "community-offer-light",
+      "tint": false,
+      "dark": {
+        "img": "community-offer-dark"
+      }
+    },
+    "community.unreachable": {
+      "img": "empty-nearby-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-nearby-dark"
+      }
+    },
+    "bots.empty": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "backup.none": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "themes.shared": {
+      "img": "community-offer-light",
+      "tint": false,
+      "dark": {
+        "img": "community-offer-dark"
+      }
+    },
+    "device.not_connected": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "setup.restore": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "link.removed": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "pane.forums": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "pane.you": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "empty.unread": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "empty.folders": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "empty.broadcast": {
+      "img": "chat-new-light",
+      "tint": false,
+      "dark": {
+        "img": "chat-new-dark"
+      }
+    },
+    "offgrid.walkie": {
+      "img": "empty-nearby-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-nearby-dark"
+      }
+    },
+    "offgrid.arrivals": {
+      "img": "empty-people-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-people-dark"
+      }
+    },
+    "offgrid.maps": {
+      "img": "empty-nearby-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-nearby-dark"
+      }
+    },
+    "forum.gone": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "bots.no_commands": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "bots.no_rules": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "admin.no_logs": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "card.install": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "themes.looking": {
+      "img": "empty-no_matches-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-no_matches-dark"
+      }
+    },
+    "bubbles.no_decorations": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "error.another_tab": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "error.permission": {
+      "img": "setup-first_contact-light",
+      "tint": false,
+      "dark": {
+        "img": "setup-first_contact-dark"
+      }
+    },
+    "update.ready": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "whats_new": {
+      "img": "onboarding-welcome-light",
+      "tint": false,
+      "dark": {
+        "img": "onboarding-welcome-dark"
+      }
+    },
+    "pane.popup": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "problems.none": {
+      "img": "empty-no_matches-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-no_matches-dark"
+      }
+    },
+    "store.none_yet": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "store.up_to_date": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
+    },
+    "studio.drop": {
+      "img": "pane-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "pane-chats-dark"
+      }
     }
   },
   "assets": {
