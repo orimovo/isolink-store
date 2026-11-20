@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "by": "Isolink",
+  "licence": "CC0-1.0",
+  "desc": "An ASCII terminal with phosphor-green graphics, square chat bubbles and soft beeps.",
+  "tags": [
+    "retro",
+    "terminal",
+    "ascii"
+  ],
+  "minApp": "0.26.57"
+}
