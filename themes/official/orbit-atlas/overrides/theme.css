@@ -1,0 +1,6 @@
+Menu, Dropdown, Popup, Dialog { border-radius: 10px; border: 1px solid var(--accent-soft); }
+Sheet { border-radius: 14px 14px 0 0; border: 1px solid var(--accent-soft); }
+SearchField#chats, SearchField#icons, TextField, Composer::field { border-radius: 8px; }
+Fab { border-radius: 6px; }
+IconTile[icon="theme"], IconTile[icon="storefront"] { border-radius: 6px; background: var(--accent-soft); color: var(--ink); }
+Dialog::title { font-family: var(--font-serif); }
