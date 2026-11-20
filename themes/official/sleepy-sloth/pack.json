@@ -1308,5 +1308,140 @@
         "img": "aad39fa7d44b88a40b0a2"
       }
     }
-  }
+  },
+  "options": [
+    {
+      "id": "colour",
+      "name": "Colour",
+      "names": {
+        "de": "Farbe",
+        "es": "Color",
+        "fr": "Couleur",
+        "pt": "Cor",
+        "zh": "颜色",
+        "ar": "اللون"
+      },
+      "type": "colour",
+      "picks": [
+        "#7D7034",
+        "#50C97B",
+        "#7E72D4",
+        "#E0607A"
+      ],
+      "any": true,
+      "sets": [
+        "app.accent"
+      ],
+      "clear": [
+        "app.stops"
+      ]
+    },
+    {
+      "id": "icons",
+      "name": "Icons",
+      "names": {
+        "de": "Symbole",
+        "es": "Iconos",
+        "fr": "Icônes",
+        "pt": "Ícones",
+        "zh": "图标",
+        "ar": "الأيقونات"
+      },
+      "type": "choice",
+      "default": "plain",
+      "choices": [
+        {
+          "id": "plain",
+          "name": "Plain",
+          "names": {
+            "de": "Schlicht",
+            "es": "Simple",
+            "fr": "Simple",
+            "pt": "Simples",
+            "zh": "普通",
+            "ar": "عادي"
+          }
+        },
+        {
+          "id": "accent",
+          "name": "Accent",
+          "names": {
+            "de": "Akzent",
+            "es": "Acento",
+            "pt": "Destaque",
+            "zh": "强调色",
+            "ar": "التمييز"
+          },
+          "set": {
+            "app.iconColour": "accent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "name": "Character",
+      "names": {
+        "de": "Figur",
+        "es": "Personaje",
+        "fr": "Personnage",
+        "pt": "Personagem",
+        "zh": "角色",
+        "ar": "الشخصية"
+      },
+      "type": "toggle",
+      "default": true,
+      "off": {
+        "mine.layers": [],
+        "mine.anims": [],
+        "mine.on": null,
+        "mine.idle": null,
+        "mine.still": null,
+        "mine.reduced": null
+      }
+    },
+    {
+      "id": "background",
+      "name": "Background",
+      "names": {
+        "de": "Hintergrund",
+        "es": "Fondo",
+        "fr": "Arrière-plan",
+        "pt": "Plano de fundo",
+        "zh": "背景",
+        "ar": "الخلفية"
+      },
+      "type": "choice",
+      "default": "picture",
+      "choices": [
+        {
+          "id": "picture",
+          "name": "Picture",
+          "names": {
+            "de": "Bild",
+            "es": "Imagen",
+            "fr": "Image",
+            "pt": "Imagem",
+            "zh": "图片",
+            "ar": "صورة"
+          }
+        },
+        {
+          "id": "plain",
+          "name": "Plain",
+          "names": {
+            "de": "Schlicht",
+            "es": "Simple",
+            "fr": "Simple",
+            "pt": "Simples",
+            "zh": "普通",
+            "ar": "عادي"
+          },
+          "set": {
+            "background": null
+          }
+        }
+      ]
+    }
+  ]
 }
