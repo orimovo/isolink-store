@@ -45,6 +45,9 @@
       "mode": "system",
       "iconPack": "fontAwesome",
       "chrome": {
+        "send": {
+          "shape": "rounded"
+        },
         "files": {
           "line": {
             "light": 2360964908,

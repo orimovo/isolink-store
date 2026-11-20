@@ -45,6 +45,9 @@
       "mode": "system",
       "iconPack": "tabler",
       "chrome": {
+        "send": {
+          "shape": "rounded"
+        },
         "files": {
           "line": {
             "light": 2353826358,

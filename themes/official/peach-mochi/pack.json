@@ -45,6 +45,9 @@
       "mode": "system",
       "iconPack": "lucide",
       "chrome": {
+        "send": {
+          "shape": "rounded"
+        },
         "files": {
           "line": {
             "light": 2363256661,

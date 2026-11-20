@@ -45,6 +45,9 @@
       "mode": "system",
       "iconPack": "remix",
       "chrome": {
+        "send": {
+          "shape": "rounded"
+        },
         "files": {
           "line": {
             "light": 2351926890,

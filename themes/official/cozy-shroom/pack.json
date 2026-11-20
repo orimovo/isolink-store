@@ -45,6 +45,9 @@
       "mode": "system",
       "iconPack": "phosphor",
       "chrome": {
+        "send": {
+          "shape": "rounded"
+        },
         "files": {
           "line": {
             "light": 2361937208,
