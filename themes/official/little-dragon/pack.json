@@ -21,7 +21,7 @@
     },
     "app": {
       "overrides": {
-        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 14px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 20px 20px 0 0; border: 1px solid var(--accent-soft); }\nSearchField#chats, SearchField#icons, TextField, Composer::field { border-radius: 12px; }\nFab { border-radius: 9px; }\nIconTile[icon=\"theme\"], IconTile[icon=\"store\"] { border-radius: 9px; background: var(--accent-soft); color: var(--ink); }"
+        "style": "Menu, Dropdown, Popup, Dialog { border-radius: 14px; border: 1px solid var(--accent-soft); }\nSheet { border-radius: 20px 20px 0 0; border: 1px solid var(--accent-soft); }\nSearchField#chats, SearchField#icons, TextField, Composer::field { border-radius: 12px; }\nFab { border-radius: 9px; }\nIconTile[icon=\"theme\"], IconTile[icon=\"storefront\"] { border-radius: 9px; background: var(--accent-soft); color: var(--ink); }"
       },
       "id": "little-dragon_app",
       "name": "Little Dragon",
