@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "by": "Isolink",
+  "licence": "CC0-1.0",
+  "desc": "A minimalist chemistry notebook with sea-glass bubbles, molecular diagrams and quiet lab tones.",
+  "tags": [
+    "science",
+    "chemistry",
+    "minimal",
+    "teal"
+  ],
+  "minApp": "0.26.57"
+}
