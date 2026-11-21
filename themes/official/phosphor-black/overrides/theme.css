@@ -60,8 +60,18 @@ Card {
 NavBar,
 FloatingButton,
 Button,
+IconButton,
 Chip,
-Row {
+Row,
+Pill,
+Badge,
+Segmented,
+Checkbox,
+Switch,
+Progress,
+Banner,
+Toast,
+MenuItem {
   border-radius: 0px;
 }
 
