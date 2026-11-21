@@ -27,8 +27,7 @@ IconButton[icon="edit"] {
   color: var(--ink);
 }
 
-SearchField#chats,
-SearchField#icons,
+SearchField,
 TextField {
   border-radius: 0px;
 }
@@ -78,6 +77,13 @@ Page#you Row:selected,
 Page#theme Row:selected,
 Page#store Row:selected {
   border-radius: 0px;
+  box-shadow: 0 0 0 1px var(--outline);
+}
+
+AppIcon {
+  border-radius: 0px;
+  background: var(--accent-soft);
+  color: var(--ink);
   box-shadow: 0 0 0 1px var(--outline);
 }
 
