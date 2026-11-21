@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 8,
   "by": "Isolink",
   "licence": "CC0-1.0",
   "desc": "A black-and-silver ASCII terminal with square chat bubbles and soft beeps.",
@@ -8,5 +8,5 @@
     "terminal",
     "ascii"
   ],
-  "minApp": "0.26.60"
+  "minApp": "0.26.62"
 }

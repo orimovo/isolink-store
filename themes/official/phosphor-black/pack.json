@@ -15,7 +15,7 @@
       "gradient": false,
       "tint": "neutral",
       "tintStrength": 0.22,
-      "roundness": "sharp",
+      "roundness": "square",
       "mode": "dark",
       "iconPack": "sharp",
       "tabFill": false,

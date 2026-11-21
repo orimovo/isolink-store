@@ -27,8 +27,7 @@ IconButton[icon="edit"] {
   color: var(--ink);
 }
 
-SearchField#chats,
-SearchField#icons,
+SearchField,
 TextField {
   border-radius: 0px;
 }
@@ -52,14 +51,27 @@ Composer::add:selected {
   color: var(--accent);
 }
 
-Page Group,
-Page Card {
+Group,
+Card {
   border-radius: 0px;
   box-shadow: 0 0 0 1px var(--accent-soft);
 }
 
 NavBar,
-FloatingButton {
+FloatingButton,
+Button,
+IconButton,
+Chip,
+Row,
+Pill,
+Badge,
+Segmented,
+Checkbox,
+Switch,
+Progress,
+Banner,
+Toast,
+MenuItem {
   border-radius: 0px;
 }
 
@@ -81,13 +93,14 @@ Page#store Row:selected {
   box-shadow: 0 0 0 1px var(--outline);
 }
 
-Group IconTile,
-Page#settings IconTile,
-Page#you IconTile,
-Page#theme IconTile,
-Page#store IconTile,
-IconTile[icon="theme"],
-IconTile[icon="storefront"] {
+AppIcon {
+  border-radius: 0px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--outline);
+}
+
+IconTile {
   border-radius: 0px;
   background: var(--accent-soft);
   color: var(--ink);
