@@ -2039,7 +2039,7 @@
       "chrome": {
         "title": {
           "colour": {
-            "light": 4279510589,
+            "light": 4293981692,
             "dark": 4293981692
           },
           "font": "standard",
@@ -2052,49 +2052,49 @@
         },
         "tabs": {
           "fill": {
-            "light": 4293324792,
+            "light": 4279575096,
             "dark": 4279575096
           },
           "text": {
-            "light": 4280499030,
+            "light": 4292864502,
             "dark": 4292864502
           },
           "border": {
-            "light": 4289183446,
+            "light": 4282407540,
             "dark": 4282407540
           },
           "shape": "rounded"
         },
         "chips": {
           "fill": {
-            "light": 4293324792,
+            "light": 4279575096,
             "dark": 4279575096
           },
           "text": {
-            "light": 4280499030,
+            "light": 4292864502,
             "dark": 4292864502
           },
           "border": {
-            "light": 4289183446,
+            "light": 4282407540,
             "dark": 4282407540
           },
           "shape": "rounded"
         },
         "files": {
           "line": {
-            "light": 2358104063,
+            "light": 2995638271,
             "dark": 2995638271
           },
           "border": {
-            "light": 1301139455,
+            "light": 1720569855,
             "dark": 1720569855
           },
           "badge": {
-            "light": 697159679,
+            "light": 1200476159,
             "dark": 1200476159
           },
           "badgeIcon": {
-            "light": 4280302422,
+            "light": 4287483903,
             "dark": 4287483903
           }
         }
@@ -2120,7 +2120,7 @@
       "fit": "tile",
       "tile": 0.5,
       "dim": 0,
-      "img": "bg-light",
+      "img": "bg-dark",
       "dark": {
         "img": "bg-dark"
       }
@@ -2325,386 +2325,191 @@
     }
   },
   "assets": {
-    "onboarding-welcome-light": {
-      "file": "assets/onboarding-welcome-light.png"
-    },
     "onboarding-welcome-dark": {
       "file": "assets/onboarding-welcome-dark.png"
-    },
-    "setup-switches-light": {
-      "file": "assets/setup-switches-light.png"
     },
     "setup-switches-dark": {
       "file": "assets/setup-switches-dark.png"
     },
-    "setup-reach-light": {
-      "file": "assets/setup-reach-light.png"
-    },
     "setup-reach-dark": {
       "file": "assets/setup-reach-dark.png"
-    },
-    "setup-first-contact-light": {
-      "file": "assets/setup-first-contact-light.png"
     },
     "setup-first-contact-dark": {
       "file": "assets/setup-first-contact-dark.png"
     },
-    "setup-restore-light": {
-      "file": "assets/setup-restore-light.png"
-    },
     "setup-restore-dark": {
       "file": "assets/setup-restore-dark.png"
-    },
-    "setup-move-light": {
-      "file": "assets/setup-move-light.png"
     },
     "setup-move-dark": {
       "file": "assets/setup-move-dark.png"
     },
-    "link-device-light": {
-      "file": "assets/link-device-light.png"
-    },
     "link-device-dark": {
       "file": "assets/link-device-dark.png"
-    },
-    "link-removed-light": {
-      "file": "assets/link-removed-light.png"
     },
     "link-removed-dark": {
       "file": "assets/link-removed-dark.png"
     },
-    "empty-chats-light": {
-      "file": "assets/empty-chats-light.png"
-    },
     "empty-chats-dark": {
       "file": "assets/empty-chats-dark.png"
-    },
-    "empty-people-light": {
-      "file": "assets/empty-people-light.png"
     },
     "empty-people-dark": {
       "file": "assets/empty-people-dark.png"
     },
-    "empty-nearby-light": {
-      "file": "assets/empty-nearby-light.png"
-    },
     "empty-nearby-dark": {
       "file": "assets/empty-nearby-dark.png"
-    },
-    "empty-forums-light": {
-      "file": "assets/empty-forums-light.png"
     },
     "empty-forums-dark": {
       "file": "assets/empty-forums-dark.png"
     },
-    "pane-chats-light": {
-      "file": "assets/pane-chats-light.png"
-    },
     "pane-chats-dark": {
       "file": "assets/pane-chats-dark.png"
-    },
-    "pane-people-light": {
-      "file": "assets/pane-people-light.png"
     },
     "pane-people-dark": {
       "file": "assets/pane-people-dark.png"
     },
-    "pane-forums-light": {
-      "file": "assets/pane-forums-light.png"
-    },
     "pane-forums-dark": {
       "file": "assets/pane-forums-dark.png"
-    },
-    "pane-you-light": {
-      "file": "assets/pane-you-light.png"
     },
     "pane-you-dark": {
       "file": "assets/pane-you-dark.png"
     },
-    "pane-popup-light": {
-      "file": "assets/pane-popup-light.png"
-    },
     "pane-popup-dark": {
       "file": "assets/pane-popup-dark.png"
-    },
-    "chat-new-light": {
-      "file": "assets/chat-new-light.png"
     },
     "chat-new-dark": {
       "file": "assets/chat-new-dark.png"
     },
-    "empty-search-light": {
-      "file": "assets/empty-search-light.png"
-    },
     "empty-search-dark": {
       "file": "assets/empty-search-dark.png"
-    },
-    "empty-no-matches-light": {
-      "file": "assets/empty-no-matches-light.png"
     },
     "empty-no-matches-dark": {
       "file": "assets/empty-no-matches-dark.png"
     },
-    "empty-starred-light": {
-      "file": "assets/empty-starred-light.png"
-    },
     "empty-starred-dark": {
       "file": "assets/empty-starred-dark.png"
-    },
-    "empty-archived-light": {
-      "file": "assets/empty-archived-light.png"
     },
     "empty-archived-dark": {
       "file": "assets/empty-archived-dark.png"
     },
-    "empty-unread-light": {
-      "file": "assets/empty-unread-light.png"
-    },
     "empty-unread-dark": {
       "file": "assets/empty-unread-dark.png"
-    },
-    "empty-reminders-light": {
-      "file": "assets/empty-reminders-light.png"
     },
     "empty-reminders-dark": {
       "file": "assets/empty-reminders-dark.png"
     },
-    "empty-folders-light": {
-      "file": "assets/empty-folders-light.png"
-    },
     "empty-folders-dark": {
       "file": "assets/empty-folders-dark.png"
-    },
-    "empty-broadcast-light": {
-      "file": "assets/empty-broadcast-light.png"
     },
     "empty-broadcast-dark": {
       "file": "assets/empty-broadcast-dark.png"
     },
-    "empty-carried-light": {
-      "file": "assets/empty-carried-light.png"
-    },
     "empty-carried-dark": {
       "file": "assets/empty-carried-dark.png"
-    },
-    "offgrid-find-signal-light": {
-      "file": "assets/offgrid-find-signal-light.png"
     },
     "offgrid-find-signal-dark": {
       "file": "assets/offgrid-find-signal-dark.png"
     },
-    "offgrid-stay-together-light": {
-      "file": "assets/offgrid-stay-together-light.png"
-    },
     "offgrid-stay-together-dark": {
       "file": "assets/offgrid-stay-together-dark.png"
-    },
-    "offgrid-walkie-light": {
-      "file": "assets/offgrid-walkie-light.png"
     },
     "offgrid-walkie-dark": {
       "file": "assets/offgrid-walkie-dark.png"
     },
-    "offgrid-sos-ended-light": {
-      "file": "assets/offgrid-sos-ended-light.png"
-    },
     "offgrid-sos-ended-dark": {
       "file": "assets/offgrid-sos-ended-dark.png"
-    },
-    "offgrid-arrivals-light": {
-      "file": "assets/offgrid-arrivals-light.png"
     },
     "offgrid-arrivals-dark": {
       "file": "assets/offgrid-arrivals-dark.png"
     },
-    "offgrid-maps-light": {
-      "file": "assets/offgrid-maps-light.png"
-    },
     "offgrid-maps-dark": {
       "file": "assets/offgrid-maps-dark.png"
-    },
-    "community-offer-light": {
-      "file": "assets/community-offer-light.png"
     },
     "community-offer-dark": {
       "file": "assets/community-offer-dark.png"
     },
-    "community-joined-light": {
-      "file": "assets/community-joined-light.png"
-    },
     "community-joined-dark": {
       "file": "assets/community-joined-dark.png"
-    },
-    "community-unreachable-light": {
-      "file": "assets/community-unreachable-light.png"
     },
     "community-unreachable-dark": {
       "file": "assets/community-unreachable-dark.png"
     },
-    "forum-no-posts-light": {
-      "file": "assets/forum-no-posts-light.png"
-    },
     "forum-no-posts-dark": {
       "file": "assets/forum-no-posts-dark.png"
-    },
-    "forum-gone-light": {
-      "file": "assets/forum-gone-light.png"
     },
     "forum-gone-dark": {
       "file": "assets/forum-gone-dark.png"
     },
-    "bots-empty-light": {
-      "file": "assets/bots-empty-light.png"
-    },
     "bots-empty-dark": {
       "file": "assets/bots-empty-dark.png"
-    },
-    "bots-no-commands-light": {
-      "file": "assets/bots-no-commands-light.png"
     },
     "bots-no-commands-dark": {
       "file": "assets/bots-no-commands-dark.png"
     },
-    "bots-no-rules-light": {
-      "file": "assets/bots-no-rules-light.png"
-    },
     "bots-no-rules-dark": {
       "file": "assets/bots-no-rules-dark.png"
-    },
-    "admin-no-logs-light": {
-      "file": "assets/admin-no-logs-light.png"
     },
     "admin-no-logs-dark": {
       "file": "assets/admin-no-logs-dark.png"
     },
-    "backup-none-light": {
-      "file": "assets/backup-none-light.png"
-    },
     "backup-none-dark": {
       "file": "assets/backup-none-dark.png"
-    },
-    "cards-empty-light": {
-      "file": "assets/cards-empty-light.png"
     },
     "cards-empty-dark": {
       "file": "assets/cards-empty-dark.png"
     },
-    "studio-drop-light": {
-      "file": "assets/studio-drop-light.png"
-    },
     "studio-drop-dark": {
       "file": "assets/studio-drop-dark.png"
-    },
-    "card-install-light": {
-      "file": "assets/card-install-light.png"
     },
     "card-install-dark": {
       "file": "assets/card-install-dark.png"
     },
-    "themes-mine-light": {
-      "file": "assets/themes-mine-light.png"
-    },
     "themes-mine-dark": {
       "file": "assets/themes-mine-dark.png"
-    },
-    "themes-shared-light": {
-      "file": "assets/themes-shared-light.png"
     },
     "themes-shared-dark": {
       "file": "assets/themes-shared-dark.png"
     },
-    "themes-looking-light": {
-      "file": "assets/themes-looking-light.png"
-    },
     "themes-looking-dark": {
       "file": "assets/themes-looking-dark.png"
-    },
-    "bubbles-no-decorations-light": {
-      "file": "assets/bubbles-no-decorations-light.png"
     },
     "bubbles-no-decorations-dark": {
       "file": "assets/bubbles-no-decorations-dark.png"
     },
-    "verify-added-light": {
-      "file": "assets/verify-added-light.png"
-    },
     "verify-added-dark": {
       "file": "assets/verify-added-dark.png"
-    },
-    "verify-done-light": {
-      "file": "assets/verify-done-light.png"
     },
     "verify-done-dark": {
       "file": "assets/verify-done-dark.png"
     },
-    "error-load-light": {
-      "file": "assets/error-load-light.png"
-    },
     "error-load-dark": {
       "file": "assets/error-load-dark.png"
-    },
-    "error-another-tab-light": {
-      "file": "assets/error-another-tab-light.png"
     },
     "error-another-tab-dark": {
       "file": "assets/error-another-tab-dark.png"
     },
-    "error-permission-light": {
-      "file": "assets/error-permission-light.png"
-    },
     "error-permission-dark": {
       "file": "assets/error-permission-dark.png"
-    },
-    "update-ready-light": {
-      "file": "assets/update-ready-light.png"
     },
     "update-ready-dark": {
       "file": "assets/update-ready-dark.png"
     },
-    "whats-new-light": {
-      "file": "assets/whats-new-light.png"
-    },
     "whats-new-dark": {
       "file": "assets/whats-new-dark.png"
-    },
-    "device-not-connected-light": {
-      "file": "assets/device-not-connected-light.png"
     },
     "device-not-connected-dark": {
       "file": "assets/device-not-connected-dark.png"
     },
-    "store-up-to-date-light": {
-      "file": "assets/store-up-to-date-light.png"
-    },
     "store-up-to-date-dark": {
       "file": "assets/store-up-to-date-dark.png"
-    },
-    "store-none-yet-light": {
-      "file": "assets/store-none-yet-light.png"
     },
     "store-none-yet-dark": {
       "file": "assets/store-none-yet-dark.png"
     },
-    "problems-none-light": {
-      "file": "assets/problems-none-light.png"
-    },
     "problems-none-dark": {
       "file": "assets/problems-none-dark.png"
     },
-    "decor-ground-light": {
-      "file": "assets/decor-ground-light.png"
-    },
     "decor-ground-dark": {
       "file": "assets/decor-ground-dark.png"
-    },
-    "decor-peek-light": {
-      "file": "assets/decor-peek-light.png"
-    },
-    "decor-peek-dark": {
-      "file": "assets/decor-peek-dark.png"
-    },
-    "bg-light": {
-      "file": "assets/bg-light.png"
     },
     "bg-dark": {
       "file": "assets/bg-dark.png"
@@ -2715,445 +2520,252 @@
   },
   "art": {
     "onboarding.welcome": {
-      "img": "onboarding-welcome-light",
-      "tint": false,
-      "dark": {
-        "img": "onboarding-welcome-dark"
-      }
+      "img": "onboarding-welcome-dark",
+      "tint": false
     },
     "setup.switches": {
-      "img": "setup-switches-light",
-      "tint": false,
-      "dark": {
-        "img": "setup-switches-dark"
-      }
+      "img": "setup-switches-dark",
+      "tint": false
     },
     "setup.reach": {
-      "img": "setup-reach-light",
-      "tint": false,
-      "dark": {
-        "img": "setup-reach-dark"
-      }
+      "img": "setup-reach-dark",
+      "tint": false
     },
     "setup.first_contact": {
-      "img": "setup-first-contact-light",
-      "tint": false,
-      "dark": {
-        "img": "setup-first-contact-dark"
-      }
+      "img": "setup-first-contact-dark",
+      "tint": false
     },
     "setup.restore": {
-      "img": "setup-restore-light",
-      "tint": false,
-      "dark": {
-        "img": "setup-restore-dark"
-      }
+      "img": "setup-restore-dark",
+      "tint": false
     },
     "setup.move": {
-      "img": "setup-move-light",
-      "tint": false,
-      "dark": {
-        "img": "setup-move-dark"
-      }
+      "img": "setup-move-dark",
+      "tint": false
     },
     "link.device": {
-      "img": "link-device-light",
-      "tint": false,
-      "dark": {
-        "img": "link-device-dark"
-      }
+      "img": "link-device-dark",
+      "tint": false
     },
     "link.removed": {
-      "img": "link-removed-light",
-      "tint": false,
-      "dark": {
-        "img": "link-removed-dark"
-      }
+      "img": "link-removed-dark",
+      "tint": false
     },
     "empty.chats": {
-      "img": "empty-chats-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-chats-dark"
-      }
+      "img": "empty-chats-dark",
+      "tint": false
     },
     "empty.people": {
-      "img": "empty-people-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-people-dark"
-      }
+      "img": "empty-people-dark",
+      "tint": false
     },
     "empty.nearby": {
-      "img": "empty-nearby-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-nearby-dark"
-      }
+      "img": "empty-nearby-dark",
+      "tint": false
     },
     "empty.forums": {
-      "img": "empty-forums-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-forums-dark"
-      }
+      "img": "empty-forums-dark",
+      "tint": false
     },
     "pane.chats": {
-      "img": "pane-chats-light",
-      "tint": false,
-      "dark": {
-        "img": "pane-chats-dark"
-      }
+      "img": "pane-chats-dark",
+      "tint": false
     },
     "pane.people": {
-      "img": "pane-people-light",
-      "tint": false,
-      "dark": {
-        "img": "pane-people-dark"
-      }
+      "img": "pane-people-dark",
+      "tint": false
     },
     "pane.forums": {
-      "img": "pane-forums-light",
-      "tint": false,
-      "dark": {
-        "img": "pane-forums-dark"
-      }
+      "img": "pane-forums-dark",
+      "tint": false
     },
     "pane.you": {
-      "img": "pane-you-light",
-      "tint": false,
-      "dark": {
-        "img": "pane-you-dark"
-      }
+      "img": "pane-you-dark",
+      "tint": false
     },
     "pane.popup": {
-      "img": "pane-popup-light",
-      "tint": false,
-      "dark": {
-        "img": "pane-popup-dark"
-      }
+      "img": "pane-popup-dark",
+      "tint": false
     },
     "chat.new": {
-      "img": "chat-new-light",
-      "tint": false,
-      "dark": {
-        "img": "chat-new-dark"
-      }
+      "img": "chat-new-dark",
+      "tint": false
     },
     "empty.search": {
-      "img": "empty-search-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-search-dark"
-      }
+      "img": "empty-search-dark",
+      "tint": false
     },
     "empty.no_matches": {
-      "img": "empty-no-matches-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-no-matches-dark"
-      }
+      "img": "empty-no-matches-dark",
+      "tint": false
     },
     "empty.starred": {
-      "img": "empty-starred-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-starred-dark"
-      }
+      "img": "empty-starred-dark",
+      "tint": false
     },
     "empty.archived": {
-      "img": "empty-archived-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-archived-dark"
-      }
+      "img": "empty-archived-dark",
+      "tint": false
     },
     "empty.unread": {
-      "img": "empty-unread-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-unread-dark"
-      }
+      "img": "empty-unread-dark",
+      "tint": false
     },
     "empty.reminders": {
-      "img": "empty-reminders-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-reminders-dark"
-      }
+      "img": "empty-reminders-dark",
+      "tint": false
     },
     "empty.folders": {
-      "img": "empty-folders-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-folders-dark"
-      }
+      "img": "empty-folders-dark",
+      "tint": false
     },
     "empty.broadcast": {
-      "img": "empty-broadcast-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-broadcast-dark"
-      }
+      "img": "empty-broadcast-dark",
+      "tint": false
     },
     "empty.carried": {
-      "img": "empty-carried-light",
-      "tint": false,
-      "dark": {
-        "img": "empty-carried-dark"
-      }
+      "img": "empty-carried-dark",
+      "tint": false
     },
     "offgrid.find_signal": {
-      "img": "offgrid-find-signal-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-find-signal-dark"
-      }
+      "img": "offgrid-find-signal-dark",
+      "tint": false
     },
     "offgrid.stay_together": {
-      "img": "offgrid-stay-together-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-stay-together-dark"
-      }
+      "img": "offgrid-stay-together-dark",
+      "tint": false
     },
     "offgrid.walkie": {
-      "img": "offgrid-walkie-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-walkie-dark"
-      }
+      "img": "offgrid-walkie-dark",
+      "tint": false
     },
     "offgrid.sos_ended": {
-      "img": "offgrid-sos-ended-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-sos-ended-dark"
-      }
+      "img": "offgrid-sos-ended-dark",
+      "tint": false
     },
     "offgrid.arrivals": {
-      "img": "offgrid-arrivals-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-arrivals-dark"
-      }
+      "img": "offgrid-arrivals-dark",
+      "tint": false
     },
     "offgrid.maps": {
-      "img": "offgrid-maps-light",
-      "tint": false,
-      "dark": {
-        "img": "offgrid-maps-dark"
-      }
+      "img": "offgrid-maps-dark",
+      "tint": false
     },
     "community.offer": {
-      "img": "community-offer-light",
-      "tint": false,
-      "dark": {
-        "img": "community-offer-dark"
-      }
+      "img": "community-offer-dark",
+      "tint": false
     },
     "community.joined": {
-      "img": "community-joined-light",
-      "tint": false,
-      "dark": {
-        "img": "community-joined-dark"
-      }
+      "img": "community-joined-dark",
+      "tint": false
     },
     "community.unreachable": {
-      "img": "community-unreachable-light",
-      "tint": false,
-      "dark": {
-        "img": "community-unreachable-dark"
-      }
+      "img": "community-unreachable-dark",
+      "tint": false
     },
     "forum.no_posts": {
-      "img": "forum-no-posts-light",
-      "tint": false,
-      "dark": {
-        "img": "forum-no-posts-dark"
-      }
+      "img": "forum-no-posts-dark",
+      "tint": false
     },
     "forum.gone": {
-      "img": "forum-gone-light",
-      "tint": false,
-      "dark": {
-        "img": "forum-gone-dark"
-      }
+      "img": "forum-gone-dark",
+      "tint": false
     },
     "bots.empty": {
-      "img": "bots-empty-light",
-      "tint": false,
-      "dark": {
-        "img": "bots-empty-dark"
-      }
+      "img": "bots-empty-dark",
+      "tint": false
     },
     "bots.no_commands": {
-      "img": "bots-no-commands-light",
-      "tint": false,
-      "dark": {
-        "img": "bots-no-commands-dark"
-      }
+      "img": "bots-no-commands-dark",
+      "tint": false
     },
     "bots.no_rules": {
-      "img": "bots-no-rules-light",
-      "tint": false,
-      "dark": {
-        "img": "bots-no-rules-dark"
-      }
+      "img": "bots-no-rules-dark",
+      "tint": false
     },
     "admin.no_logs": {
-      "img": "admin-no-logs-light",
-      "tint": false,
-      "dark": {
-        "img": "admin-no-logs-dark"
-      }
+      "img": "admin-no-logs-dark",
+      "tint": false
     },
     "backup.none": {
-      "img": "backup-none-light",
-      "tint": false,
-      "dark": {
-        "img": "backup-none-dark"
-      }
+      "img": "backup-none-dark",
+      "tint": false
     },
     "cards.empty": {
-      "img": "cards-empty-light",
-      "tint": false,
-      "dark": {
-        "img": "cards-empty-dark"
-      }
+      "img": "cards-empty-dark",
+      "tint": false
     },
     "studio.drop": {
-      "img": "studio-drop-light",
-      "tint": false,
-      "dark": {
-        "img": "studio-drop-dark"
-      }
+      "img": "studio-drop-dark",
+      "tint": false
     },
     "card.install": {
-      "img": "card-install-light",
-      "tint": false,
-      "dark": {
-        "img": "card-install-dark"
-      }
+      "img": "card-install-dark",
+      "tint": false
     },
     "themes.mine": {
-      "img": "themes-mine-light",
-      "tint": false,
-      "dark": {
-        "img": "themes-mine-dark"
-      }
+      "img": "themes-mine-dark",
+      "tint": false
     },
     "themes.shared": {
-      "img": "themes-shared-light",
-      "tint": false,
-      "dark": {
-        "img": "themes-shared-dark"
-      }
+      "img": "themes-shared-dark",
+      "tint": false
     },
     "themes.looking": {
-      "img": "themes-looking-light",
-      "tint": false,
-      "dark": {
-        "img": "themes-looking-dark"
-      }
+      "img": "themes-looking-dark",
+      "tint": false
     },
     "bubbles.no_decorations": {
-      "img": "bubbles-no-decorations-light",
-      "tint": false,
-      "dark": {
-        "img": "bubbles-no-decorations-dark"
-      }
+      "img": "bubbles-no-decorations-dark",
+      "tint": false
     },
     "verify.added": {
-      "img": "verify-added-light",
-      "tint": false,
-      "dark": {
-        "img": "verify-added-dark"
-      }
+      "img": "verify-added-dark",
+      "tint": false
     },
     "verify.done": {
-      "img": "verify-done-light",
-      "tint": false,
-      "dark": {
-        "img": "verify-done-dark"
-      }
+      "img": "verify-done-dark",
+      "tint": false
     },
     "error.load": {
-      "img": "error-load-light",
-      "tint": false,
-      "dark": {
-        "img": "error-load-dark"
-      }
+      "img": "error-load-dark",
+      "tint": false
     },
     "error.another_tab": {
-      "img": "error-another-tab-light",
-      "tint": false,
-      "dark": {
-        "img": "error-another-tab-dark"
-      }
+      "img": "error-another-tab-dark",
+      "tint": false
     },
     "error.permission": {
-      "img": "error-permission-light",
-      "tint": false,
-      "dark": {
-        "img": "error-permission-dark"
-      }
+      "img": "error-permission-dark",
+      "tint": false
     },
     "update.ready": {
-      "img": "update-ready-light",
-      "tint": false,
-      "dark": {
-        "img": "update-ready-dark"
-      }
+      "img": "update-ready-dark",
+      "tint": false
     },
     "whats_new": {
-      "img": "whats-new-light",
-      "tint": false,
-      "dark": {
-        "img": "whats-new-dark"
-      }
+      "img": "whats-new-dark",
+      "tint": false
     },
     "device.not_connected": {
-      "img": "device-not-connected-light",
-      "tint": false,
-      "dark": {
-        "img": "device-not-connected-dark"
-      }
+      "img": "device-not-connected-dark",
+      "tint": false
     },
     "store.up_to_date": {
-      "img": "store-up-to-date-light",
-      "tint": false,
-      "dark": {
-        "img": "store-up-to-date-dark"
-      }
+      "img": "store-up-to-date-dark",
+      "tint": false
     },
     "store.none_yet": {
-      "img": "store-none-yet-light",
-      "tint": false,
-      "dark": {
-        "img": "store-none-yet-dark"
-      }
+      "img": "store-none-yet-dark",
+      "tint": false
     },
     "problems.none": {
-      "img": "problems-none-light",
-      "tint": false,
-      "dark": {
-        "img": "problems-none-dark"
-      }
+      "img": "problems-none-dark",
+      "tint": false
     },
     "decor.ground": {
-      "img": "decor-ground-light",
-      "tint": false,
-      "dark": {
-        "img": "decor-ground-dark"
-      }
-    },
-    "decor.peek": {
-      "img": "decor-peek-light",
-      "tint": false,
-      "dark": {
-        "img": "decor-peek-dark"
-      }
+      "img": "decor-ground-dark",
+      "tint": false
     }
   },
   "sounds": [
@@ -3291,40 +2903,6 @@
           "name": "Plain",
           "set": {
             "background": null
-          }
-        }
-      ]
-    },
-    {
-      "id": "mode",
-      "name": "Appearance",
-      "names": {
-        "de": "Darstellung",
-        "es": "Apariencia",
-        "fr": "Apparence",
-        "pt": "Aparência",
-        "zh": "外观",
-        "ar": "المظهر"
-      },
-      "type": "choice",
-      "default": "dark",
-      "choices": [
-        {
-          "id": "dark",
-          "name": "Midnight"
-        },
-        {
-          "id": "light",
-          "name": "Daylight",
-          "set": {
-            "app.mode": "light"
-          }
-        },
-        {
-          "id": "system",
-          "name": "System",
-          "set": {
-            "app.mode": "system"
           }
         }
       ]

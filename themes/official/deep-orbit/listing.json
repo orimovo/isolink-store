@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "by": "Kyle Pantall",
   "licence": "CC-BY-4.0",
   "desc": "A quiet midnight starfield with luminous astronomical imagery, icy controls, and a spacious navy interface.",
@@ -13,11 +13,11 @@
   "minApp": "0.26.61",
   "cover": "onboarding.welcome",
   "illustrations": [
-    "onboarding.welcome",
     "empty.chats",
+    "empty.unread",
     "community.offer",
     "empty.nearby",
-    "setup.first_contact",
-    "whats_new"
+    "empty.starred",
+    "offgrid.arrivals"
   ]
 }
