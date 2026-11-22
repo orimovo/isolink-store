@@ -2691,18 +2691,6 @@
     "problems-none-dark": {
       "file": "assets/problems-none-dark.png"
     },
-    "decor-ground-light": {
-      "file": "assets/decor-ground-light.png"
-    },
-    "decor-ground-dark": {
-      "file": "assets/decor-ground-dark.png"
-    },
-    "decor-peek-light": {
-      "file": "assets/decor-peek-light.png"
-    },
-    "decor-peek-dark": {
-      "file": "assets/decor-peek-dark.png"
-    },
     "bg-light": {
       "file": "assets/bg-light.png"
     },
@@ -3139,20 +3127,6 @@
       "tint": false,
       "dark": {
         "img": "problems-none-dark"
-      }
-    },
-    "decor.ground": {
-      "img": "decor-ground-light",
-      "tint": false,
-      "dark": {
-        "img": "decor-ground-dark"
-      }
-    },
-    "decor.peek": {
-      "img": "decor-peek-light",
-      "tint": false,
-      "dark": {
-        "img": "decor-peek-dark"
       }
     }
   },

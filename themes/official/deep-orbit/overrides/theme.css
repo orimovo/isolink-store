@@ -1,7 +1,10 @@
 /* Deep Orbit — opaque midnight surfaces, quiet outlines and clear controls. */
-TopBar { background: #101D30; border-bottom: 1px solid #263A53; color: #F0F5FC; }
+/* Let the real header panes, not a second box around them, own the chrome. */
+TopBar { color: #F0F5FC; }
 TopBar::title { color: #F0F5FC; font-weight: 700; }
+TopBar Glass { background: #101D30; border: none; }
 NavBar { background: #101D30; border-radius: 16px; border: 1px solid #30465F; }
+NavBar > Glass { background: #101D30; border: none; padding-inline: 4px; }
 Fab { background: var(--accent); border-radius: 16px; color: var(--on-accent); }
 Fab::icon, Fab::label { color: var(--on-accent); }
 FloatingButton { background: #152238; border: 1px solid #48617C; border-radius: 16px; color: #8DCFFF; }
@@ -13,21 +16,26 @@ Button[variant="danger"] { color: #FFE1EA; background: #512B3D; }
 Button:disabled { opacity: 0.55; }
 IconButton { border-radius: 12px; }
 IconButton[filled] { background: #20354E; border: 1px solid #385572; }
+TopBar IconButton[filled] { border: none; }
 IconButton[send] { background: var(--accent); border-radius: 24px; color: var(--on-accent); }
 IconButton[send]::icon { color: var(--on-accent); }
 SearchField, TextField { background: #152238; border: 1px solid #405A74; border-radius: 14px; color: #F2F6FC; }
 SearchField::icon { color: var(--accent); }
 SearchField::field, TextField::field { color: #F2F6FC; caret-color: var(--accent); }
 SearchField:focus, TextField:focus { border-color: var(--accent); }
-Composer { background: #101D30; border-top: 1px solid #283D56; }
-Composer::bar { background: #152238; border: 1px solid #405A74; border-radius: 20px; }
-Composer::field { color: #F1F6FE; caret-color: var(--accent); }
+/* ::bar is the full footer; ::field is the actual rounded message box. */
+Composer::bar { background: transparent; border: none; }
+Composer::field { background: #152238; border: 1px solid #405A74; border-radius: 20px; padding: 6px; color: #F1F6FE; caret-color: var(--accent); }
+Composer Glass { background: #152238; border: none; }
 Composer::add { color: var(--accent); }
-Composer::send { background: var(--accent); color: var(--on-accent); border-radius: 24px; }
+Composer::send { background: var(--accent); border: none; color: var(--on-accent); border-radius: 24px; }
+Composer IconButton[send] { border: none; }
 IconTile { border-radius: 10px; background: #20354E; color: var(--accent); border: 1px solid #354D67; }
 AppIcon[plain] { background: #152238; border: 1px solid #354D67; border-radius: 16px; }
 AppIcon { border-radius: 16px; }
-Menu, Dropdown, Sheet, Popup, Dialog, Glass { background: #152238; border: 1px solid #405A74; border-radius: 16px; color: #F0F5FC; }
+Menu, Dropdown, Sheet, Popup, Dialog { background: #152238; border: 1px solid #405A74; border-radius: 16px; color: #F0F5FC; }
+/* Retain the native glass radius and let its owning component supply an edge. */
+Glass { background: #152238; color: #F0F5FC; }
 MenuItem { border-radius: 10px; color: #F0F5FC; }
 MenuItem::icon { color: var(--accent); }
 MenuItem:hover, MenuItem:pressed, MenuItem:checked { background: #20354E; }
@@ -46,9 +54,14 @@ Pill[tone="warning"] { color: #D8B77A; }
 Pill[tone="danger"] { color: #F5A8BE; }
 Switch { border-radius: 20px; }
 Switch:checked { color: var(--accent); }
-FilterTabs, Segmented { background: #152238; border-radius: 12px; border: 1px solid #405A74; }
+/* A four-pixel gutter keeps individual picks clear of the outlined track. */
+FilterTabs { background: #152238; border-radius: 16px; border: 1px solid #405A74; padding: 4px; }
+TopBar FilterTabs { background: transparent; border: none; padding: 0; }
+FilterTabs Glass { background: #152238; border: none; }
+/* Segmented uses its native inset; its thumb follows this track's radius. */
+Segmented { border-radius: 16px; }
 Chip { background: #152238; border: 1px solid #405A74; border-radius: 12px; color: #DFE9F6; }
-Chip:selected { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+Chip:selected { background: var(--accent); color: var(--on-accent); border: none; }
 Checkbox { border-radius: 6px; }
 Checkbox:checked { background: var(--accent); color: var(--on-accent); }
 Progress { background: #263B55; color: var(--accent); border-radius: 8px; }
@@ -63,14 +76,18 @@ Art:unthemed { content: placeholder; }
 
 /* A complete complementary pale-sky mode, selectable in Options. */
 @media (prefers-color-scheme: light) {
-  TopBar, NavBar, Composer { background: #E6EFF8; border-color: #A7BED6; color: #152238; }
+  TopBar { color: #152238; }
+  TopBar Glass, NavBar > Glass { background: #E6EFF8; }
+  NavBar { background: #E6EFF8; border-color: #A7BED6; color: #152238; }
   TopBar::title, Dialog::title { color: #152238; }
-  FloatingButton, SearchField, TextField, Composer::bar, Menu, Dropdown, Sheet, Popup, Dialog, Glass, Card, Group, Banner, Toast, FilterTabs, Segmented { background: #F0F5FB; border-color: #B4C8DB; color: #152238; }
+  FloatingButton, SearchField, TextField, Composer::field, Menu, Dropdown, Sheet, Popup, Dialog, Card, Group, Banner, Toast, FilterTabs { background: #F0F5FB; border-color: #B4C8DB; color: #152238; }
+  Glass, Composer Glass, FilterTabs Glass { background: #F0F5FB; color: #152238; }
   SearchField::field, TextField::field, Composer::field, MenuItem, Row::title, EmptyState { color: #152238; }
   Row::subtitle { color: #475F78; }
   Row:selected, Row:hover, MenuItem:hover, MenuItem:pressed, MenuItem:checked { background: #DCE9F5; }
   Button[variant="secondary"], Chip { background: #E4EEF7; border-color: #90ACC5; color: #152238; }
   IconTile, IconButton[filled], AppIcon[plain], Pill { background: #DCE9F5; border-color: #A7BED6; color: #274C70; }
+  IconButton[send] { background: var(--accent); border: none; color: var(--on-accent); }
   Pill[tone="success"] { color: #206849; }
   Pill[tone="warning"] { color: #7A5317; }
   Pill[tone="danger"], Row[danger]::title, MenuItem[danger], MenuItem[danger]::icon { color: #94234B; }
