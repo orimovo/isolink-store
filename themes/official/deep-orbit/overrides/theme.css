@@ -1,0 +1,79 @@
+/* Deep Orbit — opaque midnight surfaces, quiet outlines and clear controls. */
+TopBar { background: #101D30; border-bottom: 1px solid #263A53; color: #F0F5FC; }
+TopBar::title { color: #F0F5FC; font-weight: 700; }
+NavBar { background: #101D30; border-radius: 16px; border: 1px solid #30465F; }
+Fab { background: var(--accent); border-radius: 16px; color: var(--on-accent); }
+Fab::icon, Fab::label { color: var(--on-accent); }
+FloatingButton { background: #152238; border: 1px solid #48617C; border-radius: 16px; color: #8DCFFF; }
+Button { border-radius: 12px; }
+Button[variant="primary"], Button[variant="pill"] { background: var(--accent); color: var(--on-accent); }
+Button[variant="secondary"] { background: #152238; border: 1px solid #526B87; color: #EDF4FF; }
+Button[variant="ghost"] { color: var(--accent); }
+Button[variant="danger"] { color: #FFE1EA; background: #512B3D; }
+Button:disabled { opacity: 0.55; }
+IconButton { border-radius: 12px; }
+IconButton[filled] { background: #20354E; border: 1px solid #385572; }
+IconButton[send] { background: var(--accent); border-radius: 24px; color: var(--on-accent); }
+IconButton[send]::icon { color: var(--on-accent); }
+SearchField, TextField { background: #152238; border: 1px solid #405A74; border-radius: 14px; color: #F2F6FC; }
+SearchField::icon { color: var(--accent); }
+SearchField::field, TextField::field { color: #F2F6FC; caret-color: var(--accent); }
+SearchField:focus, TextField:focus { border-color: var(--accent); }
+Composer { background: #101D30; border-top: 1px solid #283D56; }
+Composer::bar { background: #152238; border: 1px solid #405A74; border-radius: 20px; }
+Composer::field { color: #F1F6FE; caret-color: var(--accent); }
+Composer::add { color: var(--accent); }
+Composer::send { background: var(--accent); color: var(--on-accent); border-radius: 24px; }
+IconTile { border-radius: 10px; background: #20354E; color: var(--accent); border: 1px solid #354D67; }
+AppIcon[plain] { background: #152238; border: 1px solid #354D67; border-radius: 16px; }
+AppIcon { border-radius: 16px; }
+Menu, Dropdown, Sheet, Popup, Dialog, Glass { background: #152238; border: 1px solid #405A74; border-radius: 16px; color: #F0F5FC; }
+MenuItem { border-radius: 10px; color: #F0F5FC; }
+MenuItem::icon { color: var(--accent); }
+MenuItem:hover, MenuItem:pressed, MenuItem:checked { background: #20354E; }
+MenuItem[danger], MenuItem[danger]::icon { color: #F5A8BE; }
+Dialog::title { color: #F4F7FC; font-weight: 700; }
+Card, Group { background: #152238; border: 1px solid #2C425D; border-radius: 16px; color: #F0F5FC; }
+Row { border-radius: 10px; }
+Row::title { color: #F0F5FC; }
+Row::subtitle { color: #AABBD0; }
+Row:selected, Row:hover { background: #20354E; }
+Row[danger]::title { color: #F5A8BE; }
+Pill { background: #20354E; border-radius: 12px; color: #DCE7F6; border: 1px solid #3D5671; }
+Pill[tone="accent"] { color: var(--accent); }
+Pill[tone="success"] { color: #8CDAB5; }
+Pill[tone="warning"] { color: #D8B77A; }
+Pill[tone="danger"] { color: #F5A8BE; }
+Switch { border-radius: 20px; }
+Switch:checked { color: var(--accent); }
+FilterTabs, Segmented { background: #152238; border-radius: 12px; border: 1px solid #405A74; }
+Chip { background: #152238; border: 1px solid #405A74; border-radius: 12px; color: #DFE9F6; }
+Chip:selected { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+Checkbox { border-radius: 6px; }
+Checkbox:checked { background: var(--accent); color: var(--on-accent); }
+Progress { background: #263B55; color: var(--accent); border-radius: 8px; }
+Banner, Toast { background: #152238; color: #F0F5FC; border: 1px solid #405A74; border-radius: 12px; }
+Banner[tone="accent"] { border-color: var(--accent); }
+Banner[tone="success"] { border-color: #6CBB96; }
+Banner[tone="warning"] { border-color: #D8B77A; }
+Banner[tone="danger"] { border-color: #CD8EA8; }
+Badge { background: var(--accent); color: var(--on-accent); border-radius: 10px; }
+EmptyState { color: #DFE9F6; }
+Art:unthemed { content: placeholder; }
+
+/* A complete complementary pale-sky mode, selectable in Options. */
+@media (prefers-color-scheme: light) {
+  TopBar, NavBar, Composer { background: #E6EFF8; border-color: #A7BED6; color: #152238; }
+  TopBar::title, Dialog::title { color: #152238; }
+  FloatingButton, SearchField, TextField, Composer::bar, Menu, Dropdown, Sheet, Popup, Dialog, Glass, Card, Group, Banner, Toast, FilterTabs, Segmented { background: #F0F5FB; border-color: #B4C8DB; color: #152238; }
+  SearchField::field, TextField::field, Composer::field, MenuItem, Row::title, EmptyState { color: #152238; }
+  Row::subtitle { color: #475F78; }
+  Row:selected, Row:hover, MenuItem:hover, MenuItem:pressed, MenuItem:checked { background: #DCE9F5; }
+  Button[variant="secondary"], Chip { background: #E4EEF7; border-color: #90ACC5; color: #152238; }
+  IconTile, IconButton[filled], AppIcon[plain], Pill { background: #DCE9F5; border-color: #A7BED6; color: #274C70; }
+  Pill[tone="success"] { color: #206849; }
+  Pill[tone="warning"] { color: #7A5317; }
+  Pill[tone="danger"], Row[danger]::title, MenuItem[danger], MenuItem[danger]::icon { color: #94234B; }
+  Button[variant="danger"] { background: #F8DBE3; color: #7B2240; }
+  Progress { background: #D1E0F0; }
+}

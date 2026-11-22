@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "by": "Kyle Pantall",
+  "licence": "CC-BY-4.0",
+  "desc": "A quiet midnight starfield with luminous astronomical imagery, icy controls, and a spacious navy interface.",
+  "tags": [
+    "space",
+    "galaxy",
+    "dark",
+    "astronomy",
+    "minimal"
+  ],
+  "minApp": "0.26.61",
+  "cover": "onboarding.welcome",
+  "illustrations": [
+    "onboarding.welcome",
+    "empty.chats",
+    "community.offer",
+    "empty.nearby",
+    "setup.first_contact",
+    "whats_new"
+  ]
+}
