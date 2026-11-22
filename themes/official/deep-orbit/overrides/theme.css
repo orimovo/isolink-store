@@ -73,24 +73,3 @@ Banner[tone="danger"] { border-color: #CD8EA8; }
 Badge { background: var(--accent); color: var(--on-accent); border-radius: 10px; }
 EmptyState { color: #DFE9F6; }
 Art:unthemed { content: placeholder; }
-
-/* A complete complementary pale-sky mode, selectable in Options. */
-@media (prefers-color-scheme: light) {
-  TopBar { color: #152238; }
-  TopBar Glass, NavBar > Glass { background: #E6EFF8; }
-  NavBar { background: #E6EFF8; border-color: #A7BED6; color: #152238; }
-  TopBar::title, Dialog::title { color: #152238; }
-  FloatingButton, SearchField, TextField, Composer::field, Menu, Dropdown, Sheet, Popup, Dialog, Card, Group, Banner, Toast, FilterTabs { background: #F0F5FB; border-color: #B4C8DB; color: #152238; }
-  Glass, Composer Glass, FilterTabs Glass { background: #F0F5FB; color: #152238; }
-  SearchField::field, TextField::field, Composer::field, MenuItem, Row::title, EmptyState { color: #152238; }
-  Row::subtitle { color: #475F78; }
-  Row:selected, Row:hover, MenuItem:hover, MenuItem:pressed, MenuItem:checked { background: #DCE9F5; }
-  Button[variant="secondary"], Chip { background: #E4EEF7; border-color: #90ACC5; color: #152238; }
-  IconTile, IconButton[filled], AppIcon[plain], Pill { background: #DCE9F5; border-color: #A7BED6; color: #274C70; }
-  IconButton[send] { background: var(--accent); border: none; color: var(--on-accent); }
-  Pill[tone="success"] { color: #206849; }
-  Pill[tone="warning"] { color: #7A5317; }
-  Pill[tone="danger"], Row[danger]::title, MenuItem[danger], MenuItem[danger]::icon { color: #94234B; }
-  Button[variant="danger"] { background: #F8DBE3; color: #7B2240; }
-  Progress { background: #D1E0F0; }
-}

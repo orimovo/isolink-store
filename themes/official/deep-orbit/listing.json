@@ -13,11 +13,11 @@
   "minApp": "0.26.61",
   "cover": "onboarding.welcome",
   "illustrations": [
-    "onboarding.welcome",
     "empty.chats",
+    "empty.unread",
     "community.offer",
     "empty.nearby",
-    "setup.first_contact",
-    "whats_new"
+    "empty.starred",
+    "offgrid.arrivals"
   ]
 }
