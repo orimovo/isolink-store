@@ -1,0 +1,411 @@
+{
+  "v": 2,
+  "id": "orbit-planner",
+  "name": "Orbit Planner",
+  "based_on": {
+    "id": "orbit-atlas",
+    "by": "Kyle Pantall",
+    "name": "Orbit Atlas"
+  },
+  "parts": {
+    "app": {
+      "id": "orbit-planner-look",
+      "name": "Orbit Planner",
+      "accent": 4286077291,
+      "gradient": false,
+      "tint": "warm",
+      "tintStrength": 0.48,
+      "roundness": "soft",
+      "mode": "system",
+      "iconPack": "outlined",
+      "fabPlace": "header",
+      "nav": {
+        "shape": "card",
+        "fill": "surface",
+        "labels": "always"
+      },
+      "chrome": {
+        "title": {
+          "colour": {
+            "light": 4281871161,
+            "dark": 4294768883
+          },
+          "font": "serif",
+          "weight": 600
+        },
+        "send": {
+          "fill": {
+            "light": 4281871161,
+            "dark": 4293907124
+          },
+          "icon": {
+            "light": 4294768883,
+            "dark": 4281871161
+          },
+          "shape": "rounded"
+        },
+        "tabs": {
+          "fill": {
+            "light": 4294109922,
+            "dark": 4281215025
+          },
+          "fillOn": {
+            "light": 4294301897,
+            "dark": 4283712332
+          },
+          "text": {
+            "light": 4283778897,
+            "dark": 4293122005
+          },
+          "textOn": {
+            "light": 4281871161,
+            "dark": 4294768883
+          },
+          "border": {
+            "light": 4292399046,
+            "dark": 4284963170
+          },
+          "shape": "rounded"
+        },
+        "chips": {
+          "fill": {
+            "light": 4294109922,
+            "dark": 4281215025
+          },
+          "fillOn": {
+            "light": 4294301897,
+            "dark": 4283712332
+          },
+          "text": {
+            "light": 4283778897,
+            "dark": 4293122005
+          },
+          "textOn": {
+            "light": 4281871161,
+            "dark": 4294768883
+          },
+          "border": {
+            "light": 4292399046,
+            "dark": 4284963170
+          },
+          "shape": "rounded"
+        }
+      },
+      "icons": {
+        "theme": {
+          "path": "icons/saturn.png",
+          "keep": true
+        },
+        "chats": {
+          "path": "icons/chats.svg",
+          "on": {
+            "path": "icons/chats-selected.svg"
+          }
+        },
+        "contacts": {
+          "path": "icons/contacts.svg",
+          "on": {
+            "path": "icons/contacts-selected.svg"
+          }
+        },
+        "forums": {
+          "path": "icons/forums.svg",
+          "on": {
+            "path": "icons/forums-selected.svg"
+          }
+        },
+        "send": {
+          "path": "icons/send.svg"
+        },
+        "attach": {
+          "path": "icons/attach.svg"
+        },
+        "newChat": {
+          "path": "icons/newChat.svg"
+        },
+        "search": {
+          "path": "icons/search.svg"
+        },
+        "edit": {
+          "path": "icons/edit.svg"
+        },
+        "settings": {
+          "path": "icons/settings.svg"
+        },
+        "pin": {
+          "path": "icons/pin.svg"
+        }
+      },
+      "overrides": {
+        "style": {
+          "path": "overrides/paper.css"
+        }
+      }
+    },
+    "mine": {
+      "ref": "field-note"
+    },
+    "theirs": {
+      "ref": "letter"
+    },
+    "background": {
+      "img": "chart-light",
+      "dark": {
+        "img": "chart-dark"
+      },
+      "fit": "tile",
+      "tile": 0.64,
+      "dim": 0
+    }
+  },
+  "bubbles": {
+    "field-note": {
+      "v": 2,
+      "id": "field-note",
+      "name": "Field note",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4283514956
+      },
+      "border": {
+        "fill": "colour",
+        "c": 4285750631,
+        "w": 1,
+        "r": 10
+      },
+      "shape": {
+        "corners": [
+          11,
+          11,
+          4,
+          11
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "text": {
+        "c": 4294965485,
+        "readable": true,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 5
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      },
+      "reduced": "still",
+      "layers": [
+        {
+          "id": "solar-seal",
+          "name": "Solar seal",
+          "kind": "custom",
+          "img": "solar-seal",
+          "size": 0.62,
+          "z": "front",
+          "over": 0,
+          "tall": "top",
+          "mirror": "never",
+          "anchor": {
+            "edge": "right",
+            "along": 0,
+            "pivot": [
+              1,
+              1
+            ],
+            "offset": [
+              -7,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    "letter": {
+      "v": 2,
+      "id": "letter",
+      "name": "Observatory letter",
+      "flip": true,
+      "body": {
+        "fill": "colour",
+        "c": 4293646532
+      },
+      "border": {
+        "fill": "colour",
+        "c": 4289104761,
+        "w": 1,
+        "r": 10
+      },
+      "shape": {
+        "corners": [
+          11,
+          11,
+          4,
+          11
+        ],
+        "tail": {
+          "at": "none"
+        }
+      },
+      "text": {
+        "c": 4281871161,
+        "readable": true,
+        "links": "text"
+      },
+      "media": {
+        "fit": "plate",
+        "inset": 5
+      },
+      "emoji": {
+        "bare": true,
+        "max": 3
+      },
+      "reduced": "still"
+    }
+  },
+  "assets": {
+    "chart-light": {
+      "file": "assets/chart-light.png"
+    },
+    "chart-dark": {
+      "file": "assets/chart-dark.png"
+    },
+    "solar-seal": {
+      "file": "assets/solar-seal.png"
+    },
+    "welcome": {
+      "file": "assets/welcome.png"
+    },
+    "empty-chats-light": {
+      "file": "assets/empty-chats-light.png"
+    },
+    "empty-chats-dark": {
+      "file": "assets/empty-chats-dark.png"
+    },
+    "chat-new-light": {
+      "file": "assets/chat-new-light.png"
+    },
+    "chat-new-dark": {
+      "file": "assets/chat-new-dark.png"
+    },
+    "empty-people-light": {
+      "file": "assets/empty-people-light.png"
+    },
+    "empty-people-dark": {
+      "file": "assets/empty-people-dark.png"
+    },
+    "empty-reminders-light": {
+      "file": "assets/empty-reminders-light.png"
+    },
+    "empty-reminders-dark": {
+      "file": "assets/empty-reminders-dark.png"
+    },
+    "empty-folders-light": {
+      "file": "assets/empty-folders-light.png"
+    },
+    "empty-folders-dark": {
+      "file": "assets/empty-folders-dark.png"
+    },
+    "empty-no-matches-light": {
+      "file": "assets/empty-no-matches-light.png"
+    },
+    "empty-no-matches-dark": {
+      "file": "assets/empty-no-matches-dark.png"
+    }
+  },
+  "art": {
+    "onboarding.welcome": {
+      "img": "welcome",
+      "tint": false
+    },
+    "empty.chats": {
+      "img": "empty-chats-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-chats-dark"
+      }
+    },
+    "chat.new": {
+      "img": "chat-new-light",
+      "tint": false,
+      "dark": {
+        "img": "chat-new-dark"
+      }
+    },
+    "empty.people": {
+      "img": "empty-people-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-people-dark"
+      }
+    },
+    "empty.reminders": {
+      "img": "empty-reminders-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-reminders-dark"
+      }
+    },
+    "empty.folders": {
+      "img": "empty-folders-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-folders-dark"
+      }
+    },
+    "empty.no_matches": {
+      "img": "empty-no-matches-light",
+      "tint": false,
+      "dark": {
+        "img": "empty-no-matches-dark"
+      }
+    }
+  },
+  "options": [
+    {
+      "id": "chart",
+      "name": "Chart wallpaper",
+      "type": "toggle",
+      "default": true,
+      "off": {
+        "background": null
+      }
+    },
+    {
+      "id": "seal",
+      "name": "Solar seal",
+      "type": "toggle",
+      "default": true,
+      "off": {
+        "mine.layers": []
+      }
+    },
+    {
+      "id": "letters",
+      "name": "Message paper",
+      "type": "choice",
+      "default": "parchment",
+      "choices": [
+        {
+          "id": "parchment",
+          "name": "Parchment"
+        },
+        {
+          "id": "night",
+          "name": "Night ink",
+          "set": {
+            "theirs.body.c": 4281872957,
+            "theirs.text.c": 4294240219,
+            "theirs.border.c": 4285819511,
+            "mine.body.c": 4283712332,
+            "mine.text.c": 4294964712
+          }
+        }
+      ]
+    }
+  ]
+}
