@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "by": "Kyle Pantall",
+  "licence": "CC-BY-4.0",
+  "desc": "Engraved Saturn, orbital charts and serif headings from Orbit Planner. Send plum field notes with a sun seal and receive replies on parchment or night ink.",
+  "tags": [
+    "astronomy",
+    "planets",
+    "paper",
+    "illustrated",
+    "orbit-planner"
+  ],
+  "minApp": "0.26.60",
+  "illustrations": [
+    "empty.chats",
+    "chat.new",
+    "empty.people",
+    "empty.folders",
+    "empty.reminders"
+  ]
+}

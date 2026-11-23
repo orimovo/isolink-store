@@ -1,0 +1,29 @@
+TopBar, NavBar {
+  background: #fcf8f3;
+}
+TopBar { border-bottom: 1px solid #d8cfc6; }
+NavBar { border-top: 1px solid #d8cfc6; }
+SearchField, Composer::field {
+  background: #f7efe6;
+  color: #382b39;
+  border: 1px solid #ab998c;
+  border-radius: 10px;
+  caret-color: #382b39;
+}
+SearchField:focus, Composer::field:focus { border: 2px solid #795968; }
+Menu, Dropdown, Dialog { border: 1px solid #ae9c91; border-radius: 10px; }
+Fab { border-radius: 9px; }
+
+@media (prefers-color-scheme: dark) {
+  TopBar, NavBar { background: #211d25; }
+  TopBar { border-bottom: 1px solid #675962; }
+  NavBar { border-top: 1px solid #675962; }
+  SearchField, Composer::field {
+    background: #302a32;
+    color: #fcf8f3;
+    border: 1px solid #82717c;
+    caret-color: #efd2b4;
+  }
+  SearchField:focus, Composer::field:focus { border: 2px solid #efd2b4; }
+  Menu, Dropdown, Dialog { border: 1px solid #756571; }
+}
